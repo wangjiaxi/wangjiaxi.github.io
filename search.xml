@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[test password]]></title>
+    <url>%2F2019%2F04%2F04%2Ftest-password%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
     <title><![CDATA[Python实现照片的手绘效果]]></title>
     <url>%2F2019%2F04%2F04%2FPython%E5%AE%9E%E7%8E%B0%E7%85%A7%E7%89%87%E7%9A%84%E6%89%8B%E7%BB%98%E6%95%88%E6%9E%9C%2F</url>
     <content type="text"><![CDATA[梯度的重构利用像素之间的梯度值和虚拟深度值对图像进行重构，根据灰度变化来模拟人类视觉的明暗程度。 手绘效果的特征 黑白灰色 边界线条较重 相同或相近色彩趋于白色 略有光源效果 代码实现用到的第三方库安装：pip install pillow`pip install numpy` 1234567891011121314151617181920212223242526272829#image.pyfrom PIL import Imageimport numpy as npa = np.asarray(Image.open('./yunwuyue.jpg').convert('L')).astype('float')depth = 10. #预设深度值为10，取值范围0-100grad = np.gradient(a) #提取x和y方向的梯度值grad_x, grad_y = grad#根据深度值调整x和y方向的梯度值grad_x = grad_x * depth / 100.grad_y = grad_y * depth / 100.A = np.sqrt(grad_x**2 + grad_y**2 + 1.)uni_x = grad_x / Auni_y = grad_y / Auni_z = 1. / Avec_el = np.pi / 2.2vec_az = np.pi / 4dx = np.cos(vec_el) * np.cos(vec_az)dy = np.cos(vec_el) * np.sin(vec_az)dz = np.sin(vec_el)b = 255 * (dx * uni_x + dy * uni_y + dz * uni_z)b = b.clip(0, 255)im = Image.fromarray(b.astype('uint8'))im.save('./yunwuyueHD.jpg') 展示]]></content>
