@@ -354,6 +354,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -402,7 +424,17 @@
       
         
           
-            
+            <h1 id="梯度的重构"><a href="#梯度的重构" class="headerlink" title="梯度的重构"></a>梯度的重构</h1><p>利用像素之间的梯度值和虚拟深度值对图像进行重构，根据灰度变化来模拟人类视觉的明暗程度。</p>
+<h1 id="手绘效果的特征"><a href="#手绘效果的特征" class="headerlink" title="手绘效果的特征"></a>手绘效果的特征</h1><ol>
+<li>黑白灰色</li>
+<li>边界线条较重</li>
+<li>相同或相近色彩趋于白色</li>
+<li>略有光源效果</li>
+</ol>
+<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><p>用到的第三方库安装：<code>pip install pillow`</code>pip install numpy`</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#image.py</span></span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a = np.asarray(Image.open(<span class="string">'./yunwuyue.jpg'</span>).convert(<span class="string">'L'</span>)).astype(<span class="string">'float'</span>)</span><br><span class="line"></span><br><span class="line">depth = <span class="number">10.</span>     <span class="comment">#预设深度值为10，取值范围0-100</span></span><br><span class="line">grad = np.gradient(a)       <span class="comment">#提取x和y方向的梯度值</span></span><br><span class="line">grad_x, grad_y = grad</span><br><span class="line"><span class="comment">#根据深度值调整x和y方向的梯度值</span></span><br><span class="line">grad_x = grad_x * depth / <span class="number">100.</span></span><br><span class="line">grad_y = grad_y * depth / <span class="number">100.</span></span><br><span class="line">A = np.sqrt(grad_x**<span class="number">2</span> + grad_y**<span class="number">2</span> + <span class="number">1.</span>)</span><br><span class="line">uni_x = grad_x / A</span><br><span class="line">uni_y = grad_y / A</span><br><span class="line">uni_z = <span class="number">1.</span> / A</span><br><span class="line"></span><br><span class="line">vec_el = np.pi / <span class="number">2.2</span></span><br><span class="line">vec_az = np.pi / <span class="number">4</span></span><br><span class="line">dx = np.cos(vec_el) * np.cos(vec_az)</span><br><span class="line">dy = np.cos(vec_el) * np.sin(vec_az)</span><br><span class="line">dz = np.sin(vec_el)</span><br><span class="line"></span><br><span class="line">b = <span class="number">255</span> * (dx * uni_x + dy * uni_y + dz * uni_z)</span><br><span class="line">b = b.clip(<span class="number">0</span>, <span class="number">255</span>)</span><br><span class="line"></span><br><span class="line">im = Image.fromarray(b.astype(<span class="string">'uint8'</span>))</span><br><span class="line">im.save(<span class="string">'./yunwuyueHD.jpg'</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="展示"><a href="#展示" class="headerlink" title="展示"></a>展示</h1>
+
           
         
       
@@ -492,6 +524,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -539,9 +593,14 @@
 
       
         
-          
-            
-          
+          <p>2016年6月16日，LIGO合作组宣布2015年12月26日 03:38:53（UTC），两台不同位置的引力波探测器同时探测到了一个引力波信号。<br></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/04/04/Matplotlib绘制引力波/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -678,7 +737,7 @@
       
         
           
-            
+            <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#修改网卡信息</span></span><br><span class="line">vi /etc/sysconfig/network-scripts/ifcfg-eth0</span><br><span class="line"></span><br><span class="line">DEVICE=eth0</span><br><span class="line">TYPE=Ethernet</span><br><span class="line">UUID=81c06473-0e58-4a5a-b4c4-35a2a853ab04</span><br><span class="line">ONBOOT=yes</span><br><span class="line">NM_CONTROLLED=yes</span><br><span class="line">BOOTPROTO=static</span><br><span class="line">IPADDR=192.168.8.100</span><br><span class="line">NETMASK=255.255.255.0</span><br><span class="line">GATEWAY=192.168.8.1</span><br><span class="line">DNS1=192.168.8.1</span><br><span class="line">DNS2=114.114.114.114</span><br><span class="line"><span class="comment">#重启生效</span></span><br><span class="line">service network restart</span><br><span class="line"><span class="comment">#++++++++++++++++++++++++++++++++++++++++++++++++</span></span><br><span class="line"><span class="comment">#关闭防火墙                                     </span></span><br><span class="line">service iptables stop                           </span><br><span class="line">chkconfig iptables off                          </span><br><span class="line"><span class="comment">#++++++++++++++++++++++++++++++++++++++++++++++++</span></span><br><span class="line"><span class="comment">#修改主机名                                     </span></span><br><span class="line">vi /etc/sysconfig/network                       </span><br><span class="line"><span class="comment">#++++++++++++++++++++++++++++++++++++++++++++++++</span></span><br><span class="line"><span class="comment">#修改映射关系                                   </span></span><br><span class="line">vi /etc/hosts                                   </span><br><span class="line"><span class="comment">#++++++++++++++++++++++++++++++++++++++++++++++++</span></span><br><span class="line"><span class="comment">#环境变量                                       </span></span><br><span class="line">vi /etc/profile                                 </span><br><span class="line">                                                </span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/root/app/jdk1.8.0_191         </span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin                </span><br><span class="line">                                                </span><br><span class="line"><span class="comment">#source一下生效                                 </span></span><br><span class="line"><span class="built_in">source</span> /etc/profile                             </span><br><span class="line"><span class="comment">#++++++++++++++++++++++++++++++++++++++++++++++++</span></span><br><span class="line"><span class="comment">#时间同步</span></span><br><span class="line">yum install ntpdate -y</span><br><span class="line">ntpdate 0.asia.pool.ntp.org</span><br><span class="line"><span class="comment">#++++++++++++++++++++++++++++++++++++++++++++++++</span></span><br><span class="line"><span class="comment">#集群通信</span></span><br><span class="line">yum install openssh-clients</span><br><span class="line"></span><br><span class="line">ssh登陆，scp发送文件</span><br><span class="line">scp -r /etc/hosts bigdata-03:/etc/</span><br><span class="line"></span><br><span class="line"><span class="comment">#免密登陆</span></span><br><span class="line">ssh-keygen -t rsa     <span class="comment">#生成公钥和私钥</span></span><br><span class="line">ssh-copy-id -i /root/.ssh/id_rsa.pub bigdata-03    <span class="comment">#为需要进行免密的机器进行发送公钥（不要忘了给自己发）</span></span><br><span class="line"><span class="comment">#++++++++++++++++++++++++++++++++++++++++++++++++</span></span><br></pre></td></tr></table></figure>
           
         
       
@@ -768,6 +827,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -816,7 +897,35 @@
       
         
           
-            
+            <h1 id="Kafka概述"><a href="#Kafka概述" class="headerlink" title="Kafka概述"></a>Kafka概述</h1><ul>
+<li>和消息系统类似</li>
+<li>消息中间件：生产者和消费者</li>
+<li>A distributed streaming platform</li>
+</ul>
+<h1 id="Kafka架构和核心概念"><a href="#Kafka架构和核心概念" class="headerlink" title="Kafka架构和核心概念"></a>Kafka架构和核心概念</h1>
+<ul>
+<li>Kafka is run as a cluster on one or more servers that can span multiple datacenters.</li>
+<li>The Kafka cluster stores streams of records in categories called topics.</li>
+<li>Each record consists of a key, a value, and a timestamp.</li>
+</ul>
+<h1 id="单节点单broker的Kafka部署及使用"><a href="#单节点单broker的Kafka部署及使用" class="headerlink" title="单节点单broker的Kafka部署及使用"></a>单节点单broker的Kafka部署及使用</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># $KAFKA_HOME/config/server.properties</span></span><br><span class="line"></span><br><span class="line">broker.id=0</span><br><span class="line">listeners=PLAINTEXT://:9092</span><br><span class="line">host.name=bigdata-01</span><br><span class="line">log.dirs=/root/app/tmp/kafka-logs</span><br><span class="line">zookeeper.connect=bigdata-01:2181</span><br></pre></td></tr></table></figure>
+<p>启动kafka<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-server-start.sh <span class="variable">$KAFKA_HOME</span>/config/server.properties</span><br><span class="line"></span><br><span class="line">USAGE: /root/app/kafka_2.11-0.9.0.0/bin/kafka-server-start.sh [-daemon] server.properties [--override property=value]*</span><br></pre></td></tr></table></figure></p>
+<p>创建topic：zk<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-topics.sh --create --zookeeper bigdata-01:2181 --replication-factor 1 --partitions 1 --topic hello_topic</span><br></pre></td></tr></table></figure></p>
+<p>查看所有topic<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-topics.sh --list --zookeeper bigdata-01:2181</span><br></pre></td></tr></table></figure></p>
+<p>发送消息：broker<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-console-producer.sh --broker-list bigdata-01:9092 --topic hello_topic</span><br></pre></td></tr></table></figure></p>
+<p>消费消息：zk<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-console-consumer.sh --zookeeper bigdata-01:2181 -topic hello_topic</span><br></pre></td></tr></table></figure></p>
+<p>查看所有topic的详细信息：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics.sh --describe --zookeeper bigdata-01:2181</span><br></pre></td></tr></table></figure></p>
+<p>查看指定topic的详细信息：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics.sh --describe --zookeeper bigdata-01:2181 -topic hello_topic</span><br></pre></td></tr></table></figure></p>
+<h1 id="单节点多broker的Kafka部署及使用"><a href="#单节点多broker的Kafka部署及使用" class="headerlink" title="单节点多broker的Kafka部署及使用"></a>单节点多broker的Kafka部署及使用</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#配置多个配置文件</span></span><br><span class="line">server-1.properties</span><br><span class="line">server-2.properties</span><br><span class="line">server-3.properties</span><br><span class="line"></span><br><span class="line"><span class="comment">#启动</span></span><br><span class="line">kafka-server-start.sh -daemon <span class="variable">$KAFKA_HOME</span>/config/server-1.properties &amp;</span><br><span class="line">kafka-server-start.sh -daemon <span class="variable">$KAFKA_HOME</span>/config/server-2.properties &amp;</span><br><span class="line">kafka-server-start.sh -daemon <span class="variable">$KAFKA_HOME</span>/config/server-3.properties &amp;</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建topic</span></span><br><span class="line">bin/kafka-topics.sh --create --zookeeper bigdata-01:2181 --replication-factor 3 --partitions 1 --topic my-replication-topic</span><br><span class="line"></span><br><span class="line"><span class="comment">#启动一个生产者</span></span><br><span class="line">kafka-console-producer.sh --broker-list bigdata-01:9093,bigdata-01:9094，bigdata-01:9095 --topic my-replication-topic</span><br><span class="line"></span><br><span class="line"><span class="comment">#启动一个消费者</span></span><br><span class="line">kafka-console-consumer.sh --zookeeper bigdata-01:2181 -topic my-replication-topic</span><br></pre></td></tr></table></figure>
+<h1 id="Kafka容错性测试"><a href="#Kafka容错性测试" class="headerlink" title="Kafka容错性测试"></a>Kafka容错性测试</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@bigdata-01 ~]<span class="comment"># kafka-topics.sh --describe --zookeeper bigdata-01:2181</span></span><br><span class="line">Topic:hello_topic	PartitionCount:1	ReplicationFactor:1	Configs:</span><br><span class="line">	Topic: hello_topic	Partition: 0	Leader: 0	Replicas: 0	Isr: 0</span><br><span class="line">Topic:my-replication-topic	PartitionCount:1	ReplicationFactor:3	Configs:</span><br><span class="line">	Topic: my-replication-topic	Partition: 0	Leader: 3	Replicas: 3,1,2	Isr: 3,1,2</span><br></pre></td></tr></table></figure>
+<p>此时leader为broker3，如果终止该进程，会发生什么呢？<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@bigdata-01 ~]<span class="comment"># jps -m</span></span><br><span class="line">2882 ConsoleConsumer --zookeeper bigdata-01:2181 -topic my-replication-topic</span><br><span class="line">2660 Kafka /root/app/kafka_2.11-0.9.0.0/config/server-3.properties</span><br><span class="line">2550 Kafka /root/app/kafka_2.11-0.9.0.0/config/server-1.properties</span><br><span class="line">2843 ConsoleProducer --broker-list bigdata-01:9093,bigdata-01:9094，bigdata-01:9095 --topic my-replication-topic</span><br><span class="line">2955 Jps -m</span><br><span class="line">1934 QuorumPeerMain /root/app/zookeeper-3.4.5-cdh5.7.0/bin/../conf/zoo.cfg</span><br><span class="line"></span><br><span class="line">[root@bigdata-01 ~]<span class="comment"># kill -9 2550</span></span><br><span class="line">[root@bigdata-01 ~]<span class="comment"># kill -9 2660</span></span><br><span class="line">[root@bigdata-01 ~]<span class="comment"># kafka-topics.sh --describe --zookeeper bigdata-01:2181</span></span><br><span class="line">Topic:hello_topic	PartitionCount:1	ReplicationFactor:1	Configs:</span><br><span class="line">	Topic: hello_topic	Partition: 0	Leader: 0	Replicas: 0	Isr: 0</span><br><span class="line">Topic:my-replication-topic	PartitionCount:1	ReplicationFactor:3	Configs:</span><br><span class="line">	Topic: my-replication-topic	Partition: 0	Leader: 2	Replicas: 3,1,2	Isr: 2</span><br></pre></td></tr></table></figure></p>
+<p>发现杀掉broker1,3以后，选举2为leader，并不影响消息的发送和接收。</p>
+<h1 id="Kafka的Java-API"><a href="#Kafka的Java-API" class="headerlink" title="Kafka的Java API"></a>Kafka的Java API</h1><p>使用IDEA + Maven构建开发环境，pom.xml配置如下<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scala.version</span>&gt;</span>2.11.8<span class="tag">&lt;/<span class="name">scala.version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">kafka.version</span>&gt;</span>0.9.0.0<span class="tag">&lt;/<span class="name">kafka.version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--kafka dependency--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.kafka<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>kafka_2.11<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;kafka.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.scala-lang<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>scala-library<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;scala.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>创建Kafka的配置类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Kafka常用配置文件</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KafkaProperties</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String ZK = <span class="string">"bigdata-01:2181"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String TOPIC = <span class="string">"hello_topic"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String BROKER_LIST = <span class="string">"bigdata-01:9092"</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String GROUP_ID = <span class="string">"test_group_1"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Kafka的生产者<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> kafka.javaapi.producer.Producer;</span><br><span class="line"><span class="keyword">import</span> kafka.producer.KeyedMessage;</span><br><span class="line"><span class="keyword">import</span> kafka.producer.ProducerConfig;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Properties;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Kafka生产者</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KafkaProducer</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String topic;</span><br><span class="line">    <span class="keyword">private</span> Producer&lt;Integer,String&gt; producer;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">KafkaProducer</span><span class="params">(String topic)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.topic = topic;</span><br><span class="line">        Properties properties = <span class="keyword">new</span> Properties();</span><br><span class="line">        properties.put(<span class="string">"metadata.broker.list"</span>,KafkaProperties.BROKER_LIST);</span><br><span class="line">        properties.put(<span class="string">"serializer.class"</span>,<span class="string">"kafka.serializer.StringEncoder"</span>);</span><br><span class="line">        properties.put(<span class="string">"request.required.acks"</span>,<span class="string">"1"</span>);</span><br><span class="line">        producer = <span class="keyword">new</span> Producer&lt;Integer, String&gt;(<span class="keyword">new</span> ProducerConfig(properties));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> messageNo = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>)&#123;</span><br><span class="line">            String message = <span class="string">"message_"</span> + messageNo;</span><br><span class="line">            producer.send(<span class="keyword">new</span> KeyedMessage&lt;Integer, String&gt;(topic, message));</span><br><span class="line">            System.out.println(<span class="string">"Sent: "</span> + message);</span><br><span class="line">            messageNo ++ ;</span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line">                Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">            &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Kafka的消费者<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> kafka.consumer.Consumer;</span><br><span class="line"><span class="keyword">import</span> kafka.consumer.ConsumerConfig;</span><br><span class="line"><span class="keyword">import</span> kafka.consumer.ConsumerIterator;</span><br><span class="line"><span class="keyword">import</span> kafka.consumer.KafkaStream;</span><br><span class="line"><span class="keyword">import</span> kafka.javaapi.consumer.ConsumerConnector;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> java.util.Properties;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> com.wjx.spark.kafka.KafkaProperties.GROUP_ID;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Kafka消费者</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KafkaConsumer</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String topic;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">KafkaConsumer</span><span class="params">(String topic)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.topic = topic;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> ConsumerConnector <span class="title">createConnector</span><span class="params">()</span></span>&#123;</span><br><span class="line">        Properties properties = <span class="keyword">new</span> Properties();</span><br><span class="line">        properties.put(<span class="string">"zookeeper.connect"</span>,KafkaProperties.ZK);</span><br><span class="line">        properties.put(<span class="string">"group.id"</span>,KafkaProperties.GROUP_ID);</span><br><span class="line">        <span class="keyword">return</span> Consumer.createJavaConsumerConnector(<span class="keyword">new</span> ConsumerConfig(properties));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ConsumerConnector consumer = createConnector();</span><br><span class="line">        Map&lt;String,Integer&gt; topicCountMap = <span class="keyword">new</span> HashMap&lt;String, Integer&gt;();</span><br><span class="line">        topicCountMap.put(topic, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//String:topic</span></span><br><span class="line">        <span class="comment">//List&lt;KafkaStream&lt;byte[], byte[]&gt;&gt;  对应的数据流</span></span><br><span class="line">        Map&lt;String, List&lt;KafkaStream&lt;<span class="keyword">byte</span>[], <span class="keyword">byte</span>[]&gt;&gt;&gt; messageStreams = consumer.createMessageStreams(topicCountMap);</span><br><span class="line">        KafkaStream&lt;<span class="keyword">byte</span>[], <span class="keyword">byte</span>[]&gt; stream = messageStreams.get(topic).get(<span class="number">0</span>);<span class="comment">//获取每次接收到的数据</span></span><br><span class="line">        ConsumerIterator&lt;<span class="keyword">byte</span>[], <span class="keyword">byte</span>[]&gt; iterator = stream.iterator();</span><br><span class="line">        <span class="keyword">while</span> (iterator.hasNext())&#123;</span><br><span class="line">            String message = <span class="keyword">new</span> String(iterator.next().message());</span><br><span class="line">            System.out.println(<span class="string">"received: "</span> + message);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Kafka客户端启动测试<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Kafka Java API测试</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KafkaClientApp</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">new</span> KafkaProducer(KafkaProperties.TOPIC).start();</span><br><span class="line">        <span class="keyword">new</span> KafkaConsumer(KafkaProperties.TOPIC).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
           
         
       
@@ -906,6 +1015,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -954,7 +1085,65 @@
       
         
           
-            
+            <h1 id="Flume概述"><a href="#Flume概述" class="headerlink" title="Flume概述"></a>Flume概述</h1><p>Flume is a distributed, reliable, and available service for efficiently collecting(收集), aggregating(聚合), and moving(移动) large amounts of log data. </p>
+<ul>
+<li>Flume官网：<a href="http://flume.apache.org/" target="_blank" rel="noopener">http://flume.apache.org/</a></li>
+<li>FLume是一个分布式、高可靠、高可用的服务，用于分布式海量日志高效收集、聚合、移动系统。</li>
+</ul>
+<h2 id="设计目标"><a href="#设计目标" class="headerlink" title="设计目标"></a>设计目标</h2><ul>
+<li>可靠性</li>
+<li>扩展性</li>
+<li>管理性</li>
+</ul>
+<h2 id="业界同类产品对比"><a href="#业界同类产品对比" class="headerlink" title="业界同类产品对比"></a>业界同类产品对比</h2><ul>
+<li>Flume: Cloudera/Apache  Java</li>
+<li>Scribe: Facebook C/C++ 不再维护</li>
+<li>Chukwa: Yahoo/Apache Java 不再维护</li>
+<li>Fluentd: Ruby</li>
+<li>Logstash: ELK(Elasticsearch,Kibana)</li>
+</ul>
+<h2 id="Flume架构及核心组件"><a href="#Flume架构及核心组件" class="headerlink" title="Flume架构及核心组件"></a>Flume架构及核心组件</h2>
+<ul>
+<li>Source      收集</li>
+<li>Channel     聚集</li>
+<li>Sink        输出</li>
+</ul>
+<h1 id="Flume环境部署"><a href="#Flume环境部署" class="headerlink" title="Flume环境部署"></a>Flume环境部署</h1><h2 id="前置条件"><a href="#前置条件" class="headerlink" title="前置条件"></a>前置条件</h2><ol>
+<li>Java Runtime Environment - Java 1.8 or later</li>
+<li>Memory - Sufficient memory for configurations used by sources, channels or sinks</li>
+<li>Disk Space - Sufficient disk space for configurations used by channels or sinks</li>
+<li>Directory Permissions - Read/Write permissions for directories used by agent</li>
+</ol>
+<h3 id="安装jdk"><a href="#安装jdk" class="headerlink" title="安装jdk"></a>安装jdk</h3><p>下载解压到~/app<br>将java配置到系统环境变量中：<code>vi ~/.bash_profile</code><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/root/app/jdk1.8.0_191</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></p>
+<p>检测：<code>java -version</code></p>
+<h3 id="安装Flume"><a href="#安装Flume" class="headerlink" title="安装Flume"></a>安装Flume</h3><p>下载解压到~/app<br>将flume配置到系统环境变量中：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> FLUME_HOME=/root/app/apache-flume-1.6.0-cdh5.7.0-bin</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$FLUME_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br></pre></td></tr></table></figure></p>
+<p>flume-env.sh的配置：<code>export JAVA_HOME=/root/app/jdk1.8.0_191</code><br>检测：<code>flume-ng version</code></p>
+<h1 id="Flume实战"><a href="#Flume实战" class="headerlink" title="Flume实战"></a>Flume实战</h1><h2 id="需求1：从指定网络端口采集数据输出到控制台"><a href="#需求1：从指定网络端口采集数据输出到控制台" class="headerlink" title="需求1：从指定网络端口采集数据输出到控制台"></a>需求1：从指定网络端口采集数据输出到控制台</h2><p>使用flume的关键就是写配置文件：</p>
+<ol>
+<li>配置source</li>
+<li>配置channel</li>
+<li>配置sink</li>
+<li>把以上3个组件串起来</li>
+</ol>
+<p>配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># example.conf: A single-node Flume configuration</span><br><span class="line"></span><br><span class="line"># a1:agent名称</span><br><span class="line"># r1:source名称</span><br><span class="line"># k1:sink名称</span><br><span class="line"># c1:channel名称</span><br><span class="line"></span><br><span class="line"># Name the components on this agent</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.sinks = k1</span><br><span class="line">a1.channels = c1</span><br><span class="line"></span><br><span class="line"># Describe/configure the source</span><br><span class="line">a1.sources.r1.type = netcat</span><br><span class="line">a1.sources.r1.bind = localhost</span><br><span class="line">a1.sources.r1.port = 44444</span><br><span class="line"></span><br><span class="line"># Describe the sink</span><br><span class="line">a1.sinks.k1.type = logger</span><br><span class="line"></span><br><span class="line"># Use a channel which buffers events in memory</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line"></span><br><span class="line"># a1.channels.c1.capacity = 1000</span><br><span class="line"># a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># Bind the source and sink to the channel</span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure></p>
+<p>启动agent<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">flume-ng agent \</span><br><span class="line">--name a1 \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/example.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure></p>
+<p>使用telnet进行测试：<code>telnet localhost 44444</code><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Event: &#123; headers:&#123;&#125; body: 68 65 6C 6C 6F 0D     hello. &#125;</span><br></pre></td></tr></table></figure></p>
+<p>Event是Flume数据传输的基本单元<br>Event = 可选的header + byte array</p>
+<h2 id="需求2：监控一个文件实时采集新增的数据输出到控制台"><a href="#需求2：监控一个文件实时采集新增的数据输出到控制台" class="headerlink" title="需求2：监控一个文件实时采集新增的数据输出到控制台"></a>需求2：监控一个文件实时采集新增的数据输出到控制台</h2><p>Agent选型：exec source + memory channel + logger sink</p>
+<p>配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># example.conf: A single-node Flume configuration</span><br><span class="line"></span><br><span class="line"># Name the components on this agent</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.sinks = k1</span><br><span class="line">a1.channels = c1</span><br><span class="line"></span><br><span class="line"># Describe/configure the source</span><br><span class="line">a1.sources.r1.type = exec</span><br><span class="line">a1.sources.r1.command = tail -F /root/data/data.log</span><br><span class="line">a1.sources.r1.shell = /bin/bash -c</span><br><span class="line"></span><br><span class="line"># Describe the sink</span><br><span class="line">a1.sinks.k1.type = logger</span><br><span class="line"></span><br><span class="line"># Use a channel which buffers events in memory</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line"></span><br><span class="line"># a1.channels.c1.capacity = 1000</span><br><span class="line"># a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># Bind the source and sink to the channel</span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure></p>
+<p>启动agent<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">flume-ng agent \</span><br><span class="line">--name a1 \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/<span class="built_in">exec</span>-memory-logger.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure></p>
+<h2 id="需求3：将A服务器上的日志实时采集到B服务器"><a href="#需求3：将A服务器上的日志实时采集到B服务器" class="headerlink" title="需求3：将A服务器上的日志实时采集到B服务器"></a>需求3：将A服务器上的日志实时采集到B服务器</h2><p>技术选型：exec source + memory channel + avro sink<br>          avro source + memory channel + logger sink</p>
+<p>配置文件1:exec-memory-avro.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">exec-memory-avro.sources = exec-source</span><br><span class="line">exec-memory-avro.sinks = avro-sink</span><br><span class="line">exec-memory-avro.channels = memory-channel</span><br><span class="line"></span><br><span class="line">exec-memory-avro.sources.exec-source.type = exec</span><br><span class="line">exec-memory-avro.sources.exec-source.command = tail -F /root/data/data.log</span><br><span class="line">exec-memory-avro.sources.exec-source.shell = /bin/bash -c</span><br><span class="line"></span><br><span class="line">exec-memory-avro.sinks.avro-sink.type = avro</span><br><span class="line">exec-memory-avro.sinks.avro-sink.hostname = bigdata-01</span><br><span class="line">exec-memory-avro.sinks.avro-sink.port = 44444</span><br><span class="line"></span><br><span class="line">exec-memory-avro.channels.memory-channel.type = memory</span><br><span class="line"></span><br><span class="line">exec-memory-avro.sources.exec-source.channels = memory-channel</span><br><span class="line">exec-memory-avro.sinks.avro-sink.channel = memory-channel</span><br></pre></td></tr></table></figure></p>
+<p>配置文件2:avro-memory-logger.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">avro-memory-logger.sources = avro-source</span><br><span class="line">avro-memory-logger.sinks = logger-sink</span><br><span class="line">avro-memory-logger.channels = memory-channel</span><br><span class="line"></span><br><span class="line">avro-memory-logger.sources.avro-source.type = avro</span><br><span class="line">avro-memory-logger.sources.avro-source.bind = bigdata-01</span><br><span class="line">avro-memory-logger.sources.avro-source.port = 44444</span><br><span class="line"></span><br><span class="line">avro-memory-logger.sinks.logger-sink.type = logger</span><br><span class="line"></span><br><span class="line">avro-memory-logger.channels.memory-channel.type = memory</span><br><span class="line"></span><br><span class="line">avro-memory-logger.sources.avro-source.channels = memory-channel</span><br><span class="line">avro-memory-logger.sinks.logger-sink.channel = memory-channel</span><br></pre></td></tr></table></figure></p>
+<p>先启动avro-memory-logger<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">flume-ng agent \</span><br><span class="line">--name avro-memory-logger \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/avro-memory-logger.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure></p>
+<p>再启动exec-memory-avro<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">flume-ng agent \</span><br><span class="line">--name <span class="built_in">exec</span>-memory-avro \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/<span class="built_in">exec</span>-memory-avro.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure></p>
+<p>日志收集过程：</p>
+<ol>
+<li>机器A上监控一个文件，当我们访问主站的时候，会有用户行为日志记录到access.log中</li>
+<li>avro sink 把新产生的日志输出到对应的 avro source 指定的 hostname 和 port 上</li>
+<li>通过 avro source 对应的 agent 将我们的日志输出到控制台(kafka)</li>
+</ol>
+
           
         
       
@@ -1092,7 +1281,96 @@
       
         
           
-            
+            <h1 id="一些最重要的-SQL-命令"><a href="#一些最重要的-SQL-命令" class="headerlink" title="一些最重要的 SQL 命令"></a>一些最重要的 SQL 命令</h1><ul>
+<li>SELECT - 从数据库中提取数据</li>
+<li>UPDATE - 更新数据库中的数据</li>
+<li>DELETE - 从数据库中删除数据</li>
+<li>INSERT INTO - 向数据库中插入新数据</li>
+<li>CREATE DATABASE - 创建新数据库</li>
+<li>ALTER DATABASE - 修改数据库</li>
+<li>CREATE TABLE - 创建新表</li>
+<li>ALTER TABLE - 变更（改变）数据库表</li>
+<li>DROP TABLE - 删除表</li>
+<li>CREATE INDEX - 创建索引（搜索键）</li>
+<li>DROP INDEX - 删除索引</li>
+</ul>
+<h1 id="SQL-SELECT-DISTINCT（选择不同）-语法"><a href="#SQL-SELECT-DISTINCT（选择不同）-语法" class="headerlink" title="SQL SELECT DISTINCT（选择不同） 语法"></a>SQL SELECT DISTINCT（选择不同） 语法</h1><p>SELECT DISTINCT语法用于仅返回不同的（different）值。<br>在一张表内，一列通常包含许多重复的值; 有时你只想列出不同的（different）值。<br>SELECT DISTINCT语句用于仅返回不同的（different）值。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> column1, column2, ...</span><br><span class="line"><span class="keyword">FROM</span> table_name;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*实例*/</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> Country <span class="keyword">FROM</span> Customers;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*列出不同（distinct）客户国家的数量*/</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(<span class="keyword">DISTINCT</span> Country) <span class="keyword">FROM</span> Customers;</span><br></pre></td></tr></table></figure>
+<h1 id="SQL-WHERE-语法"><a href="#SQL-WHERE-语法" class="headerlink" title="SQL WHERE 语法"></a>SQL WHERE 语法</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> column1, column2, ...</span><br><span class="line"><span class="keyword">FROM</span> table_name</span><br><span class="line"><span class="keyword">WHERE</span> condition;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*实例*/</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Customers</span><br><span class="line"><span class="keyword">WHERE</span> Country=<span class="string">'Mexico'</span>;</span><br></pre></td></tr></table></figure>
+<p>WHERE子句中可以使用以下运算符：</p>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>=</td>
+<td>等于</td>
+</tr>
+<tr>
+<td>&lt;&gt;</td>
+<td>不等于。注意：在某些版本的SQL中，这个操作符可能写成!=</td>
+</tr>
+<tr>
+<td>></td>
+<td>大于</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>小于</td>
+</tr>
+<tr>
+<td>&gt;=</td>
+<td>大于等于</td>
+</tr>
+<tr>
+<td>&lt;=</td>
+<td>小于等于</td>
+</tr>
+<tr>
+<td>BETWEEN</td>
+<td>在某个范围内</td>
+</tr>
+<tr>
+<td>LIKE</td>
+<td>搜索某种模式</td>
+</tr>
+<tr>
+<td>IN</td>
+<td>为列指定多个可能的值</td>
+</tr>
+</tbody>
+</table>
+<h1 id="SQL-AND-amp-OR-运算符"><a href="#SQL-AND-amp-OR-运算符" class="headerlink" title="SQL AND &amp; OR 运算符"></a>SQL AND &amp; OR 运算符</h1><p>WHERE子句可以与AND，OR和NOT运算符结合使用。</p>
+<p>AND和OR运算符用于根据多个条件筛选记录：</p>
+<ul>
+<li>如果由AND分隔的所有条件为TRUE，则AND运算符显示记录。</li>
+<li>如果由OR分隔的任何条件为真，则OR运算符显示记录。</li>
+</ul>
+<p>如果条件不为真，则NOT运算符显示记录。 </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*实例*/</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Customers </span><br><span class="line"><span class="keyword">WHERE</span> Country=<span class="string">'Germany'</span> </span><br><span class="line"><span class="keyword">AND</span> City=<span class="string">'Berlin'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Customers</span><br><span class="line"><span class="keyword">WHERE</span> City=<span class="string">'Berlin'</span> <span class="keyword">OR</span> City=<span class="string">'München'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Customers</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">NOT</span> Country=<span class="string">'Germany'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Customers</span><br><span class="line"><span class="keyword">WHERE</span> Country=<span class="string">'Germany'</span> <span class="keyword">AND</span> (City=<span class="string">'Berlin'</span> <span class="keyword">OR</span> City=<span class="string">'München'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Customers</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">NOT</span> Country=<span class="string">'Germany'</span> <span class="keyword">AND</span> <span class="keyword">NOT</span> Country=<span class="string">'USA'</span>;</span><br></pre></td></tr></table></figure>
+<h1 id="SQL-ORDER-BY-Keyword（按关键字排序）"><a href="#SQL-ORDER-BY-Keyword（按关键字排序）" class="headerlink" title="SQL ORDER BY Keyword（按关键字排序）"></a>SQL ORDER BY Keyword（按关键字排序）</h1><p>SQL ORDER BY 关键字</p>
+<p>ORDER BY 关键字用于按升序或降序对结果集进行排序。<br>ORDER BY 关键字默认情况下按升序排序记录。<br>如果需要按降序对记录进行排序，可以使用DESC关键字。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> column1, column2, ...</span><br><span class="line"><span class="keyword">FROM</span> table_name</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> column1, column2, ... <span class="keyword">ASC</span>|<span class="keyword">DESC</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*ORDER BY 多列 实例*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*从 "Customers" 表中选取所有客户，并按照 "Country" 和 "CustomerName" 列排序*/</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Customers</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> Country, CustomerName;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*从"Customers" 表中选择所有客户，按 "Country" 升序排列，并按 "CustomerName" 列降序排列*/</span></span><br><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> Customers</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> Country <span class="keyword">ASC</span>, CustomerName <span class="keyword">DESC</span>;</span><br></pre></td></tr></table></figure>
+<h1 id="SQL-INSERT-INTO-语句（在表中插入）"><a href="#SQL-INSERT-INTO-语句（在表中插入）" class="headerlink" title="SQL INSERT INTO 语句（在表中插入）"></a>SQL INSERT INTO 语句（在表中插入）</h1><p>SQL INSERT INTO 语句</p>
+<p>INSERT INTO 语句用于向表中插入新记录。</p>
+<p>SQL INSERT INTO 语法</p>
+<p>INSERT INTO 语句可以用两种形式编写。<br>第一个表单没有指定要插入数据的列的名称，只提供要插入的值：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> table_name (column1, column2, column3, ...)</span><br><span class="line"><span class="keyword">VALUES</span> (value1, value2, value3, ...);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*实例*/</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> Customers (CustomerName, ContactName, Address, City, PostalCode, Country)</span><br><span class="line"><span class="keyword">VALUES</span> (<span class="string">'Cardinal'</span>,<span class="string">'Tom B. Erichsen'</span>,<span class="string">'Skagen 21'</span>,<span class="string">'Stavanger'</span>,<span class="string">'4006'</span>,<span class="string">'Norway'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> Customers (CustomerName, City, Country)</span><br><span class="line"><span class="keyword">VALUES</span> (<span class="string">'Cardinal'</span>, <span class="string">'Stavanger'</span>, <span class="string">'Norway'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>如果要为表中的所有列添加值，则不需要在SQL查询中指定列名称。但是，请确保值的顺序与表中的列顺序相同。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> table_name</span><br><span class="line"><span class="keyword">VALUES</span> (value1, value2, value3, ...);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*实例*/</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> Customers </span><br><span class="line"><span class="keyword">VALUES</span> (<span class="string">'Cardinal'</span>,<span class="string">'Tom B. Erichsen'</span>,<span class="string">'Skagen 21'</span>,<span class="string">'Stavanger'</span>,<span class="string">'4006'</span>,<span class="string">'Norway'</span>);</span><br></pre></td></tr></table></figure></p>
+<h1 id="SQL-NULL-Values（空值）"><a href="#SQL-NULL-Values（空值）" class="headerlink" title="SQL NULL Values（空值）"></a>SQL NULL Values（空值）</h1><p>如何测试NULL值？</p>
+<p>使用比较运算符（例如=，&lt;或&lt;&gt;）来测试NULL值是不可行的。<br>我们将不得不使用IS NULL和IS NOT NULL运算符。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*IS NULL语法*/</span></span><br><span class="line"><span class="keyword">SELECT</span> column_names</span><br><span class="line"><span class="keyword">FROM</span> table_name</span><br><span class="line"><span class="keyword">WHERE</span> column_name <span class="keyword">IS</span> <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*IS NOT NULL语法*/</span></span><br><span class="line"><span class="keyword">SELECT</span> column_names</span><br><span class="line"><span class="keyword">FROM</span> table_name</span><br><span class="line"><span class="keyword">WHERE</span> column_name <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
+<h1 id="SQL-UPDATE-语句（更新表中的记录）"><a href="#SQL-UPDATE-语句（更新表中的记录）" class="headerlink" title="SQL UPDATE 语句（更新表中的记录）"></a>SQL UPDATE 语句（更新表中的记录）</h1><p>UPDATE 语句用于更新表中已存在的记录。 </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*SQL UPDATE 语法*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">UPDATE</span> table_name</span><br><span class="line"><span class="keyword">SET</span> column1 = value1, column2 = value2, ...</span><br><span class="line"><span class="keyword">WHERE</span> condition;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*实例*/</span></span><br><span class="line"><span class="comment">/*把国家/地区为"Mexico"的所有记录的联系人姓名更新为“Juan”*/</span></span><br><span class="line"><span class="keyword">UPDATE</span> Customers</span><br><span class="line"><span class="keyword">SET</span> ContactName=<span class="string">'Juan'</span></span><br><span class="line"><span class="keyword">WHERE</span> Country=<span class="string">'Mexico'</span>;</span><br></pre></td></tr></table></figure>
+<p>更新记录时要小心。如果省略WHERE子句，所有记录将被更新！<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> Customers</span><br><span class="line"><span class="keyword">SET</span> ContactName=<span class="string">'Juan'</span>;</span><br></pre></td></tr></table></figure></p>
+<h1 id="SQL-Delete-语句（删除表中的记录）"><a href="#SQL-Delete-语句（删除表中的记录）" class="headerlink" title="SQL Delete 语句（删除表中的记录）"></a>SQL Delete 语句（删除表中的记录）</h1><p>DELETE 语句用于删除表中的行。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*SQL DELETE 语法*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> table_name</span><br><span class="line"><span class="keyword">WHERE</span> condition;</span><br></pre></td></tr></table></figure>
+<p>WHERE子句指定需要删除哪些记录。如果省略了WHERE子句，表中所有记录都将被删除！</p>
+<p>删除所有数据：可以删除表中的所有行，而不需要删除该表。这意味着表的结构、属性和索引将保持不变<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> table_name;</span><br><span class="line"><span class="comment">/*或者*/</span></span><br><span class="line"><span class="keyword">DELETE</span> * <span class="keyword">FROM</span> table_name;</span><br></pre></td></tr></table></figure></p>
+
           
         
       
@@ -1182,6 +1460,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -1230,7 +1530,54 @@
       
         
           
-            
+            <h1 id="环境准备：centOS6-5"><a href="#环境准备：centOS6-5" class="headerlink" title="环境准备：centOS6.5"></a>环境准备：centOS6.5</h1><p>Redis是c语言开发的。<br>安装redis需要c语言的编译环境。如果没有gcc需要在线安装。</p>
+<h1 id="安装编译环境"><a href="#安装编译环境" class="headerlink" title="安装编译环境"></a>安装编译环境</h1><p><code>yum install gcc-c++</code></p>
+<h1 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h1><ul>
+<li><p>第一步：redis的源码(安装)包上传到linux系统。</p>
+</li>
+<li><p>第二步：进入到压缩包所在的路径，解压缩redis。</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf redis-3.0.0.tar.gz</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第三步：编译。进入redis源码目录（redis3.0.0）。</li>
+</ul>
+<p>执行：<code>make</code></p>
+<ul>
+<li>第四步：进入/usr/redis-3.0.0/src/安装。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make install PREFIX=/usr/java/redis</span><br></pre></td></tr></table></figure>
+<p>如果报错<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">zmalloc.h:50:31: error: jemalloc/jemalloc.h: No such file or directory</span><br><span class="line">zmalloc.h:55:2: error: <span class="comment">#error "Newer version of jemalloc required"</span></span><br><span class="line">make[1]: *** [adlist.o] Error 1</span><br><span class="line">make[1]: Leaving directory </span><br><span class="line">`/data0/src/redis-2.6.2/src<span class="string">'</span></span><br><span class="line"><span class="string">make: *** [all] Error 2</span></span><br></pre></td></tr></table></figure></p>
+<p>解决办法是：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make MALLOC=libc</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>PREFIX参数指定redis的安装目录。一般软件安装到/usr目录下</p>
+</blockquote>
+<p>连接redis</p>
+<h1 id="redis的启动"><a href="#redis的启动" class="headerlink" title="redis的启动"></a>redis的启动</h1><h2 id="前端启动"><a href="#前端启动" class="headerlink" title="前端启动"></a>前端启动</h2><p>在redis的安装目录的bin目录下直接启动redis-server</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./redis-server</span><br></pre></td></tr></table></figure>
+<h2 id="后台启动"><a href="#后台启动" class="headerlink" title="后台启动"></a>后台启动</h2><p>把/root/redis-3.0.0/redis.conf复制到/usr/java/r<br>edis/bin目录下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp redis.conf /usr/java/redis/bin/</span><br></pre></td></tr></table></figure>
+<p>修改配置文件：</p>
+<p>启动服务器：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./redis-server redis.conf</span><br></pre></td></tr></table></figure>
+<p>查看redis进程：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux|grep redis</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root      5190  0.1  0.3  33936  1712 ?        Ssl  18:23   0:00 ./redis-server *:6379    </span><br><span class="line">root      5196  0.0  0.1   4356   728 pts/0    S+   18:24   0:00 grep redis</span><br></pre></td></tr></table></figure>
+<h2 id="关闭服务"><a href="#关闭服务" class="headerlink" title="关闭服务"></a>关闭服务</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./redis-cli shutdown</span><br></pre></td></tr></table></figure>
+<p>或者通过kill -9 PID关闭</p>
+<p>Redis-cli</p>
+<p><code>[root@localhost bin]# ./redis-cli</code></p>
+<p>默认连接localhost运行在6379端口的redis服务。</p>
+<p><code>[root@localhost bin]# ./redis-cli -h</code></p>
+<p><code>192.168.75.128 -p 6379</code></p>
+<blockquote>
+<p>-h：连接的服务器的地址</p>
+</blockquote>
+<blockquote>
+<p>-p：服务的端口号</p>
+</blockquote>
+<p>关闭redis：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./redis-cli shutdown</span><br></pre></td></tr></table></figure></p>
+
           
         
       
@@ -1320,6 +1667,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -1368,7 +1737,373 @@
       
         
           
-            
+            <h1 id="数据的维度"><a href="#数据的维度" class="headerlink" title="数据的维度"></a>数据的维度</h1><p>一个数据表达一个含义<br>一组数据表达一个或多个含义</p>
+<h2 id="一维数据"><a href="#一维数据" class="headerlink" title="一维数据"></a>一维数据</h2><p>一维数据由对等关系的有序或无序数据构成，采用线性方式组织，对应列表、数组和集合等概念。</p>
+<p>列表和数组</p>
+<ul>
+<li>列表：数据类型可以不同</li>
+<li>数组：数据类型相同</li>
+</ul>
+<h2 id="二维数据"><a href="#二维数据" class="headerlink" title="二维数据"></a>二维数据</h2><p>二维数据由多个一维数据构成，是一维数据的组合形式。表格是典型的二维数据，其中，表头是二维数据的一部分。</p>
+<h2 id="多维数据"><a href="#多维数据" class="headerlink" title="多维数据"></a>多维数据</h2><p>多维数据由一维或二维数据在新维度上扩展形成。</p>
+<h2 id="高维数据"><a href="#高维数据" class="headerlink" title="高维数据"></a>高维数据</h2><p>高维数据仅利用最基本的二元关系展示数据间的复杂结构。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    “firstName” : “Tian” ,</span><br><span class="line">    “lastName”  : “Song” ,</span><br><span class="line">    “address”   : &#123;</span><br><span class="line">                    “streetAddr” : “中关村南大街5号” ,</span><br><span class="line">                    “city”       : “北京市” ,</span><br><span class="line">                    “zipcode”    : “100081”</span><br><span class="line">                   &#125; ,</span><br><span class="line">    “prof”      : [ “Computer System” , “Security” ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="数据维度的Python表示"><a href="#数据维度的Python表示" class="headerlink" title="数据维度的Python表示"></a>数据维度的Python表示</h2><p>数据维度是数据的组织形式。</p>
+<ul>
+<li>一维数据：列表和集合类型</li>
+<li>二维数据：列表类型</li>
+<li>多维数据：列表类型</li>
+<li>高维数据：字典类型或数据表示格式(JSON、XML和YAML格式)</li>
+</ul>
+<h1 id="NumPy的数组对象：ndarray"><a href="#NumPy的数组对象：ndarray" class="headerlink" title="NumPy的数组对象：ndarray"></a>NumPy的数组对象：ndarray</h1><h2 id="NumPy"><a href="#NumPy" class="headerlink" title="NumPy"></a>NumPy</h2><p>NumPy是一个开源的Python科学计算基础库，包含：</p>
+<ul>
+<li>一个强大的N维数组对象 ndarray</li>
+<li>广播功能函数</li>
+<li>整合C/C++/Fortran代码的工具</li>
+<li>线性代数、傅里叶变换、随机数生成等功能<br>NumPy是SciPy、Pandas等数据处理或科学计算库的基础。</li>
+</ul>
+<h2 id="NumPy的引用"><a href="#NumPy的引用" class="headerlink" title="NumPy的引用"></a>NumPy的引用</h2><p>尽管别名可以省略或更改，建议使用上述约定的别名<br></p>
+<h2 id="N维数组对象：ndarray"><a href="#N维数组对象：ndarray" class="headerlink" title="N维数组对象：ndarray"></a>N维数组对象：ndarray</h2><h3 id="Python已有列表类型，为什么需要一个数组对象-类型-？"><a href="#Python已有列表类型，为什么需要一个数组对象-类型-？" class="headerlink" title="Python已有列表类型，为什么需要一个数组对象(类型)？"></a>Python已有列表类型，为什么需要一个数组对象(类型)？</h3><ul>
+<li>数组对象可以去掉元素间运算所需的循环，使一维向量更像单个数</li>
+<li>设置专门的数组对象，经过优化，可以提升这类应用的运算速度</li>
+</ul>
+<blockquote>
+<p> 观察：科学计算中，一个维度所有数据的类型往往相同</p>
+</blockquote>
+<ul>
+<li>数组对象采用相同的数据类型，有助于节省运算和存储</li>
+</ul>
+<h3 id="ndarray是一个多维数组对象，由两部分构成："><a href="#ndarray是一个多维数组对象，由两部分构成：" class="headerlink" title="ndarray是一个多维数组对象，由两部分构成："></a>ndarray是一个多维数组对象，由两部分构成：</h3><ul>
+<li>实际的数据</li>
+<li>描述这些数据的元数据（数据维度、数据类型等）<br>ndarray数组一般要求所有元素类型相同（同质），数组下标从0开始</li>
+</ul>
+<h3 id="ndarray实例"><a href="#ndarray实例" class="headerlink" title="ndarray实例"></a>ndarray实例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">np.array()  <span class="comment">#生成一个ndarray数组</span></span><br><span class="line"><span class="comment">#np.array()输出成[]形式，元素由空格分割</span></span><br><span class="line"><span class="comment">#轴(axis): 保存数据的维度；秩(rank)：轴的数量</span></span><br></pre></td></tr></table></figure>
+<h3 id="ndarray对象的属性"><a href="#ndarray对象的属性" class="headerlink" title="ndarray对象的属性"></a>ndarray对象的属性</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.ndim</code></td>
+<td>秩，即轴的数量或维度的数量</td>
+</tr>
+<tr>
+<td><code>.shape</code></td>
+<td>ndarray对象的尺度，对于矩阵，n行m列</td>
+</tr>
+<tr>
+<td><code>.size</code></td>
+<td>ndarray对象元素的个数，相当于.shape中n*m的值</td>
+</tr>
+<tr>
+<td><code>.dtype</code></td>
+<td>ndarray对象的元素类型</td>
+</tr>
+<tr>
+<td><code>.itemsize</code></td>
+<td>ndarray对象中每个元素的大小，以字节为单位</td>
+</tr>
+</tbody>
+</table>
+<h1 id="ndarray数组的元素"><a href="#ndarray数组的元素" class="headerlink" title="ndarray数组的元素"></a>ndarray数组的元素</h1><p>ndarray的元素类型(1)</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bool</td>
+<td>布尔类型，True或False</td>
+</tr>
+<tr>
+<td>intc</td>
+<td>与C语言中的int类型一致，一般是int32或int64</td>
+</tr>
+<tr>
+<td>intp</td>
+<td>用于索引的整数，与C语言中ssize_t一致，int32或int64</td>
+</tr>
+<tr>
+<td>int8</td>
+<td>字节长度的整数，取值：[‐128, 127]</td>
+</tr>
+<tr>
+<td>int16</td>
+<td>16位长度的整数，取值：[‐32768, 32767]</td>
+</tr>
+<tr>
+<td>int32</td>
+<td>32位长度的整数，取值：[‐2^31,2^31‐1]</td>
+</tr>
+<tr>
+<td>int64</td>
+<td>64位长度的整数，取值：[‐2^63,2^63‐1]</td>
+</tr>
+</tbody>
+</table>
+<p>ndarray的元素类型(2)</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uint8</td>
+<td>8位无符号整数，取值：[0, 255]</td>
+</tr>
+<tr>
+<td>uint16</td>
+<td>16位无符号整数，取值：[0, 65535]</td>
+</tr>
+<tr>
+<td>uint32</td>
+<td>32位无符号整数，取值：[0,232‐1]</td>
+</tr>
+<tr>
+<td>uint6</td>
+<td>32位无符号整数，取值：[0,264‐1]</td>
+</tr>
+<tr>
+<td>float16</td>
+<td>16位半精度浮点数：1位符号位，5位指数，10位尾数</td>
+</tr>
+<tr>
+<td>float32</td>
+<td>32位半精度浮点数：1位符号位，8位指数，23位尾数</td>
+</tr>
+<tr>
+<td>float64</td>
+<td>64位半精度浮点数：1位符号位，11位指数，52位尾数</td>
+</tr>
+</tbody>
+</table>
+<p>ndarray的元素类型(3)</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>complex64</td>
+<td>复数类型，实部和虚部都是32位浮点数</td>
+</tr>
+<tr>
+<td>complex128</td>
+<td>复数类型，实部和虚部都是64位浮点数</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>ndarray为什么要支持这么多种元素类型？</p>
+</blockquote>
+<p>对比：Python语法仅支持整数、浮点数和复数3种类型</p>
+<ul>
+<li>科学计算涉及数据较多，对存储和性能都有较高要求</li>
+<li>对元素类型精细定义，有助于NumPy合理使用存储空间并优化性能</li>
+<li>对元素类型精细定义，有助于程序员对程序规模有合理评估</li>
+</ul>
+<h2 id="非同质的ndarray对象"><a href="#非同质的ndarray对象" class="headerlink" title="非同质的ndarray对象"></a>非同质的ndarray对象</h2><ul>
+<li>ndarray数组可以由非同质对象构成</li>
+<li>非同质ndarray元素为对象类型</li>
+<li>非同质ndarray对象无法有效发挥NumPy优势，尽量避免</li>
+</ul>
+<h1 id="ndarray数组的创建"><a href="#ndarray数组的创建" class="headerlink" title="ndarray数组的创建"></a>ndarray数组的创建</h1><h2 id="ndarray数组的创建方法"><a href="#ndarray数组的创建方法" class="headerlink" title="ndarray数组的创建方法"></a>ndarray数组的创建方法</h2><ul>
+<li>从Python中的列表、元组等类型创建ndarray数组</li>
+<li>使用NumPy中函数创建ndarray数组，如：arange, ones, zero</li>
+</ul>
+<h3 id="（1）从Python中的列表、元组等类型创建ndarray数组"><a href="#（1）从Python中的列表、元组等类型创建ndarray数组" class="headerlink" title="（1）从Python中的列表、元组等类型创建ndarray数组"></a>（1）从Python中的列表、元组等类型创建ndarray数组</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x= np.array(list/tuple)</span><br><span class="line">x= np.array(list/tuple, dtype=np.float32)</span><br><span class="line"><span class="comment">#当np.array()不指定dtype时，NumPy将根据数据情况关联一个dtype</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#从列表类型创建</span></span><br><span class="line">x = np.array([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">#从元组类型创建</span></span><br><span class="line">x = np.array((<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">#从列表和元组混合类型创建</span></span><br><span class="line">x = np.array([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">9</span>, <span class="number">8</span>], (<span class="number">0.1</span>, <span class="number">0.2</span>)])</span><br></pre></td></tr></table></figure>
+<h3 id="（2）使用NumPy中函数创建ndarray数组，如：arange-ones-zero等"><a href="#（2）使用NumPy中函数创建ndarray数组，如：arange-ones-zero等" class="headerlink" title="（2）使用NumPy中函数创建ndarray数组，如：arange, ones, zero等"></a>（2）使用NumPy中函数创建ndarray数组，如：arange, ones, zero等</h3><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>np.arange(n)</code></td>
+<td>类似range()函数，返回ndarray类型，元素从0到n‐1</td>
+</tr>
+<tr>
+<td><code>np.ones(shape)</code></td>
+<td>根据shape生成一个全1数组，shape是元组类型</td>
+</tr>
+<tr>
+<td><code>np.zeros(shape)</code></td>
+<td>根据shape生成一个全0数组，shape是元组类型</td>
+</tr>
+<tr>
+<td><code>np.full(shape,val)</code></td>
+<td>根据shape生成一个数组，每个元素值都是valnp.eye(n)创建一个正方的n*n单位矩阵，对角线为1，其余为0</td>
+</tr>
+<tr>
+<td><code>np.ones_like(a)</code></td>
+<td>根据数组a的形状生成一个全1数组</td>
+</tr>
+<tr>
+<td><code>np.zeros_like(a)</code></td>
+<td>根据数组a的形状生成一个全0数组</td>
+</tr>
+<tr>
+<td><code>np.full_like(a,val)</code></td>
+<td>根据数组a的形状生成一个数组，每个元素值都是val</td>
+</tr>
+</tbody>
+</table>
+<h3 id="（3）使用NumPy中其他函数创建ndarray数组"><a href="#（3）使用NumPy中其他函数创建ndarray数组" class="headerlink" title="（3）使用NumPy中其他函数创建ndarray数组"></a>（3）使用NumPy中其他函数创建ndarray数组</h3><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>np.linspace()</code></td>
+<td>根据起止数据等间距地填充数据，形成数组</td>
+</tr>
+<tr>
+<td><code>np.concatenate()</code></td>
+<td>将两个或多个数组合并成一个新的</td>
+</tr>
+</tbody>
+</table>
+<h1 id="ndarray数组的变换"><a href="#ndarray数组的变换" class="headerlink" title="ndarray数组的变换"></a>ndarray数组的变换</h1><p>对于创建后的ndarray数组，可以对其进行维度变换和元素类型变换</p>
+<h2 id="ndarray数组的维度变换"><a href="#ndarray数组的维度变换" class="headerlink" title="ndarray数组的维度变换"></a>ndarray数组的维度变换</h2><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.reshape(shape)</code></td>
+<td>不改变数组元素，返回一个shape形状的数组，原数组不变</td>
+</tr>
+<tr>
+<td><code>.resize(shape)</code></td>
+<td>与.reshape()功能一致，但修改原数组</td>
+</tr>
+<tr>
+<td><code>.swapaxes(ax1,ax2)</code></td>
+<td>将数组n个维度中两个维度进行调换</td>
+</tr>
+<tr>
+<td><code>.flatten()</code></td>
+<td>对数组进行降维，返回折叠后的一维数组，原数组不变</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ndarray数组的类型变换"><a href="#ndarray数组的类型变换" class="headerlink" title="ndarray数组的类型变换"></a>ndarray数组的类型变换</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">new_a = a.astype(new_type)</span><br></pre></td></tr></table></figure>
+<p>astype()方法一定会创建新的数组（原始数据的一个拷贝），即使两个类型一致。</p>
+<h2 id="ndarray数组向列表的转换"><a href="#ndarray数组向列表的转换" class="headerlink" title="ndarray数组向列表的转换"></a>ndarray数组向列表的转换</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls = a.tolist()</span><br></pre></td></tr></table></figure>
+<h1 id="ndarray数组的操作"><a href="#ndarray数组的操作" class="headerlink" title="ndarray数组的操作"></a>ndarray数组的操作</h1><h2 id="数组的索引和切片"><a href="#数组的索引和切片" class="headerlink" title="数组的索引和切片"></a>数组的索引和切片</h2><ul>
+<li>索引：获取数组中特定位置元素的过程</li>
+<li>切片：获取数组元素子集的过程</li>
+</ul>
+<h3 id="一维数组的索引和切片"><a href="#一维数组的索引和切片" class="headerlink" title="一维数组的索引和切片"></a>一维数组的索引和切片</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">7</span>]: a = np.array([<span class="number">9</span>,<span class="number">8</span>,<span class="number">7</span>,<span class="number">6</span>,<span class="number">5</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="number">8</span>]: a[<span class="number">2</span>]</span><br><span class="line">Out[<span class="number">8</span>]: <span class="number">7</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#起始编号: 终止编号(不含): 步长，3元素冒号分割</span></span><br><span class="line"><span class="comment">#编号0开始从左递增，或‐1开始从右递减</span></span><br><span class="line">In [<span class="number">9</span>]: a[<span class="number">1</span>:<span class="number">4</span>:<span class="number">2</span>]</span><br><span class="line">Out[<span class="number">9</span>]: array([<span class="number">8</span>, <span class="number">6</span>])</span><br></pre></td></tr></table></figure>
+<h3 id="多维数组的索引和切片"><a href="#多维数组的索引和切片" class="headerlink" title="多维数组的索引和切片"></a>多维数组的索引和切片</h3><p>多维数组的索引：每个维度一个索引值，逗号分割</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">10</span>]: a = np.arange(<span class="number">24</span>).reshape((<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>))</span><br><span class="line"></span><br><span class="line">In [<span class="number">11</span>]: a</span><br><span class="line">Out[<span class="number">11</span>]: </span><br><span class="line">array([[[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>],</span><br><span class="line">        [ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>],</span><br><span class="line">        [ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>]],</span><br><span class="line"></span><br><span class="line">       [[<span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">        [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>],</span><br><span class="line">        [<span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>]]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">12</span>]: a[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">Out[<span class="number">12</span>]: <span class="number">23</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">13</span>]: a[<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">Out[<span class="number">13</span>]: <span class="number">6</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">14</span>]: a[<span class="number">-1</span>,<span class="number">-2</span>,<span class="number">-3</span>]</span><br><span class="line">Out[<span class="number">14</span>]: <span class="number">17</span></span><br></pre></td></tr></table></figure>
+<p>多维数组的切片： 选取一个维度用”:”,每个维度切片方法与一维数组相同,每个维度可以使用步长跳跃切片。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#In [10]: a = np.arange(24).reshape((2,3,4))</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">15</span>]: a[:,<span class="number">1</span>,<span class="number">-3</span>]</span><br><span class="line">Out[<span class="number">15</span>]: array([ <span class="number">5</span>, <span class="number">17</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="number">16</span>]: a[:,<span class="number">1</span>:<span class="number">3</span>,:]</span><br><span class="line">Out[<span class="number">16</span>]: </span><br><span class="line">array([[[ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>],</span><br><span class="line">        [ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>]],</span><br><span class="line"></span><br><span class="line">       [[<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>],</span><br><span class="line">        [<span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>]]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">17</span>]: a[:,:,::<span class="number">2</span>]</span><br><span class="line">Out[<span class="number">17</span>]: </span><br><span class="line">array([[[ <span class="number">0</span>,  <span class="number">2</span>],</span><br><span class="line">        [ <span class="number">4</span>,  <span class="number">6</span>],</span><br><span class="line">        [ <span class="number">8</span>, <span class="number">10</span>]],</span><br><span class="line"></span><br><span class="line">       [[<span class="number">12</span>, <span class="number">14</span>],</span><br><span class="line">        [<span class="number">16</span>, <span class="number">18</span>],</span><br><span class="line">        [<span class="number">20</span>, <span class="number">22</span>]]])</span><br></pre></td></tr></table></figure>
+<h1 id="ndarray数组的运算"><a href="#ndarray数组的运算" class="headerlink" title="ndarray数组的运算"></a>ndarray数组的运算</h1><h2 id="数组与标量之间的运算"><a href="#数组与标量之间的运算" class="headerlink" title="数组与标量之间的运算"></a>数组与标量之间的运算</h2><p>数组与标量之间的运算作用于数组的每一个元素</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">19</span>]: a = np.arange(<span class="number">24</span>).reshape((<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>))</span><br><span class="line"></span><br><span class="line">In [<span class="number">20</span>]: a</span><br><span class="line">Out[<span class="number">20</span>]: </span><br><span class="line">array([[[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>],</span><br><span class="line">        [ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>],</span><br><span class="line">        [ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>]],</span><br><span class="line"></span><br><span class="line">       [[<span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">        [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>],</span><br><span class="line">        [<span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>]]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">21</span>]: a.mean()</span><br><span class="line">Out[<span class="number">21</span>]: <span class="number">11.5</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">22</span>]: a = a / a.mean()</span><br><span class="line"></span><br><span class="line">In [<span class="number">23</span>]: a</span><br><span class="line">Out[<span class="number">23</span>]: </span><br><span class="line">array([[[<span class="number">0.</span>        , <span class="number">0.08695652</span>, <span class="number">0.17391304</span>, <span class="number">0.26086957</span>],</span><br><span class="line">        [<span class="number">0.34782609</span>, <span class="number">0.43478261</span>, <span class="number">0.52173913</span>, <span class="number">0.60869565</span>],</span><br><span class="line">        [<span class="number">0.69565217</span>, <span class="number">0.7826087</span> , <span class="number">0.86956522</span>, <span class="number">0.95652174</span>]],</span><br><span class="line"></span><br><span class="line">       [[<span class="number">1.04347826</span>, <span class="number">1.13043478</span>, <span class="number">1.2173913</span> , <span class="number">1.30434783</span>],</span><br><span class="line">        [<span class="number">1.39130435</span>, <span class="number">1.47826087</span>, <span class="number">1.56521739</span>, <span class="number">1.65217391</span>],</span><br><span class="line">        [<span class="number">1.73913043</span>, <span class="number">1.82608696</span>, <span class="number">1.91304348</span>, <span class="number">2.</span>        ]]])</span><br></pre></td></tr></table></figure>
+<h2 id="NumPy一元函数"><a href="#NumPy一元函数" class="headerlink" title="NumPy一元函数"></a>NumPy一元函数</h2><p>对ndarray中的数据执行元素级运算的函数</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>np.abs(x)</code> <code>np.fabs(x)</code></td>
+<td>计算数组各元素的绝对值</td>
+</tr>
+<tr>
+<td><code>np.sqrt(x)</code></td>
+<td>计算数组各元素的平方根</td>
+</tr>
+<tr>
+<td><code>np.square(x)</code></td>
+<td>计算数组各元素的平方</td>
+</tr>
+<tr>
+<td><code>np.log(x)</code> <code>np.log10(x)</code> <code>np.log2(x)</code></td>
+<td>计算数组各元素的自然对数、10底对数和2底对数</td>
+</tr>
+<tr>
+<td><code>np.ceil(x)</code> <code>np.floor(x)</code></td>
+<td>计算数组各元素的ceiling值 或 floor值</td>
+</tr>
+<tr>
+<td><code>np.rint(x)</code></td>
+<td>计算数组各元素的四舍五入值</td>
+</tr>
+<tr>
+<td><code>np.modf(x)</code></td>
+<td>将数组各元素的小数和整数部分以两个独立数组形式返回</td>
+</tr>
+<tr>
+<td><code>np.cos(x)</code> <code>np.cosh(x)</code> <code>np.sin(x)</code> <code>np.sinh(x)</code> <code>np.tan(x)</code> <code>np.tanh(x)</code></td>
+<td>计算数组各元素的普通型和双曲型三角函数</td>
+</tr>
+<tr>
+<td><code>np.exp(x)</code></td>
+<td>计算数组各元素的指数值</td>
+</tr>
+<tr>
+<td><code>np.sign(x)</code></td>
+<td>计算数组各元素的符号值，1(+), 0,-1(-)</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">24</span>]: a = np.arange(<span class="number">24</span>).reshape((<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>))</span><br><span class="line"></span><br><span class="line">In [<span class="number">25</span>]: np.square(a)</span><br><span class="line">Out[<span class="number">25</span>]: </span><br><span class="line">array([[[  <span class="number">0</span>,   <span class="number">1</span>,   <span class="number">4</span>,   <span class="number">9</span>],</span><br><span class="line">        [ <span class="number">16</span>,  <span class="number">25</span>,  <span class="number">36</span>,  <span class="number">49</span>],</span><br><span class="line">        [ <span class="number">64</span>,  <span class="number">81</span>, <span class="number">100</span>, <span class="number">121</span>]],</span><br><span class="line"></span><br><span class="line">       [[<span class="number">144</span>, <span class="number">169</span>, <span class="number">196</span>, <span class="number">225</span>],</span><br><span class="line">        [<span class="number">256</span>, <span class="number">289</span>, <span class="number">324</span>, <span class="number">361</span>],</span><br><span class="line">        [<span class="number">400</span>, <span class="number">441</span>, <span class="number">484</span>, <span class="number">529</span>]]], dtype=int32)</span><br><span class="line"></span><br><span class="line">In [<span class="number">26</span>]: a = np.sqrt(a)</span><br><span class="line"></span><br><span class="line">In [<span class="number">27</span>]: a</span><br><span class="line">Out[<span class="number">27</span>]: </span><br><span class="line">array([[[<span class="number">0.</span>        , <span class="number">1.</span>        , <span class="number">1.41421356</span>, <span class="number">1.73205081</span>],</span><br><span class="line">        [<span class="number">2.</span>        , <span class="number">2.23606798</span>, <span class="number">2.44948974</span>, <span class="number">2.64575131</span>],</span><br><span class="line">        [<span class="number">2.82842712</span>, <span class="number">3.</span>        , <span class="number">3.16227766</span>, <span class="number">3.31662479</span>]],</span><br><span class="line"></span><br><span class="line">       [[<span class="number">3.46410162</span>, <span class="number">3.60555128</span>, <span class="number">3.74165739</span>, <span class="number">3.87298335</span>],</span><br><span class="line">        [<span class="number">4.</span>        , <span class="number">4.12310563</span>, <span class="number">4.24264069</span>, <span class="number">4.35889894</span>],</span><br><span class="line">        [<span class="number">4.47213595</span>, <span class="number">4.58257569</span>, <span class="number">4.69041576</span>, <span class="number">4.79583152</span>]]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">28</span>]: np.modf(a)</span><br><span class="line">Out[<span class="number">28</span>]: </span><br><span class="line">(array([[[<span class="number">0.</span>        , <span class="number">0.</span>        , <span class="number">0.41421356</span>, <span class="number">0.73205081</span>],</span><br><span class="line">         [<span class="number">0.</span>        , <span class="number">0.23606798</span>, <span class="number">0.44948974</span>, <span class="number">0.64575131</span>],</span><br><span class="line">         [<span class="number">0.82842712</span>, <span class="number">0.</span>        , <span class="number">0.16227766</span>, <span class="number">0.31662479</span>]],</span><br><span class="line"> </span><br><span class="line">        [[<span class="number">0.46410162</span>, <span class="number">0.60555128</span>, <span class="number">0.74165739</span>, <span class="number">0.87298335</span>],</span><br><span class="line">         [<span class="number">0.</span>        , <span class="number">0.12310563</span>, <span class="number">0.24264069</span>, <span class="number">0.35889894</span>],</span><br><span class="line">         [<span class="number">0.47213595</span>, <span class="number">0.58257569</span>, <span class="number">0.69041576</span>, <span class="number">0.79583152</span>]]]),</span><br><span class="line"> array([[[<span class="number">0.</span>, <span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>],</span><br><span class="line">         [<span class="number">2.</span>, <span class="number">2.</span>, <span class="number">2.</span>, <span class="number">2.</span>],</span><br><span class="line">         [<span class="number">2.</span>, <span class="number">3.</span>, <span class="number">3.</span>, <span class="number">3.</span>]],</span><br><span class="line"> </span><br><span class="line">        [[<span class="number">3.</span>, <span class="number">3.</span>, <span class="number">3.</span>, <span class="number">3.</span>],</span><br><span class="line">         [<span class="number">4.</span>, <span class="number">4.</span>, <span class="number">4.</span>, <span class="number">4.</span>],</span><br><span class="line">         [<span class="number">4.</span>, <span class="number">4.</span>, <span class="number">4.</span>, <span class="number">4.</span>]]]))</span><br></pre></td></tr></table></figure>
+<h2 id="NumPy二元函数"><a href="#NumPy二元函数" class="headerlink" title="NumPy二元函数"></a>NumPy二元函数</h2><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>+ ‐ * / **</code></td>
+<td>两个数组各元素进行对应运算</td>
+</tr>
+<tr>
+<td><code>np.maximum(x,y)</code> <code>np.fmax()</code> <code>np.minimum(x,y)</code> <code>np.fmin()</code></td>
+<td>元素级的最大值/最小值计算</td>
+</tr>
+<tr>
+<td><code>np.mod(x,y)</code></td>
+<td>元素级的模运算</td>
+</tr>
+<tr>
+<td><code>np.copysign(x,y)</code></td>
+<td>将数组y中各元素值的符号赋值给数组x对应元素</td>
+</tr>
+<tr>
+<td><code>&gt;&lt; &gt;= &lt;= == !=</code></td>
+<td>算术比较，产生布尔型数组</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">29</span>]: a = np.arange(<span class="number">24</span>).reshape((<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>))</span><br><span class="line"></span><br><span class="line">In [<span class="number">30</span>]: b = np.sqrt(a)</span><br><span class="line"></span><br><span class="line">In [<span class="number">31</span>]: a</span><br><span class="line">Out[<span class="number">31</span>]: </span><br><span class="line">array([[[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>],</span><br><span class="line">        [ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>],</span><br><span class="line">        [ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>]],</span><br><span class="line"></span><br><span class="line">       [[<span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">        [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>],</span><br><span class="line">        [<span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>]]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">32</span>]: b</span><br><span class="line">Out[<span class="number">32</span>]: </span><br><span class="line">array([[[<span class="number">0.</span>        , <span class="number">1.</span>        , <span class="number">1.41421356</span>, <span class="number">1.73205081</span>],</span><br><span class="line">        [<span class="number">2.</span>        , <span class="number">2.23606798</span>, <span class="number">2.44948974</span>, <span class="number">2.64575131</span>],</span><br><span class="line">        [<span class="number">2.82842712</span>, <span class="number">3.</span>        , <span class="number">3.16227766</span>, <span class="number">3.31662479</span>]],</span><br><span class="line"></span><br><span class="line">       [[<span class="number">3.46410162</span>, <span class="number">3.60555128</span>, <span class="number">3.74165739</span>, <span class="number">3.87298335</span>],</span><br><span class="line">        [<span class="number">4.</span>        , <span class="number">4.12310563</span>, <span class="number">4.24264069</span>, <span class="number">4.35889894</span>],</span><br><span class="line">        [<span class="number">4.47213595</span>, <span class="number">4.58257569</span>, <span class="number">4.69041576</span>, <span class="number">4.79583152</span>]]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">33</span>]: np.maximum(a,b)</span><br><span class="line">Out[<span class="number">33</span>]: </span><br><span class="line">array([[[ <span class="number">0.</span>,  <span class="number">1.</span>,  <span class="number">2.</span>,  <span class="number">3.</span>],</span><br><span class="line">        [ <span class="number">4.</span>,  <span class="number">5.</span>,  <span class="number">6.</span>,  <span class="number">7.</span>],</span><br><span class="line">        [ <span class="number">8.</span>,  <span class="number">9.</span>, <span class="number">10.</span>, <span class="number">11.</span>]],</span><br><span class="line"></span><br><span class="line">       [[<span class="number">12.</span>, <span class="number">13.</span>, <span class="number">14.</span>, <span class="number">15.</span>],</span><br><span class="line">        [<span class="number">16.</span>, <span class="number">17.</span>, <span class="number">18.</span>, <span class="number">19.</span>],</span><br><span class="line">        [<span class="number">20.</span>, <span class="number">21.</span>, <span class="number">22.</span>, <span class="number">23.</span>]]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">34</span>]: a &gt; b</span><br><span class="line">Out[<span class="number">34</span>]: </span><br><span class="line">array([[[<span class="literal">False</span>, <span class="literal">False</span>,  <span class="literal">True</span>,  <span class="literal">True</span>],</span><br><span class="line">        [ <span class="literal">True</span>,  <span class="literal">True</span>,  <span class="literal">True</span>,  <span class="literal">True</span>],</span><br><span class="line">        [ <span class="literal">True</span>,  <span class="literal">True</span>,  <span class="literal">True</span>,  <span class="literal">True</span>]],</span><br><span class="line"></span><br><span class="line">       [[ <span class="literal">True</span>,  <span class="literal">True</span>,  <span class="literal">True</span>,  <span class="literal">True</span>],</span><br><span class="line">        [ <span class="literal">True</span>,  <span class="literal">True</span>,  <span class="literal">True</span>,  <span class="literal">True</span>],</span><br><span class="line">        [ <span class="literal">True</span>,  <span class="literal">True</span>,  <span class="literal">True</span>,  <span class="literal">True</span>]]])</span><br></pre></td></tr></table></figure>
           
         
       
@@ -1458,6 +2193,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -1506,7 +2263,212 @@
       
         
           
-            
+            <h1 id="从数据处理到人工智能"><a href="#从数据处理到人工智能" class="headerlink" title="从数据处理到人工智能"></a>从数据处理到人工智能</h1><p>数据表示-&gt;数据清洗-&gt;数据统计-&gt;数据可视化-&gt;数据挖掘-&gt;人工智能</p>
+<ul>
+<li>数据表示：采用合适方式用程序表达数据</li>
+<li>数据清理：数据归一化、数据转换、异常值处理</li>
+<li>数据统计：数据的概要理解，数量、分布、中位数等</li>
+<li>数据可视化：直观展示数据内涵的方式</li>
+<li>数据挖掘：从数据分析获得知识，产生数据外的价值</li>
+<li>人工智能：数据/语言/图像/视觉等方面深度分析与决策</li>
+</ul>
+<h2 id="Python库之数据分析"><a href="#Python库之数据分析" class="headerlink" title="Python库之数据分析"></a>Python库之数据分析</h2><h3 id="Numpy-表达N维数组的最基础库"><a href="#Numpy-表达N维数组的最基础库" class="headerlink" title="Numpy: 表达N维数组的最基础库"></a>Numpy: 表达N维数组的最基础库</h3><ul>
+<li>Python接口使用，C语言实现，计算速度优异</li>
+<li>Python数据分析及科学计算的基础库，支撑Pandas等</li>
+<li>提供直接的矩阵运算、广播函数、线性代数等功能</li>
+</ul>
+<h3 id="Pandas-Python数据分析高层次应用库"><a href="#Pandas-Python数据分析高层次应用库" class="headerlink" title="Pandas: Python数据分析高层次应用库"></a>Pandas: Python数据分析高层次应用库</h3><ul>
+<li>提供了简单易用的数据结构和数据分析工具</li>
+<li>理解数据类型与索引的关系，操作索引即操作数据</li>
+<li>Python最主要的数据分析功能库，基于Numpy开发</li>
+</ul>
+<p>Series = 索引 + 一维数据<br>DataFrame = 行列索引 + 二维数据</p>
+<h3 id="SciPy-数学、科学和工程计算功能库"><a href="#SciPy-数学、科学和工程计算功能库" class="headerlink" title="SciPy: 数学、科学和工程计算功能库"></a>SciPy: 数学、科学和工程计算功能库</h3><ul>
+<li>提供了一批数学算法及工程数据运算功能</li>
+<li>类似Matlab，可用于如傅里叶变换、信号处理等应用</li>
+<li>Python最主要的科学计算功能库，基于Numpy开发</li>
+</ul>
+<h2 id="Python库之数据可视化"><a href="#Python库之数据可视化" class="headerlink" title="Python库之数据可视化"></a>Python库之数据可视化</h2><h3 id="Matplotlib-高质量的二维数据可视化功能库"><a href="#Matplotlib-高质量的二维数据可视化功能库" class="headerlink" title="Matplotlib: 高质量的二维数据可视化功能库"></a>Matplotlib: 高质量的二维数据可视化功能库</h3><ul>
+<li>提供了超过100种数据可视化展示效果</li>
+<li>通过matplotlib.pyplot子库调用各可视化效果</li>
+<li>Python最主要的数据可视化功能库，基于Numpy开发</li>
+</ul>
+<h3 id="Seaborn-统计类数据可视化功能库"><a href="#Seaborn-统计类数据可视化功能库" class="headerlink" title="Seaborn: 统计类数据可视化功能库"></a>Seaborn: 统计类数据可视化功能库</h3><ul>
+<li>提供了一批高层次的统计类数据可视化展示效果</li>
+<li>主要展示数据间分布、分类和线性关系等内容</li>
+<li>基于Matplotlib开发，支持Numpy和Pandas</li>
+</ul>
+<h3 id="Mayavi：三维科学数据可视化功能库"><a href="#Mayavi：三维科学数据可视化功能库" class="headerlink" title="Mayavi：三维科学数据可视化功能库"></a>Mayavi：三维科学数据可视化功能库</h3><ul>
+<li>提供了一批简单易用的3D科学计算数据可视化展示效果</li>
+<li>目前版本是Mayavi2，三维可视化最主要的第三方库</li>
+<li>支持Numpy、TVTK、Traits、Envisage等第三方库</li>
+</ul>
+<h2 id="Python之文本处理"><a href="#Python之文本处理" class="headerlink" title="Python之文本处理"></a>Python之文本处理</h2><h3 id="PyPDF2：用来处理pdf文件的工具集"><a href="#PyPDF2：用来处理pdf文件的工具集" class="headerlink" title="PyPDF2：用来处理pdf文件的工具集"></a>PyPDF2：用来处理pdf文件的工具集</h3><ul>
+<li>提供了一批处理PDF文件的计算功能</li>
+<li>支持获取信息、分隔/整合文件、加密解密等</li>
+<li>完全Python语言实现，不需要额外依赖，功能稳定</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PyPDF2 <span class="keyword">import</span> PdfFileReader, PdfFileMerger</span><br><span class="line">merger = PdfFileMerger()</span><br><span class="line">input1 = open(<span class="string">"document1.pdf"</span>, <span class="string">"rb"</span>)</span><br><span class="line">input2 = open(<span class="string">"document2.pdf"</span>, <span class="string">"rb"</span>)</span><br><span class="line">merger.append(fileobj = input1, pages = (<span class="number">0</span>,<span class="number">3</span>))</span><br><span class="line">merger.merge(position = <span class="number">2</span>, fileobj = input2, pages = (<span class="number">0</span>,<span class="number">1</span>))</span><br><span class="line">output = open(<span class="string">"document-output.pdf"</span>, <span class="string">"wb"</span>)</span><br><span class="line">merger.write(output)</span><br></pre></td></tr></table></figure>
+<h3 id="NLTK：自然语言文本处理第三方库"><a href="#NLTK：自然语言文本处理第三方库" class="headerlink" title="NLTK：自然语言文本处理第三方库"></a>NLTK：自然语言文本处理第三方库</h3><ul>
+<li>提供了一批简单易用的自然语言文本处理功能</li>
+<li>支持语言文本分类、标记、语法句法、语义分析等</li>
+<li>最优秀的Python自然语言处理库</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> nltk.corpus <span class="keyword">import</span> treebank</span><br><span class="line">t = treebank.parsed_sents(<span class="string">'wsj_0001.mrg'</span>)[<span class="number">0</span>]</span><br><span class="line">t.draw()</span><br></pre></td></tr></table></figure>
+<h3 id="Python-docx：创建或更新Microsoft-Word文件的第三方库"><a href="#Python-docx：创建或更新Microsoft-Word文件的第三方库" class="headerlink" title="Python-docx：创建或更新Microsoft Word文件的第三方库"></a>Python-docx：创建或更新Microsoft Word文件的第三方库</h3><ul>
+<li>提供创建或更新.doc .docx等文件的计算功能</li>
+<li>增加并配置段落、图片、表格、文字等，功能全面</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> docx <span class="keyword">import</span> Document</span><br><span class="line">document = Document()</span><br><span class="line">document.add_heading(<span class="string">'Document Title'</span>, <span class="number">0</span>)</span><br><span class="line">p = document.add_paragraph(<span class="string">'A plain paragraph having some '</span>)</span><br><span class="line">document.add_page_break()</span><br><span class="line">document.save(<span class="string">'demo.docx'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="Python之机器学习"><a href="#Python之机器学习" class="headerlink" title="Python之机器学习"></a>Python之机器学习</h2><h3 id="Scikit-learn：机器学习方法工具集"><a href="#Scikit-learn：机器学习方法工具集" class="headerlink" title="Scikit-learn：机器学习方法工具集"></a>Scikit-learn：机器学习方法工具集</h3><ul>
+<li>提供一批统一化的机器学习方法功能接口</li>
+<li>提供聚类、分类、回归、强化学习等计算功能</li>
+<li>机器学习最基本且最优秀的Python第三方库</li>
+</ul>
+<h3 id="TensorFlow：AlphaGo背后的机器学习计算框架"><a href="#TensorFlow：AlphaGo背后的机器学习计算框架" class="headerlink" title="TensorFlow：AlphaGo背后的机器学习计算框架"></a>TensorFlow：AlphaGo背后的机器学习计算框架</h3><ul>
+<li>谷歌公司推动的开源机器学习框架</li>
+<li>将数据流图作为基础，图节点代表运算，边代表张量</li>
+<li>应用机器学习方法的一种方式，支撑谷歌人工智能应用</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess = tf.Session()</span><br><span class="line">sess.run(init)</span><br><span class="line">res = sess.run(result)</span><br><span class="line">print(<span class="string">'result:'</span>, res)</span><br></pre></td></tr></table></figure>
+<h3 id="MXNet：基于神经网络的深度学习计算框架"><a href="#MXNet：基于神经网络的深度学习计算框架" class="headerlink" title="MXNet：基于神经网络的深度学习计算框架"></a>MXNet：基于神经网络的深度学习计算框架</h3><ul>
+<li>提供可扩展的神经网络及深度学习计算功能</li>
+<li>可用于自动驾驶、机器翻译、语音识别等众多领域</li>
+<li>Python最重要的深度学习计算框架</li>
+</ul>
+<h1 id="实例：霍兰德人格分析雷达图"><a href="#实例：霍兰德人格分析雷达图" class="headerlink" title="实例：霍兰德人格分析雷达图"></a>实例：霍兰德人格分析雷达图</h1><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>霍兰德人格分析</p>
+<ul>
+<li>霍兰德认为：人格兴趣与职业之间应有一种内在的对应关系</li>
+<li>人格分类：研究型、艺术型、社会型、企业型、传统型、现实性</li>
+<li>职业：工程师、实验员、艺术家、推销员、记事员、社会工作者</li>
+</ul>
+<p>需求</p>
+<ul>
+<li>需求：雷达图方式验证霍兰德人格分析</li>
+<li>输入：各职业人群结合兴趣的调研数据</li>
+<li>输出：雷达图</li>
+</ul>
+<p>第三方库的使用</p>
+<ul>
+<li>通用雷达图绘制：matplotlib库</li>
+<li>专业的多维数据表示：numpy库</li>
+<li>输出：雷达图</li>
+</ul>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#HollandRadarDraw.py</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> matplotlib</span><br><span class="line">matplotlib.rcParams[<span class="string">'font.family'</span>]=<span class="string">'SimHei'</span></span><br><span class="line">radar_labels = np.array([<span class="string">'研究型(I)'</span>,<span class="string">'艺术型(A)'</span>,<span class="string">'社会型(S)'</span>,\</span><br><span class="line"><span class="string">'企业型(E)'</span>,<span class="string">'常规型(C)'</span>,<span class="string">'现实型(R)'</span>])</span><br><span class="line">data = np.array([[<span class="number">0.40</span>, <span class="number">0.32</span>, <span class="number">0.35</span>, <span class="number">0.30</span>, <span class="number">0.30</span>, <span class="number">0.88</span>],</span><br><span class="line">[<span class="number">0.85</span>, <span class="number">0.35</span>, <span class="number">0.30</span>, <span class="number">0.40</span>, <span class="number">0.40</span>, <span class="number">0.30</span>],</span><br><span class="line">[<span class="number">0.43</span>, <span class="number">0.89</span>, <span class="number">0.30</span>, <span class="number">0.28</span>, <span class="number">0.22</span>, <span class="number">0.30</span>],</span><br><span class="line">[<span class="number">0.30</span>, <span class="number">0.25</span>, <span class="number">0.48</span>, <span class="number">0.85</span>, <span class="number">0.45</span>, <span class="number">0.40</span>],</span><br><span class="line">[<span class="number">0.20</span>, <span class="number">0.38</span>, <span class="number">0.87</span>, <span class="number">0.45</span>, <span class="number">0.32</span>, <span class="number">0.28</span>],</span><br><span class="line">[<span class="number">0.34</span>, <span class="number">0.31</span>, <span class="number">0.38</span>, <span class="number">0.40</span>, <span class="number">0.92</span>, <span class="number">0.28</span>]]) <span class="comment">#数据值</span></span><br><span class="line">data_labels = (<span class="string">'艺术家'</span>,<span class="string">'实验员'</span>,<span class="string">'工程师'</span>,<span class="string">'推销员'</span>,<span class="string">'社会工作者'</span>,<span class="string">'记事员'</span>)</span><br><span class="line">angles = np.linspace(<span class="number">0</span>, <span class="number">2</span>*np.pi, <span class="number">6</span>, endpoint=<span class="literal">False</span>)</span><br><span class="line">data = np.concatenate((data, [data[<span class="number">0</span>]]))</span><br><span class="line">angles = np.concatenate((angles, [angles[<span class="number">0</span>]]))</span><br><span class="line">fig = plt.figure(facecolor=<span class="string">"white"</span>)</span><br><span class="line">plt.subplot(<span class="number">111</span>, polar=<span class="literal">True</span>)</span><br><span class="line">plt.plot(angles,data,<span class="string">'o-'</span>, linewidth=<span class="number">1</span>, alpha=<span class="number">0.2</span>)</span><br><span class="line">plt.fill(angles,data, alpha=<span class="number">0.25</span>)</span><br><span class="line">plt.thetagrids(angles*<span class="number">180</span>/np.pi, radar_labels,frac = <span class="number">1.2</span>)</span><br><span class="line">plt.figtext(<span class="number">0.52</span>, <span class="number">0.95</span>, <span class="string">'霍兰德人格分析'</span>, ha=<span class="string">'center'</span>, size=<span class="number">20</span>)</span><br><span class="line">legend = plt.legend(data_labels, loc=(<span class="number">0.94</span>, <span class="number">0.80</span>), labelspacing=<span class="number">0.1</span>)</span><br><span class="line">plt.setp(legend.get_texts(), fontsize=<span class="string">'large'</span>)</span><br><span class="line">plt.grid(<span class="literal">True</span>)</span><br><span class="line">plt.savefig(<span class="string">'holland_radar.jpg'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h1 id="从Web解析到网络空间"><a href="#从Web解析到网络空间" class="headerlink" title="从Web解析到网络空间"></a>从Web解析到网络空间</h1><h2 id="Python库之网络爬虫"><a href="#Python库之网络爬虫" class="headerlink" title="Python库之网络爬虫"></a>Python库之网络爬虫</h2><h3 id="Requests-最友好的网络爬虫功能库"><a href="#Requests-最友好的网络爬虫功能库" class="headerlink" title="Requests: 最友好的网络爬虫功能库"></a>Requests: 最友好的网络爬虫功能库</h3><ul>
+<li>提供了简单易用的类HTTP协议网络爬虫功能</li>
+<li>支持连接池、SSL、Cookies、HTTP(S)代理等</li>
+<li>Python最主要的页面级网络爬虫功能库</li>
+</ul>
+<h3 id="Scrapy-优秀的网络爬虫框架"><a href="#Scrapy-优秀的网络爬虫框架" class="headerlink" title="Scrapy: 优秀的网络爬虫框架"></a>Scrapy: 优秀的网络爬虫框架</h3><ul>
+<li>提供了构建网络爬虫系统的框架功能，功能半成品</li>
+<li>支持批量和定时网页爬取、提供数据处理流程等</li>
+<li>Python最主要且最专业的网络爬虫框架</li>
+</ul>
+<h3 id="pyspider-强大的Web页面爬取系统"><a href="#pyspider-强大的Web页面爬取系统" class="headerlink" title="pyspider: 强大的Web页面爬取系统"></a>pyspider: 强大的Web页面爬取系统</h3><ul>
+<li>提供了完整的网页爬取系统构建功能</li>
+<li>支持数据库后端、消息队列、优先级、分布式架构等</li>
+<li>Python重要的网络爬虫类第三方库</li>
+</ul>
+<h2 id="Python库之Web信息提取"><a href="#Python库之Web信息提取" class="headerlink" title="Python库之Web信息提取"></a>Python库之Web信息提取</h2><h3 id="Beautiful-Soup-HTML和XML的解析库"><a href="#Beautiful-Soup-HTML和XML的解析库" class="headerlink" title="Beautiful Soup: HTML和XML的解析库"></a>Beautiful Soup: HTML和XML的解析库</h3><ul>
+<li>提供了解析HTML和XML等Web信息的功能</li>
+<li>又名beautifulsoup4或bs4，可以加载多种解析引擎</li>
+<li>常与网络爬虫库搭配使用，如Scrapy、requests等</li>
+</ul>
+<h3 id="Re-正则表达式解析和处理功能库"><a href="#Re-正则表达式解析和处理功能库" class="headerlink" title="Re: 正则表达式解析和处理功能库"></a>Re: 正则表达式解析和处理功能库</h3><ul>
+<li>提供了定义和解析正则表达式的一批通用功能</li>
+<li>可用于各类场景，包括定点的Web信息提取</li>
+<li>Python最主要的标准库之一，无需安装</li>
+</ul>
+<h3 id="Python-Goose-提取文章类型Web页面的功能库"><a href="#Python-Goose-提取文章类型Web页面的功能库" class="headerlink" title="Python-Goose: 提取文章类型Web页面的功能库"></a>Python-Goose: 提取文章类型Web页面的功能库</h3><ul>
+<li>提供了对Web页面中文章信息/视频等元数据的提取功能</li>
+<li>针对特定类型Web页面，应用覆盖面较广</li>
+<li>Python最主要的Web信息提取库</li>
+</ul>
+<h2 id="Python库之Web网站开发"><a href="#Python库之Web网站开发" class="headerlink" title="Python库之Web网站开发"></a>Python库之Web网站开发</h2><h3 id="Django-最流行的Web应用框架"><a href="#Django-最流行的Web应用框架" class="headerlink" title="Django: 最流行的Web应用框架"></a>Django: 最流行的Web应用框架</h3><ul>
+<li>提供了构建Web系统的基本应用框架</li>
+<li>MTV模式：模型(model)、模板(Template)、视图(Views)</li>
+<li>Python最重要的Web应用框架，略微复杂的应用框架</li>
+</ul>
+<h3 id="Pyramid-规模适中的Web应用框架"><a href="#Pyramid-规模适中的Web应用框架" class="headerlink" title="Pyramid: 规模适中的Web应用框架"></a>Pyramid: 规模适中的Web应用框架</h3><ul>
+<li>提供了简单方便构建Web系统的应用框架</li>
+<li>不大不小，规模适中，适合快速构建并适度扩展类应用</li>
+<li>Python产品级Web应用框架，起步简单可扩展性好</li>
+</ul>
+<h3 id="Flask-Web应用开发微框架"><a href="#Flask-Web应用开发微框架" class="headerlink" title="Flask: Web应用开发微框架"></a>Flask: Web应用开发微框架</h3><ul>
+<li>提供了最简单构建Web系统的应用框架</li>
+<li>特点是：简单、规模小、快速</li>
+<li>Django &gt; Pyramid &gt; Flask</li>
+</ul>
+<h2 id="Python库之网络应用开发"><a href="#Python库之网络应用开发" class="headerlink" title="Python库之网络应用开发"></a>Python库之网络应用开发</h2><h3 id="WeRoBot-微信公众号开发框架"><a href="#WeRoBot-微信公众号开发框架" class="headerlink" title="WeRoBot: 微信公众号开发框架"></a>WeRoBot: 微信公众号开发框架</h3><ul>
+<li>提供了解析微信服务器消息及反馈消息的功能</li>
+<li>建立微信机器人的重要技术手段</li>
+</ul>
+<h3 id="aip-百度AI开放平台接口"><a href="#aip-百度AI开放平台接口" class="headerlink" title="aip: 百度AI开放平台接口"></a>aip: 百度AI开放平台接口</h3><ul>
+<li>提供了访问百度AI服务的Python功能接口</li>
+<li>语音、人脸、OCR、NLP、知识图谱、图像搜索等领域</li>
+<li>Python百度AI应用的最主要方式</li>
+</ul>
+<h3 id="MyQR-二维码生成第三方库"><a href="#MyQR-二维码生成第三方库" class="headerlink" title="MyQR: 二维码生成第三方库"></a>MyQR: 二维码生成第三方库</h3><ul>
+<li>提供了生成二维码的系列功能</li>
+<li>基本二维码、艺术二维码和动态二维码</li>
+</ul>
+<h1 id="从人机交互到艺术设计"><a href="#从人机交互到艺术设计" class="headerlink" title="从人机交互到艺术设计"></a>从人机交互到艺术设计</h1><h2 id="Python库之图形用户界面"><a href="#Python库之图形用户界面" class="headerlink" title="Python库之图形用户界面"></a>Python库之图形用户界面</h2><h3 id="PyQt5-Qt开发框架的Python接口"><a href="#PyQt5-Qt开发框架的Python接口" class="headerlink" title="PyQt5: Qt开发框架的Python接口"></a>PyQt5: Qt开发框架的Python接口</h3><ul>
+<li>提供了创建Qt5程序的Python API接口</li>
+<li>Qt是非常成熟的跨平台桌面应用开发系统，完备GUI</li>
+<li>推荐的Python GUI开发第三方库</li>
+</ul>
+<h3 id="wxPython-跨平台GUI开发框架"><a href="#wxPython-跨平台GUI开发框架" class="headerlink" title="wxPython: 跨平台GUI开发框架"></a>wxPython: 跨平台GUI开发框架</h3><ul>
+<li>提供了专用于Python的跨平台GUI开发框架</li>
+<li>理解数据类型与索引的关系，操作索引即操作数据</li>
+<li>Python最主要的数据分析功能库，基于Numpy开发</li>
+</ul>
+<h3 id="PyGObject-使用GTK-开发GUI的功能库"><a href="#PyGObject-使用GTK-开发GUI的功能库" class="headerlink" title="PyGObject: 使用GTK+开发GUI的功能库"></a>PyGObject: 使用GTK+开发GUI的功能库</h3><ul>
+<li>提供了整合GTK+、WebKitGTK+等库的功能</li>
+<li>GTK+：跨平台的一种用户图形界面GUI框架</li>
+<li>实例：Anaconda采用该库构建GUI</li>
+</ul>
+<h2 id="Python库之游戏开发"><a href="#Python库之游戏开发" class="headerlink" title="Python库之游戏开发"></a>Python库之游戏开发</h2><h3 id="PyGame-简单的游戏开发功能库"><a href="#PyGame-简单的游戏开发功能库" class="headerlink" title="PyGame: 简单的游戏开发功能库"></a>PyGame: 简单的游戏开发功能库</h3><ul>
+<li>提供了基于SDL的简单游戏开发功能及实现引擎</li>
+<li>理解游戏对外部输入的响应机制及角色构建和交互机制</li>
+<li>Python游戏入门最主要的第三方库</li>
+</ul>
+<h3 id="Panda3D-开源、跨平台的3D渲染和游戏开发库"><a href="#Panda3D-开源、跨平台的3D渲染和游戏开发库" class="headerlink" title="Panda3D: 开源、跨平台的3D渲染和游戏开发库"></a>Panda3D: 开源、跨平台的3D渲染和游戏开发库</h3><ul>
+<li>一个3D游戏引擎，提供Python和C++两种接口</li>
+<li>支持很多先进特性：法线贴图、光泽贴图、卡通渲染等</li>
+<li>由迪士尼和卡尼基梅隆大学共同开发</li>
+</ul>
+<h3 id="cocos2d-构建2D游戏和图形界面交互式应用的框架"><a href="#cocos2d-构建2D游戏和图形界面交互式应用的框架" class="headerlink" title="cocos2d: 构建2D游戏和图形界面交互式应用的框架"></a>cocos2d: 构建2D游戏和图形界面交互式应用的框架</h3><ul>
+<li>提供了基于OpenGL的游戏开发图形渲染功能</li>
+<li>支持GPU加速，采用树形结构分层管理游戏对象类型</li>
+<li>适用于2D专业级游戏开发</li>
+</ul>
+<h2 id="Python库之虚拟现实"><a href="#Python库之虚拟现实" class="headerlink" title="Python库之虚拟现实"></a>Python库之虚拟现实</h2><h3 id="VR-Zero-在树莓派上开发VR应用的Python库"><a href="#VR-Zero-在树莓派上开发VR应用的Python库" class="headerlink" title="VR Zero: 在树莓派上开发VR应用的Python库"></a>VR Zero: 在树莓派上开发VR应用的Python库</h3><ul>
+<li>提供大量与VR开发相关的功能</li>
+<li>针对树莓派的VR开发库，支持设备小型化，配置简单化</li>
+<li>非常适合初学者实践VR开发及应用</li>
+</ul>
+<h3 id="pyovr-Oculus-Rift的Python开发接口"><a href="#pyovr-Oculus-Rift的Python开发接口" class="headerlink" title="pyovr: Oculus Rift的Python开发接口"></a>pyovr: Oculus Rift的Python开发接口</h3><ul>
+<li>针对Oculus VR设备的Python开发库</li>
+<li>基于成熟的VR设备，提供全套文档，工业级应用设备</li>
+<li>Python+虚拟现实领域探索的一种思路</li>
+</ul>
+<h3 id="Vizard-基于Python的通用VR开发引擎"><a href="#Vizard-基于Python的通用VR开发引擎" class="headerlink" title="Vizard: 基于Python的通用VR开发引擎"></a>Vizard: 基于Python的通用VR开发引擎</h3><ul>
+<li>专业的企业级虚拟现实开发引擎</li>
+<li>提供详细的官方文档</li>
+<li>支持多种主流的VR硬件设备，具有一定通用性</li>
+</ul>
+<h2 id="Python库之图形艺术"><a href="#Python库之图形艺术" class="headerlink" title="Python库之图形艺术"></a>Python库之图形艺术</h2><h3 id="Quads-迭代的艺术"><a href="#Quads-迭代的艺术" class="headerlink" title="Quads: 迭代的艺术"></a>Quads: 迭代的艺术</h3><ul>
+<li>对图片进行四分迭代，形成像素风</li>
+<li>可以生成动图或静图图像</li>
+<li>简单易用，具有很高展示度</li>
+</ul>
+<h3 id="ascii-art-ASCII艺术库"><a href="#ascii-art-ASCII艺术库" class="headerlink" title="ascii_art: ASCII艺术库"></a>ascii_art: ASCII艺术库</h3><ul>
+<li>将普通图片转为ASCII艺术风格</li>
+<li>输出可以是纯文本或彩色文本</li>
+<li>可采用图片格式输出</li>
+</ul>
+<h1 id="实例-玫瑰花绘制"><a href="#实例-玫瑰花绘制" class="headerlink" title="实例: 玫瑰花绘制"></a>实例: 玫瑰花绘制</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># RoseDraw.py</span></span><br><span class="line"><span class="keyword">import</span> turtle <span class="keyword">as</span> t</span><br><span class="line"><span class="comment"># 定义一个曲线绘制函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">DegreeCurve</span><span class="params">(n, r, d=<span class="number">1</span>)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">        t.left(d)</span><br><span class="line">        t.circle(r, abs(d))</span><br><span class="line"><span class="comment"># 初始位置设定</span></span><br><span class="line">s = <span class="number">0.2</span> <span class="comment"># size</span></span><br><span class="line">t.setup(<span class="number">450</span>*<span class="number">5</span>*s, <span class="number">750</span>*<span class="number">5</span>*s)</span><br><span class="line">t.pencolor(<span class="string">"black"</span>)</span><br><span class="line">t.fillcolor(<span class="string">"red"</span>)</span><br><span class="line">t.speed(<span class="number">100</span>)</span><br><span class="line">t.penup()</span><br><span class="line">t.goto(<span class="number">0</span>, <span class="number">900</span>*s)</span><br><span class="line">t.pendown()</span><br><span class="line"><span class="comment"># 绘制花朵形状</span></span><br><span class="line">t.begin_fill()</span><br><span class="line">t.circle(<span class="number">200</span>*s,<span class="number">30</span>)</span><br><span class="line">DegreeCurve(<span class="number">60</span>, <span class="number">50</span>*s)</span><br><span class="line">t.circle(<span class="number">200</span>*s,<span class="number">30</span>)</span><br><span class="line">DegreeCurve(<span class="number">4</span>, <span class="number">100</span>*s)</span><br><span class="line">t.circle(<span class="number">200</span>*s,<span class="number">50</span>)</span><br><span class="line">DegreeCurve(<span class="number">50</span>, <span class="number">50</span>*s)</span><br><span class="line">t.circle(<span class="number">350</span>*s,<span class="number">65</span>)</span><br><span class="line">DegreeCurve(<span class="number">40</span>, <span class="number">70</span>*s)</span><br><span class="line">t.circle(<span class="number">150</span>*s,<span class="number">50</span>)</span><br><span class="line">DegreeCurve(<span class="number">20</span>, <span class="number">50</span>*s, <span class="number">-1</span>)</span><br><span class="line">t.circle(<span class="number">400</span>*s,<span class="number">60</span>)</span><br><span class="line">DegreeCurve(<span class="number">18</span>, <span class="number">50</span>*s)</span><br><span class="line">t.fd(<span class="number">250</span>*s)</span><br><span class="line">t.right(<span class="number">150</span>)</span><br><span class="line">t.circle(<span class="number">-500</span>*s,<span class="number">12</span>)</span><br><span class="line">t.left(<span class="number">140</span>)</span><br><span class="line">t.circle(<span class="number">550</span>*s,<span class="number">110</span>)</span><br><span class="line">t.left(<span class="number">27</span>)</span><br><span class="line">t.circle(<span class="number">650</span>*s,<span class="number">100</span>)</span><br><span class="line">t.left(<span class="number">130</span>)</span><br><span class="line">t.circle(<span class="number">-300</span>*s,<span class="number">20</span>)</span><br><span class="line">t.right(<span class="number">123</span>)</span><br><span class="line">t.circle(<span class="number">220</span>*s,<span class="number">57</span>)</span><br><span class="line">t.end_fill()</span><br><span class="line"><span class="comment"># 绘制花枝形状</span></span><br><span class="line">t.left(<span class="number">120</span>)</span><br><span class="line">t.fd(<span class="number">280</span>*s)</span><br><span class="line">t.left(<span class="number">115</span>)</span><br><span class="line">t.circle(<span class="number">300</span>*s,<span class="number">33</span>)</span><br><span class="line">t.left(<span class="number">180</span>)</span><br><span class="line">t.circle(<span class="number">-300</span>*s,<span class="number">33</span>)</span><br><span class="line">DegreeCurve(<span class="number">70</span>, <span class="number">225</span>*s, <span class="number">-1</span>)</span><br><span class="line">t.circle(<span class="number">350</span>*s,<span class="number">104</span>)</span><br><span class="line">t.left(<span class="number">90</span>)</span><br><span class="line">t.circle(<span class="number">200</span>*s,<span class="number">105</span>)</span><br><span class="line">t.circle(<span class="number">-500</span>*s,<span class="number">63</span>)</span><br><span class="line">t.penup()</span><br><span class="line">t.goto(<span class="number">170</span>*s,<span class="number">-30</span>*s)</span><br><span class="line">t.pendown()</span><br><span class="line">t.left(<span class="number">160</span>)</span><br><span class="line">DegreeCurve(<span class="number">20</span>, <span class="number">2500</span>*s)</span><br><span class="line">DegreeCurve(<span class="number">220</span>, <span class="number">250</span>*s, <span class="number">-1</span>)</span><br><span class="line"><span class="comment"># 绘制一个绿色叶子</span></span><br><span class="line">t.fillcolor(<span class="string">'green'</span>)</span><br><span class="line">t.penup()</span><br><span class="line">t.goto(<span class="number">670</span>*s,<span class="number">-180</span>*s)</span><br><span class="line">t.pendown()</span><br><span class="line">t.right(<span class="number">140</span>)</span><br><span class="line">t.begin_fill()</span><br><span class="line">t.circle(<span class="number">300</span>*s,<span class="number">120</span>)</span><br><span class="line">t.left(<span class="number">60</span>)</span><br><span class="line">t.circle(<span class="number">300</span>*s,<span class="number">120</span>)</span><br><span class="line">t.end_fill()</span><br><span class="line">t.penup()</span><br><span class="line">t.goto(<span class="number">180</span>*s,<span class="number">-550</span>*s)</span><br><span class="line">t.pendown()</span><br><span class="line">t.right(<span class="number">85</span>)</span><br><span class="line">t.circle(<span class="number">600</span>*s,<span class="number">40</span>)</span><br><span class="line"><span class="comment"># 绘制另一个绿色叶子</span></span><br><span class="line">t.penup()</span><br><span class="line">t.goto(<span class="number">-150</span>*s,<span class="number">-1000</span>*s)</span><br><span class="line">t.pendown()</span><br><span class="line">t.begin_fill()</span><br><span class="line">t.rt(<span class="number">120</span>)</span><br><span class="line">t.circle(<span class="number">300</span>*s,<span class="number">115</span>)</span><br><span class="line">t.left(<span class="number">75</span>)</span><br><span class="line">t.circle(<span class="number">300</span>*s,<span class="number">100</span>)</span><br><span class="line">t.end_fill()</span><br><span class="line">t.penup()</span><br><span class="line">t.goto(<span class="number">430</span>*s,<span class="number">-1070</span>*s)</span><br><span class="line">t.pendown()</span><br><span class="line">t.right(<span class="number">30</span>)</span><br><span class="line">t.circle(<span class="number">-600</span>*s,<span class="number">35</span>)</span><br><span class="line">t.done()</span><br></pre></td></tr></table></figure>
           
         
       
@@ -1596,6 +2558,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -1644,7 +2628,227 @@
       
         
           
-            
+            <h1 id="实例：体育竞技分析"><a href="#实例：体育竞技分析" class="headerlink" title="实例：体育竞技分析"></a>实例：体育竞技分析</h1><blockquote>
+<p>高手过招，胜负只在毫厘之间</p>
+</blockquote>
+<h2 id="“体育竞技分析”问题分析"><a href="#“体育竞技分析”问题分析" class="headerlink" title="“体育竞技分析”问题分析"></a>“体育竞技分析”问题分析</h2><h3 id="体育竞技分析"><a href="#体育竞技分析" class="headerlink" title="体育竞技分析"></a>体育竞技分析</h3><ul>
+<li>需求：毫厘是多少？如何科学分析体育竞技比赛？</li>
+<li>输入：球员的水平</li>
+<li>输出：可预测的比赛成绩</li>
+</ul>
+<h3 id="体育竞技分析：模拟N场比赛"><a href="#体育竞技分析：模拟N场比赛" class="headerlink" title="体育竞技分析：模拟N场比赛"></a>体育竞技分析：模拟N场比赛</h3><ul>
+<li>计算思维：抽象 + 自动化</li>
+<li>模拟：抽象比赛过程 + 自动化执行N场比赛</li>
+<li>当N越大时，比赛结果分析会越科学</li>
+</ul>
+<h3 id="比赛规则"><a href="#比赛规则" class="headerlink" title="比赛规则"></a>比赛规则</h3><ul>
+<li>双人击球比赛：A &amp; B，回合制，5局3胜</li>
+<li>开始时一方先发球，直至判分，接下来胜者发球</li>
+<li>球员只能在发球局得分，15分胜一局</li>
+</ul>
+<h2 id="自顶向下和自底向上"><a href="#自顶向下和自底向上" class="headerlink" title="自顶向下和自底向上"></a>自顶向下和自底向上</h2><h3 id="自顶向下（设计）——解决复杂问题的有效方法"><a href="#自顶向下（设计）——解决复杂问题的有效方法" class="headerlink" title="自顶向下（设计）——解决复杂问题的有效方法"></a>自顶向下（设计）——解决复杂问题的有效方法</h3><ul>
+<li>将一个总问题表达为若干个小问题组成的形式</li>
+<li>使用同样方法进一步分解小问题</li>
+<li>直至，小问题可以用计算机简单明了的解决</li>
+</ul>
+<h3 id="自底向上（执行）——逐步组建复杂系统的有效测试方法"><a href="#自底向上（执行）——逐步组建复杂系统的有效测试方法" class="headerlink" title="自底向上（执行）——逐步组建复杂系统的有效测试方法"></a>自底向上（执行）——逐步组建复杂系统的有效测试方法</h3><h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h3 id="程序总体框架及步骤"><a href="#程序总体框架及步骤" class="headerlink" title="程序总体框架及步骤"></a>程序总体框架及步骤</h3><ul>
+<li>步骤1：打印程序的介绍性信息               - printInfo()</li>
+<li>步骤2：获得程序运行参数：proA, proB, n    - getInputs()</li>
+<li>步骤3：利用球员A和B的能力值，模拟n局比赛  - simNGames()</li>
+<li>步骤4：输出球员A和B获胜比赛的场次及概率   - printSummary()</li>
+</ul>
+<h3 id="全代码"><a href="#全代码" class="headerlink" title="全代码"></a>全代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printIntro</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"这个程序模拟两个选手A和B的某种竞技比赛"</span>)</span><br><span class="line">    print(<span class="string">"程序运行需要A和B的能力值（以0到1之间的小数表示）"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getInputs</span><span class="params">()</span>:</span></span><br><span class="line">    a = eval(input(<span class="string">"请输入选手A的能力值（0-1）："</span>))</span><br><span class="line">    b = eval(input(<span class="string">"请输入选手B的能力值（0-1）："</span>))</span><br><span class="line">    n = eval(input(<span class="string">"模拟比赛的场次："</span>))</span><br><span class="line">    <span class="keyword">return</span> a, b, n</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printSummary</span><span class="params">(winsA, winsB)</span>:</span></span><br><span class="line">    n = winsA + winsB</span><br><span class="line">    print(<span class="string">"竞技分析开始，共模拟&#123;&#125;场比赛"</span>.format(n))</span><br><span class="line">    print(<span class="string">"选手A获胜&#123;&#125;场比赛，占比&#123;:0.1%&#125;"</span>.format(winsA, winsA/n))</span><br><span class="line">    print(<span class="string">"选手B获胜&#123;&#125;场比赛，占比&#123;:0.1%&#125;"</span>.format(winsB, winsB/n))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gameOver</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> a==<span class="number">15</span> <span class="keyword">or</span> b==<span class="number">15</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simOneGame</span><span class="params">(probA, probB)</span>:</span></span><br><span class="line">    scoreA, scoreB = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    serving =<span class="string">"A"</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> gameOver(scoreA,scoreB):</span><br><span class="line">        <span class="keyword">if</span> serving == <span class="string">"A"</span>:</span><br><span class="line">            <span class="keyword">if</span> random() &lt; probA:</span><br><span class="line">                scoreA += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                serving = <span class="string">"B"</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> random() &lt; probB:</span><br><span class="line">                scoreB += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                serving = <span class="string">"A"</span></span><br><span class="line">    <span class="keyword">return</span> scoreA, scoreB</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simNGames</span><span class="params">(n, probA, probB)</span>:</span></span><br><span class="line">    winsA, winsB = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">        scoreA, scoreB = simOneGame(probA, probB)</span><br><span class="line">        <span class="keyword">if</span> scoreA &gt; scoreB:</span><br><span class="line">            winsA += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            winsB += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> winsA, winsB</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    printIntro()</span><br><span class="line">    probA, probB, n = getInputs()</span><br><span class="line">    winsA, winsB = simNGames(n, probA, probB)</span><br><span class="line">    printSummary(winsA, winsB)</span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+<h3 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h3>
+<h2 id="举一反三"><a href="#举一反三" class="headerlink" title="举一反三"></a>举一反三</h2><ol>
+<li>理解自顶向下和自底向上</li>
+</ol>
+<ul>
+<li>理解自顶向下的设计思维：分而治之</li>
+<li>理解自底向上的执行思维：模块化集成</li>
+<li>自顶向下是“系统”思维的简化</li>
+</ul>
+<ol start="2">
+<li>应用问题的扩展</li>
+</ol>
+<ul>
+<li>扩展比赛参数，增加对更多能力对比情况的判断</li>
+<li>扩展比赛设计，增加对真实比赛结果的预测</li>
+<li>扩展分析逻辑，反向推理，用胜率推算能力？</li>
+</ul>
+<h1 id="Python程序设计思维"><a href="#Python程序设计思维" class="headerlink" title="Python程序设计思维"></a>Python程序设计思维</h1><h2 id="计算思维"><a href="#计算思维" class="headerlink" title="计算思维"></a>计算思维</h2><p>第3种人类思维特征</p>
+<ul>
+<li>逻辑思维：推理和演绎，数学为代表，A-&gt;B B-&gt;C A-&gt;C</li>
+<li>实证思维：实验和验证，物理为代表，引力波&lt;-实验</li>
+<li>计算思维：设计和构造，计算机为代表，汉诺塔递归</li>
+</ul>
+<p>计算思维（Computational Thinking）：<strong>抽象</strong>问题的计算过程，利用计算机<strong>自动化</strong>求解，是基于计算机的思维方式。计算思维基于计算机强大的算力及海量数据，抽象计算过程，关注设计和构造，而非因果。</p>
+<h2 id="计算生态与Python语言"><a href="#计算生态与Python语言" class="headerlink" title="计算生态与Python语言"></a>计算生态与Python语言</h2><ul>
+<li>以开源项目为代表的大量第三方库</li>
+<li>库的建设经过野蛮生长和自然选择</li>
+<li>库之间相互关联使用，依存发展</li>
+<li>社区庞大，新技术更迭迅速</li>
+</ul>
+<p>计算生态的价值</p>
+<ul>
+<li>加速科技类应用创新的重要支撑</li>
+<li>发展科技产品商业价值的重要模式</li>
+<li>国家科技体系安全和稳固的基础</li>
+</ul>
+<h2 id="基本的程序设计模式"><a href="#基本的程序设计模式" class="headerlink" title="基本的程序设计模式"></a>基本的程序设计模式</h2><p>IPO<br>模块化设计<br>配置化设计</p>
+<h1 id="Python第三方库安装"><a href="#Python第三方库安装" class="headerlink" title="Python第三方库安装"></a>Python第三方库安装</h1><p>Python社区：<a href="https://pypi.org" target="_blank" rel="noopener">https://pypi.org</a></p>
+<p>安装第三方库：</p>
+<ol>
+<li>主要方法：使用pip命令</li>
+<li>集成安装方法</li>
+<li>文件安装方法</li>
+</ol>
+<p>Anaconda： <a href="https://www.continuum.io" target="_blank" rel="noopener">https://www.continuum.io</a></p>
+<ul>
+<li>支持近800个第三方库</li>
+<li>包含多个主流工具</li>
+<li>适合数据计算领域开发</li>
+</ul>
+<p>UCI页面： <a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/" target="_blank" rel="noopener">http://www.lfd.uci.edu/~gohlke/pythonlibs/</a></p>
+<ul>
+<li>在UCI页面上搜索&lt;库名称&gt;</li>
+<li>下载对应版本的文件</li>
+<li>使用pip install &lt;文件名&gt;安装</li>
+</ul>
+<h1 id="os库的使用"><a href="#os库的使用" class="headerlink" title="os库的使用"></a>os库的使用</h1><h2 id="os库基本介绍"><a href="#os库基本介绍" class="headerlink" title="os库基本介绍"></a>os库基本介绍</h2><p>os库提供通用的、基本的操作系统交互功能</p>
+<ul>
+<li>os库是Python标准库，包含几百个函数</li>
+<li>常用路径操作、进程管理、环境参数等几类<ul>
+<li>路径操作：os.path子库，处理文件路径及信息</li>
+<li>进程管理：启动系统中其他程序</li>
+<li>环境参数：获得系统软硬件信息等环境参数</li>
+</ul>
+</li>
+</ul>
+<h2 id="os库的路径操作"><a href="#os库的路径操作" class="headerlink" title="os库的路径操作"></a>os库的路径操作</h2><p>os.path子库以path为入口，用于操作和处理文件路径<br>| 函数                        | 描述                                              |<br>| ————————— | ————————————————- |<br>| <code>os.path.abspath(path)</code>     | 返回path在当前系统中的绝对路径                    |<br>| <code>os.path.normpath(path)</code>    | 归一化path的表示形式，统一用\\分隔路径          |<br>| <code>os.path.relpath(path)</code>     | 返回当前程序与文件之间的相对路径（relative path） |<br>| <code>os.path.dirname(path)</code>     | 返回path中的目录名称                              |<br>| <code>os.path.basename(path)</code>    | 返回path中最后的文件名称                          |<br>| <code>os.path.join(path,*paths)</code> | 组合path与paths，返回一个路径字符串               |<br>| <code>os.path.exists(path)</code>      | 判断path对应文件或目录是否存在，返回True或False   |<br>| <code>os.path.isfile(path)</code>      | 判断path所对应是否为已存在的文件，返回True或False |<br>| <code>os.path.isdir(path)</code>       | 判断path所对应是否为已存在的目录，返回True或False |<br>| <code>os.path.getatime(path)</code>    | 返回path对应文件或目录上一次的访问时间            |<br>| <code>os.path.getmtime(path)</code>    | 返回path对应文件或目录最近一次的修改时间          |<br>| <code>os.path.getctime(path)</code>    | 返回path对应文件或目录创建时间                    |<br>| <code>os.path.getsize(path)</code>     | 返回path对应文件的大小，以字节为单位              |</p>
+<h2 id="os库的进程管理"><a href="#os库的进程管理" class="headerlink" title="os库的进程管理"></a>os库的进程管理</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">os.system(command)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>执行程序或命令command</li>
+<li>在Windows操作系统中，返回值为cmd调用的返回信息</li>
+</ul>
+<h2 id="os库的环境参数"><a href="#os库的环境参数" class="headerlink" title="os库的环境参数"></a>os库的环境参数</h2><p>获取或改变系统环境信息<br>| 函数             | 描述                                            |<br>| —————- | ———————————————– |<br>| <code>os.chdir(path)</code> | 修改当前程序的操作路径                          |<br>| <code>os.getcwd()</code>    | 返回程序的当前路径                              |<br>| <code>os.getlogin()</code>  | 获得当前系统登录用户名称                        |<br>| <code>os.cpu_count()</code> | 获得当前系统CPU数量                             |<br>| <code>os.urandom(n)</code>  | 获得n个字节长度的随机字符串，通常用于加解密运算 |</p>
+<h1 id="实例：第三方库安装脚本"><a href="#实例：第三方库安装脚本" class="headerlink" title="实例：第三方库安装脚本"></a>实例：第三方库安装脚本</h1><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><ul>
+<li>需求：批量安装第三方库需要人工干预，能否自动安装？</li>
+<li>自动执行pip逐一根据需求安装</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>库名</th>
+<th>用途</th>
+<th>pip安装指令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NumPy</td>
+<td>N维数据表示和运算</td>
+<td>pip install numpy</td>
+</tr>
+<tr>
+<td>Matplotlib</td>
+<td>二维数据可视化</td>
+<td>pip install matplotlib</td>
+</tr>
+<tr>
+<td>PIL</td>
+<td>图像处理</td>
+<td>pip install pillow</td>
+</tr>
+<tr>
+<td>Scikit-Learn</td>
+<td>机器学习和数据挖掘</td>
+<td>pip install sklearn</td>
+</tr>
+<tr>
+<td>Requests</td>
+<td>HTTP协议访问及网络爬虫</td>
+<td>pip install requests</td>
+</tr>
+<tr>
+<td>Jieba</td>
+<td>中文分词</td>
+<td>pip install jieba</td>
+</tr>
+<tr>
+<td>Beautiful Soup</td>
+<td>HTML和XML解析器</td>
+<td>pip install beautifulsoup4</td>
+</tr>
+<tr>
+<td>Wheel Python</td>
+<td>第三方库文件打包工具</td>
+<td>pip install wheel</td>
+</tr>
+<tr>
+<td>PyInstaller</td>
+<td>打包Python源文件为可执行文件</td>
+<td>pip install pyinstall</td>
+</tr>
+<tr>
+<td>Flask</td>
+<td>轻量级Web开发框架</td>
+<td>pip install flask</td>
+</tr>
+<tr>
+<td>WeRoBot</td>
+<td>微信机器人开发框架</td>
+<td>pip install werobot</td>
+</tr>
+<tr>
+<td>SymPy</td>
+<td>数学符号计算工具</td>
+<td>pip install sympy</td>
+</tr>
+<tr>
+<td>Pandas</td>
+<td>高效数据分析和计算</td>
+<td>pip install pandas</td>
+</tr>
+<tr>
+<td>Networkx</td>
+<td>复杂网络和图结构的建模和分析</td>
+<td>pip install networkx</td>
+</tr>
+<tr>
+<td>PyQt5</td>
+<td>基于Qt的专业级GUI开发框架</td>
+<td>pip install pyqt5</td>
+</tr>
+<tr>
+<td>PyOpenGL</td>
+<td>多平台OpenGL开发接口</td>
+<td>pip install pyopengl</td>
+</tr>
+<tr>
+<td>PyPDF2</td>
+<td>PDF文件内容提取及处理</td>
+<td>pip install pypdf2</td>
+</tr>
+<tr>
+<td>docopt</td>
+<td>Python命令行解析</td>
+<td>pip install docopt</td>
+</tr>
+<tr>
+<td>PyGame</td>
+<td>简单小游戏开发框架</td>
+<td>pip install pygame</td>
+</tr>
+</tbody>
+</table>
+<h2 id="实例解析"><a href="#实例解析" class="headerlink" title="实例解析"></a>实例解析</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#BatchInstall.py</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">libs = &#123;<span class="string">"numpy"</span>,<span class="string">"matplotlib"</span>,<span class="string">"pillow"</span>,<span class="string">"sklearn"</span>,<span class="string">"requests"</span>,\</span><br><span class="line">        <span class="string">"jieba"</span>,<span class="string">"beautifulsoup4"</span>,<span class="string">"wheel"</span>,<span class="string">"networkx"</span>,<span class="string">"sympy"</span>,\</span><br><span class="line">        <span class="string">"pyinstaller"</span>,<span class="string">"django"</span>,<span class="string">"flask"</span>,<span class="string">"werobot"</span>,<span class="string">"pyqt5"</span>,\</span><br><span class="line">        <span class="string">"pandas"</span>,<span class="string">"pyopengl"</span>,<span class="string">"pypdf2"</span>,<span class="string">"docopt"</span>,<span class="string">"pygame"</span>&#125;</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">for</span> lib <span class="keyword">in</span> libs:</span><br><span class="line">        os.system(<span class="string">"pip install"</span> + lib)</span><br><span class="line">    print(<span class="string">"Successful"</span>)</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    print(<span class="string">"Failed Somehow"</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="举一反三-1"><a href="#举一反三-1" class="headerlink" title="举一反三"></a>举一反三</h2><p>自动化脚本+</p>
+<ul>
+<li>编写各类自动化运行程序的脚本，调用已有程序</li>
+<li>扩展应用：安装更多第三方库，增加配置文件</li>
+<li>扩展异常检测：捕获更多异常类型，程序更稳定友好</li>
+</ul>
+
           
         
       
@@ -1738,7 +2942,25 @@
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
             
 
           </nav>

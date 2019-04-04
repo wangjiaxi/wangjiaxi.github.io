@@ -80,7 +80,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Python,">
 
 
 
@@ -91,17 +91,18 @@
 
 
 
-<meta name="description" content="做个正常人">
+<meta name="description" content="梯度的重构利用像素之间的梯度值和虚拟深度值对图像进行重构，根据灰度变化来模拟人类视觉的明暗程度。 手绘效果的特征 黑白灰色 边界线条较重 相同或相近色彩趋于白色 略有光源效果  代码实现用到的第三方库安装：pip install pillow`pip install numpy` 1234567891011121314151617181920212223242526272829#image.pyf">
+<meta name="keywords" content="Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python实现照片的手绘效果">
 <meta property="og:url" content="http://yoursite.com/2019/04/04/Python实现照片的手绘效果/index.html">
 <meta property="og:site_name" content="wangjiaxi&#39;s notebook">
-<meta property="og:description" content="做个正常人">
+<meta property="og:description" content="梯度的重构利用像素之间的梯度值和虚拟深度值对图像进行重构，根据灰度变化来模拟人类视觉的明暗程度。 手绘效果的特征 黑白灰色 边界线条较重 相同或相近色彩趋于白色 略有光源效果  代码实现用到的第三方库安装：pip install pillow`pip install numpy` 1234567891011121314151617181920212223242526272829#image.pyf">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-04T07:46:57.187Z">
+<meta property="og:updated_time" content="2019-04-04T09:15:05.642Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python实现照片的手绘效果">
-<meta name="twitter:description" content="做个正常人">
+<meta name="twitter:description" content="梯度的重构利用像素之间的梯度值和虚拟深度值对图像进行重构，根据灰度变化来模拟人类视觉的明暗程度。 手绘效果的特征 黑白灰色 边界线条较重 相同或相近色彩趋于白色 略有光源效果  代码实现用到的第三方库安装：pip install pillow`pip install numpy` 1234567891011121314151617181920212223242526272829#image.pyf">
 
 
 
@@ -352,6 +353,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -398,7 +421,17 @@
       
 
       
-        
+        <h1 id="梯度的重构"><a href="#梯度的重构" class="headerlink" title="梯度的重构"></a>梯度的重构</h1><p>利用像素之间的梯度值和虚拟深度值对图像进行重构，根据灰度变化来模拟人类视觉的明暗程度。</p>
+<h1 id="手绘效果的特征"><a href="#手绘效果的特征" class="headerlink" title="手绘效果的特征"></a>手绘效果的特征</h1><ol>
+<li>黑白灰色</li>
+<li>边界线条较重</li>
+<li>相同或相近色彩趋于白色</li>
+<li>略有光源效果</li>
+</ol>
+<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><p>用到的第三方库安装：<code>pip install pillow`</code>pip install numpy`</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#image.py</span></span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a = np.asarray(Image.open(<span class="string">'./yunwuyue.jpg'</span>).convert(<span class="string">'L'</span>)).astype(<span class="string">'float'</span>)</span><br><span class="line"></span><br><span class="line">depth = <span class="number">10.</span>     <span class="comment">#预设深度值为10，取值范围0-100</span></span><br><span class="line">grad = np.gradient(a)       <span class="comment">#提取x和y方向的梯度值</span></span><br><span class="line">grad_x, grad_y = grad</span><br><span class="line"><span class="comment">#根据深度值调整x和y方向的梯度值</span></span><br><span class="line">grad_x = grad_x * depth / <span class="number">100.</span></span><br><span class="line">grad_y = grad_y * depth / <span class="number">100.</span></span><br><span class="line">A = np.sqrt(grad_x**<span class="number">2</span> + grad_y**<span class="number">2</span> + <span class="number">1.</span>)</span><br><span class="line">uni_x = grad_x / A</span><br><span class="line">uni_y = grad_y / A</span><br><span class="line">uni_z = <span class="number">1.</span> / A</span><br><span class="line"></span><br><span class="line">vec_el = np.pi / <span class="number">2.2</span></span><br><span class="line">vec_az = np.pi / <span class="number">4</span></span><br><span class="line">dx = np.cos(vec_el) * np.cos(vec_az)</span><br><span class="line">dy = np.cos(vec_el) * np.sin(vec_az)</span><br><span class="line">dz = np.sin(vec_el)</span><br><span class="line"></span><br><span class="line">b = <span class="number">255</span> * (dx * uni_x + dy * uni_y + dz * uni_z)</span><br><span class="line">b = b.clip(<span class="number">0</span>, <span class="number">255</span>)</span><br><span class="line"></span><br><span class="line">im = Image.fromarray(b.astype(<span class="string">'uint8'</span>))</span><br><span class="line">im.save(<span class="string">'./yunwuyueHD.jpg'</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="展示"><a href="#展示" class="headerlink" title="展示"></a>展示</h1>
+
       
     </div>
     
@@ -459,6 +492,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
       
 
       
@@ -529,8 +568,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -554,7 +602,25 @@
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
             
 
           </nav>
@@ -574,6 +640,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#梯度的重构"><span class="nav-number">1.</span> <span class="nav-text">梯度的重构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#手绘效果的特征"><span class="nav-number">2.</span> <span class="nav-text">手绘效果的特征</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码实现"><span class="nav-number">3.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#展示"><span class="nav-number">4.</span> <span class="nav-text">展示</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

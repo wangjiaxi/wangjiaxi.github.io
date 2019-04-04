@@ -80,7 +80,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Flume,Kafka,">
 
 
 
@@ -91,17 +91,18 @@
 
 
 
-<meta name="description" content="做个正常人">
+<meta name="description" content="Flume的配置12345678910111213141516171819# avro-memory-kafka.confavro-memory-kafka.sources = avro-sourceavro-memory-kafka.sinks = kafka-sinkavro-memory-kafka.channels = memory-channelavro-memory-kafka.sou">
+<meta name="keywords" content="Flume,Kafka">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Flume+Kafka实时数据采集">
 <meta property="og:url" content="http://yoursite.com/2019/04/04/Flume-Kafka实时数据采集/index.html">
 <meta property="og:site_name" content="wangjiaxi&#39;s notebook">
-<meta property="og:description" content="做个正常人">
+<meta property="og:description" content="Flume的配置12345678910111213141516171819# avro-memory-kafka.confavro-memory-kafka.sources = avro-sourceavro-memory-kafka.sinks = kafka-sinkavro-memory-kafka.channels = memory-channelavro-memory-kafka.sou">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-04T07:36:41.102Z">
+<meta property="og:updated_time" content="2019-04-04T08:52:18.657Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Flume+Kafka实时数据采集">
-<meta name="twitter:description" content="做个正常人">
+<meta name="twitter:description" content="Flume的配置12345678910111213141516171819# avro-memory-kafka.confavro-memory-kafka.sources = avro-sourceavro-memory-kafka.sinks = kafka-sinkavro-memory-kafka.channels = memory-channelavro-memory-kafka.sou">
 
 
 
@@ -352,6 +353,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -398,7 +421,15 @@
       
 
       
-        
+        <p>Flume的配置<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># avro-memory-kafka.conf</span></span><br><span class="line">avro-memory-kafka.sources = avro-source</span><br><span class="line">avro-memory-kafka.sinks = kafka-sink</span><br><span class="line">avro-memory-kafka.channels = memory-channel</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.type = avro</span><br><span class="line">avro-memory-kafka.sources.avro-source.bind = bigdata-01</span><br><span class="line">avro-memory-kafka.sources.avro-source.port = 44444</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.type = org.apache.flume.sink.kafka.KafkaSink</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.brokerList = bigdata-01:9092</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.topic = hello_topic</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.batchSize = 5</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.requiredAcks = 1</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.channels.memory-channel.type = memory</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.channels = memory-channel</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.channel = memory-channel</span><br></pre></td></tr></table></figure></p>
+<p>启动Flume<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">flume-ng agent \</span><br><span class="line">--name avro-memory-kafka \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/avro-memory-kafka.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br><span class="line"></span><br><span class="line">flume-ng agent \</span><br><span class="line">--name <span class="built_in">exec</span>-memory-avro \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/<span class="built_in">exec</span>-memory-avro.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure></p>
+<p>启动消费者进行监控<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-console-consumer.sh --zookeeper bigdata-01:2181 -topic hello_topic</span><br></pre></td></tr></table></figure></p>
+<p>向日志文件中追加内容<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@bigdata-01 ~]<span class="comment"># cd data/</span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># ll</span></span><br><span class="line">total 4</span><br><span class="line">-rw-r--r--. 1 root root 112 Feb  6 05:37 data.log</span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark2 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark3 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark4 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark5 &gt;&gt; data.log</span></span><br></pre></td></tr></table></figure></p>
+<p>这时，消费者就可以消费到日志文件中的新内容了。</p>
+<blockquote>
+<p>Flume的版本不同，配置文件（*.conf）需要配置的内容也不完全相同。</p>
+</blockquote>
+
       
     </div>
     
@@ -459,6 +490,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Flume/" rel="tag"># Flume</a>
+          
+            <a href="/tags/Kafka/" rel="tag"># Kafka</a>
+          
+        </div>
       
 
       
@@ -554,7 +593,25 @@
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
             
 
           </nav>

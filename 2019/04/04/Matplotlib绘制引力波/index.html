@@ -80,7 +80,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Python,">
 
 
 
@@ -91,17 +91,18 @@
 
 
 
-<meta name="description" content="做个正常人">
+<meta name="description" content="2016年6月16日，LIGO合作组宣布2015年12月26日 03:38:53（UTC），两台不同位置的引力波探测器同时探测到了一个引力波信号。">
+<meta name="keywords" content="Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Matplotlib绘制引力波">
 <meta property="og:url" content="http://yoursite.com/2019/04/04/Matplotlib绘制引力波/index.html">
 <meta property="og:site_name" content="wangjiaxi&#39;s notebook">
-<meta property="og:description" content="做个正常人">
+<meta property="og:description" content="2016年6月16日，LIGO合作组宣布2015年12月26日 03:38:53（UTC），两台不同位置的引力波探测器同时探测到了一个引力波信号。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-04T07:46:28.727Z">
+<meta property="og:updated_time" content="2019-04-04T09:14:23.630Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Matplotlib绘制引力波">
-<meta name="twitter:description" content="做个正常人">
+<meta name="twitter:description" content="2016年6月16日，LIGO合作组宣布2015年12月26日 03:38:53（UTC），两台不同位置的引力波探测器同时探测到了一个引力波信号。">
 
 
 
@@ -352,6 +353,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -398,7 +421,10 @@
       
 
       
-        
+        <p>2016年6月16日，LIGO合作组宣布2015年12月26日 03:38:53（UTC），两台不同位置的引力波探测器同时探测到了一个引力波信号。<br><a id="more"></a></p>
+<h1 id="引力波"><a href="#引力波" class="headerlink" title="引力波"></a>引力波</h1><p>物理学中，引力波是因为时空弯曲对外以辐射形式传播的能量。<br>爱因斯坦基于广义相对论语言了引力波的存在。<br>2016年6月16日，LIGO合作组宣布2015年12月26日 03:38:53（UTC），两台不同位置的引力波探测器同时探测到了一个引力波信号。</p>
+<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">Created on Sun Feb 24 10:17:31 2019</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@author: Administrator</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#引力波</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> scipy.io <span class="keyword">import</span> wavfile</span><br><span class="line"></span><br><span class="line"><span class="comment">#产生时间序列</span></span><br><span class="line">rate_h, hstrain = wavfile.read(<span class="string">r"H1_Strain.wav"</span>,<span class="string">"rb"</span>)</span><br><span class="line">rate_l, lstrain = wavfile.read(<span class="string">r"L1_Strain.wav"</span>,<span class="string">"rb"</span>)</span><br><span class="line">reftime, ref_H1 = np.genfromtxt(<span class="string">'wf_template.txt'</span>).transpose()</span><br><span class="line"></span><br><span class="line"><span class="comment">#读取应变数据</span></span><br><span class="line">htime_interval = <span class="number">1</span> / rate_h</span><br><span class="line">ltime_interval = <span class="number">1</span> / rate_l</span><br><span class="line"></span><br><span class="line">htime_len = hstrain.shape[<span class="number">0</span>] / rate_h</span><br><span class="line">htime = np.arange(-htime_len / <span class="number">2</span>, htime_len / <span class="number">2</span>, htime_interval)</span><br><span class="line">ltime_len = lstrain.shape[<span class="number">0</span>] / rate_l</span><br><span class="line">ltime = np.arange(-ltime_len / <span class="number">2</span>, ltime_len / <span class="number">2</span>, ltime_interval)</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用来自“H1”探测器的数据作图</span></span><br><span class="line">fig = plt.figure(figsize = (<span class="number">12</span>, <span class="number">6</span>))  <span class="comment">#创建一个12*6的绘图空间</span></span><br><span class="line"></span><br><span class="line">plth = fig.add_subplot(<span class="number">221</span>)</span><br><span class="line">plth.plot(htime, hstrain, <span class="string">'y'</span>)</span><br><span class="line">plth.set_xlabel(<span class="string">'Time(seconds)'</span>)</span><br><span class="line">plth.set_ylabel(<span class="string">'H1 Strain'</span>)</span><br><span class="line">plth.set_title(<span class="string">'H1 Strain'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#绘制L1 Strain 和 Template</span></span><br><span class="line">pltl = fig.add_subplot(<span class="number">222</span>)</span><br><span class="line">pltl.plot(ltime, lstrain, <span class="string">'g'</span>)</span><br><span class="line">pltl.set_xlabel(<span class="string">'Time(seconds)'</span>)</span><br><span class="line">pltl.set_ylabel(<span class="string">'L1 Strain'</span>)</span><br><span class="line">pltl.set_title(<span class="string">'L1 Strain'</span>)</span><br><span class="line"></span><br><span class="line">pltref = fig.add_subplot(<span class="number">212</span>)</span><br><span class="line">pltref.plot(reftime, ref_H1, <span class="string">'y'</span>)</span><br><span class="line">pltref.set_xlabel(<span class="string">'Time(seconds)'</span>)</span><br><span class="line">pltref.set_ylabel(<span class="string">'Template Strain'</span>)</span><br><span class="line">pltref.set_title(<span class="string">'Template'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#自动调整图像外部边缘</span></span><br><span class="line">fig.tight_layout()</span><br><span class="line"></span><br><span class="line">plt.savefig(<span class="string">"Gravitational_Waves_Original.png"</span>)</span><br><span class="line">plt.show()</span><br><span class="line">plt.close(fig)</span><br></pre></td></tr></table></figure>
+<h1 id="图像展示"><a href="#图像展示" class="headerlink" title="图像展示"></a>图像展示</h1>
       
     </div>
     
@@ -459,6 +485,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
       
 
       
@@ -533,8 +565,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -558,7 +599,25 @@
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
             
 
           </nav>
@@ -578,6 +637,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#引力波"><span class="nav-number">1.</span> <span class="nav-text">引力波</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码实现"><span class="nav-number">2.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图像展示"><span class="nav-number">3.</span> <span class="nav-text">图像展示</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

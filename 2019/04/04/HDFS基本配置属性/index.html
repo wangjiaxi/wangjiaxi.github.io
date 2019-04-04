@@ -80,7 +80,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Hadoop,">
 
 
 
@@ -91,17 +91,18 @@
 
 
 
-<meta name="description" content="做个正常人">
+<meta name="description" content="块大小HDFS中存储的文件块的块大小，默认128M 参数：dfs.blocksize  默认：134217728 此参数用于客户端程序，也就是说，HDFS里面存储的文件块的块大小完全由客户端决定 副本数量HDFS中存储的文件快可以有多个副本，默认3个 参数：dfs.replication 默认：3 此参数用于客户端程序，也就是说，HDFS里面存储的文件块的副本数完全由客户端决定  为什么要默认3个">
+<meta name="keywords" content="Hadoop">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HDFS基本配置属性">
 <meta property="og:url" content="http://yoursite.com/2019/04/04/HDFS基本配置属性/index.html">
 <meta property="og:site_name" content="wangjiaxi&#39;s notebook">
-<meta property="og:description" content="做个正常人">
+<meta property="og:description" content="块大小HDFS中存储的文件块的块大小，默认128M 参数：dfs.blocksize  默认：134217728 此参数用于客户端程序，也就是说，HDFS里面存储的文件块的块大小完全由客户端决定 副本数量HDFS中存储的文件快可以有多个副本，默认3个 参数：dfs.replication 默认：3 此参数用于客户端程序，也就是说，HDFS里面存储的文件块的副本数完全由客户端决定  为什么要默认3个">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-04T07:37:31.013Z">
+<meta property="og:updated_time" content="2019-04-04T08:53:03.843Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HDFS基本配置属性">
-<meta name="twitter:description" content="做个正常人">
+<meta name="twitter:description" content="块大小HDFS中存储的文件块的块大小，默认128M 参数：dfs.blocksize  默认：134217728 此参数用于客户端程序，也就是说，HDFS里面存储的文件块的块大小完全由客户端决定 副本数量HDFS中存储的文件快可以有多个副本，默认3个 参数：dfs.replication 默认：3 此参数用于客户端程序，也就是说，HDFS里面存储的文件块的副本数完全由客户端决定  为什么要默认3个">
 
 
 
@@ -352,6 +353,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -398,7 +421,41 @@
       
 
       
-        
+        <h1 id="块大小"><a href="#块大小" class="headerlink" title="块大小"></a>块大小</h1><p>HDFS中存储的文件块的块大小，默认128M</p>
+<p>参数：dfs.blocksize </p>
+<p>默认：134217728</p>
+<p>此参数用于客户端程序，也就是说，HDFS里面存储的文件块的<strong>块大小</strong>完全由客户端决定</p>
+<h1 id="副本数量"><a href="#副本数量" class="headerlink" title="副本数量"></a>副本数量</h1><p>HDFS中存储的文件快可以有多个副本，默认3个</p>
+<p>参数：dfs.replication</p>
+<p>默认：3</p>
+<p>此参数用于客户端程序，也就是说，HDFS里面存储的文件块的<strong>副本数</strong>完全由客户端决定</p>
+<blockquote>
+<p>为什么要默认3个？<br>第一个副本：存在离客户端系统最近的一台DataNode上；<br>第二个副本：存在跟上一台DataNode相同的机架的另一台DataNode上；<br>第三个副本：存在另一个机架上的某台DataNode上</p>
+</blockquote>
+<h1 id="NameNode元数据存储目录"><a href="#NameNode元数据存储目录" class="headerlink" title="NameNode元数据存储目录"></a>NameNode元数据存储目录</h1><p>元数据存储目录就是NameNode的工作目录，其位置由以下参数决定：</p>
+<p>参数：dfs.namenode.name.dir</p>
+<p>默认：file://${hadoop.tmp.dir}/dfs/name</p>
+<p>此参数是给服务端程序NameNode使用</p>
+<p>此参数默认值<strong>在生产中</strong>并不合适，应该给NameNode专门配置一个安全的位置作为工作目录</p>
+<p>正确做法：应该给NameNode配置多个目录，而且这多个目录应该挂载不同的磁盘<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.name.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">value</span>&gt;</span>/mnt/disk1,/mnt/disk2,/mnt/disk3,nfs://<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>配置多个目录后，NameNode会往个目录中写入==相同的数据==作为冗余备份</p>
+<h1 id="DataNode文件块存储目录"><a href="#DataNode文件块存储目录" class="headerlink" title="DataNode文件块存储目录"></a>DataNode文件块存储目录</h1><p>DataNode的工作目录也是参数可配的：</p>
+<p>参数：dfs.datanode.data.dir</p>
+<p>默认：file://${hadoop.tmp.dir}/dfs/data</p>
+<p>默认配置在生产系统中并不合适，应该让DataNode的工作目录指定到服务器上用于存储数据的多块数据磁盘上<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.datanode.name.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">value</span>&gt;</span>/data/disk1,/data/disk2,/data/disk3<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>配置多个目录后，NameNode会往个目录中写入==不同的数据==，以扩大DataNode自身的容量</p>
+<h1 id="HDFS动态扩容"><a href="#HDFS动态扩容" class="headerlink" title="HDFS动态扩容"></a>HDFS动态扩容</h1><p>扩容就是增加DataNode，DataNode可以在线扩容。</p>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
+<li>准备一台服务器，配置好环境：网络、IP、防火墙、免密登录、JDK；</li>
+<li>从原集群的任意一台机器上复制Hadoop安装包到新机器上；</li>
+<li>在原集群的slaves文件中添加新机器的主机名；</li>
+<li>在新机器上启动DataNode即可。</li>
+</ol>
+<h2 id="DataNode启动方法"><a href="#DataNode启动方法" class="headerlink" title="DataNode启动方法"></a>DataNode启动方法</h2><ol>
+<li>直接用<code>start-dfs.sh</code></li>
+<li>在新机器上手动启动一个DataNode进程：<code>hadoop-daemon.sh start datanode</code></li>
+</ol>
+
       
     </div>
     
@@ -459,6 +516,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop/" rel="tag"># Hadoop</a>
+          
+        </div>
       
 
       
@@ -533,8 +596,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -558,7 +630,25 @@
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
             
 
           </nav>
@@ -578,6 +668,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#块大小"><span class="nav-number">1.</span> <span class="nav-text">块大小</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#副本数量"><span class="nav-number">2.</span> <span class="nav-text">副本数量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NameNode元数据存储目录"><span class="nav-number">3.</span> <span class="nav-text">NameNode元数据存储目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DataNode文件块存储目录"><span class="nav-number">4.</span> <span class="nav-text">DataNode文件块存储目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HDFS动态扩容"><span class="nav-number">5.</span> <span class="nav-text">HDFS动态扩容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#步骤"><span class="nav-number">5.1.</span> <span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DataNode启动方法"><span class="nav-number">5.2.</span> <span class="nav-text">DataNode启动方法</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
