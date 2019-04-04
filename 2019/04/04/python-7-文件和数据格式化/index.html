@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Python,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="文件的使用文件的类型文件的理解文件是数据的抽象和集合  文件是存储在辅助存储器上的数据序列 文件是数据存储的一种形式 文件展现形态：文本文件和二进制文件">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python(7)文件和数据格式化">
+<meta property="og:url" content="http://yoursite.com/2019/04/04/python-7-文件和数据格式化/index.html">
+<meta property="og:site_name" content="wangjiaxi&#39;s notebook">
+<meta property="og:description" content="文件的使用文件的类型文件的理解文件是数据的抽象和集合  文件是存储在辅助存储器上的数据序列 文件是数据存储的一种形式 文件展现形态：文本文件和二进制文件">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6">
+<meta property="og:image" content="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6">
+<meta property="og:image" content="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6">
+<meta property="og:image" content="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6">
+<meta property="og:image" content="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6">
+<meta property="og:image" content="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6">
+<meta property="og:image" content="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6">
+<meta property="og:image" content="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6">
+<meta property="og:image" content="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6">
+<meta property="og:updated_time" content="2019-04-04T09:24:32.144Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python(7)文件和数据格式化">
+<meta name="twitter:description" content="文件的使用文件的类型文件的理解文件是数据的抽象和集合  文件是存储在辅助存储器上的数据序列 文件是数据存储的一种形式 文件展现形态：文本文件和二进制文件">
+<meta name="twitter:image" content="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/04/python-7-文件和数据格式化/">
+
+
+
+
+
+  <title>python(7)文件和数据格式化 | wangjiaxi's notebook</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">wangjiaxi's notebook</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/04/python-7-文件和数据格式化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wangjiaxi">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangjiaxi's notebook">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python(7)文件和数据格式化</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-04T15:39:03+08:00">
+                2019-04-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="文件的使用"><a href="#文件的使用" class="headerlink" title="文件的使用"></a>文件的使用</h1><h2 id="文件的类型"><a href="#文件的类型" class="headerlink" title="文件的类型"></a>文件的类型</h2><h3 id="文件的理解"><a href="#文件的理解" class="headerlink" title="文件的理解"></a>文件的理解</h3><p>文件是数据的抽象和集合</p>
+<ul>
+<li>文件是存储在辅助存储器上的数据序列</li>
+<li>文件是数据存储的一种形式</li>
+<li>文件展现形态：文本文件和二进制文件</li>
+</ul>
+<a id="more"></a>
+<p>文本文件 vs 二进制文件</p>
+<ul>
+<li>文本文件和二进制文件只是文件的展示方式</li>
+<li>本质上，所有文件都是二进制形式存储</li>
+<li>形式上，所有文件采用两种方式展示</li>
+</ul>
+<p>文本文件</p>
+<ul>
+<li>由<strong>单一特定编码</strong>组成的文件，如UTF-8编码</li>
+<li>由于存在编码，也被看成是存储着的长字符串</li>
+<li>适用于例如：.txt文件、.py文件</li>
+</ul>
+<p>二进制文件</p>
+<ul>
+<li>直接由比特0和1组成，<strong>没有统一字符编码</strong></li>
+<li>一般存在二进制0和1的组织结构，即文件格式</li>
+<li>适用于例如：.png文件、.avi文件等</li>
+</ul>
+<h2 id="文件的打开和关闭"><a href="#文件的打开和关闭" class="headerlink" title="文件的打开和关闭"></a>文件的打开和关闭</h2><p>文件处理的步骤：打开-操作-关闭</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">文件的存储状态-&gt;&gt;文件的占用状态: a = open( , )</span><br><span class="line">文件的占用状态-&gt;&gt;文件的存储状态: a.close()</span><br></pre></td></tr></table></figure>
+<p>文件打开以后就可以对文件进行读写</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//读文件函数</span><br><span class="line">a.read(size)</span><br><span class="line">a.readline(size)</span><br><span class="line">a.readlines(hint)</span><br><span class="line"></span><br><span class="line">//写文件函数</span><br><span class="line">a.write(s)</span><br><span class="line">a.writelines(lines)</span><br><span class="line">a.seek(offset)</span><br></pre></td></tr></table></figure>
+<p>文件路径<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;变量名&gt; = open(&lt;文件名&gt;, &lt;打开模式&gt;)</span><br></pre></td></tr></table></figure></p>
+<p>打开模式</p>
+<table>
+<thead>
+<tr>
+<th>文件的打开模式</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>‘r’</td>
+<td>只读模式，默认值，如果文件不存在，返回FileNotFoundError</td>
+</tr>
+<tr>
+<td>‘w’</td>
+<td>覆盖写模式，文件不存在则创建，存在则完全覆盖</td>
+</tr>
+<tr>
+<td>‘x’</td>
+<td>创建写模式，文件不存在则创建，存在则返回FileExistsError</td>
+</tr>
+<tr>
+<td>‘a’</td>
+<td>追加写模式，文件不存在则创建，存在则在文件最后追加内容</td>
+</tr>
+<tr>
+<td>‘b’</td>
+<td>二进制文件模式</td>
+</tr>
+<tr>
+<td>‘t’</td>
+<td>文本文件模式，默认值</td>
+</tr>
+<tr>
+<td>‘+’</td>
+<td>与r/w/x/a一同使用，在原功能基础上增加同时读写功能</td>
+</tr>
+</tbody>
+</table>
+<p>文件的关闭<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;文件名&gt;.close()</span><br></pre></td></tr></table></figure></p>
+<h2 id="文件内容的读取"><a href="#文件内容的读取" class="headerlink" title="文件内容的读取"></a>文件内容的读取</h2><table>
+<thead>
+<tr>
+<th>操作方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><f>.read(size=-1)</f></td>
+<td>读入全部内容，如果给出参数，读入前size长度</td>
+</tr>
+<tr>
+<td><f>.readline(size=-1)</f></td>
+<td>读入全部内容，如果给出参数，读入该行前size长度</td>
+</tr>
+<tr>
+<td><f>.readlines(hint=-1)</f></td>
+<td>读入文件所有行，以每行为元素形成列表，如果给出参数，读入前hint行</td>
+</tr>
+</tbody>
+</table>
+<p>文件的全文本操作</p>
+<ul>
+<li><p>遍历全文本：方法一</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fname = input(<span class="string">"请输入要打开的文件名称："</span>)</span><br><span class="line">fo = open(fname,<span class="string">"r"</span>)</span><br><span class="line">txt = fo.read()</span><br><span class="line"><span class="comment">#对全文txt进行处理</span></span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>遍历全文本：方法二</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fname = input(<span class="string">"请输入要打开的文件名称："</span>)</span><br><span class="line">fo = open(fname,<span class="string">"r"</span>)</span><br><span class="line">txt = fo.read(<span class="number">2</span>)</span><br><span class="line"><span class="keyword">while</span> txt != <span class="string">""</span>:</span><br><span class="line">    <span class="comment">#对txt进行处理</span></span><br><span class="line">    txt = fo.read(<span class="number">2</span>)</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>文件的逐行操作</p>
+<ul>
+<li><p>逐行遍历文件：方法一</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fname = input(<span class="string">"请输入要打开的文件名称："</span>)</span><br><span class="line">fo = open(fname,<span class="string">"r"</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fo.readlines():</span><br><span class="line">    print(line)</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>逐行遍历文件：方法二</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fname = input(<span class="string">"请输入要打开的文件名称："</span>)</span><br><span class="line">fo = open(fname,<span class="string">"r"</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fo:</span><br><span class="line">    print(line)</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="数据的文件写入"><a href="#数据的文件写入" class="headerlink" title="数据的文件写入"></a>数据的文件写入</h2><table>
+<thead>
+<tr>
+<th>操作方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><f>.write(s)</f></td>
+<td>向文件写入一个字符串或字节流</td>
+</tr>
+<tr>
+<td><f>.writelines(lines)</f></td>
+<td>将一个元素全为字符串的列表写入文件</td>
+</tr>
+<tr>
+<td><f>.seek(offset)</f></td>
+<td>改变当前文件操作指针的位置，offset含义如下：0-文件开头，1-当前位置，2-文件结尾</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fo = open(<span class="string">"output.txt"</span>,<span class="string">"w+"</span>)</span><br><span class="line">ls = [<span class="string">"中国"</span>,<span class="string">"法国"</span>,<span class="string">"美国"</span>]</span><br><span class="line">fo.writelines(ls)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fo:</span><br><span class="line">      print(line)</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure>
+<p>此时控制台没有任何输出</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fo = open(<span class="string">"output.txt"</span>,<span class="string">"w+"</span>)</span><br><span class="line">ls = [<span class="string">"中国"</span>,<span class="string">"法国"</span>,<span class="string">"美国"</span>]</span><br><span class="line">fo.writelines(ls)</span><br><span class="line">fo.seek(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fo:</span><br><span class="line">      print(line)</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure>
+<p>此时输出“中国法国美国”</p>
+<h1 id="实例：自动轨迹绘制"><a href="#实例：自动轨迹绘制" class="headerlink" title="实例：自动轨迹绘制"></a>实例：自动轨迹绘制</h1><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><ul>
+<li>需求：根据脚本来绘制图形</li>
+<li>不是写代码而是数据绘制图形</li>
+<li>数据脚本是自动化最重要的第一步</li>
+</ul>
+<h2 id="基本思路"><a href="#基本思路" class="headerlink" title="基本思路"></a>基本思路</h2><ul>
+<li>步骤1：定义数据文件格式（接口）</li>
+<li>步骤2：编写程序，根据文件接口解析参数绘制图形</li>
+<li>步骤3：编制数据文件</li>
+</ul>
+<h2 id="编写程序"><a href="#编写程序" class="headerlink" title="编写程序"></a>编写程序</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#AutoTraceDraw.py</span></span><br><span class="line"><span class="keyword">import</span> turtle <span class="keyword">as</span> t</span><br><span class="line">t.title(<span class="string">'自动轨迹绘制'</span>)</span><br><span class="line">t.setup(<span class="number">800</span>,<span class="number">600</span>,<span class="number">0</span>,<span class="number">0</span>)</span><br><span class="line">t.pencolor(<span class="string">"red"</span>)</span><br><span class="line">t.pensize(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#数据读取</span></span><br><span class="line">datals = []</span><br><span class="line">f = open(<span class="string">"data.txt"</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">      line = line.replace(<span class="string">"\n"</span>,<span class="string">""</span>)</span><br><span class="line">      datals.append(list(map(eval, line.split(<span class="string">","</span>))))</span><br><span class="line"></span><br><span class="line"><span class="comment">#自动绘制</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(datals)):</span><br><span class="line">      t.pencolor(datals[i][<span class="number">3</span>],datals[i][<span class="number">4</span>],datals[i][<span class="number">5</span>])</span><br><span class="line">      t.fd(datals[i][<span class="number">0</span>])</span><br><span class="line">      <span class="keyword">if</span> datals[i][<span class="number">1</span>]:</span><br><span class="line">            t.right(datals[i][<span class="number">2</span>])</span><br><span class="line">      <span class="keyword">else</span>:</span><br><span class="line">            t.left(datals[i][<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+<h2 id="数据文件"><a href="#数据文件" class="headerlink" title="数据文件"></a>数据文件</h2><p>data.txt</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">300,0,144,1,0,0</span><br><span class="line">300,0,144,0,1,0</span><br><span class="line">300,0,144,0,0,1</span><br><span class="line">300,0,144,1,1,0</span><br><span class="line">300,0,108,0,1,1</span><br><span class="line">184,0,72,1,0,1</span><br><span class="line">184,0,72,0,0,0</span><br><span class="line">184,0,72,0,0,0</span><br><span class="line">184,0,72,0,0,0</span><br><span class="line">184,1,72,1,0,1</span><br><span class="line">184,1,72,0,0,0</span><br><span class="line">184,1,72,0,0,0</span><br><span class="line">184,1,72,0,0,0</span><br><span class="line">184,1,72,0,0,0</span><br><span class="line">184,1,720,0,0,0</span><br></pre></td></tr></table></figure>
+<h2 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h2><p><img src="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6" alt="image">/%E8%87%AA%E5%8A%A8%E8%BD%A8%E8%BF%B9%E7%BB%98%E5%88%B6.jpg)</p>
+<h1 id="一维数据的格式化和处理"><a href="#一维数据的格式化和处理" class="headerlink" title="一维数据的格式化和处理"></a>一维数据的格式化和处理</h1><h2 id="数据组织的维度"><a href="#数据组织的维度" class="headerlink" title="数据组织的维度"></a>数据组织的维度</h2><p>从一个数据到一组数据：一个数据表达一个含义，一组数据表达一个或多个含义</p>
+<ul>
+<li>一维数据：由对等关系的有序或无序数据构成，采用线性方式组织，对应列表、数组、集合等概念。</li>
+<li>二维数据：由多个一维数据构成，是一维数据的组合形式。表格是典型的二维数据。</li>
+<li>多维数据：由一维或二维数据在新的维度上扩展形成</li>
+<li>高维数据：键值对</li>
+</ul>
+<p>数据的操作周期：存储&lt;->表示&lt;->操作</p>
+<h2 id="一维数据的表示"><a href="#一维数据的表示" class="headerlink" title="一维数据的表示"></a>一维数据的表示</h2><p>如果数据间有序：使用列表类型</p>
+<ul>
+<li>列表类型可以表达一维有序数据</li>
+<li>for循环可以遍历数据，进而对每个数据进行处理</li>
+</ul>
+<p>如果数据间无序：使用集合类型</p>
+<ul>
+<li>集合类型可以表达一维无需数据</li>
+<li>for循环可以遍历数据，进而对每个数据进行处理</li>
+</ul>
+<h2 id="一维数据的存储"><a href="#一维数据的存储" class="headerlink" title="一维数据的存储"></a>一维数据的存储</h2><ol>
+<li>存储方式一：空格分隔</li>
+</ol>
+<ul>
+<li>使用一个或多个空格分隔进行存储，不换行</li>
+<li>缺点：数据中不能存在空格</li>
+</ul>
+<ol start="2">
+<li>存储方式二：逗号分隔</li>
+</ol>
+<ul>
+<li>使用英文半角逗号分隔数据进行存储，不换行</li>
+<li>缺点：数据中不能有英文逗号</li>
+</ul>
+<ol start="3">
+<li>存储方式三：其他方式</li>
+</ol>
+<ul>
+<li>使用其他符号或符号组合分隔，建议采用特殊符号</li>
+<li>缺点：需要根据数据特点定义，通用性较差</li>
+</ul>
+<h2 id="一维数据的处理"><a href="#一维数据的处理" class="headerlink" title="一维数据的处理"></a>一维数据的处理</h2><p>从空格分割的文件中<strong>读入</strong>数据<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">txt = open(fname).read()</span><br><span class="line">ls = txt.split()</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure></p>
+<p>从特殊符号分割的文件中<strong>读入</strong>数据<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">txt = open(fname).read()</span><br><span class="line">ls = txt.split(<span class="string">"$"</span>)</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure></p>
+<p>采用空格分隔方式将数据写入文件<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ls = [<span class="string">"中国"</span>,<span class="string">"美国"</span>,<span class="string">"日本"</span>]</span><br><span class="line">f = open(fname,<span class="string">'w'</span>)</span><br><span class="line">f.write(<span class="string">' '</span>.join(ls))</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure></p>
+<h1 id="二维数据的格式化和处理"><a href="#二维数据的格式化和处理" class="headerlink" title="二维数据的格式化和处理"></a>二维数据的格式化和处理</h1><h2 id="二维数据的表示"><a href="#二维数据的表示" class="headerlink" title="二维数据的表示"></a>二维数据的表示</h2><p>使用列表类型（二维列表）</p>
+<ul>
+<li>使用两层for循环遍历每个元素</li>
+<li>外层列表中每个元素可以对应一行，也可以对应一列</li>
+</ul>
+<h2 id="CSV格式与二维数据的存储"><a href="#CSV格式与二维数据的存储" class="headerlink" title="CSV格式与二维数据的存储"></a>CSV格式与二维数据的存储</h2><p>CSV：Comma-Separated Values</p>
+<ul>
+<li>国际通用的一二维数据存储格式，一般.csv扩展名</li>
+<li>每行一个一维数据，采用逗号分隔，无空行</li>
+<li>Excel可读入输出，一般编辑软件都可以产生</li>
+<li>如果某个元素确缺失，逗号仍要保留</li>
+<li>二维数据的表头可以作为数据存储，也可以另行存储</li>
+</ul>
+<p>二维数据的存储</p>
+<ul>
+<li>按行存或按列存都可以，具体由程序决定</li>
+<li>一般索引习惯：<code>ls[row][column]</code>，先行后列</li>
+<li>根据一般习惯，外层列表每个元素是一行，按行存</li>
+</ul>
+<h2 id="二维数据的处理"><a href="#二维数据的处理" class="headerlink" title="二维数据的处理"></a>二维数据的处理</h2><p>从CSV文件中读入数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fo = open(fname)</span><br><span class="line">ls =[]</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fo:</span><br><span class="line">    line = line.replace(<span class="string">"\n"</span>,<span class="string">""</span>)</span><br><span class="line">    ls.append(line.split(<span class="string">","</span>))</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure>
+<p>将数据写入CSV文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ls = [[],[],[]]  <span class="comment">#二维列表</span></span><br><span class="line">f.open(fname,<span class="string">'w'</span>)</span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> ls:</span><br><span class="line">    f.write(<span class="string">','</span>.join(item) + <span class="string">'\n'</span>)</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+<p>二维数据的逐一处理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ls = [[],[],[]]  <span class="comment">#二维列表</span></span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> ls:</span><br><span class="line">    <span class="keyword">for</span> column <span class="keyword">in</span> row:</span><br><span class="line">        print(ls[row][column])</span><br></pre></td></tr></table></figure>
+<h1 id="wordcloud库的使用"><a href="#wordcloud库的使用" class="headerlink" title="wordcloud库的使用"></a>wordcloud库的使用</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>wordcloud是优秀的词云展示的第三方库，词云以词语为基本单位，更加直观和艺术的展示文本。</p>
+<ul>
+<li>安装命令<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install wordcloud</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h2><p>wordcloud库把词云当作一个WordCloud对象</p>
+<ul>
+<li>wordcloud.WordCloud()代表一个文本对应的词云</li>
+<li>可以根据文本中词语出现的频率等参数绘制词云</li>
+<li>词云的形状、尺寸和颜色都可以设定</li>
+</ul>
+<p>wordcloud库常规方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">w = wordcloud.WordCloud()</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>以WordCloud对象为基础</li>
+<li>配置参数、加载文本、输出文件</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>w.generate(txt)</td>
+<td>向WordCloud对象w中加载文本txt，<code>w.generate(&quot;python and wordcloud&quot;)</code></td>
+</tr>
+<tr>
+<td>w.to_file(filename)</td>
+<td>将词云输出成图像文件，.png或.jpg格式，<code>w.to_file(&quot;outfile.png&quot;)</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>步骤1：配置对象参数</li>
+<li>步骤2：加载词云文本</li>
+<li>步骤3：输出词云文件</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> wordcloud</span><br><span class="line">c = wordcloud.WordCloud()</span><br><span class="line">c.generate(<span class="string">"wordcloud by python"</span>)</span><br><span class="line">c.to_file(<span class="string">"pywordcloud.png"</span>)</span><br></pre></td></tr></table></figure>
+<p>从文本到图片，wordcloud做了哪些事情呢？</p>
+<ol>
+<li>分隔：以空格分隔单词</li>
+<li>统计：单词出现次数并过滤</li>
+<li>字体：根据统计配置字号</li>
+<li>布局：颜色环境尺寸</li>
+</ol>
+<p>wordcloud配置对象参数<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">w = wordcloud.WordCloud(&lt;参数&gt;)</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>width</td>
+<td>指定词云对象生成图片的宽度，默认400像素</td>
+</tr>
+<tr>
+<td>height</td>
+<td>指定词云对象生成图片的高度，默认200像素</td>
+</tr>
+<tr>
+<td>min_font_size</td>
+<td>指定词云中字体的最小字号，默认4号</td>
+</tr>
+<tr>
+<td>max_font_size</td>
+<td>指定词云中字体的最大字号，根据高度自动调节</td>
+</tr>
+<tr>
+<td>font_step</td>
+<td>指定词云中字体字号的不进间隔，默认为1</td>
+</tr>
+<tr>
+<td>font_path</td>
+<td>指定字体文件的路径，默认None</td>
+</tr>
+<tr>
+<td>max_words</td>
+<td>指定词云显示的最大单词数量，默认为200</td>
+</tr>
+<tr>
+<td>stop_words</td>
+<td>指定词云的排除词列表，即不显示的单词列表</td>
+</tr>
+<tr>
+<td>mask</td>
+<td>指定词云形状，默认为长方形，需要引用imread()函数</td>
+</tr>
+<tr>
+<td>background_color</td>
+<td>指定词云图片的背景颜色，默认为黑色</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#指定词云形状，默认为长方形，需要引用imread()函数</span></span><br><span class="line"><span class="keyword">from</span> scipy.misc <span class="keyword">import</span> imread </span><br><span class="line">mk = imread(<span class="string">"pic.png"</span>)</span><br><span class="line">w = wordcloud.WordCloud(mask = mk)</span><br></pre></td></tr></table></figure>
+<p>两个小demo<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> wordcloud</span><br><span class="line">txt = <span class="string">"life is short, you need python"</span></span><br><span class="line">w = wordcloud.WordCloud( \</span><br><span class="line">	background_color = <span class="string">"white"</span>)</span><br><span class="line">w.generate(txt)</span><br><span class="line">w.to_file(<span class="string">"d:/pywordcloud.png"</span>)</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6" alt="image">/pywordcloud.png)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="keyword">import</span> wordcloud</span><br><span class="line">txt = <span class="string">"程序设计语言是计算机能够理解和\</span></span><br><span class="line"><span class="string">识别用户操作意图的一种交互体系,它按照\</span></span><br><span class="line"><span class="string">特定规则组织计算机指令,使计算机能够自\</span></span><br><span class="line"><span class="string">动进行各种运算处理。"</span></span><br><span class="line">w = wordcloud.WordCloud( width = <span class="number">1000</span>, \</span><br><span class="line">    font_path = <span class="string">"msyh.ttc"</span>, height = <span class="number">700</span>)</span><br><span class="line">w.generate(<span class="string">" "</span>.join(jieba.lcut(txt)))</span><br><span class="line">w.to_file(<span class="string">"d:/zhongwenciyun.jpg"</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6" alt="image">/zhongwenciyun.jpg)</p>
+<h1 id="实例：政府工作报告词云"><a href="#实例：政府工作报告词云" class="headerlink" title="实例：政府工作报告词云"></a>实例：政府工作报告词云</h1><h2 id="问题分析-1"><a href="#问题分析-1" class="headerlink" title="问题分析"></a>问题分析</h2><p>直观理解政策文件</p>
+<ul>
+<li>需求：对于政府工作报告等政策文件，如何直观理解？</li>
+<li>体会直观的价值：生成词云 &amp; 优化词云</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">政府工作报告等文件 --&gt; 有效展示的词云</span><br></pre></td></tr></table></figure>
+<h2 id="基本思路和代码实现"><a href="#基本思路和代码实现" class="headerlink" title="基本思路和代码实现"></a>基本思路和代码实现</h2><ul>
+<li>步骤1：读取文件，分词整理</li>
+<li>步骤2：设置并输出词云</li>
+<li>步骤3：观察结果，优化迭代</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#GovRpWordCloudv1.py</span></span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="keyword">import</span> wordcloud</span><br><span class="line">f = open(<span class="string">"关于实施乡村振兴战略的意见.txt"</span>,<span class="string">"r"</span>,encoding=<span class="string">"utf-8"</span>)</span><br><span class="line"><span class="comment">#f = open("新时代中国特色社会主义.txt","r",encoding="utf-8")</span></span><br><span class="line">t = f.read()</span><br><span class="line">f.close()</span><br><span class="line">ls = jieba.lcut(t)</span><br><span class="line">txt = <span class="string">" "</span>.join(ls)</span><br><span class="line"><span class="comment">#w = wordcloud.WordCloud(max_words = 15,font_path = "msyh.ttc",width = 1000,height = 700,background_color = "white")</span></span><br><span class="line">w = wordcloud.WordCloud(font_path = <span class="string">"msyh.ttc"</span>,width = <span class="number">1000</span>,height = <span class="number">700</span>,background_color = <span class="string">"white"</span>)</span><br><span class="line">w.generate(txt)</span><br><span class="line">w.to_file(<span class="string">"GovRpWordCloudv1.png"</span>)</span><br></pre></td></tr></table></figure>
+<p>运行程序后，两个报告的词云如下：</p>
+<p><img src="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6" alt="image">/GovRpWordCloudv1%E4%B8%AD%E7%89%B9.png)</p>
+<p><img src="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6" alt="image">/GovRpWordCloudv1%E5%86%9C%E6%9D%91.png)</p>
+<p>增加参数<code>max_words=15</code>，结果如下：</p>
+<p><img src="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6" alt="image">/GovRpWordCloudv1%E4%B8%AD%E7%89%B915.png)</p>
+<p><img src="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6" alt="image">/GovRpWordCloudv1%E5%86%9C%E6%9D%9115.png)</p>
+<p>增加形状<code>mask = mask</code>，词云图更加漂亮：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#GovRpWordCloudv1.py</span></span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="keyword">import</span> wordcloud</span><br><span class="line"><span class="keyword">from</span> scipy.misc <span class="keyword">import</span> imread</span><br><span class="line">mask = imread(<span class="string">"chinamap.jpg"</span>)</span><br><span class="line"><span class="comment">#mask = imread("fivestars.png")</span></span><br><span class="line">f = open(<span class="string">"关于实施乡村振兴战略的意见.txt"</span>,<span class="string">"r"</span>,encoding=<span class="string">"utf-8"</span>)</span><br><span class="line"><span class="comment">#f = open("新时代中国特色社会主义.txt","r",encoding="utf-8")</span></span><br><span class="line">t = f.read()</span><br><span class="line">f.close()</span><br><span class="line">ls = jieba.lcut(t)</span><br><span class="line">txt = <span class="string">" "</span>.join(ls)</span><br><span class="line">w = wordcloud.WordCloud(mask = mask,font_path = <span class="string">"msyh.ttc"</span>,width = <span class="number">1000</span>,height = <span class="number">700</span>,background_color = <span class="string">"white"</span>)</span><br><span class="line">w.generate(txt)</span><br><span class="line">w.to_file(<span class="string">"GovRpWordCloudv1.png"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>结果展示：<br><img src="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6" alt="image">/GovRpWordCloudv1%E4%B8%AD%E7%89%B9%E4%BA%94%E6%98%9F.png)</p>
+<p><img src="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6" alt="image">/GovRpWordCloudv1%E5%86%9C%E6%9D%91%E5%9C%B0%E5%9B%BE.png)</p>
+<h2 id="扩展能力"><a href="#扩展能力" class="headerlink" title="扩展能力"></a>扩展能力</h2><ul>
+<li>了解wordcloud更多参数，扩展词云能力</li>
+<li>特色词云：设计一款属于自己的特色词云风格</li>
+<li>更多文件：用更多文件练习词云生成</li>
+</ul>
+<blockquote>
+<p>练习素材下载:<br><br><a href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6" target="_blank" rel="noopener">新时代中国特色社会主义.txt</a>/%E6%96%B0%E6%97%B6%E4%BB%A3%E4%B8%AD%E5%9B%BD%E7%89%B9%E8%89%B2%E7%A4%BE%E4%BC%9A%E4%B8%BB%E4%B9%89.txt)<br><br><a href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6" target="_blank" rel="noopener">关于实施乡村振兴战略的意见.txt</a>/%E5%85%B3%E4%BA%8E%E5%AE%9E%E6%96%BD%E4%B9%A1%E6%9D%91%E6%8C%AF%E5%85%B4%E6%88%98%E7%95%A5%E7%9A%84%E6%84%8F%E8%A7%81.txt)<br><br><a href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6" target="_blank" rel="noopener">chinamap.jpg</a>/chinamap.jpg)<br><br><a href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6" target="_blank" rel="noopener">fivestars.png</a>/fivestars.png)</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>鼓励一下</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="wangjiaxi 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="wangjiaxi 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    wangjiaxi
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2019/04/04/python-7-文件和数据格式化/" title="python(7)文件和数据格式化">http://yoursite.com/2019/04/04/python-7-文件和数据格式化/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/04/python-6-组合数据类型/" rel="next" title="python(6)组合数据类型">
+                <i class="fa fa-chevron-left"></i> python(6)组合数据类型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/04/python-8-程序设计方法学/" rel="prev" title="python(8)程序设计方法学">
+                python(8)程序设计方法学 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="wangjiaxi">
+            
+              <p class="site-author-name" itemprop="name">wangjiaxi</p>
+              <p class="site-description motion-element" itemprop="description">做个正常人</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/wangjiaxi/" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="wangjiaxi.cv@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-evenlope"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#文件的使用"><span class="nav-number">1.</span> <span class="nav-text">文件的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件的类型"><span class="nav-number">1.1.</span> <span class="nav-text">文件的类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文件的理解"><span class="nav-number">1.1.1.</span> <span class="nav-text">文件的理解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件的打开和关闭"><span class="nav-number">1.2.</span> <span class="nav-text">文件的打开和关闭</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件内容的读取"><span class="nav-number">1.3.</span> <span class="nav-text">文件内容的读取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据的文件写入"><span class="nav-number">1.4.</span> <span class="nav-text">数据的文件写入</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实例：自动轨迹绘制"><span class="nav-number">2.</span> <span class="nav-text">实例：自动轨迹绘制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题分析"><span class="nav-number">2.1.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思路"><span class="nav-number">2.2.</span> <span class="nav-text">基本思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写程序"><span class="nav-number">2.3.</span> <span class="nav-text">编写程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据文件"><span class="nav-number">2.4.</span> <span class="nav-text">数据文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行结果"><span class="nav-number">2.5.</span> <span class="nav-text">运行结果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一维数据的格式化和处理"><span class="nav-number">3.</span> <span class="nav-text">一维数据的格式化和处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据组织的维度"><span class="nav-number">3.1.</span> <span class="nav-text">数据组织的维度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一维数据的表示"><span class="nav-number">3.2.</span> <span class="nav-text">一维数据的表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一维数据的存储"><span class="nav-number">3.3.</span> <span class="nav-text">一维数据的存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一维数据的处理"><span class="nav-number">3.4.</span> <span class="nav-text">一维数据的处理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二维数据的格式化和处理"><span class="nav-number">4.</span> <span class="nav-text">二维数据的格式化和处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二维数据的表示"><span class="nav-number">4.1.</span> <span class="nav-text">二维数据的表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSV格式与二维数据的存储"><span class="nav-number">4.2.</span> <span class="nav-text">CSV格式与二维数据的存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二维数据的处理"><span class="nav-number">4.3.</span> <span class="nav-text">二维数据的处理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#wordcloud库的使用"><span class="nav-number">5.</span> <span class="nav-text">wordcloud库的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本介绍"><span class="nav-number">5.1.</span> <span class="nav-text">基本介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用说明"><span class="nav-number">5.2.</span> <span class="nav-text">使用说明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实例：政府工作报告词云"><span class="nav-number">6.</span> <span class="nav-text">实例：政府工作报告词云</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题分析-1"><span class="nav-number">6.1.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思路和代码实现"><span class="nav-number">6.2.</span> <span class="nav-text">基本思路和代码实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展能力"><span class="nav-number">6.3.</span> <span class="nav-text">扩展能力</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangjiaxi</span>
+
+  
+</div>
+
+
+  <script src="https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script id="ribbon" type="text/javascript" size="300" alpha="0.6" zindex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
