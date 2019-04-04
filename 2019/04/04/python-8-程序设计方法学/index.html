@@ -138,10 +138,12 @@
 <meta property="og:site_name" content="wangjiaxi&#39;s notebook">
 <meta property="og:description" content="实例：体育竞技分析 高手过招，胜负只在毫厘之间  “体育竞技分析”问题分析体育竞技分析 需求：毫厘是多少？如何科学分析体育竞技比赛？  输入：球员的水平  输出：可预测的比赛成绩">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-04T09:24:20.569Z">
+<meta property="og:image" content="http://yoursite.com/2019/04/04/python-8-程序设计方法学/2019/04/04/python-8-程序设计方法学/result.png">
+<meta property="og:updated_time" content="2019-04-04T15:31:51.412Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python(8)程序设计方法学">
 <meta name="twitter:description" content="实例：体育竞技分析 高手过招，胜负只在毫厘之间  “体育竞技分析”问题分析体育竞技分析 需求：毫厘是多少？如何科学分析体育竞技比赛？  输入：球员的水平  输出：可预测的比赛成绩">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/04/python-8-程序设计方法学/2019/04/04/python-8-程序设计方法学/result.png">
 
 
 
@@ -397,7 +399,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-04-04T17:24:20+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2019-04-04T23:31:51+08:00">
                 2019-04-04
               </time>
             
@@ -447,7 +449,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  
+                  2.1k
                 </span>
               
 
@@ -463,7 +465,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  
+                  8
                 </span>
               
             </div>
@@ -518,7 +520,7 @@
 <li>步骤4：输出球员A和B获胜比赛的场次及概率   - printSummary()</li>
 </ul>
 <h3 id="全代码"><a href="#全代码" class="headerlink" title="全代码"></a>全代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printIntro</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">"这个程序模拟两个选手A和B的某种竞技比赛"</span>)</span><br><span class="line">    print(<span class="string">"程序运行需要A和B的能力值（以0到1之间的小数表示）"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getInputs</span><span class="params">()</span>:</span></span><br><span class="line">    a = eval(input(<span class="string">"请输入选手A的能力值（0-1）："</span>))</span><br><span class="line">    b = eval(input(<span class="string">"请输入选手B的能力值（0-1）："</span>))</span><br><span class="line">    n = eval(input(<span class="string">"模拟比赛的场次："</span>))</span><br><span class="line">    <span class="keyword">return</span> a, b, n</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printSummary</span><span class="params">(winsA, winsB)</span>:</span></span><br><span class="line">    n = winsA + winsB</span><br><span class="line">    print(<span class="string">"竞技分析开始，共模拟&#123;&#125;场比赛"</span>.format(n))</span><br><span class="line">    print(<span class="string">"选手A获胜&#123;&#125;场比赛，占比&#123;:0.1%&#125;"</span>.format(winsA, winsA/n))</span><br><span class="line">    print(<span class="string">"选手B获胜&#123;&#125;场比赛，占比&#123;:0.1%&#125;"</span>.format(winsB, winsB/n))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gameOver</span><span class="params">(a, b)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> a==<span class="number">15</span> <span class="keyword">or</span> b==<span class="number">15</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simOneGame</span><span class="params">(probA, probB)</span>:</span></span><br><span class="line">    scoreA, scoreB = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    serving =<span class="string">"A"</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> gameOver(scoreA,scoreB):</span><br><span class="line">        <span class="keyword">if</span> serving == <span class="string">"A"</span>:</span><br><span class="line">            <span class="keyword">if</span> random() &lt; probA:</span><br><span class="line">                scoreA += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                serving = <span class="string">"B"</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> random() &lt; probB:</span><br><span class="line">                scoreB += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                serving = <span class="string">"A"</span></span><br><span class="line">    <span class="keyword">return</span> scoreA, scoreB</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simNGames</span><span class="params">(n, probA, probB)</span>:</span></span><br><span class="line">    winsA, winsB = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">        scoreA, scoreB = simOneGame(probA, probB)</span><br><span class="line">        <span class="keyword">if</span> scoreA &gt; scoreB:</span><br><span class="line">            winsA += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            winsB += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> winsA, winsB</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    printIntro()</span><br><span class="line">    probA, probB, n = getInputs()</span><br><span class="line">    winsA, winsB = simNGames(n, probA, probB)</span><br><span class="line">    printSummary(winsA, winsB)</span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
-<h3 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h3>
+<h3 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h3><img src="/2019/04/04/python-8-程序设计方法学/2019/04/04/python-8-程序设计方法学/result.png">
 <h2 id="举一反三"><a href="#举一反三" class="headerlink" title="举一反三"></a>举一反三</h2><ol>
 <li>理解自顶向下和自底向上</li>
 </ol>
@@ -584,7 +586,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="os库的路径操作"><a href="#os库的路径操作" class="headerlink" title="os库的路径操作"></a>os库的路径操作</h2><p>os.path子库以path为入口，用于操作和处理文件路径<br>| 函数                        | 描述                                              |<br>| ————————— | ————————————————- |<br>| <code>os.path.abspath(path)</code>     | 返回path在当前系统中的绝对路径                    |<br>| <code>os.path.normpath(path)</code>    | 归一化path的表示形式，统一用\\分隔路径          |<br>| <code>os.path.relpath(path)</code>     | 返回当前程序与文件之间的相对路径（relative path） |<br>| <code>os.path.dirname(path)</code>     | 返回path中的目录名称                              |<br>| <code>os.path.basename(path)</code>    | 返回path中最后的文件名称                          |<br>| <code>os.path.join(path,*paths)</code> | 组合path与paths，返回一个路径字符串               |<br>| <code>os.path.exists(path)</code>      | 判断path对应文件或目录是否存在，返回True或False   |<br>| <code>os.path.isfile(path)</code>      | 判断path所对应是否为已存在的文件，返回True或False |<br>| <code>os.path.isdir(path)</code>       | 判断path所对应是否为已存在的目录，返回True或False |<br>| <code>os.path.getatime(path)</code>    | 返回path对应文件或目录上一次的访问时间            |<br>| <code>os.path.getmtime(path)</code>    | 返回path对应文件或目录最近一次的修改时间          |<br>| <code>os.path.getctime(path)</code>    | 返回path对应文件或目录创建时间                    |<br>| <code>os.path.getsize(path)</code>     | 返回path对应文件的大小，以字节为单位              |</p>
+<h2 id="os库的路径操作"><a href="#os库的路径操作" class="headerlink" title="os库的路径操作"></a>os库的路径操作</h2><p>os.path子库以path为入口，用于操作和处理文件路径<br>| 函数                        | 描述                                  |<br>| ————————— | ——————————— |<br>| <code>os.path.abspath(path)</code>  | 返回path在当前系统中的绝对路径             |<br>| <code>os.path.normpath(path)</code>  | 归一化path的表示形式，统一用\\分隔路径      |<br>| <code>os.path.relpath(path)</code> | 返回当前程序与文件之间的相对路径（relative path）|<br>| <code>os.path.dirname(path)</code>   | 返回path中的目录名称                        |<br>| <code>os.path.basename(path)</code> | 返回path中最后的文件名称                  |<br>| <code>os.path.join(path,*paths)</code> | 组合path与paths，返回一个路径字符串         |<br>| <code>os.path.exists(path)</code> | 判断path对应文件或目录是否存在，返回True或False   |<br>| <code>os.path.isfile(path)</code>  | 判断path所对应是否为已存在的文件，返回True或False|<br>| <code>os.path.isdir(path)</code>  | 判断path所对应是否为已存在的目录，返回True或False |<br>| <code>os.path.getatime(path)</code>  | 返回path对应文件或目录上一次的访问时间        |<br>| <code>os.path.getmtime(path)</code>    | 返回path对应文件或目录最近一次的修改时间     |<br>| <code>os.path.getctime(path)</code>    | 返回path对应文件或目录创建时间             |<br>| <code>os.path.getsize(path)</code>     | 返回path对应文件的大小，以字节为单位        |</p>
 <h2 id="os库的进程管理"><a href="#os库的进程管理" class="headerlink" title="os库的进程管理"></a>os库的进程管理</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">os.system(command)</span><br></pre></td></tr></table></figure>
 <ul>
 <li>执行程序或命令command</li>
@@ -898,7 +900,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -981,7 +983,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count"></span>
+    <span title="Site words total count">21.4k</span>
   
 </div>
 
