@@ -137,13 +137,13 @@
 <meta property="og:site_name" content="wangjiaxi&#39;s notebook">
 <meta property="og:description" content="梯度的重构利用像素之间的梯度值和虚拟深度值对图像进行重构，根据灰度变化来模拟人类视觉的明暗程度。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2019/04/04/Python实现照片的手绘效果/BLOG/source/_posts/Python实现照片的手绘效果/yunwuyue.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/04/04/Python实现照片的手绘效果/BLOG/source/_posts/Python实现照片的手绘效果/yunwuyueHD.jpg">
-<meta property="og:updated_time" content="2019-04-05T00:51:59.740Z">
+<meta property="og:image" content="http://yoursite.com/2019/04/04/Python实现照片的手绘效果/yunwuyue.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/04/04/Python实现照片的手绘效果/yunwuyueHD.jpg">
+<meta property="og:updated_time" content="2019-04-05T00:54:50.862Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python实现照片的手绘效果">
 <meta name="twitter:description" content="梯度的重构利用像素之间的梯度值和虚拟深度值对图像进行重构，根据灰度变化来模拟人类视觉的明暗程度。">
-<meta name="twitter:image" content="http://yoursite.com/2019/04/04/Python实现照片的手绘效果/BLOG/source/_posts/Python实现照片的手绘效果/yunwuyue.jpg">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/04/Python实现照片的手绘效果/yunwuyue.jpg">
 
 
 
@@ -481,7 +481,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-05 08:51:59" itemprop="dateModified" datetime="2019-04-05T08:51:59+08:00">2019-04-05</time>
+                <time title="修改时间：2019-04-05 08:54:50" itemprop="dateModified" datetime="2019-04-05T08:54:50+08:00">2019-04-05</time>
               
             
           </span>
@@ -543,8 +543,8 @@
 </ol>
 <h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><p>用到的第三方库安装：<code>pip install pillow`</code>pip install numpy`</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#image.py</span></span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a = np.asarray(Image.open(<span class="string">'./yunwuyue.jpg'</span>).convert(<span class="string">'L'</span>)).astype(<span class="string">'float'</span>)</span><br><span class="line"></span><br><span class="line">depth = <span class="number">10.</span>     <span class="comment">#预设深度值为10，取值范围0-100</span></span><br><span class="line">grad = np.gradient(a)       <span class="comment">#提取x和y方向的梯度值</span></span><br><span class="line">grad_x, grad_y = grad</span><br><span class="line"><span class="comment">#根据深度值调整x和y方向的梯度值</span></span><br><span class="line">grad_x = grad_x * depth / <span class="number">100.</span></span><br><span class="line">grad_y = grad_y * depth / <span class="number">100.</span></span><br><span class="line">A = np.sqrt(grad_x**<span class="number">2</span> + grad_y**<span class="number">2</span> + <span class="number">1.</span>)</span><br><span class="line">uni_x = grad_x / A</span><br><span class="line">uni_y = grad_y / A</span><br><span class="line">uni_z = <span class="number">1.</span> / A</span><br><span class="line"></span><br><span class="line">vec_el = np.pi / <span class="number">2.2</span></span><br><span class="line">vec_az = np.pi / <span class="number">4</span></span><br><span class="line">dx = np.cos(vec_el) * np.cos(vec_az)</span><br><span class="line">dy = np.cos(vec_el) * np.sin(vec_az)</span><br><span class="line">dz = np.sin(vec_el)</span><br><span class="line"></span><br><span class="line">b = <span class="number">255</span> * (dx * uni_x + dy * uni_y + dz * uni_z)</span><br><span class="line">b = b.clip(<span class="number">0</span>, <span class="number">255</span>)</span><br><span class="line"></span><br><span class="line">im = Image.fromarray(b.astype(<span class="string">'uint8'</span>))</span><br><span class="line">im.save(<span class="string">'./yunwuyueHD.jpg'</span>)</span><br></pre></td></tr></table></figure>
-<h1 id="展示"><a href="#展示" class="headerlink" title="展示"></a>展示</h1><p><img src="/2019/04/04/Python实现照片的手绘效果/BLOG\source\_posts\Python实现照片的手绘效果\yunwuyue.jpg" alt></p>
-<p><img src="/2019/04/04/Python实现照片的手绘效果/BLOG\source\_posts\Python实现照片的手绘效果\yunwuyueHD.jpg" alt></p>
+<h1 id="展示"><a href="#展示" class="headerlink" title="展示"></a>展示</h1><p><img src="/2019/04/04/Python实现照片的手绘效果/yunwuyue.jpg" alt></p>
+<p><img src="/2019/04/04/Python实现照片的手绘效果/yunwuyueHD.jpg" alt></p>
 
       
     </div>
