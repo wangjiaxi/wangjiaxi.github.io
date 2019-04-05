@@ -863,6 +863,9 @@
 
 
 
+  
+  
+
 
 
 
@@ -885,6 +888,12 @@
 
   
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/three/three.min.js"></script>
+
+  
+  <script src="/lib/three/three-waves.min.js"></script>
 
 
   
@@ -1285,7 +1294,7 @@ if ($('body').find('pre.mermaid').length) {
     cache: true,
     success: function() {
       mermaid.initialize({
-        theme: 'forest',
+        theme: 'default',
         logLevel: 3,
         flowchart: { curve: 'linear' },
         gantt: { axisFormat: '%m/%d/%Y' },
