@@ -129,17 +129,14 @@
 
 
 
-  <meta name="description" content="做个正常人">
-<meta property="og:type" content="website">
+  <meta property="og:type" content="website">
 <meta property="og:title" content="resume">
 <meta property="og:url" content="http://yoursite.com/resume/index.html">
 <meta property="og:site_name" content="wangjiaxi&#39;s notebook">
-<meta property="og:description" content="做个正常人">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-04T09:36:43.147Z">
+<meta property="og:updated_time" content="2019-04-05T13:55:11.811Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="resume">
-<meta name="twitter:description" content="做个正常人">
 
 
 
@@ -450,7 +447,7 @@
       <div class="post-body">
         
         
-          
+          <div class="pdf" target="/index/个人简历-王佳希.pdf" height></div>
         
       </div>
       
@@ -1132,6 +1129,32 @@
   
 
   
+<script>
+if ($('body').find('div.pdf').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/pdfobject@2.1.1/pdfobject.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      $('body').find('div.pdf').each(function(i, o) {
+        PDFObject.embed($(o).attr('target'), $(o), {
+          pdfOpenParams: {
+            navpanes: 0,
+            toolbar: 0,
+            statusbar: 0,
+            pagemode: 'thumbs',
+            view: 'FitH'
+          },
+          PDFJS_URL: '/lib/pdf/web/viewer.html',
+          height: $(o).attr('height') || '500px'
+        });
+      });
+    },
+  });
+}
+</script>
+
 
   
 <script>
