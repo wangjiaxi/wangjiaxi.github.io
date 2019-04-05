@@ -105,7 +105,7 @@
     root: '/',
     scheme: 'Mist',
     version: '7.1.0',
-    sidebar: {"position":"left","display":"always","offset":12,"onmobile":true,"dimmer":false},
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":true,"dimmer":false},
     back2top: true,
     back2top_sidebar: false,
     fancybox: false,
@@ -1639,7 +1639,7 @@
 if ($('body').find('div.pdf').length) {
   $.ajax({
     type: 'GET',
-    url: '//cdn.jsdelivr.net/npm/pdfobject@2.1.1/pdfobject.min.js',
+    url: '//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js',
     dataType: 'script',
     cache: true,
     success: function() {
