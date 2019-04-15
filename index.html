@@ -417,6 +417,266 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/15/Python-2-基本图形绘制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wangjiaxi">
+      <meta itemprop="description" content="做个正常人">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangjiaxi's notebook">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/15/Python-2-基本图形绘制/" class="post-title-link" itemprop="url">Python(2)基本图形绘制</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-15 10:47:37 / 修改时间：10:48:48" itemprop="dateCreated datePublished" datetime="2019-04-15T10:47:37+08:00">2019-04-15</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="深入理解Python语言"><a href="#深入理解Python语言" class="headerlink" title="深入理解Python语言"></a>深入理解Python语言</h1><ul>
+<li>Python语言是通用语言</li>
+<li>Python语言是脚本语言</li>
+<li>Python语言是开源语言</li>
+<li>Python语言是跨平台语言</li>
+<li>Python语言是多模型语言</li>
+</ul>
+<h1 id="实例-Python蟒蛇绘制"><a href="#实例-Python蟒蛇绘制" class="headerlink" title="实例: Python蟒蛇绘制"></a>实例: Python蟒蛇绘制</h1><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><ul>
+<li>用程序绘制一条蟒蛇</li>
+<li>设计蟒蛇的基本形状</li>
+</ul>
+<h2 id="实例编写"><a href="#实例编写" class="headerlink" title="实例编写"></a>实例编写</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#PythonDraw.py</span></span><br><span class="line"><span class="keyword">import</span> turtle</span><br><span class="line">turtle.setup(<span class="number">650</span>, <span class="number">350</span>, <span class="number">200</span>, <span class="number">200</span>)</span><br><span class="line">turtle.penup()</span><br><span class="line">turtle.fd(<span class="number">-250</span>)</span><br><span class="line">turtle.pendown()</span><br><span class="line">turtle.pensize(<span class="number">25</span>)</span><br><span class="line">turtle.pencolor(<span class="string">"purple"</span>)</span><br><span class="line">turtle.seth(<span class="number">-40</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">4</span>):</span><br><span class="line">    turtle.circle(<span class="number">40</span>, <span class="number">80</span>)</span><br><span class="line">    turtle.circle(<span class="number">-40</span>, <span class="number">80</span>)</span><br><span class="line">turtle.circle(<span class="number">40</span>, <span class="number">80</span>/<span class="number">2</span>)</span><br><span class="line">turtle.fd(<span class="number">40</span>)</span><br><span class="line">turtle.circle(<span class="number">16</span>, <span class="number">180</span>)</span><br><span class="line">turtle.fd(<span class="number">40</span> * <span class="number">2</span>/<span class="number">3</span>)</span><br><span class="line">turtle.done()</span><br></pre></td></tr></table></figure>
+<h2 id="图片展示"><a href="#图片展示" class="headerlink" title="图片展示"></a>图片展示</h2><p><img src="/2019/04/15/Python-2-基本图形绘制/Pythondraw.jpg" alt></p>
+<h2 id="举一反三"><a href="#举一反三" class="headerlink" title="举一反三"></a>举一反三</h2><ul>
+<li>程序参数的改变<ul>
+<li>Python蟒蛇的颜色：黑色、白色、七彩色…</li>
+<li>Python蟒蛇的长度：1节、3节、10节…</li>
+<li>Python蟒蛇的方向：向左走、斜着走…</li>
+</ul>
+</li>
+<li>计算问题的扩展<ul>
+<li>Python蟒蛇绘制问题是各类图像绘制问题的代表</li>
+<li>圆形绘制、五角星绘制、国旗绘制、机器猫绘制…</li>
+<li>掌握绘制一条线的方法，就可以绘制整个世界</li>
+</ul>
+</li>
+</ul>
+<h1 id="turtle库的使用"><a href="#turtle库的使用" class="headerlink" title="turtle库的使用"></a>turtle库的使用</h1><h2 id="turtle库基本介绍"><a href="#turtle库基本介绍" class="headerlink" title="turtle库基本介绍"></a>turtle库基本介绍</h2><p>turtle(海龟)库是turtle绘图体系的Python实现</p>
+<ul>
+<li>turtle绘图体系：1969年诞生，主要用于程序设计入门</li>
+<li>Python语言的标准库之一</li>
+<li>入门级的图形绘制函数库</li>
+</ul>
+<h3 id="标准库"><a href="#标准库" class="headerlink" title="标准库"></a>标准库</h3><p>Python计算生态 = 标准库 + 第三方库</p>
+<ul>
+<li>标准库：随解释器直接安装到操作系统中的功能模块</li>
+<li>第三方库：需要经过安装才能使用的功能模块</li>
+<li>库Library、包Package、模块Module，统称<strong>模块</strong></li>
+</ul>
+<h3 id="turtle的原理"><a href="#turtle的原理" class="headerlink" title="turtle的原理"></a>turtle的原理</h3><p>turtle(海龟)是一种真实的存在</p>
+<ul>
+<li>有一只海龟，其实在窗体正中心，在画布上游走</li>
+<li>走过的轨迹形成了绘制的图形</li>
+<li>海龟由程序控制，可以变换颜色、改变宽度等</li>
+</ul>
+<h2 id="turtle绘图窗体"><a href="#turtle绘图窗体" class="headerlink" title="turtle绘图窗体"></a>turtle绘图窗体</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">turtle.setup(width, height, startx, starty)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>setup()设置窗体大小及位置</li>
+<li>4个参数中后两个可选</li>
+<li>setup()不是必须的</li>
+</ul>
+<h2 id="RGB色彩模式"><a href="#RGB色彩模式" class="headerlink" title="RGB色彩模式"></a>RGB色彩模式</h2><ul>
+<li>RGB指红蓝绿三个通道的颜色组合</li>
+<li>覆盖视力所能感知的所有颜色</li>
+<li>RGB每色取值范围0-255整数或0-1小数</li>
+</ul>
+<p>常用RGB色彩<br>| 英文名称 | RGB整数值     | RGB小数值        | 中文名称 |<br>| ——– | ————- | —————- | ——– |<br>| white    | 255, 255, 255 | 1, 1, 1          | 白色     |<br>| yellow   | 255, 255, 0   | 1, 1, 0          | 黄色     |<br>| magenta  | 255, 0, 255   | 1, 0, 1          | 洋红     |<br>| cyan     | 0, 255, 255   | 0, 1, 1          | 青色     |<br>| blue     | 0, 0, 255     | 0, 0, 1          | 蓝色     |<br>| black    | 0, 0, 0       | 0, 0, 0          | 黑色     |<br>| seashell | 255, 245, 238 | 1, 0.96, 0.93    | 海贝色   |<br>| gold     | 255, 215, 0   | 1, 0.84, 0       | 金色     |<br>| pink     | 255, 192, 203 | 1, 0.75, 0.80    | 粉红色   |<br>| brown    | 165, 42, 42   | 0.65, 0.16, 0.16 | 棕色     |<br>| purple   | 160, 32, 240  | 0.63, 0.13, 0.94 | 紫色     |<br>| tomato   | 255, 99, 71   | 1, 0.39, 0.28    | 番茄色   |</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">turtle.colormode(mode)</span><br></pre></td></tr></table></figure>
+<h1 id="turtle程序语法元素分析"><a href="#turtle程序语法元素分析" class="headerlink" title="turtle程序语法元素分析"></a>turtle程序语法元素分析</h1><h2 id="库引用与import"><a href="#库引用与import" class="headerlink" title="库引用与import"></a>库引用与import</h2><h3 id="库引用"><a href="#库引用" class="headerlink" title="库引用"></a>库引用</h3><p>扩充Python程序功能的方式,使用import保留字完成，采用<a>.<b>()编码风格</b></a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &lt;库名&gt; </span><br><span class="line">&lt;库名&gt;.&lt;函数名&gt;(&lt;函数参数&gt;)</span><br></pre></td></tr></table></figure>
+<h3 id="import更多用法"><a href="#import更多用法" class="headerlink" title="import更多用法"></a>import更多用法</h3><ol>
+<li>使用from和import保留字共同完成</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> &lt;库名&gt; <span class="keyword">import</span> &lt;函数名&gt; </span><br><span class="line"><span class="keyword">from</span> &lt;库名&gt; <span class="keyword">import</span> *</span><br><span class="line">&lt;函数名&gt;(&lt;函数参数&gt;)</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>使用import和as保留字共同完成</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &lt;库名&gt; <span class="keyword">as</span> &lt;库别名&gt; </span><br><span class="line">&lt;库别名&gt;.&lt;函数名&gt;(&lt;函数参数&gt;)</span><br></pre></td></tr></table></figure>
+<h2 id="turtle画笔控制函数"><a href="#turtle画笔控制函数" class="headerlink" title="turtle画笔控制函数"></a>turtle画笔控制函数</h2><ul>
+<li><code>turtle.penup()</code> 别名 <code>turtle.pu()</code><br>抬起画笔，海龟在飞行</li>
+<li><code>turtle.pendown()</code> 别名 <code>turtle.pd()</code><br>落下画笔，海龟在爬行</li>
+<li><code>turtle.pensize(width)</code> 别名 <code>turtle.width(width)</code><br>画笔宽度，海龟的腰围</li>
+<li><code>turtle.pencolor(color)</code> color为颜色字符串或r,g,b值<br>画笔颜色，海龟在涂装<ul>
+<li>颜色字符串 ：<code>turtle.pencolor(&quot;purple&quot;)</code></li>
+<li>RGB的小数值：<code>turtle.pencolor(0.63, 0.13, 0.94)</code></li>
+<li>RGB的元组值：<code>turtle.pencolor((0.63,0.13,0.94))</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="turtle运动控制函数"><a href="#turtle运动控制函数" class="headerlink" title="turtle运动控制函数"></a>turtle运动控制函数</h2><ul>
+<li><code>turtle.forward(d)</code> 别名 <code>turtle.fd(d)</code><br>向前行进，海龟走直线</li>
+<li>d: 行进距离，可以为负数</li>
+<li><code>turtle.circle(r, extent=None)</code><br>根据半径r绘制extent角度的弧形</li>
+<li>r: 默认圆心在海龟左侧r距离的位置</li>
+<li>extent: 绘制角度，默认是360度整圆</li>
+</ul>
+<h2 id="turtle方向控制函数"><a href="#turtle方向控制函数" class="headerlink" title="turtle方向控制函数"></a>turtle方向控制函数</h2><ul>
+<li><code>turtle.setheading(angle)</code> 别名 <code>turtle.seth(angle)</code><br>改变行进方向，海龟走角度</li>
+<li>angle: 行进方向的绝对角度</li>
+<li><code>turtle.left(angle)</code> 海龟向左转</li>
+<li><code>turtle.right(angle)</code> 海龟向右转</li>
+<li>angle: 在海龟当前行进方向上旋转的角度</li>
+</ul>
+<h2 id="循环语句与range-函数"><a href="#循环语句与range-函数" class="headerlink" title="循环语句与range()函数"></a>循环语句与range()函数</h2><h3 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h3><p>按照一定次数循环执行一组语句</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> &lt;变量&gt; <span class="keyword">in</span> range(&lt;次数&gt;):</span><br><span class="line">    &lt;被循环执行的语句&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># &lt;变量&gt;表示每次循环的计数，0到&lt;次数&gt;-1</span></span><br></pre></td></tr></table></figure>
+<h3 id="range-函数"><a href="#range-函数" class="headerlink" title="range()函数"></a>range()函数</h3><p>产生循环计数序列</p>
+<ul>
+<li><code>range(N)</code><br>产生 0 到 N-1的整数序列，共N个</li>
+<li><code>range(M,N)</code><br>产生 M 到 N-1的整数序列，共N-M个</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/04/Python实现照片的手绘效果/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1962,181 +2222,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/04/python-8-程序设计方法学/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wangjiaxi">
-      <meta itemprop="description" content="做个正常人">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangjiaxi's notebook">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/04/04/python-8-程序设计方法学/" class="post-title-link" itemprop="url">python(8)程序设计方法学</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-04-04 15:42:39 / 修改时间：23:31:51" itemprop="dateCreated datePublished" datetime="2019-04-04T15:42:39+08:00">2019-04-04</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="实例：体育竞技分析"><a href="#实例：体育竞技分析" class="headerlink" title="实例：体育竞技分析"></a>实例：体育竞技分析</h1><blockquote>
-<p>高手过招，胜负只在毫厘之间</p>
-</blockquote>
-<h2 id="“体育竞技分析”问题分析"><a href="#“体育竞技分析”问题分析" class="headerlink" title="“体育竞技分析”问题分析"></a>“体育竞技分析”问题分析</h2><h3 id="体育竞技分析"><a href="#体育竞技分析" class="headerlink" title="体育竞技分析"></a>体育竞技分析</h3><ul>
-<li><p>需求：毫厘是多少？如何科学分析体育竞技比赛？</p>
-</li>
-<li><p>输入：球员的水平</p>
-</li>
-<li><p>输出：可预测的比赛成绩</p></li></ul>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/04/04/python-8-程序设计方法学/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2185,7 +2270,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
