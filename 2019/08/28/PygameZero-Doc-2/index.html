@@ -140,12 +140,12 @@
 <meta property="og:image" content="https://pygame-zero.readthedocs.io/zh_CN/latest/_images/flappybird-stage.png">
 <meta property="og:image" content="https://pygame-zero.readthedocs.io/en/stable/_images/flappybird-top-start.png">
 <meta property="og:image" content="https://pygame-zero.readthedocs.io/en/stable/_images/flappybird-bottom-start.png">
-<meta property="og:image" content="http://yoursite.com/2019/08/28/PygameZero-Doc-2/Users/hetao/Desktop/PYCHARM_WORKSPACE/flappybird/images/bird2.png">
-<meta property="og:image" content="http://yoursite.com/2019/08/28/PygameZero-Doc-2/Users/hetao/Desktop/PYCHARM_WORKSPACE/flappybird/images/bird1.png">
-<meta property="og:image" content="http://yoursite.com/2019/08/28/PygameZero-Doc-2/Users/hetao/Desktop/PYCHARM_WORKSPACE/flappybird/images/birddead.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/28/PygameZero-Doc-2/bird2.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/28/PygameZero-Doc-2/bird1.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/28/PygameZero-Doc-2/birddead.png">
 <meta property="og:image" content="https://pygame-zero.readthedocs.io/zh_CN/latest/_images/flappybird-bird-start.png">
 <meta property="og:image" content="https://pygame-zero.readthedocs.io/en/stable/_images/flappybird-bird-space.png">
-<meta property="og:updated_time" content="2019-08-28T03:11:55.587Z">
+<meta property="og:updated_time" content="2019-08-28T03:17:26.540Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PygameZero Doc 2">
 <meta name="twitter:description" content="本篇介绍了FlappyBird的PygameZero实现，为了方便与Scratch比较，所以没有加入计分功能。">
@@ -470,7 +470,7 @@
                 
               
 
-              <time title="创建时间：2019-08-28 11:09:15 / 修改时间：11:11:55" itemprop="dateCreated datePublished" datetime="2019-08-28T11:09:15+08:00">2019-08-28</time>
+              <time title="创建时间：2019-08-28 11:09:15 / 修改时间：11:17:26" itemprop="dateCreated datePublished" datetime="2019-08-28T11:09:15+08:00">2019-08-28</time>
             
 
             
@@ -584,11 +584,11 @@
 <h2 id="让小鸟拍打翅膀"><a href="#让小鸟拍打翅膀" class="headerlink" title="让小鸟拍打翅膀"></a>让小鸟拍打翅膀</h2><p>接下来的部分是让小鸟可以拍打翅膀：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> bird.dead:</span><br><span class="line">    <span class="keyword">if</span> bird.vy &lt; <span class="number">-3</span>:</span><br><span class="line">        bird.image = <span class="string">'bird2'</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        bird.image = <span class="string">'bird1'</span></span><br></pre></td></tr></table></figure>
 <p>这会检查小鸟是向上移动还是向下移动。如果小鸟向上移动我们设置图片为 <code>bird2</code> ，否则设置图片为<code>bird1</code> 。（-3是通过不断试错得出的经验值，这样游戏看起来会更加真实。）</p>
-<p><img src="/2019/08/28/PygameZero-Doc-2/Users\hetao\Desktop\PYCHARM_WORKSPACE\flappybird\images\bird2.png" alt="bird1"></p>
-<p><img src="/2019/08/28/PygameZero-Doc-2/Users\hetao\Desktop\PYCHARM_WORKSPACE\flappybird\images\bird1.png" alt="bird2"></p>
+<p><img src="/2019/08/28/PygameZero-Doc-2/bird2.png" alt="bird1"></p>
+<p><img src="/2019/08/28/PygameZero-Doc-2/bird1.png" alt="bird2"></p>
 <h2 id="检测小鸟是否撞管子"><a href="#检测小鸟是否撞管子" class="headerlink" title="检测小鸟是否撞管子"></a>检测小鸟是否撞管子</h2><p>接下来我们要检测小鸟有没有撞管子。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> bird.colliderect(pipe_top) <span class="keyword">or</span> bird.colliderect(pipe_bottom):</span><br><span class="line">    bird.dead = <span class="literal">True</span></span><br><span class="line">    bird.image = <span class="string">'birddead'</span></span><br></pre></td></tr></table></figure>
-<p><img src="/2019/08/28/PygameZero-Doc-2/Users\hetao\Desktop\PYCHARM_WORKSPACE\flappybird\images\birddead.png" alt="birddead"></p>
+<p><img src="/2019/08/28/PygameZero-Doc-2/birddead.png" alt="birddead"></p>
 <p>如果小鸟撞到管子了，我们就把变量 <code>bird.dead</code> 值设置为 <code>True</code>。这是一个<strong>布尔值</strong>表示非假即真，这样我们可以方便的检测小鸟是否还活着。如果小鸟挂了，我们就不需要响应玩家的输入了。</p>
 <h2 id="检测小鸟是否触顶-触底"><a href="#检测小鸟是否触顶-触底" class="headerlink" title="检测小鸟是否触顶/触底"></a>检测小鸟是否触顶/触底</h2><p>最后我们检测一下小鸟有没有触底或触顶（屏幕的上下边缘），如果是的话就重置小鸟的状态和属性：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> <span class="number">0</span> &lt; bird.y &lt; <span class="number">720</span>:</span><br><span class="line">    bird.y = <span class="number">200</span></span><br><span class="line">    bird.dead = <span class="literal">False</span></span><br><span class="line">    bird.vy = <span class="number">0</span></span><br><span class="line">    reset_pipes()</span><br></pre></td></tr></table></figure>
