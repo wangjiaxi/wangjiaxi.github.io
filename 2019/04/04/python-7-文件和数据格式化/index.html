@@ -137,20 +137,20 @@
 <meta property="og:site_name" content="wangjiaxi&#39;s notebook">
 <meta property="og:description" content="文件的使用文件的类型文件的理解文件是数据的抽象和集合  文件是存储在辅助存储器上的数据序列 文件是数据存储的一种形式 文件展现形态：文本文件和二进制文件">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6">
-<meta property="og:image" content="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6">
-<meta property="og:image" content="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6">
-<meta property="og:image" content="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6">
-<meta property="og:image" content="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6">
-<meta property="og:image" content="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6">
-<meta property="og:image" content="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6">
-<meta property="og:image" content="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6">
-<meta property="og:image" content="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6">
-<meta property="og:updated_time" content="2019-04-04T15:34:05.003Z">
+<meta property="og:image" content="http://yoursite.com/2019/04/04/python-7-文件和数据格式化/自动轨迹绘制.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/04/04/python-7-文件和数据格式化/pywordcloud.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/04/python-7-文件和数据格式化/zhongwenciyun.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/04/04/python-7-文件和数据格式化/GovRpWordCloudv1中特.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/04/python-7-文件和数据格式化/GovRpWordCloudv1农村.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/04/python-7-文件和数据格式化/GovRpWordCloudv1中特15.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/04/python-7-文件和数据格式化/GovRpWordCloudv1农村15.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/04/python-7-文件和数据格式化/GovRpWordCloudv1中特五星.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/04/python-7-文件和数据格式化/GovRpWordCloudv1农村地图.png">
+<meta property="og:updated_time" content="2019-09-10T00:20:44.105Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python(7)文件和数据格式化">
 <meta name="twitter:description" content="文件的使用文件的类型文件的理解文件是数据的抽象和集合  文件是存储在辅助存储器上的数据序列 文件是数据存储的一种形式 文件展现形态：文本文件和二进制文件">
-<meta name="twitter:image" content="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/04/python-7-文件和数据格式化/自动轨迹绘制.jpg">
 
 
 
@@ -471,12 +471,24 @@
                 
               
 
-              <time title="创建时间：2019-04-04 15:39:03 / 修改时间：23:34:05" itemprop="dateCreated datePublished" datetime="2019-04-04T15:39:03+08:00">2019-04-04</time>
+              <time title="创建时间：2019-04-04 15:39:03" itemprop="dateCreated datePublished" datetime="2019-04-04T15:39:03+08:00">2019-04-04</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-09-10 08:20:44" itemprop="dateModified" datetime="2019-09-10T08:20:44+08:00">2019-09-10</time>
               
             
           </span>
@@ -690,7 +702,7 @@
 <h2 id="编写程序"><a href="#编写程序" class="headerlink" title="编写程序"></a>编写程序</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#AutoTraceDraw.py</span></span><br><span class="line"><span class="keyword">import</span> turtle <span class="keyword">as</span> t</span><br><span class="line">t.title(<span class="string">'自动轨迹绘制'</span>)</span><br><span class="line">t.setup(<span class="number">800</span>,<span class="number">600</span>,<span class="number">0</span>,<span class="number">0</span>)</span><br><span class="line">t.pencolor(<span class="string">"red"</span>)</span><br><span class="line">t.pensize(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#数据读取</span></span><br><span class="line">datals = []</span><br><span class="line">f = open(<span class="string">"data.txt"</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">      line = line.replace(<span class="string">"\n"</span>,<span class="string">""</span>)</span><br><span class="line">      datals.append(list(map(eval, line.split(<span class="string">","</span>))))</span><br><span class="line"></span><br><span class="line"><span class="comment">#自动绘制</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(datals)):</span><br><span class="line">      t.pencolor(datals[i][<span class="number">3</span>],datals[i][<span class="number">4</span>],datals[i][<span class="number">5</span>])</span><br><span class="line">      t.fd(datals[i][<span class="number">0</span>])</span><br><span class="line">      <span class="keyword">if</span> datals[i][<span class="number">1</span>]:</span><br><span class="line">            t.right(datals[i][<span class="number">2</span>])</span><br><span class="line">      <span class="keyword">else</span>:</span><br><span class="line">            t.left(datals[i][<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
 <h2 id="数据文件"><a href="#数据文件" class="headerlink" title="数据文件"></a>数据文件</h2><p>data.txt</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">300,0,144,1,0,0</span><br><span class="line">300,0,144,0,1,0</span><br><span class="line">300,0,144,0,0,1</span><br><span class="line">300,0,144,1,1,0</span><br><span class="line">300,0,108,0,1,1</span><br><span class="line">184,0,72,1,0,1</span><br><span class="line">184,0,72,0,0,0</span><br><span class="line">184,0,72,0,0,0</span><br><span class="line">184,0,72,0,0,0</span><br><span class="line">184,1,72,1,0,1</span><br><span class="line">184,1,72,0,0,0</span><br><span class="line">184,1,72,0,0,0</span><br><span class="line">184,1,72,0,0,0</span><br><span class="line">184,1,72,0,0,0</span><br><span class="line">184,1,720,0,0,0</span><br></pre></td></tr></table></figure>
-<h2 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h2><p><img src="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6" alt="image">/%E8%87%AA%E5%8A%A8%E8%BD%A8%E8%BF%B9%E7%BB%98%E5%88%B6.jpg)</p>
+<h2 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h2><p><img src="/2019/04/04/python-7-文件和数据格式化/自动轨迹绘制.jpg" alt></p>
 <h1 id="一维数据的格式化和处理"><a href="#一维数据的格式化和处理" class="headerlink" title="一维数据的格式化和处理"></a>一维数据的格式化和处理</h1><h2 id="数据组织的维度"><a href="#数据组织的维度" class="headerlink" title="数据组织的维度"></a>数据组织的维度</h2><p>从一个数据到一组数据：一个数据表达一个含义，一组数据表达一个或多个含义</p>
 <ul>
 <li>一维数据：由对等关系的有序或无序数据构成，采用线性方式组织，对应列表、数组、集合等概念。</li>
@@ -858,9 +870,9 @@
 </table>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#指定词云形状，默认为长方形，需要引用imread()函数</span></span><br><span class="line"><span class="keyword">from</span> scipy.misc <span class="keyword">import</span> imread </span><br><span class="line">mk = imread(<span class="string">"pic.png"</span>)</span><br><span class="line">w = wordcloud.WordCloud(mask = mk)</span><br></pre></td></tr></table></figure>
 <p>两个小demo<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> wordcloud</span><br><span class="line">txt = <span class="string">"life is short, you need python"</span></span><br><span class="line">w = wordcloud.WordCloud( \</span><br><span class="line">	background_color = <span class="string">"white"</span>)</span><br><span class="line">w.generate(txt)</span><br><span class="line">w.to_file(<span class="string">"d:/pywordcloud.png"</span>)</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6" alt="image">/pywordcloud.png)</p>
+<p><img src="/2019/04/04/python-7-文件和数据格式化/pywordcloud.png" alt></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="keyword">import</span> wordcloud</span><br><span class="line">txt = <span class="string">"程序设计语言是计算机能够理解和\</span></span><br><span class="line"><span class="string">识别用户操作意图的一种交互体系,它按照\</span></span><br><span class="line"><span class="string">特定规则组织计算机指令,使计算机能够自\</span></span><br><span class="line"><span class="string">动进行各种运算处理。"</span></span><br><span class="line">w = wordcloud.WordCloud( width = <span class="number">1000</span>, \</span><br><span class="line">    font_path = <span class="string">"msyh.ttc"</span>, height = <span class="number">700</span>)</span><br><span class="line">w.generate(<span class="string">" "</span>.join(jieba.lcut(txt)))</span><br><span class="line">w.to_file(<span class="string">"d:/zhongwenciyun.jpg"</span>)</span><br></pre></td></tr></table></figure>
-<p><img src="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6" alt="image">/zhongwenciyun.jpg)</p>
+<p><img src="/2019/04/04/python-7-文件和数据格式化/zhongwenciyun.jpg" alt></p>
 <h1 id="实例：政府工作报告词云"><a href="#实例：政府工作报告词云" class="headerlink" title="实例：政府工作报告词云"></a>实例：政府工作报告词云</h1><h2 id="问题分析-1"><a href="#问题分析-1" class="headerlink" title="问题分析"></a>问题分析</h2><p>直观理解政策文件</p>
 <ul>
 <li>需求：对于政府工作报告等政策文件，如何直观理解？</li>
@@ -874,14 +886,14 @@
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#GovRpWordCloudv1.py</span></span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="keyword">import</span> wordcloud</span><br><span class="line">f = open(<span class="string">"关于实施乡村振兴战略的意见.txt"</span>,<span class="string">"r"</span>,encoding=<span class="string">"utf-8"</span>)</span><br><span class="line"><span class="comment">#f = open("新时代中国特色社会主义.txt","r",encoding="utf-8")</span></span><br><span class="line">t = f.read()</span><br><span class="line">f.close()</span><br><span class="line">ls = jieba.lcut(t)</span><br><span class="line">txt = <span class="string">" "</span>.join(ls)</span><br><span class="line"><span class="comment">#w = wordcloud.WordCloud(max_words = 15,font_path = "msyh.ttc",width = 1000,height = 700,background_color = "white")</span></span><br><span class="line">w = wordcloud.WordCloud(font_path = <span class="string">"msyh.ttc"</span>,width = <span class="number">1000</span>,height = <span class="number">700</span>,background_color = <span class="string">"white"</span>)</span><br><span class="line">w.generate(txt)</span><br><span class="line">w.to_file(<span class="string">"GovRpWordCloudv1.png"</span>)</span><br></pre></td></tr></table></figure>
 <p>运行程序后，两个报告的词云如下：</p>
-<p><img src="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6" alt="image">/GovRpWordCloudv1%E4%B8%AD%E7%89%B9.png)</p>
-<p><img src="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6" alt="image">/GovRpWordCloudv1%E5%86%9C%E6%9D%91.png)</p>
+<p><img src="/2019/04/04/python-7-文件和数据格式化/GovRpWordCloudv1中特.png" alt="image"></p>
+<p><img src="/2019/04/04/python-7-文件和数据格式化/GovRpWordCloudv1农村.png" alt="image"></p>
 <p>增加参数<code>max_words=15</code>，结果如下：</p>
-<p><img src="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6" alt="image">/GovRpWordCloudv1%E4%B8%AD%E7%89%B915.png)</p>
-<p><img src="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6" alt="image">/GovRpWordCloudv1%E5%86%9C%E6%9D%9115.png)</p>
+<p><img src="/2019/04/04/python-7-文件和数据格式化/GovRpWordCloudv1中特15.png" alt="image"></p>
+<p><img src="/2019/04/04/python-7-文件和数据格式化/GovRpWordCloudv1农村15.png" alt="image"></p>
 <p>增加形状<code>mask = mask</code>，词云图更加漂亮：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#GovRpWordCloudv1.py</span></span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="keyword">import</span> wordcloud</span><br><span class="line"><span class="keyword">from</span> scipy.misc <span class="keyword">import</span> imread</span><br><span class="line">mask = imread(<span class="string">"chinamap.jpg"</span>)</span><br><span class="line"><span class="comment">#mask = imread("fivestars.png")</span></span><br><span class="line">f = open(<span class="string">"关于实施乡村振兴战略的意见.txt"</span>,<span class="string">"r"</span>,encoding=<span class="string">"utf-8"</span>)</span><br><span class="line"><span class="comment">#f = open("新时代中国特色社会主义.txt","r",encoding="utf-8")</span></span><br><span class="line">t = f.read()</span><br><span class="line">f.close()</span><br><span class="line">ls = jieba.lcut(t)</span><br><span class="line">txt = <span class="string">" "</span>.join(ls)</span><br><span class="line">w = wordcloud.WordCloud(mask = mask,font_path = <span class="string">"msyh.ttc"</span>,width = <span class="number">1000</span>,height = <span class="number">700</span>,background_color = <span class="string">"white"</span>)</span><br><span class="line">w.generate(txt)</span><br><span class="line">w.to_file(<span class="string">"GovRpWordCloudv1.png"</span>)</span><br></pre></td></tr></table></figure></p>
-<p>结果展示：<br><img src="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6" alt="image">/GovRpWordCloudv1%E4%B8%AD%E7%89%B9%E4%BA%94%E6%98%9F.png)</p>
-<p><img src="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6" alt="image">/GovRpWordCloudv1%E5%86%9C%E6%9D%91%E5%9C%B0%E5%9B%BE.png)</p>
+<p>结果展示：<br><img src="/2019/04/04/python-7-文件和数据格式化/GovRpWordCloudv1中特五星.png" alt="image"></p>
+<p><img src="/2019/04/04/python-7-文件和数据格式化/GovRpWordCloudv1农村地图.png" alt="image"></p>
 <h2 id="扩展能力"><a href="#扩展能力" class="headerlink" title="扩展能力"></a>扩展能力</h2><ul>
 <li>了解wordcloud更多参数，扩展词云能力</li>
 <li>特色词云：设计一款属于自己的特色词云风格</li>
