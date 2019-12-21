@@ -1,0 +1,1869 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/w.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/w.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/w.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/w.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":true,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="数据的维度一个数据表达一个含义一组数据表达一个或多个含义 一维数据一维数据由对等关系的有序或无序数据构成，采用线性方式组织，对应列表、数组和集合等概念。 列表和数组  列表：数据类型可以不同 数组：数据类型相同">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python数据分析之Numpy库入门">
+<meta property="og:url" content="http://yoursite.com/2019/04/04/Python数据分析之Numpy库入门/index.html">
+<meta property="og:site_name" content="wangjiaxi&#39;s notebook">
+<meta property="og:description" content="数据的维度一个数据表达一个含义一组数据表达一个或多个含义 一维数据一维数据由对等关系的有序或无序数据构成，采用线性方式组织，对应列表、数组和集合等概念。 列表和数组  列表：数据类型可以不同 数组：数据类型相同">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-04-04T09:27:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python数据分析之Numpy库入门">
+<meta name="twitter:description" content="数据的维度一个数据表达一个含义一组数据表达一个或多个含义 一维数据一维数据由对等关系的有序或无序数据构成，采用线性方式组织，对应列表、数组和集合等概念。 列表和数组  列表：数据类型可以不同 数组：数据类型相同">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/04/04/Python数据分析之Numpy库入门/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+  <title>Python数据分析之Numpy库入门 | wangjiaxi's notebook</title>
+  
+
+
+
+
+  <script async src="//www.googletagmanager.com/gtag/js?id=UA-145825566-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-145825566-1');
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">wangjiaxi's notebook</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/04/Python数据分析之Numpy库入门/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wangjiaxi">
+      <meta itemprop="description" content="做个正常人">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangjiaxi's notebook">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python数据分析之Numpy库入门
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-04 15:44:37 / 修改时间：17:27:08" itemprop="dateCreated datePublished" datetime="2019-04-04T15:44:37+08:00">2019-04-04</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/04/04/Python数据分析之Numpy库入门/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/04/Python数据分析之Numpy库入门/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="数据的维度"><a href="#数据的维度" class="headerlink" title="数据的维度"></a>数据的维度</h1><p>一个数据表达一个含义<br>一组数据表达一个或多个含义</p>
+<h2 id="一维数据"><a href="#一维数据" class="headerlink" title="一维数据"></a>一维数据</h2><p>一维数据由对等关系的有序或无序数据构成，采用线性方式组织，对应列表、数组和集合等概念。</p>
+<p>列表和数组</p>
+<ul>
+<li>列表：数据类型可以不同</li>
+<li>数组：数据类型相同</li>
+</ul>
+<a id="more"></a>
+<h2 id="二维数据"><a href="#二维数据" class="headerlink" title="二维数据"></a>二维数据</h2><p>二维数据由多个一维数据构成，是一维数据的组合形式。表格是典型的二维数据，其中，表头是二维数据的一部分。</p>
+<h2 id="多维数据"><a href="#多维数据" class="headerlink" title="多维数据"></a>多维数据</h2><p>多维数据由一维或二维数据在新维度上扩展形成。</p>
+<h2 id="高维数据"><a href="#高维数据" class="headerlink" title="高维数据"></a>高维数据</h2><p>高维数据仅利用最基本的二元关系展示数据间的复杂结构。<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    “firstName” : “Tian” ,</span><br><span class="line">    “lastName”  : “Song” ,</span><br><span class="line">    “address”   : &#123;</span><br><span class="line">                    “streetAddr” : “中关村南大街5号” ,</span><br><span class="line">                    “city”       : “北京市” ,</span><br><span class="line">                    “zipcode”    : “100081”</span><br><span class="line">                   &#125; ,</span><br><span class="line">    “prof”      : [ “Computer System” , “Security” ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="数据维度的Python表示"><a href="#数据维度的Python表示" class="headerlink" title="数据维度的Python表示"></a>数据维度的Python表示</h2><p>数据维度是数据的组织形式。</p>
+<ul>
+<li>一维数据：列表和集合类型</li>
+<li>二维数据：列表类型</li>
+<li>多维数据：列表类型</li>
+<li>高维数据：字典类型或数据表示格式(JSON、XML和YAML格式)</li>
+</ul>
+<h1 id="NumPy的数组对象：ndarray"><a href="#NumPy的数组对象：ndarray" class="headerlink" title="NumPy的数组对象：ndarray"></a>NumPy的数组对象：ndarray</h1><h2 id="NumPy"><a href="#NumPy" class="headerlink" title="NumPy"></a>NumPy</h2><p>NumPy是一个开源的Python科学计算基础库，包含：</p>
+<ul>
+<li>一个强大的N维数组对象 ndarray</li>
+<li>广播功能函数</li>
+<li>整合C/C++/Fortran代码的工具</li>
+<li>线性代数、傅里叶变换、随机数生成等功能<br>NumPy是SciPy、Pandas等数据处理或科学计算库的基础。</li>
+</ul>
+<h2 id="NumPy的引用"><a href="#NumPy的引用" class="headerlink" title="NumPy的引用"></a>NumPy的引用</h2><p>尽管别名可以省略或更改，建议使用上述约定的别名<br></p>
+<h2 id="N维数组对象：ndarray"><a href="#N维数组对象：ndarray" class="headerlink" title="N维数组对象：ndarray"></a>N维数组对象：ndarray</h2><h3 id="Python已有列表类型，为什么需要一个数组对象-类型-？"><a href="#Python已有列表类型，为什么需要一个数组对象-类型-？" class="headerlink" title="Python已有列表类型，为什么需要一个数组对象(类型)？"></a>Python已有列表类型，为什么需要一个数组对象(类型)？</h3><ul>
+<li>数组对象可以去掉元素间运算所需的循环，使一维向量更像单个数</li>
+<li>设置专门的数组对象，经过优化，可以提升这类应用的运算速度</li>
+</ul>
+<blockquote>
+<p> 观察：科学计算中，一个维度所有数据的类型往往相同</p>
+</blockquote>
+<ul>
+<li>数组对象采用相同的数据类型，有助于节省运算和存储</li>
+</ul>
+<h3 id="ndarray是一个多维数组对象，由两部分构成："><a href="#ndarray是一个多维数组对象，由两部分构成：" class="headerlink" title="ndarray是一个多维数组对象，由两部分构成："></a>ndarray是一个多维数组对象，由两部分构成：</h3><ul>
+<li>实际的数据</li>
+<li>描述这些数据的元数据（数据维度、数据类型等）<br>ndarray数组一般要求所有元素类型相同（同质），数组下标从0开始</li>
+</ul>
+<h3 id="ndarray实例"><a href="#ndarray实例" class="headerlink" title="ndarray实例"></a>ndarray实例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">np.array()  <span class="comment">#生成一个ndarray数组</span></span><br><span class="line"><span class="comment">#np.array()输出成[]形式，元素由空格分割</span></span><br><span class="line"><span class="comment">#轴(axis): 保存数据的维度；秩(rank)：轴的数量</span></span><br></pre></td></tr></table></figure>
+<h3 id="ndarray对象的属性"><a href="#ndarray对象的属性" class="headerlink" title="ndarray对象的属性"></a>ndarray对象的属性</h3><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.ndim</code></td>
+<td>秩，即轴的数量或维度的数量</td>
+</tr>
+<tr>
+<td><code>.shape</code></td>
+<td>ndarray对象的尺度，对于矩阵，n行m列</td>
+</tr>
+<tr>
+<td><code>.size</code></td>
+<td>ndarray对象元素的个数，相当于.shape中n*m的值</td>
+</tr>
+<tr>
+<td><code>.dtype</code></td>
+<td>ndarray对象的元素类型</td>
+</tr>
+<tr>
+<td><code>.itemsize</code></td>
+<td>ndarray对象中每个元素的大小，以字节为单位</td>
+</tr>
+</tbody>
+</table>
+<h1 id="ndarray数组的元素"><a href="#ndarray数组的元素" class="headerlink" title="ndarray数组的元素"></a>ndarray数组的元素</h1><p>ndarray的元素类型(1)</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bool</td>
+<td>布尔类型，True或False</td>
+</tr>
+<tr>
+<td>intc</td>
+<td>与C语言中的int类型一致，一般是int32或int64</td>
+</tr>
+<tr>
+<td>intp</td>
+<td>用于索引的整数，与C语言中ssize_t一致，int32或int64</td>
+</tr>
+<tr>
+<td>int8</td>
+<td>字节长度的整数，取值：[‐128, 127]</td>
+</tr>
+<tr>
+<td>int16</td>
+<td>16位长度的整数，取值：[‐32768, 32767]</td>
+</tr>
+<tr>
+<td>int32</td>
+<td>32位长度的整数，取值：[‐2^31,2^31‐1]</td>
+</tr>
+<tr>
+<td>int64</td>
+<td>64位长度的整数，取值：[‐2^63,2^63‐1]</td>
+</tr>
+</tbody>
+</table>
+<p>ndarray的元素类型(2)</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>uint8</td>
+<td>8位无符号整数，取值：[0, 255]</td>
+</tr>
+<tr>
+<td>uint16</td>
+<td>16位无符号整数，取值：[0, 65535]</td>
+</tr>
+<tr>
+<td>uint32</td>
+<td>32位无符号整数，取值：[0,232‐1]</td>
+</tr>
+<tr>
+<td>uint6</td>
+<td>32位无符号整数，取值：[0,264‐1]</td>
+</tr>
+<tr>
+<td>float16</td>
+<td>16位半精度浮点数：1位符号位，5位指数，10位尾数</td>
+</tr>
+<tr>
+<td>float32</td>
+<td>32位半精度浮点数：1位符号位，8位指数，23位尾数</td>
+</tr>
+<tr>
+<td>float64</td>
+<td>64位半精度浮点数：1位符号位，11位指数，52位尾数</td>
+</tr>
+</tbody>
+</table>
+<p>ndarray的元素类型(3)</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>complex64</td>
+<td>复数类型，实部和虚部都是32位浮点数</td>
+</tr>
+<tr>
+<td>complex128</td>
+<td>复数类型，实部和虚部都是64位浮点数</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>ndarray为什么要支持这么多种元素类型？</p>
+</blockquote>
+<p>对比：Python语法仅支持整数、浮点数和复数3种类型</p>
+<ul>
+<li>科学计算涉及数据较多，对存储和性能都有较高要求</li>
+<li>对元素类型精细定义，有助于NumPy合理使用存储空间并优化性能</li>
+<li>对元素类型精细定义，有助于程序员对程序规模有合理评估</li>
+</ul>
+<h2 id="非同质的ndarray对象"><a href="#非同质的ndarray对象" class="headerlink" title="非同质的ndarray对象"></a>非同质的ndarray对象</h2><ul>
+<li>ndarray数组可以由非同质对象构成</li>
+<li>非同质ndarray元素为对象类型</li>
+<li>非同质ndarray对象无法有效发挥NumPy优势，尽量避免</li>
+</ul>
+<h1 id="ndarray数组的创建"><a href="#ndarray数组的创建" class="headerlink" title="ndarray数组的创建"></a>ndarray数组的创建</h1><h2 id="ndarray数组的创建方法"><a href="#ndarray数组的创建方法" class="headerlink" title="ndarray数组的创建方法"></a>ndarray数组的创建方法</h2><ul>
+<li>从Python中的列表、元组等类型创建ndarray数组</li>
+<li>使用NumPy中函数创建ndarray数组，如：arange, ones, zero</li>
+</ul>
+<h3 id="（1）从Python中的列表、元组等类型创建ndarray数组"><a href="#（1）从Python中的列表、元组等类型创建ndarray数组" class="headerlink" title="（1）从Python中的列表、元组等类型创建ndarray数组"></a>（1）从Python中的列表、元组等类型创建ndarray数组</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x= np.array(list/tuple)</span><br><span class="line">x= np.array(list/tuple, dtype=np.float32)</span><br><span class="line"><span class="comment">#当np.array()不指定dtype时，NumPy将根据数据情况关联一个dtype</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#从列表类型创建</span></span><br><span class="line">x = np.array([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">#从元组类型创建</span></span><br><span class="line">x = np.array((<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">#从列表和元组混合类型创建</span></span><br><span class="line">x = np.array([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">9</span>, <span class="number">8</span>], (<span class="number">0.1</span>, <span class="number">0.2</span>)])</span><br></pre></td></tr></table></figure>
+<h3 id="（2）使用NumPy中函数创建ndarray数组，如：arange-ones-zero等"><a href="#（2）使用NumPy中函数创建ndarray数组，如：arange-ones-zero等" class="headerlink" title="（2）使用NumPy中函数创建ndarray数组，如：arange, ones, zero等"></a>（2）使用NumPy中函数创建ndarray数组，如：arange, ones, zero等</h3><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>np.arange(n)</code></td>
+<td>类似range()函数，返回ndarray类型，元素从0到n‐1</td>
+</tr>
+<tr>
+<td><code>np.ones(shape)</code></td>
+<td>根据shape生成一个全1数组，shape是元组类型</td>
+</tr>
+<tr>
+<td><code>np.zeros(shape)</code></td>
+<td>根据shape生成一个全0数组，shape是元组类型</td>
+</tr>
+<tr>
+<td><code>np.full(shape,val)</code></td>
+<td>根据shape生成一个数组，每个元素值都是valnp.eye(n)创建一个正方的n*n单位矩阵，对角线为1，其余为0</td>
+</tr>
+<tr>
+<td><code>np.ones_like(a)</code></td>
+<td>根据数组a的形状生成一个全1数组</td>
+</tr>
+<tr>
+<td><code>np.zeros_like(a)</code></td>
+<td>根据数组a的形状生成一个全0数组</td>
+</tr>
+<tr>
+<td><code>np.full_like(a,val)</code></td>
+<td>根据数组a的形状生成一个数组，每个元素值都是val</td>
+</tr>
+</tbody>
+</table>
+<h3 id="（3）使用NumPy中其他函数创建ndarray数组"><a href="#（3）使用NumPy中其他函数创建ndarray数组" class="headerlink" title="（3）使用NumPy中其他函数创建ndarray数组"></a>（3）使用NumPy中其他函数创建ndarray数组</h3><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>np.linspace()</code></td>
+<td>根据起止数据等间距地填充数据，形成数组</td>
+</tr>
+<tr>
+<td><code>np.concatenate()</code></td>
+<td>将两个或多个数组合并成一个新的</td>
+</tr>
+</tbody>
+</table>
+<h1 id="ndarray数组的变换"><a href="#ndarray数组的变换" class="headerlink" title="ndarray数组的变换"></a>ndarray数组的变换</h1><p>对于创建后的ndarray数组，可以对其进行维度变换和元素类型变换</p>
+<h2 id="ndarray数组的维度变换"><a href="#ndarray数组的维度变换" class="headerlink" title="ndarray数组的维度变换"></a>ndarray数组的维度变换</h2><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.reshape(shape)</code></td>
+<td>不改变数组元素，返回一个shape形状的数组，原数组不变</td>
+</tr>
+<tr>
+<td><code>.resize(shape)</code></td>
+<td>与.reshape()功能一致，但修改原数组</td>
+</tr>
+<tr>
+<td><code>.swapaxes(ax1,ax2)</code></td>
+<td>将数组n个维度中两个维度进行调换</td>
+</tr>
+<tr>
+<td><code>.flatten()</code></td>
+<td>对数组进行降维，返回折叠后的一维数组，原数组不变</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ndarray数组的类型变换"><a href="#ndarray数组的类型变换" class="headerlink" title="ndarray数组的类型变换"></a>ndarray数组的类型变换</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">new_a = a.astype(new_type)</span><br></pre></td></tr></table></figure>
+<p>astype()方法一定会创建新的数组（原始数据的一个拷贝），即使两个类型一致。</p>
+<h2 id="ndarray数组向列表的转换"><a href="#ndarray数组向列表的转换" class="headerlink" title="ndarray数组向列表的转换"></a>ndarray数组向列表的转换</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls = a.tolist()</span><br></pre></td></tr></table></figure>
+<h1 id="ndarray数组的操作"><a href="#ndarray数组的操作" class="headerlink" title="ndarray数组的操作"></a>ndarray数组的操作</h1><h2 id="数组的索引和切片"><a href="#数组的索引和切片" class="headerlink" title="数组的索引和切片"></a>数组的索引和切片</h2><ul>
+<li>索引：获取数组中特定位置元素的过程</li>
+<li>切片：获取数组元素子集的过程</li>
+</ul>
+<h3 id="一维数组的索引和切片"><a href="#一维数组的索引和切片" class="headerlink" title="一维数组的索引和切片"></a>一维数组的索引和切片</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">7</span>]: a = np.array([<span class="number">9</span>,<span class="number">8</span>,<span class="number">7</span>,<span class="number">6</span>,<span class="number">5</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="number">8</span>]: a[<span class="number">2</span>]</span><br><span class="line">Out[<span class="number">8</span>]: <span class="number">7</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#起始编号: 终止编号(不含): 步长，3元素冒号分割</span></span><br><span class="line"><span class="comment">#编号0开始从左递增，或‐1开始从右递减</span></span><br><span class="line">In [<span class="number">9</span>]: a[<span class="number">1</span>:<span class="number">4</span>:<span class="number">2</span>]</span><br><span class="line">Out[<span class="number">9</span>]: array([<span class="number">8</span>, <span class="number">6</span>])</span><br></pre></td></tr></table></figure>
+<h3 id="多维数组的索引和切片"><a href="#多维数组的索引和切片" class="headerlink" title="多维数组的索引和切片"></a>多维数组的索引和切片</h3><p>多维数组的索引：每个维度一个索引值，逗号分割</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">10</span>]: a = np.arange(<span class="number">24</span>).reshape((<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>))</span><br><span class="line"></span><br><span class="line">In [<span class="number">11</span>]: a</span><br><span class="line">Out[<span class="number">11</span>]: </span><br><span class="line">array([[[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>],</span><br><span class="line">        [ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>],</span><br><span class="line">        [ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>]],</span><br><span class="line"></span><br><span class="line">       [[<span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">        [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>],</span><br><span class="line">        [<span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>]]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">12</span>]: a[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">Out[<span class="number">12</span>]: <span class="number">23</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">13</span>]: a[<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>]</span><br><span class="line">Out[<span class="number">13</span>]: <span class="number">6</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">14</span>]: a[<span class="number">-1</span>,<span class="number">-2</span>,<span class="number">-3</span>]</span><br><span class="line">Out[<span class="number">14</span>]: <span class="number">17</span></span><br></pre></td></tr></table></figure>
+<p>多维数组的切片： 选取一个维度用”:”,每个维度切片方法与一维数组相同,每个维度可以使用步长跳跃切片。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#In [10]: a = np.arange(24).reshape((2,3,4))</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">15</span>]: a[:,<span class="number">1</span>,<span class="number">-3</span>]</span><br><span class="line">Out[<span class="number">15</span>]: array([ <span class="number">5</span>, <span class="number">17</span>])</span><br><span class="line"></span><br><span class="line">In [<span class="number">16</span>]: a[:,<span class="number">1</span>:<span class="number">3</span>,:]</span><br><span class="line">Out[<span class="number">16</span>]: </span><br><span class="line">array([[[ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>],</span><br><span class="line">        [ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>]],</span><br><span class="line"></span><br><span class="line">       [[<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>],</span><br><span class="line">        [<span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>]]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">17</span>]: a[:,:,::<span class="number">2</span>]</span><br><span class="line">Out[<span class="number">17</span>]: </span><br><span class="line">array([[[ <span class="number">0</span>,  <span class="number">2</span>],</span><br><span class="line">        [ <span class="number">4</span>,  <span class="number">6</span>],</span><br><span class="line">        [ <span class="number">8</span>, <span class="number">10</span>]],</span><br><span class="line"></span><br><span class="line">       [[<span class="number">12</span>, <span class="number">14</span>],</span><br><span class="line">        [<span class="number">16</span>, <span class="number">18</span>],</span><br><span class="line">        [<span class="number">20</span>, <span class="number">22</span>]]])</span><br></pre></td></tr></table></figure>
+<h1 id="ndarray数组的运算"><a href="#ndarray数组的运算" class="headerlink" title="ndarray数组的运算"></a>ndarray数组的运算</h1><h2 id="数组与标量之间的运算"><a href="#数组与标量之间的运算" class="headerlink" title="数组与标量之间的运算"></a>数组与标量之间的运算</h2><p>数组与标量之间的运算作用于数组的每一个元素</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">19</span>]: a = np.arange(<span class="number">24</span>).reshape((<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>))</span><br><span class="line"></span><br><span class="line">In [<span class="number">20</span>]: a</span><br><span class="line">Out[<span class="number">20</span>]: </span><br><span class="line">array([[[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>],</span><br><span class="line">        [ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>],</span><br><span class="line">        [ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>]],</span><br><span class="line"></span><br><span class="line">       [[<span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">        [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>],</span><br><span class="line">        [<span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>]]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">21</span>]: a.mean()</span><br><span class="line">Out[<span class="number">21</span>]: <span class="number">11.5</span></span><br><span class="line"></span><br><span class="line">In [<span class="number">22</span>]: a = a / a.mean()</span><br><span class="line"></span><br><span class="line">In [<span class="number">23</span>]: a</span><br><span class="line">Out[<span class="number">23</span>]: </span><br><span class="line">array([[[<span class="number">0.</span>        , <span class="number">0.08695652</span>, <span class="number">0.17391304</span>, <span class="number">0.26086957</span>],</span><br><span class="line">        [<span class="number">0.34782609</span>, <span class="number">0.43478261</span>, <span class="number">0.52173913</span>, <span class="number">0.60869565</span>],</span><br><span class="line">        [<span class="number">0.69565217</span>, <span class="number">0.7826087</span> , <span class="number">0.86956522</span>, <span class="number">0.95652174</span>]],</span><br><span class="line"></span><br><span class="line">       [[<span class="number">1.04347826</span>, <span class="number">1.13043478</span>, <span class="number">1.2173913</span> , <span class="number">1.30434783</span>],</span><br><span class="line">        [<span class="number">1.39130435</span>, <span class="number">1.47826087</span>, <span class="number">1.56521739</span>, <span class="number">1.65217391</span>],</span><br><span class="line">        [<span class="number">1.73913043</span>, <span class="number">1.82608696</span>, <span class="number">1.91304348</span>, <span class="number">2.</span>        ]]])</span><br></pre></td></tr></table></figure>
+<h2 id="NumPy一元函数"><a href="#NumPy一元函数" class="headerlink" title="NumPy一元函数"></a>NumPy一元函数</h2><p>对ndarray中的数据执行元素级运算的函数</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>np.abs(x)</code> <code>np.fabs(x)</code></td>
+<td>计算数组各元素的绝对值</td>
+</tr>
+<tr>
+<td><code>np.sqrt(x)</code></td>
+<td>计算数组各元素的平方根</td>
+</tr>
+<tr>
+<td><code>np.square(x)</code></td>
+<td>计算数组各元素的平方</td>
+</tr>
+<tr>
+<td><code>np.log(x)</code> <code>np.log10(x)</code> <code>np.log2(x)</code></td>
+<td>计算数组各元素的自然对数、10底对数和2底对数</td>
+</tr>
+<tr>
+<td><code>np.ceil(x)</code> <code>np.floor(x)</code></td>
+<td>计算数组各元素的ceiling值 或 floor值</td>
+</tr>
+<tr>
+<td><code>np.rint(x)</code></td>
+<td>计算数组各元素的四舍五入值</td>
+</tr>
+<tr>
+<td><code>np.modf(x)</code></td>
+<td>将数组各元素的小数和整数部分以两个独立数组形式返回</td>
+</tr>
+<tr>
+<td><code>np.cos(x)</code> <code>np.cosh(x)</code> <code>np.sin(x)</code> <code>np.sinh(x)</code> <code>np.tan(x)</code> <code>np.tanh(x)</code></td>
+<td>计算数组各元素的普通型和双曲型三角函数</td>
+</tr>
+<tr>
+<td><code>np.exp(x)</code></td>
+<td>计算数组各元素的指数值</td>
+</tr>
+<tr>
+<td><code>np.sign(x)</code></td>
+<td>计算数组各元素的符号值，1(+), 0,-1(-)</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">24</span>]: a = np.arange(<span class="number">24</span>).reshape((<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>))</span><br><span class="line"></span><br><span class="line">In [<span class="number">25</span>]: np.square(a)</span><br><span class="line">Out[<span class="number">25</span>]: </span><br><span class="line">array([[[  <span class="number">0</span>,   <span class="number">1</span>,   <span class="number">4</span>,   <span class="number">9</span>],</span><br><span class="line">        [ <span class="number">16</span>,  <span class="number">25</span>,  <span class="number">36</span>,  <span class="number">49</span>],</span><br><span class="line">        [ <span class="number">64</span>,  <span class="number">81</span>, <span class="number">100</span>, <span class="number">121</span>]],</span><br><span class="line"></span><br><span class="line">       [[<span class="number">144</span>, <span class="number">169</span>, <span class="number">196</span>, <span class="number">225</span>],</span><br><span class="line">        [<span class="number">256</span>, <span class="number">289</span>, <span class="number">324</span>, <span class="number">361</span>],</span><br><span class="line">        [<span class="number">400</span>, <span class="number">441</span>, <span class="number">484</span>, <span class="number">529</span>]]], dtype=int32)</span><br><span class="line"></span><br><span class="line">In [<span class="number">26</span>]: a = np.sqrt(a)</span><br><span class="line"></span><br><span class="line">In [<span class="number">27</span>]: a</span><br><span class="line">Out[<span class="number">27</span>]: </span><br><span class="line">array([[[<span class="number">0.</span>        , <span class="number">1.</span>        , <span class="number">1.41421356</span>, <span class="number">1.73205081</span>],</span><br><span class="line">        [<span class="number">2.</span>        , <span class="number">2.23606798</span>, <span class="number">2.44948974</span>, <span class="number">2.64575131</span>],</span><br><span class="line">        [<span class="number">2.82842712</span>, <span class="number">3.</span>        , <span class="number">3.16227766</span>, <span class="number">3.31662479</span>]],</span><br><span class="line"></span><br><span class="line">       [[<span class="number">3.46410162</span>, <span class="number">3.60555128</span>, <span class="number">3.74165739</span>, <span class="number">3.87298335</span>],</span><br><span class="line">        [<span class="number">4.</span>        , <span class="number">4.12310563</span>, <span class="number">4.24264069</span>, <span class="number">4.35889894</span>],</span><br><span class="line">        [<span class="number">4.47213595</span>, <span class="number">4.58257569</span>, <span class="number">4.69041576</span>, <span class="number">4.79583152</span>]]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">28</span>]: np.modf(a)</span><br><span class="line">Out[<span class="number">28</span>]: </span><br><span class="line">(array([[[<span class="number">0.</span>        , <span class="number">0.</span>        , <span class="number">0.41421356</span>, <span class="number">0.73205081</span>],</span><br><span class="line">         [<span class="number">0.</span>        , <span class="number">0.23606798</span>, <span class="number">0.44948974</span>, <span class="number">0.64575131</span>],</span><br><span class="line">         [<span class="number">0.82842712</span>, <span class="number">0.</span>        , <span class="number">0.16227766</span>, <span class="number">0.31662479</span>]],</span><br><span class="line"> </span><br><span class="line">        [[<span class="number">0.46410162</span>, <span class="number">0.60555128</span>, <span class="number">0.74165739</span>, <span class="number">0.87298335</span>],</span><br><span class="line">         [<span class="number">0.</span>        , <span class="number">0.12310563</span>, <span class="number">0.24264069</span>, <span class="number">0.35889894</span>],</span><br><span class="line">         [<span class="number">0.47213595</span>, <span class="number">0.58257569</span>, <span class="number">0.69041576</span>, <span class="number">0.79583152</span>]]]),</span><br><span class="line"> array([[[<span class="number">0.</span>, <span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>],</span><br><span class="line">         [<span class="number">2.</span>, <span class="number">2.</span>, <span class="number">2.</span>, <span class="number">2.</span>],</span><br><span class="line">         [<span class="number">2.</span>, <span class="number">3.</span>, <span class="number">3.</span>, <span class="number">3.</span>]],</span><br><span class="line"> </span><br><span class="line">        [[<span class="number">3.</span>, <span class="number">3.</span>, <span class="number">3.</span>, <span class="number">3.</span>],</span><br><span class="line">         [<span class="number">4.</span>, <span class="number">4.</span>, <span class="number">4.</span>, <span class="number">4.</span>],</span><br><span class="line">         [<span class="number">4.</span>, <span class="number">4.</span>, <span class="number">4.</span>, <span class="number">4.</span>]]]))</span><br></pre></td></tr></table></figure>
+<h2 id="NumPy二元函数"><a href="#NumPy二元函数" class="headerlink" title="NumPy二元函数"></a>NumPy二元函数</h2><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>+ ‐ * / **</code></td>
+<td>两个数组各元素进行对应运算</td>
+</tr>
+<tr>
+<td><code>np.maximum(x,y)</code> <code>np.fmax()</code> <code>np.minimum(x,y)</code> <code>np.fmin()</code></td>
+<td>元素级的最大值/最小值计算</td>
+</tr>
+<tr>
+<td><code>np.mod(x,y)</code></td>
+<td>元素级的模运算</td>
+</tr>
+<tr>
+<td><code>np.copysign(x,y)</code></td>
+<td>将数组y中各元素值的符号赋值给数组x对应元素</td>
+</tr>
+<tr>
+<td><code>&gt;&lt; &gt;= &lt;= == !=</code></td>
+<td>算术比较，产生布尔型数组</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">In [<span class="number">29</span>]: a = np.arange(<span class="number">24</span>).reshape((<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>))</span><br><span class="line"></span><br><span class="line">In [<span class="number">30</span>]: b = np.sqrt(a)</span><br><span class="line"></span><br><span class="line">In [<span class="number">31</span>]: a</span><br><span class="line">Out[<span class="number">31</span>]: </span><br><span class="line">array([[[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>],</span><br><span class="line">        [ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>],</span><br><span class="line">        [ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>]],</span><br><span class="line"></span><br><span class="line">       [[<span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span><br><span class="line">        [<span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>, <span class="number">19</span>],</span><br><span class="line">        [<span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>]]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">32</span>]: b</span><br><span class="line">Out[<span class="number">32</span>]: </span><br><span class="line">array([[[<span class="number">0.</span>        , <span class="number">1.</span>        , <span class="number">1.41421356</span>, <span class="number">1.73205081</span>],</span><br><span class="line">        [<span class="number">2.</span>        , <span class="number">2.23606798</span>, <span class="number">2.44948974</span>, <span class="number">2.64575131</span>],</span><br><span class="line">        [<span class="number">2.82842712</span>, <span class="number">3.</span>        , <span class="number">3.16227766</span>, <span class="number">3.31662479</span>]],</span><br><span class="line"></span><br><span class="line">       [[<span class="number">3.46410162</span>, <span class="number">3.60555128</span>, <span class="number">3.74165739</span>, <span class="number">3.87298335</span>],</span><br><span class="line">        [<span class="number">4.</span>        , <span class="number">4.12310563</span>, <span class="number">4.24264069</span>, <span class="number">4.35889894</span>],</span><br><span class="line">        [<span class="number">4.47213595</span>, <span class="number">4.58257569</span>, <span class="number">4.69041576</span>, <span class="number">4.79583152</span>]]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">33</span>]: np.maximum(a,b)</span><br><span class="line">Out[<span class="number">33</span>]: </span><br><span class="line">array([[[ <span class="number">0.</span>,  <span class="number">1.</span>,  <span class="number">2.</span>,  <span class="number">3.</span>],</span><br><span class="line">        [ <span class="number">4.</span>,  <span class="number">5.</span>,  <span class="number">6.</span>,  <span class="number">7.</span>],</span><br><span class="line">        [ <span class="number">8.</span>,  <span class="number">9.</span>, <span class="number">10.</span>, <span class="number">11.</span>]],</span><br><span class="line"></span><br><span class="line">       [[<span class="number">12.</span>, <span class="number">13.</span>, <span class="number">14.</span>, <span class="number">15.</span>],</span><br><span class="line">        [<span class="number">16.</span>, <span class="number">17.</span>, <span class="number">18.</span>, <span class="number">19.</span>],</span><br><span class="line">        [<span class="number">20.</span>, <span class="number">21.</span>, <span class="number">22.</span>, <span class="number">23.</span>]]])</span><br><span class="line"></span><br><span class="line">In [<span class="number">34</span>]: a &gt; b</span><br><span class="line">Out[<span class="number">34</span>]: </span><br><span class="line">array([[[<span class="literal">False</span>, <span class="literal">False</span>,  <span class="literal">True</span>,  <span class="literal">True</span>],</span><br><span class="line">        [ <span class="literal">True</span>,  <span class="literal">True</span>,  <span class="literal">True</span>,  <span class="literal">True</span>],</span><br><span class="line">        [ <span class="literal">True</span>,  <span class="literal">True</span>,  <span class="literal">True</span>,  <span class="literal">True</span>]],</span><br><span class="line"></span><br><span class="line">       [[ <span class="literal">True</span>,  <span class="literal">True</span>,  <span class="literal">True</span>,  <span class="literal">True</span>],</span><br><span class="line">        [ <span class="literal">True</span>,  <span class="literal">True</span>,  <span class="literal">True</span>,  <span class="literal">True</span>],</span><br><span class="line">        [ <span class="literal">True</span>,  <span class="literal">True</span>,  <span class="literal">True</span>,  <span class="literal">True</span>]]])</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="wangjiaxi 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="wangjiaxi 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/04/python-9-Python计算生态/" rel="next" title="python(9)Python计算生态">
+                <i class="fa fa-chevron-left"></i> python(9)Python计算生态
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/04/Redis操作/" rel="prev" title="Redis操作">
+                Redis操作 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="wangjiaxi">
+            
+              <p class="site-author-name" itemprop="name">wangjiaxi</p>
+              <div class="site-description motion-element" itemprop="description">做个正常人</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/wangjiaxi/" title="GitHub &rarr; https://github.com/wangjiaxi/" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:wangjiaxi.cv@qq.com" title="E-Mail &rarr; mailto:wangjiaxi.cv@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据的维度"><span class="nav-number">1.</span> <span class="nav-text">数据的维度</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一维数据"><span class="nav-number">1.1.</span> <span class="nav-text">一维数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二维数据"><span class="nav-number">1.2.</span> <span class="nav-text">二维数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多维数据"><span class="nav-number">1.3.</span> <span class="nav-text">多维数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高维数据"><span class="nav-number">1.4.</span> <span class="nav-text">高维数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据维度的Python表示"><span class="nav-number">1.5.</span> <span class="nav-text">数据维度的Python表示</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NumPy的数组对象：ndarray"><span class="nav-number">2.</span> <span class="nav-text">NumPy的数组对象：ndarray</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#NumPy"><span class="nav-number">2.1.</span> <span class="nav-text">NumPy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NumPy的引用"><span class="nav-number">2.2.</span> <span class="nav-text">NumPy的引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#N维数组对象：ndarray"><span class="nav-number">2.3.</span> <span class="nav-text">N维数组对象：ndarray</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Python已有列表类型，为什么需要一个数组对象-类型-？"><span class="nav-number">2.3.1.</span> <span class="nav-text">Python已有列表类型，为什么需要一个数组对象(类型)？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ndarray是一个多维数组对象，由两部分构成："><span class="nav-number">2.3.2.</span> <span class="nav-text">ndarray是一个多维数组对象，由两部分构成：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ndarray实例"><span class="nav-number">2.3.3.</span> <span class="nav-text">ndarray实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ndarray对象的属性"><span class="nav-number">2.3.4.</span> <span class="nav-text">ndarray对象的属性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ndarray数组的元素"><span class="nav-number">3.</span> <span class="nav-text">ndarray数组的元素</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#非同质的ndarray对象"><span class="nav-number">3.1.</span> <span class="nav-text">非同质的ndarray对象</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ndarray数组的创建"><span class="nav-number">4.</span> <span class="nav-text">ndarray数组的创建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ndarray数组的创建方法"><span class="nav-number">4.1.</span> <span class="nav-text">ndarray数组的创建方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（1）从Python中的列表、元组等类型创建ndarray数组"><span class="nav-number">4.1.1.</span> <span class="nav-text">（1）从Python中的列表、元组等类型创建ndarray数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（2）使用NumPy中函数创建ndarray数组，如：arange-ones-zero等"><span class="nav-number">4.1.2.</span> <span class="nav-text">（2）使用NumPy中函数创建ndarray数组，如：arange, ones, zero等</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（3）使用NumPy中其他函数创建ndarray数组"><span class="nav-number">4.1.3.</span> <span class="nav-text">（3）使用NumPy中其他函数创建ndarray数组</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ndarray数组的变换"><span class="nav-number">5.</span> <span class="nav-text">ndarray数组的变换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ndarray数组的维度变换"><span class="nav-number">5.1.</span> <span class="nav-text">ndarray数组的维度变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ndarray数组的类型变换"><span class="nav-number">5.2.</span> <span class="nav-text">ndarray数组的类型变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ndarray数组向列表的转换"><span class="nav-number">5.3.</span> <span class="nav-text">ndarray数组向列表的转换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ndarray数组的操作"><span class="nav-number">6.</span> <span class="nav-text">ndarray数组的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数组的索引和切片"><span class="nav-number">6.1.</span> <span class="nav-text">数组的索引和切片</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一维数组的索引和切片"><span class="nav-number">6.1.1.</span> <span class="nav-text">一维数组的索引和切片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多维数组的索引和切片"><span class="nav-number">6.1.2.</span> <span class="nav-text">多维数组的索引和切片</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ndarray数组的运算"><span class="nav-number">7.</span> <span class="nav-text">ndarray数组的运算</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数组与标量之间的运算"><span class="nav-number">7.1.</span> <span class="nav-text">数组与标量之间的运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NumPy一元函数"><span class="nav-number">7.2.</span> <span class="nav-text">NumPy一元函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NumPy二元函数"><span class="nav-number">7.3.</span> <span class="nav-text">NumPy二元函数</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+	  
+	  
+		<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+		<div class="widget-wrap">
+			<h3 class="widget-title">Tag Cloud</h3>
+			<div id="myCanvasContainer" class="widget tagcloud">
+				<canvas width="250" height="250" id="resCanvas" style="width=100%">
+					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/">Hadoop</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/">Redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏/">游戏</a><span class="tag-list-count">3</span></li></ul>
+				</canvas>
+			</div>
+		</div>
+	  
+    </div>
+	
+	<div id="music163player">
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=1321392652&auto=1&height=66"></iframe>
+	</div>
+	
+
+
+
+
+
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangjiaxi</span>
+
+  
+
+  
+</div>
+
+
+  <script src="https://unpkg.com/mermaid@/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.1.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/three/three.min.js"></script>
+
+  
+  <script src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: '7AqAfY0UTLGCzrqwgoLDeAqh-gzGzoHsz',
+    appKey: 'sqdLgSwc2tD97Dq102IaJ609',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/algolia-search.js?v=7.1.0"></script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+<script>
+if ($('body').find('div.pdf').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/pdfobject@2.1.1/pdfobject.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      $('body').find('div.pdf').each(function(i, o) {
+        PDFObject.embed($(o).attr('target'), $(o), {
+          pdfOpenParams: {
+            navpanes: 0,
+            toolbar: 0,
+            statusbar: 0,
+            pagemode: 'thumbs',
+            view: 'FitH'
+          },
+          PDFJS_URL: '/lib/pdf/web/viewer.html',
+          height: $(o).attr('height') || '500px'
+        });
+      });
+    },
+  });
+}
+</script>
+
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'default',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>
