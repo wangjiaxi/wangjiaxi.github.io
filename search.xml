@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[PyCharm控制台自动换行]]></title>
+    <url>%2F2019%2F12%2F23%2FPyCharm%E6%8E%A7%E5%88%B6%E5%8F%B0%E8%87%AA%E5%8A%A8%E6%8D%A2%E8%A1%8C%2F</url>
+    <content type="text"><![CDATA[点击File -&gt; Settings -&gt; Editor -&gt; General -&gt; Console,勾选下图项即可。]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[python中if后直接加变量]]></title>
     <url>%2F2019%2F12%2F23%2Fpython%E4%B8%ADif%E5%90%8E%E7%9B%B4%E6%8E%A5%E5%8A%A0%E5%8F%98%E9%87%8F%2F</url>
     <content type="text"><![CDATA[python中有时候会使用if语句，后边直接加一个变量，而不是一个布尔表达式，这是在判断神马呢？ 其实意思是判断这个变量是否有值，这个值需要是非零非空的值，这行代码返回True或False。Python中除了’’、””、0、()、[]、{}、None为False之外，其他的都是True。举例 123456ls = [[], 0, '', "", &#123;&#125;, (), [1], 2, '3', "4", &#123;5&#125;, (6)]for i in ls: if i: print('i =', i, '有值') else: print('i =', i, '没值') 结果123456789101112i = [] 没值i = 0 没值i = 没值i = 没值i = &#123;&#125; 没值i = () 没值i = [1] 有值i = 2 有值i = 3 有值i = 4 有值i = &#123;5&#125; 有值i = 6 有值]]></content>
