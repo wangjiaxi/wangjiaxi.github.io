@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[python中if后直接加变量]]></title>
+    <url>%2F2019%2F12%2F23%2Fpython%E4%B8%ADif%E5%90%8E%E7%9B%B4%E6%8E%A5%E5%8A%A0%E5%8F%98%E9%87%8F%2F</url>
+    <content type="text"><![CDATA[python中有时候会使用if语句，后边直接加一个变量，而不是一个布尔表达式，这是在判断神马呢？ 其实意思是判断这个变量是否有值，这个值需要是非零非空的值，这行代码返回True或False。Python中除了’’、””、0、()、[]、{}、None为False之外，其他的都是True。举例 123456ls = [[], 0, '', "", &#123;&#125;, (), [1], 2, '3', "4", &#123;5&#125;, (6)]for i in ls: if i: print('i =', i, '有值') else: print('i =', i, '没值') 结果123456789101112i = [] 没值i = 0 没值i = 没值i = 没值i = &#123;&#125; 没值i = () 没值i = [1] 有值i = 2 有值i = 3 有值i = 4 有值i = &#123;5&#125; 有值i = 6 有值]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[实用SQL]]></title>
     <url>%2F2019%2F11%2F12%2F%E5%AE%9E%E7%94%A8SQL%2F</url>
     <content type="text"><![CDATA[在编写SQL时，灵活运用一些技巧，可以大大简化程序逻辑。 插入或替换如果我们希望插入一条新记录（INSERT），但如果记录已经存在，就先删除原记录，再插入新记录。此时，可以使用REPLACE语句，这样就不必先查询，再决定是否先删除再插入： 1REPLACE INTO students (id, class_id, name, gender, score) VALUES (1, 1, &apos;小明&apos;, &apos;F&apos;, 99); 若id=1的记录不存在，REPLACE语句将插入新记录，否则，当前id=1的记录将被删除，然后再插入新记录。 插入或更新如果我们希望插入一条新记录（INSERT），但如果记录已经存在，就更新该记录，此时，可以使用INSERT INTO ... ON DUPLICATE KEY UPDATE ...语句： 1INSERT INTO students (id, class_id, name, gender, score) VALUES (1, 1, &apos;小明&apos;, &apos;F&apos;, 99) ON DUPLICATE KEY UPDATE name=&apos;小明&apos;, gender=&apos;F&apos;, score=99; 若id=1的记录不存在，INSERT语句将插入新记录，否则，当前id=1的记录将被更新，更新的字段由UPDATE指定。 插入或忽略如果我们希望插入一条新记录（INSERT），但如果记录已经存在，就啥事也不干直接忽略，此时，可以使用INSERT IGNORE INTO ...语句： 1INSERT IGNORE INTO students (id, class_id, name, gender, score) VALUES (1, 1, &apos;小明&apos;, &apos;F&apos;, 99); 若id=1的记录不存在，INSERT语句将插入新记录，否则，不执行任何操作。 快照如果想要对一个表进行快照，即复制一份当前表的数据到一个新表，可以结合CREATE TABLE和SELECT： 12-- 对class_id=1的记录进行快照，并存储为新表students_of_class1:CREATE TABLE students_of_class1 SELECT * FROM students WHERE class_id=1; 新创建的表结构和SELECT使用的表结构完全一致。 写入查询结果集如果查询结果集需要写入到表中，可以结合INSERT和SELECT，将SELECT语句的结果集直接插入到指定表中。 例如，创建一个统计成绩的表statistics，记录各班的平均成绩： 123456CREATE TABLE statistics ( id BIGINT NOT NULL AUTO_INCREMENT, class_id BIGINT NOT NULL, average DOUBLE NOT NULL, PRIMARY KEY (id)); 然后，我们就可以用一条语句写入各班的平均成绩： 1INSERT INTO statistics (class_id, average) SELECT class_id, AVG(score) FROM students GROUP BY class_id; 确保INSERT语句的列和SELECT语句的列能一一对应，就可以在statistics表中直接保存查询的结果： 123456789&gt; select * from statistics;+----+----------+--------------+| id | class_id | average |+----+----------+--------------+| 1 | 1 | 86.5 || 2 | 2 | 73.666666666 || 3 | 3 | 88.333333333 |+----+----------+--------------+3 rows in set (0.00 sec)]]></content>
