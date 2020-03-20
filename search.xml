@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[python读写文件命令]]></title>
-    <url>%2F2020%2F03%2F13%2Fpython%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6%E5%91%BD%E4%BB%A4%2F</url>
-    <content type="text"><![CDATA[1close() 关闭文件。类似于编辑器中的“文件”→“保存”。 1read() 读取文件内容，可以将结果赋给一个变量。 1readline() 只读取文本文件中的一行。 1truncate() 清空文件，慎用。 1write('stuff') 将“stuff”写入文件。 1seek(0) 将读写位置移动到文件开头。]]></content>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[回文质数]]></title>
     <url>%2F2020%2F01%2F09%2F%E5%9B%9E%E6%96%87%E8%B4%A8%E6%95%B0%2F</url>
     <content type="text"><![CDATA[题目描述因为 151 既是一个质数又是一个回文数（从左到右和从右到左是看一样的），所以 151 是回文质数。 写一个程序来找出范围 [a,b] (5 \le a &lt; b \le 100,000,000)a,b( 一亿)间的所有回文质数。 输入格式第 1 行: 二个整数 a 和 b . 输出格式输出一个回文质数的列表，一行一个。 输入输出样例输入15 500 输出1234567891011125711101131151181191313353373383 超时实现123456789101112# 获得输入ab = input().split()a = int(ab[0])b = int(ab[1])for i in range(a, b + 1): if i % 2 == 1: if str(i)[::-1] == str(i): # 判断是否回文数 for j in range(2, int(i ** 0.5) + 1): # 判断是否质数 if i % j == 0: break else: print(i) # 是则打印 大佬方法埃氏筛 12345678910def prime_numbers(n): number = [1]*(n+1) # 初始化，1表示全部为质数 for i in range(2, int((n**0.5))+1): if number[i]: # 如果下标i对应的数字i是素数 for j in range(i*i, n+1, i): # 素数i的各个倍数 number[j] = 0 j += 1 for x in range(2, n+1): if number[x]: print(x)]]></content>
