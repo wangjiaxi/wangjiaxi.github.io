@@ -129,17 +129,17 @@
 
 
 
-  <meta name="description" content="{ %html ./virus.html %}">
+  <meta name="description" content="// 基于准备好的dom，初始化echarts实例         var myChart = echarts.init(document.getElementById(&apos;echarts6565&apos;));         // 指定图表的配置项和数据         var option =  {     title: {         text: &quot;实时疫情&quot;,">
 <meta property="og:type" content="website">
 <meta property="og:title" content="virus">
 <meta property="og:url" content="http://yoursite.com/virus/index.html">
 <meta property="og:site_name" content="wangjiaxi&#39;s notebook">
-<meta property="og:description" content="{ %html ./virus.html %}">
+<meta property="og:description" content="// 基于准备好的dom，初始化echarts实例         var myChart = echarts.init(document.getElementById(&apos;echarts6565&apos;));         // 指定图表的配置项和数据         var option =  {     title: {         text: &quot;实时疫情&quot;,">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-31T09:34:55.339Z">
+<meta property="og:updated_time" content="2020-03-31T10:06:32.481Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="virus">
-<meta name="twitter:description" content="{ %html ./virus.html %}">
+<meta name="twitter:description" content="// 基于准备好的dom，初始化echarts实例         var myChart = echarts.init(document.getElementById(&apos;echarts6565&apos;));         // 指定图表的配置项和数据         var option =  {     title: {         text: &quot;实时疫情&quot;,">
 
 
 
@@ -461,8 +461,210 @@
       <div class="post-body">
         
         
-          <p>{ %html ./virus.html %}</p>
+          <div id="echarts6565" style="width: 85%;height: 400px;margin: 0 auto"></div>
+<script src="https://cdn.bootcss.com/echarts/3.8.0/echarts.common.min.js"></script>
+<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('echarts6565'));
+        // 指定图表的配置项和数据
+        var option = 
+{
+    title: {
+        text: "实时疫情",
+        x: "center"
+    },
+    tooltip: {
+        trigger: "item"
+    },
+    legend: {
+        orient: "vertical",
+        x: "left",
+        data: ["感染人数"]
+    },
+    dataRange: {
+        min: 0,
+        max: 2000,
+        x: "left",
+        y: "bottom",
+        text: ["高", "低"],
+        calculable: true,
+        color: ["#006edd", "#e0ffff"]
+    },
+    toolbox: {
+        orient: "vertical",
+        y: "bottom",
+        feature: {
+            dataView: {
+                readOnly: false,
+                show: true
+            },
+            mark: {
+                show: true
+            },
+            saveAsImage: {
+                show: true
+            }
+        },
+        x: "right",
+        showTitle: true
+    },
+    roamController: {
+        x: "right",
+        mapTypeControl: {
+            china: true
+        }
+    },
+    series: [
+        {
+            type: "map",
+            name: "感染人数",
+            data: [
+                {
+                    value: 1733,
+                    name: "湖北"
+                },
+                {
+                    value: 519,
+                    name: "香港"
+                },
+                {
+                    value: 262,
+                    name: "台湾"
+                },
+                {
+                    value: 155,
+                    name: "上海"
+                },
+                {
+                    value: 154,
+                    name: "北京"
+                },
+                {
+                    value: 125,
+                    name: "广东"
+                },
+                {
+                    value: 44,
+                    name: "福建"
+                },
+                {
+                    value: 38,
+                    name: "天津"
+                },
+                {
+                    value: 29,
+                    name: "浙江"
+                },
+                {
+                    value: 28,
+                    name: "澳门"
+                },
+                {
+                    value: 22,
+                    name: "内蒙古"
+                },
+                {
+                    value: 14,
+                    name: "江苏"
+                },
+                {
+                    value: 13,
+                    name: "山东"
+                },
+                {
+                    value: 11,
+                    name: "四川"
+                },
+                {
+                    value: 11,
+                    name: "甘肃"
+                },
+                {
+                    value: 10,
+                    name: "辽宁"
+                },
+                {
+                    value: 8,
+                    name: "陕西"
+                },
+                {
+                    value: 6,
+                    name: "云南"
+                },
+                {
+                    value: 5,
+                    name: "河北"
+                },
+                {
+                    value: 5,
+                    name: "吉林"
+                },
+                {
+                    value: 3,
+                    name: "河南"
+                },
+                {
+                    value: 3,
+                    name: "重庆"
+                },
+                {
+                    value: 3,
+                    name: "山西"
+                },
+                {
+                    value: 2,
+                    name: "黑龙江"
+                },
+                {
+                    value: 2,
+                    name: "广西"
+                },
+                {
+                    value: 1,
+                    name: "江西"
+                },
+                {
+                    value: 1,
+                    name: "贵州"
+                },
+                {
+                    value: 0,
+                    name: "湖南"
+                },
+                {
+                    value: 0,
+                    name: "安徽"
+                },
+                {
+                    value: 0,
+                    name: "海南"
+                },
+                {
+                    value: 0,
+                    name: "新疆"
+                },
+                {
+                    value: 0,
+                    name: "宁夏"
+                },
+                {
+                    value: 0,
+                    name: "青海"
+                },
+                {
+                    value: 0,
+                    name: "西藏"
+                }
+            ]
+        }
+    ],
+    backgroundColor: "rgba(0, 0, 0, 0)",
+    color: ["#ff7f50", "#87cefa", "#da70d6", "#32cd32", "#6495ed", "#ff69b4", "#ba55d3", "#cd5c5c", "#ffa500", "#40e0d0", "rgb(30, 144, 255)", "rgb(255, 99, 71)", "#7b68ee", "#00fa9a", "#ffd700", "#6699FF", "#ff6666", "#3cb371", "#b8860b", "#30e0e0", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "rgb(255, 255, 255)"]
+}
 
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+</script>
         
       </div>
       
