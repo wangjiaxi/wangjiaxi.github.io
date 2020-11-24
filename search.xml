@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[随笔]]></title>
+    <url>%2F2020%2F11%2F24%2F%E9%9A%8F%E7%AC%94%2F</url>
+    <content type="text"><![CDATA[没错，今天又整理&amp;更新了一些内容，后面会发一些「脱敏的」少儿编程Python的小项目。]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[Python输出百分比和有效数字]]></title>
     <url>%2F2020%2F05%2F13%2FPython%E8%BE%93%E5%87%BA%E7%99%BE%E5%88%86%E6%AF%94%E5%92%8C%E6%9C%89%E6%95%88%E6%95%B0%E5%AD%97%2F</url>
     <content type="text"><![CDATA[目录： 输出百分数 输出有效数字 输出百分数方式1：直接使用参数格式化：{:.2%}{:.2%}： 显示小数点后2位 显示小数点后2位： 123print('percent: &#123;:.2%&#125;'.format(42 / 50))percent: 84.00% 不显示小数位：{:.0%}，即，将2改为0： 123print('percent: &#123;:.0%&#125;'.format(42 / 50))percent: 84% 方式2：格式化为float，然后处理成%格式： {:.2f}%与方式1的区别是： 需要对42/50乘以 100 。 方式2的%在{ }外边，方式1的%在{ }里边。 显示小数点后2位： 123print('percent: &#123;:.2f&#125;%'.format(42 / 50 * 100))percent: 84.00% 显示小数点后1位： 123print('percent: &#123;:.1f&#125;%'.format(42 / 50 * 100))percent: 84.0% 只显示整数位： 123print('percent: &#123;:.0f&#125;%'.format(42 / 50 * 100))percent: 84% 说明{ }的意思是对应format()的一个参数，按默认顺序对应，参数序号从0开始，{0}对应format()的第一个参数，{1}对应第二个参数。例如： 默认顺序： 123print('percent1: &#123;:.2%&#125;, percent2: &#123;:.1%&#125;'.format(42 / 50, 42 / 100))percent1: 84.00%, percent2: 42.0% 指定顺序：{1:.1%}对应第2个参数； {0:.1%}对应第1个参数。 123print('percent2: &#123;1:.1%&#125;, percent1: &#123;0:.1%&#125;'.format(42 / 50, 42 / 100))percent2: 42.0%, percent1: 84.0% 输出有效数字用自带的decimal模块12345from decimal import *getcontext().prec = 6Decimal(1)/Decimal(7)# 结果为Decimal('0.142857')，六个有效数字]]></content>
