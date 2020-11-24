@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
+  
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon32.ico?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/favicon32.ico?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":true,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="从数据处理到人工智能数据表示-&amp;gt;数据清洗-&amp;gt;数据统计-&amp;gt;数据可视化-&amp;gt;数据挖掘-&amp;gt;人工智能  数据表示：采用合适方式用程序表达数据  数据清理：数据归一化、数据转换、异常值处理  数据统计：数据的概要理解，数量、分布、中位数等  数据可视化：直观展示数据内涵的方式  数据挖掘：从数据分析获得知识，产生数据外的价值  人工智能：数据/语言/图像/视觉等方面深度分析与决策">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵩天老师Python(9)Python计算生态">
+<meta property="og:url" content="http://yoursite.com/2019/04/04/嵩天老师Python(9)Python计算生态/index.html">
+<meta property="og:site_name" content="wangjiaxi&#39;s notebook">
+<meta property="og:description" content="从数据处理到人工智能数据表示-&amp;gt;数据清洗-&amp;gt;数据统计-&amp;gt;数据可视化-&amp;gt;数据挖掘-&amp;gt;人工智能  数据表示：采用合适方式用程序表达数据  数据清理：数据归一化、数据转换、异常值处理  数据统计：数据的概要理解，数量、分布、中位数等  数据可视化：直观展示数据内涵的方式  数据挖掘：从数据分析获得知识，产生数据外的价值  人工智能：数据/语言/图像/视觉等方面深度分析与决策">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-11-24T15:31:09.037Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="嵩天老师Python(9)Python计算生态">
+<meta name="twitter:description" content="从数据处理到人工智能数据表示-&amp;gt;数据清洗-&amp;gt;数据统计-&amp;gt;数据可视化-&amp;gt;数据挖掘-&amp;gt;人工智能  数据表示：采用合适方式用程序表达数据  数据清理：数据归一化、数据转换、异常值处理  数据统计：数据的概要理解，数量、分布、中位数等  数据可视化：直观展示数据内涵的方式  数据挖掘：从数据分析获得知识，产生数据外的价值  人工智能：数据/语言/图像/视觉等方面深度分析与决策">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/04/04/嵩天老师Python(9)Python计算生态/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+  <title>嵩天老师Python(9)Python计算生态 | wangjiaxi's notebook</title>
+  
+
+
+
+
+  <script async src="//www.googletagmanager.com/gtag/js?id=UA-145825566-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-145825566-1');
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">wangjiaxi's notebook</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/04/嵩天老师Python(9)Python计算生态/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wangjiaxi">
+      <meta itemprop="description" content="做个正常人">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangjiaxi's notebook">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">嵩天老师Python(9)Python计算生态
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-04 15:42:57" itemprop="dateCreated datePublished" datetime="2019-04-04T15:42:57+08:00">2019-04-04</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-11-24 23:31:09" itemprop="dateModified" datetime="2020-11-24T23:31:09+08:00">2020-11-24</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/04/04/嵩天老师Python(9)Python计算生态/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/04/嵩天老师Python(9)Python计算生态/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="从数据处理到人工智能"><a href="#从数据处理到人工智能" class="headerlink" title="从数据处理到人工智能"></a>从数据处理到人工智能</h1><p>数据表示-&gt;数据清洗-&gt;数据统计-&gt;数据可视化-&gt;数据挖掘-&gt;人工智能</p>
+<ul>
+<li><p>数据表示：采用合适方式用程序表达数据</p>
+</li>
+<li><p>数据清理：数据归一化、数据转换、异常值处理</p>
+</li>
+<li><p>数据统计：数据的概要理解，数量、分布、中位数等</p>
+</li>
+<li><p>数据可视化：直观展示数据内涵的方式</p>
+</li>
+<li><p>数据挖掘：从数据分析获得知识，产生数据外的价值</p>
+</li>
+<li><p>人工智能：数据/语言/图像/视觉等方面深度分析与决策</p>
+<a id="more"></a>
+</li>
+</ul>
+<h2 id="Python库之数据分析"><a href="#Python库之数据分析" class="headerlink" title="Python库之数据分析"></a>Python库之数据分析</h2><h3 id="Numpy-表达N维数组的最基础库"><a href="#Numpy-表达N维数组的最基础库" class="headerlink" title="Numpy: 表达N维数组的最基础库"></a>Numpy: 表达N维数组的最基础库</h3><ul>
+<li>Python接口使用，C语言实现，计算速度优异</li>
+<li>Python数据分析及科学计算的基础库，支撑Pandas等</li>
+<li>提供直接的矩阵运算、广播函数、线性代数等功能</li>
+</ul>
+<h3 id="Pandas-Python数据分析高层次应用库"><a href="#Pandas-Python数据分析高层次应用库" class="headerlink" title="Pandas: Python数据分析高层次应用库"></a>Pandas: Python数据分析高层次应用库</h3><ul>
+<li>提供了简单易用的数据结构和数据分析工具</li>
+<li>理解数据类型与索引的关系，操作索引即操作数据</li>
+<li>Python最主要的数据分析功能库，基于Numpy开发</li>
+</ul>
+<p>Series = 索引 + 一维数据<br>DataFrame = 行列索引 + 二维数据</p>
+<h3 id="SciPy-数学、科学和工程计算功能库"><a href="#SciPy-数学、科学和工程计算功能库" class="headerlink" title="SciPy: 数学、科学和工程计算功能库"></a>SciPy: 数学、科学和工程计算功能库</h3><ul>
+<li>提供了一批数学算法及工程数据运算功能</li>
+<li>类似Matlab，可用于如傅里叶变换、信号处理等应用</li>
+<li>Python最主要的科学计算功能库，基于Numpy开发</li>
+</ul>
+<h2 id="Python库之数据可视化"><a href="#Python库之数据可视化" class="headerlink" title="Python库之数据可视化"></a>Python库之数据可视化</h2><h3 id="Matplotlib-高质量的二维数据可视化功能库"><a href="#Matplotlib-高质量的二维数据可视化功能库" class="headerlink" title="Matplotlib: 高质量的二维数据可视化功能库"></a>Matplotlib: 高质量的二维数据可视化功能库</h3><ul>
+<li>提供了超过100种数据可视化展示效果</li>
+<li>通过matplotlib.pyplot子库调用各可视化效果</li>
+<li>Python最主要的数据可视化功能库，基于Numpy开发</li>
+</ul>
+<h3 id="Seaborn-统计类数据可视化功能库"><a href="#Seaborn-统计类数据可视化功能库" class="headerlink" title="Seaborn: 统计类数据可视化功能库"></a>Seaborn: 统计类数据可视化功能库</h3><ul>
+<li>提供了一批高层次的统计类数据可视化展示效果</li>
+<li>主要展示数据间分布、分类和线性关系等内容</li>
+<li>基于Matplotlib开发，支持Numpy和Pandas</li>
+</ul>
+<h3 id="Mayavi：三维科学数据可视化功能库"><a href="#Mayavi：三维科学数据可视化功能库" class="headerlink" title="Mayavi：三维科学数据可视化功能库"></a>Mayavi：三维科学数据可视化功能库</h3><ul>
+<li>提供了一批简单易用的3D科学计算数据可视化展示效果</li>
+<li>目前版本是Mayavi2，三维可视化最主要的第三方库</li>
+<li>支持Numpy、TVTK、Traits、Envisage等第三方库</li>
+</ul>
+<h2 id="Python之文本处理"><a href="#Python之文本处理" class="headerlink" title="Python之文本处理"></a>Python之文本处理</h2><h3 id="PyPDF2：用来处理pdf文件的工具集"><a href="#PyPDF2：用来处理pdf文件的工具集" class="headerlink" title="PyPDF2：用来处理pdf文件的工具集"></a>PyPDF2：用来处理pdf文件的工具集</h3><ul>
+<li>提供了一批处理PDF文件的计算功能</li>
+<li>支持获取信息、分隔/整合文件、加密解密等</li>
+<li>完全Python语言实现，不需要额外依赖，功能稳定</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PyPDF2 <span class="keyword">import</span> PdfFileReader, PdfFileMerger</span><br><span class="line">merger = PdfFileMerger()</span><br><span class="line">input1 = open(<span class="string">"document1.pdf"</span>, <span class="string">"rb"</span>)</span><br><span class="line">input2 = open(<span class="string">"document2.pdf"</span>, <span class="string">"rb"</span>)</span><br><span class="line">merger.append(fileobj = input1, pages = (<span class="number">0</span>,<span class="number">3</span>))</span><br><span class="line">merger.merge(position = <span class="number">2</span>, fileobj = input2, pages = (<span class="number">0</span>,<span class="number">1</span>))</span><br><span class="line">output = open(<span class="string">"document-output.pdf"</span>, <span class="string">"wb"</span>)</span><br><span class="line">merger.write(output)</span><br></pre></td></tr></table></figure>
+<h3 id="NLTK：自然语言文本处理第三方库"><a href="#NLTK：自然语言文本处理第三方库" class="headerlink" title="NLTK：自然语言文本处理第三方库"></a>NLTK：自然语言文本处理第三方库</h3><ul>
+<li>提供了一批简单易用的自然语言文本处理功能</li>
+<li>支持语言文本分类、标记、语法句法、语义分析等</li>
+<li>最优秀的Python自然语言处理库</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> nltk.corpus <span class="keyword">import</span> treebank</span><br><span class="line">t = treebank.parsed_sents(<span class="string">'wsj_0001.mrg'</span>)[<span class="number">0</span>]</span><br><span class="line">t.draw()</span><br></pre></td></tr></table></figure>
+<h3 id="Python-docx：创建或更新Microsoft-Word文件的第三方库"><a href="#Python-docx：创建或更新Microsoft-Word文件的第三方库" class="headerlink" title="Python-docx：创建或更新Microsoft Word文件的第三方库"></a>Python-docx：创建或更新Microsoft Word文件的第三方库</h3><ul>
+<li>提供创建或更新.doc .docx等文件的计算功能</li>
+<li>增加并配置段落、图片、表格、文字等，功能全面</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> docx <span class="keyword">import</span> Document</span><br><span class="line">document = Document()</span><br><span class="line">document.add_heading(<span class="string">'Document Title'</span>, <span class="number">0</span>)</span><br><span class="line">p = document.add_paragraph(<span class="string">'A plain paragraph having some '</span>)</span><br><span class="line">document.add_page_break()</span><br><span class="line">document.save(<span class="string">'demo.docx'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="Python之机器学习"><a href="#Python之机器学习" class="headerlink" title="Python之机器学习"></a>Python之机器学习</h2><h3 id="Scikit-learn：机器学习方法工具集"><a href="#Scikit-learn：机器学习方法工具集" class="headerlink" title="Scikit-learn：机器学习方法工具集"></a>Scikit-learn：机器学习方法工具集</h3><ul>
+<li>提供一批统一化的机器学习方法功能接口</li>
+<li>提供聚类、分类、回归、强化学习等计算功能</li>
+<li>机器学习最基本且最优秀的Python第三方库</li>
+</ul>
+<h3 id="TensorFlow：AlphaGo背后的机器学习计算框架"><a href="#TensorFlow：AlphaGo背后的机器学习计算框架" class="headerlink" title="TensorFlow：AlphaGo背后的机器学习计算框架"></a>TensorFlow：AlphaGo背后的机器学习计算框架</h3><ul>
+<li>谷歌公司推动的开源机器学习框架</li>
+<li>将数据流图作为基础，图节点代表运算，边代表张量</li>
+<li>应用机器学习方法的一种方式，支撑谷歌人工智能应用</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess = tf.Session()</span><br><span class="line">sess.run(init)</span><br><span class="line">res = sess.run(result)</span><br><span class="line">print(<span class="string">'result:'</span>, res)</span><br></pre></td></tr></table></figure>
+<h3 id="MXNet：基于神经网络的深度学习计算框架"><a href="#MXNet：基于神经网络的深度学习计算框架" class="headerlink" title="MXNet：基于神经网络的深度学习计算框架"></a>MXNet：基于神经网络的深度学习计算框架</h3><ul>
+<li>提供可扩展的神经网络及深度学习计算功能</li>
+<li>可用于自动驾驶、机器翻译、语音识别等众多领域</li>
+<li>Python最重要的深度学习计算框架</li>
+</ul>
+<h1 id="实例：霍兰德人格分析雷达图"><a href="#实例：霍兰德人格分析雷达图" class="headerlink" title="实例：霍兰德人格分析雷达图"></a>实例：霍兰德人格分析雷达图</h1><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>霍兰德人格分析</p>
+<ul>
+<li>霍兰德认为：人格兴趣与职业之间应有一种内在的对应关系</li>
+<li>人格分类：研究型、艺术型、社会型、企业型、传统型、现实性</li>
+<li>职业：工程师、实验员、艺术家、推销员、记事员、社会工作者</li>
+</ul>
+<p>需求</p>
+<ul>
+<li>需求：雷达图方式验证霍兰德人格分析</li>
+<li>输入：各职业人群结合兴趣的调研数据</li>
+<li>输出：雷达图</li>
+</ul>
+<p>第三方库的使用</p>
+<ul>
+<li>通用雷达图绘制：matplotlib库</li>
+<li>专业的多维数据表示：numpy库</li>
+<li>输出：雷达图</li>
+</ul>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#HollandRadarDraw.py</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> matplotlib</span><br><span class="line">matplotlib.rcParams[<span class="string">'font.family'</span>]=<span class="string">'SimHei'</span></span><br><span class="line">radar_labels = np.array([<span class="string">'研究型(I)'</span>,<span class="string">'艺术型(A)'</span>,<span class="string">'社会型(S)'</span>,\</span><br><span class="line"><span class="string">'企业型(E)'</span>,<span class="string">'常规型(C)'</span>,<span class="string">'现实型(R)'</span>])</span><br><span class="line">data = np.array([[<span class="number">0.40</span>, <span class="number">0.32</span>, <span class="number">0.35</span>, <span class="number">0.30</span>, <span class="number">0.30</span>, <span class="number">0.88</span>],</span><br><span class="line">[<span class="number">0.85</span>, <span class="number">0.35</span>, <span class="number">0.30</span>, <span class="number">0.40</span>, <span class="number">0.40</span>, <span class="number">0.30</span>],</span><br><span class="line">[<span class="number">0.43</span>, <span class="number">0.89</span>, <span class="number">0.30</span>, <span class="number">0.28</span>, <span class="number">0.22</span>, <span class="number">0.30</span>],</span><br><span class="line">[<span class="number">0.30</span>, <span class="number">0.25</span>, <span class="number">0.48</span>, <span class="number">0.85</span>, <span class="number">0.45</span>, <span class="number">0.40</span>],</span><br><span class="line">[<span class="number">0.20</span>, <span class="number">0.38</span>, <span class="number">0.87</span>, <span class="number">0.45</span>, <span class="number">0.32</span>, <span class="number">0.28</span>],</span><br><span class="line">[<span class="number">0.34</span>, <span class="number">0.31</span>, <span class="number">0.38</span>, <span class="number">0.40</span>, <span class="number">0.92</span>, <span class="number">0.28</span>]]) <span class="comment">#数据值</span></span><br><span class="line">data_labels = (<span class="string">'艺术家'</span>,<span class="string">'实验员'</span>,<span class="string">'工程师'</span>,<span class="string">'推销员'</span>,<span class="string">'社会工作者'</span>,<span class="string">'记事员'</span>)</span><br><span class="line">angles = np.linspace(<span class="number">0</span>, <span class="number">2</span>*np.pi, <span class="number">6</span>, endpoint=<span class="literal">False</span>)</span><br><span class="line">data = np.concatenate((data, [data[<span class="number">0</span>]]))</span><br><span class="line">angles = np.concatenate((angles, [angles[<span class="number">0</span>]]))</span><br><span class="line">fig = plt.figure(facecolor=<span class="string">"white"</span>)</span><br><span class="line">plt.subplot(<span class="number">111</span>, polar=<span class="literal">True</span>)</span><br><span class="line">plt.plot(angles,data,<span class="string">'o-'</span>, linewidth=<span class="number">1</span>, alpha=<span class="number">0.2</span>)</span><br><span class="line">plt.fill(angles,data, alpha=<span class="number">0.25</span>)</span><br><span class="line">plt.thetagrids(angles*<span class="number">180</span>/np.pi, radar_labels,frac = <span class="number">1.2</span>)</span><br><span class="line">plt.figtext(<span class="number">0.52</span>, <span class="number">0.95</span>, <span class="string">'霍兰德人格分析'</span>, ha=<span class="string">'center'</span>, size=<span class="number">20</span>)</span><br><span class="line">legend = plt.legend(data_labels, loc=(<span class="number">0.94</span>, <span class="number">0.80</span>), labelspacing=<span class="number">0.1</span>)</span><br><span class="line">plt.setp(legend.get_texts(), fontsize=<span class="string">'large'</span>)</span><br><span class="line">plt.grid(<span class="literal">True</span>)</span><br><span class="line">plt.savefig(<span class="string">'holland_radar.jpg'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h1 id="从Web解析到网络空间"><a href="#从Web解析到网络空间" class="headerlink" title="从Web解析到网络空间"></a>从Web解析到网络空间</h1><h2 id="Python库之网络爬虫"><a href="#Python库之网络爬虫" class="headerlink" title="Python库之网络爬虫"></a>Python库之网络爬虫</h2><h3 id="Requests-最友好的网络爬虫功能库"><a href="#Requests-最友好的网络爬虫功能库" class="headerlink" title="Requests: 最友好的网络爬虫功能库"></a>Requests: 最友好的网络爬虫功能库</h3><ul>
+<li>提供了简单易用的类HTTP协议网络爬虫功能</li>
+<li>支持连接池、SSL、Cookies、HTTP(S)代理等</li>
+<li>Python最主要的页面级网络爬虫功能库</li>
+</ul>
+<h3 id="Scrapy-优秀的网络爬虫框架"><a href="#Scrapy-优秀的网络爬虫框架" class="headerlink" title="Scrapy: 优秀的网络爬虫框架"></a>Scrapy: 优秀的网络爬虫框架</h3><ul>
+<li>提供了构建网络爬虫系统的框架功能，功能半成品</li>
+<li>支持批量和定时网页爬取、提供数据处理流程等</li>
+<li>Python最主要且最专业的网络爬虫框架</li>
+</ul>
+<h3 id="pyspider-强大的Web页面爬取系统"><a href="#pyspider-强大的Web页面爬取系统" class="headerlink" title="pyspider: 强大的Web页面爬取系统"></a>pyspider: 强大的Web页面爬取系统</h3><ul>
+<li>提供了完整的网页爬取系统构建功能</li>
+<li>支持数据库后端、消息队列、优先级、分布式架构等</li>
+<li>Python重要的网络爬虫类第三方库</li>
+</ul>
+<h2 id="Python库之Web信息提取"><a href="#Python库之Web信息提取" class="headerlink" title="Python库之Web信息提取"></a>Python库之Web信息提取</h2><h3 id="Beautiful-Soup-HTML和XML的解析库"><a href="#Beautiful-Soup-HTML和XML的解析库" class="headerlink" title="Beautiful Soup: HTML和XML的解析库"></a>Beautiful Soup: HTML和XML的解析库</h3><ul>
+<li>提供了解析HTML和XML等Web信息的功能</li>
+<li>又名beautifulsoup4或bs4，可以加载多种解析引擎</li>
+<li>常与网络爬虫库搭配使用，如Scrapy、requests等</li>
+</ul>
+<h3 id="Re-正则表达式解析和处理功能库"><a href="#Re-正则表达式解析和处理功能库" class="headerlink" title="Re: 正则表达式解析和处理功能库"></a>Re: 正则表达式解析和处理功能库</h3><ul>
+<li>提供了定义和解析正则表达式的一批通用功能</li>
+<li>可用于各类场景，包括定点的Web信息提取</li>
+<li>Python最主要的标准库之一，无需安装</li>
+</ul>
+<h3 id="Python-Goose-提取文章类型Web页面的功能库"><a href="#Python-Goose-提取文章类型Web页面的功能库" class="headerlink" title="Python-Goose: 提取文章类型Web页面的功能库"></a>Python-Goose: 提取文章类型Web页面的功能库</h3><ul>
+<li>提供了对Web页面中文章信息/视频等元数据的提取功能</li>
+<li>针对特定类型Web页面，应用覆盖面较广</li>
+<li>Python最主要的Web信息提取库</li>
+</ul>
+<h2 id="Python库之Web网站开发"><a href="#Python库之Web网站开发" class="headerlink" title="Python库之Web网站开发"></a>Python库之Web网站开发</h2><h3 id="Django-最流行的Web应用框架"><a href="#Django-最流行的Web应用框架" class="headerlink" title="Django: 最流行的Web应用框架"></a>Django: 最流行的Web应用框架</h3><ul>
+<li>提供了构建Web系统的基本应用框架</li>
+<li>MTV模式：模型(model)、模板(Template)、视图(Views)</li>
+<li>Python最重要的Web应用框架，略微复杂的应用框架</li>
+</ul>
+<h3 id="Pyramid-规模适中的Web应用框架"><a href="#Pyramid-规模适中的Web应用框架" class="headerlink" title="Pyramid: 规模适中的Web应用框架"></a>Pyramid: 规模适中的Web应用框架</h3><ul>
+<li>提供了简单方便构建Web系统的应用框架</li>
+<li>不大不小，规模适中，适合快速构建并适度扩展类应用</li>
+<li>Python产品级Web应用框架，起步简单可扩展性好</li>
+</ul>
+<h3 id="Flask-Web应用开发微框架"><a href="#Flask-Web应用开发微框架" class="headerlink" title="Flask: Web应用开发微框架"></a>Flask: Web应用开发微框架</h3><ul>
+<li>提供了最简单构建Web系统的应用框架</li>
+<li>特点是：简单、规模小、快速</li>
+<li>Django &gt; Pyramid &gt; Flask</li>
+</ul>
+<h2 id="Python库之网络应用开发"><a href="#Python库之网络应用开发" class="headerlink" title="Python库之网络应用开发"></a>Python库之网络应用开发</h2><h3 id="WeRoBot-微信公众号开发框架"><a href="#WeRoBot-微信公众号开发框架" class="headerlink" title="WeRoBot: 微信公众号开发框架"></a>WeRoBot: 微信公众号开发框架</h3><ul>
+<li>提供了解析微信服务器消息及反馈消息的功能</li>
+<li>建立微信机器人的重要技术手段</li>
+</ul>
+<h3 id="aip-百度AI开放平台接口"><a href="#aip-百度AI开放平台接口" class="headerlink" title="aip: 百度AI开放平台接口"></a>aip: 百度AI开放平台接口</h3><ul>
+<li>提供了访问百度AI服务的Python功能接口</li>
+<li>语音、人脸、OCR、NLP、知识图谱、图像搜索等领域</li>
+<li>Python百度AI应用的最主要方式</li>
+</ul>
+<h3 id="MyQR-二维码生成第三方库"><a href="#MyQR-二维码生成第三方库" class="headerlink" title="MyQR: 二维码生成第三方库"></a>MyQR: 二维码生成第三方库</h3><ul>
+<li>提供了生成二维码的系列功能</li>
+<li>基本二维码、艺术二维码和动态二维码</li>
+</ul>
+<h1 id="从人机交互到艺术设计"><a href="#从人机交互到艺术设计" class="headerlink" title="从人机交互到艺术设计"></a>从人机交互到艺术设计</h1><h2 id="Python库之图形用户界面"><a href="#Python库之图形用户界面" class="headerlink" title="Python库之图形用户界面"></a>Python库之图形用户界面</h2><h3 id="PyQt5-Qt开发框架的Python接口"><a href="#PyQt5-Qt开发框架的Python接口" class="headerlink" title="PyQt5: Qt开发框架的Python接口"></a>PyQt5: Qt开发框架的Python接口</h3><ul>
+<li>提供了创建Qt5程序的Python API接口</li>
+<li>Qt是非常成熟的跨平台桌面应用开发系统，完备GUI</li>
+<li>推荐的Python GUI开发第三方库</li>
+</ul>
+<h3 id="wxPython-跨平台GUI开发框架"><a href="#wxPython-跨平台GUI开发框架" class="headerlink" title="wxPython: 跨平台GUI开发框架"></a>wxPython: 跨平台GUI开发框架</h3><ul>
+<li>提供了专用于Python的跨平台GUI开发框架</li>
+<li>理解数据类型与索引的关系，操作索引即操作数据</li>
+<li>Python最主要的数据分析功能库，基于Numpy开发</li>
+</ul>
+<h3 id="PyGObject-使用GTK-开发GUI的功能库"><a href="#PyGObject-使用GTK-开发GUI的功能库" class="headerlink" title="PyGObject: 使用GTK+开发GUI的功能库"></a>PyGObject: 使用GTK+开发GUI的功能库</h3><ul>
+<li>提供了整合GTK+、WebKitGTK+等库的功能</li>
+<li>GTK+：跨平台的一种用户图形界面GUI框架</li>
+<li>实例：Anaconda采用该库构建GUI</li>
+</ul>
+<h2 id="Python库之游戏开发"><a href="#Python库之游戏开发" class="headerlink" title="Python库之游戏开发"></a>Python库之游戏开发</h2><h3 id="PyGame-简单的游戏开发功能库"><a href="#PyGame-简单的游戏开发功能库" class="headerlink" title="PyGame: 简单的游戏开发功能库"></a>PyGame: 简单的游戏开发功能库</h3><ul>
+<li>提供了基于SDL的简单游戏开发功能及实现引擎</li>
+<li>理解游戏对外部输入的响应机制及角色构建和交互机制</li>
+<li>Python游戏入门最主要的第三方库</li>
+</ul>
+<h3 id="Panda3D-开源、跨平台的3D渲染和游戏开发库"><a href="#Panda3D-开源、跨平台的3D渲染和游戏开发库" class="headerlink" title="Panda3D: 开源、跨平台的3D渲染和游戏开发库"></a>Panda3D: 开源、跨平台的3D渲染和游戏开发库</h3><ul>
+<li>一个3D游戏引擎，提供Python和C++两种接口</li>
+<li>支持很多先进特性：法线贴图、光泽贴图、卡通渲染等</li>
+<li>由迪士尼和卡尼基梅隆大学共同开发</li>
+</ul>
+<h3 id="cocos2d-构建2D游戏和图形界面交互式应用的框架"><a href="#cocos2d-构建2D游戏和图形界面交互式应用的框架" class="headerlink" title="cocos2d: 构建2D游戏和图形界面交互式应用的框架"></a>cocos2d: 构建2D游戏和图形界面交互式应用的框架</h3><ul>
+<li>提供了基于OpenGL的游戏开发图形渲染功能</li>
+<li>支持GPU加速，采用树形结构分层管理游戏对象类型</li>
+<li>适用于2D专业级游戏开发</li>
+</ul>
+<h2 id="Python库之虚拟现实"><a href="#Python库之虚拟现实" class="headerlink" title="Python库之虚拟现实"></a>Python库之虚拟现实</h2><h3 id="VR-Zero-在树莓派上开发VR应用的Python库"><a href="#VR-Zero-在树莓派上开发VR应用的Python库" class="headerlink" title="VR Zero: 在树莓派上开发VR应用的Python库"></a>VR Zero: 在树莓派上开发VR应用的Python库</h3><ul>
+<li>提供大量与VR开发相关的功能</li>
+<li>针对树莓派的VR开发库，支持设备小型化，配置简单化</li>
+<li>非常适合初学者实践VR开发及应用</li>
+</ul>
+<h3 id="pyovr-Oculus-Rift的Python开发接口"><a href="#pyovr-Oculus-Rift的Python开发接口" class="headerlink" title="pyovr: Oculus Rift的Python开发接口"></a>pyovr: Oculus Rift的Python开发接口</h3><ul>
+<li>针对Oculus VR设备的Python开发库</li>
+<li>基于成熟的VR设备，提供全套文档，工业级应用设备</li>
+<li>Python+虚拟现实领域探索的一种思路</li>
+</ul>
+<h3 id="Vizard-基于Python的通用VR开发引擎"><a href="#Vizard-基于Python的通用VR开发引擎" class="headerlink" title="Vizard: 基于Python的通用VR开发引擎"></a>Vizard: 基于Python的通用VR开发引擎</h3><ul>
+<li>专业的企业级虚拟现实开发引擎</li>
+<li>提供详细的官方文档</li>
+<li>支持多种主流的VR硬件设备，具有一定通用性</li>
+</ul>
+<h2 id="Python库之图形艺术"><a href="#Python库之图形艺术" class="headerlink" title="Python库之图形艺术"></a>Python库之图形艺术</h2><h3 id="Quads-迭代的艺术"><a href="#Quads-迭代的艺术" class="headerlink" title="Quads: 迭代的艺术"></a>Quads: 迭代的艺术</h3><ul>
+<li>对图片进行四分迭代，形成像素风</li>
+<li>可以生成动图或静图图像</li>
+<li>简单易用，具有很高展示度</li>
+</ul>
+<h3 id="ascii-art-ASCII艺术库"><a href="#ascii-art-ASCII艺术库" class="headerlink" title="ascii_art: ASCII艺术库"></a>ascii_art: ASCII艺术库</h3><ul>
+<li>将普通图片转为ASCII艺术风格</li>
+<li>输出可以是纯文本或彩色文本</li>
+<li>可采用图片格式输出</li>
+</ul>
+<h1 id="实例-玫瑰花绘制"><a href="#实例-玫瑰花绘制" class="headerlink" title="实例: 玫瑰花绘制"></a>实例: 玫瑰花绘制</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># RoseDraw.py</span></span><br><span class="line"><span class="keyword">import</span> turtle <span class="keyword">as</span> t</span><br><span class="line"><span class="comment"># 定义一个曲线绘制函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">DegreeCurve</span><span class="params">(n, r, d=<span class="number">1</span>)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">        t.left(d)</span><br><span class="line">        t.circle(r, abs(d))</span><br><span class="line"><span class="comment"># 初始位置设定</span></span><br><span class="line">s = <span class="number">0.2</span> <span class="comment"># size</span></span><br><span class="line">t.setup(<span class="number">450</span>*<span class="number">5</span>*s, <span class="number">750</span>*<span class="number">5</span>*s)</span><br><span class="line">t.pencolor(<span class="string">"black"</span>)</span><br><span class="line">t.fillcolor(<span class="string">"red"</span>)</span><br><span class="line">t.speed(<span class="number">100</span>)</span><br><span class="line">t.penup()</span><br><span class="line">t.goto(<span class="number">0</span>, <span class="number">900</span>*s)</span><br><span class="line">t.pendown()</span><br><span class="line"><span class="comment"># 绘制花朵形状</span></span><br><span class="line">t.begin_fill()</span><br><span class="line">t.circle(<span class="number">200</span>*s,<span class="number">30</span>)</span><br><span class="line">DegreeCurve(<span class="number">60</span>, <span class="number">50</span>*s)</span><br><span class="line">t.circle(<span class="number">200</span>*s,<span class="number">30</span>)</span><br><span class="line">DegreeCurve(<span class="number">4</span>, <span class="number">100</span>*s)</span><br><span class="line">t.circle(<span class="number">200</span>*s,<span class="number">50</span>)</span><br><span class="line">DegreeCurve(<span class="number">50</span>, <span class="number">50</span>*s)</span><br><span class="line">t.circle(<span class="number">350</span>*s,<span class="number">65</span>)</span><br><span class="line">DegreeCurve(<span class="number">40</span>, <span class="number">70</span>*s)</span><br><span class="line">t.circle(<span class="number">150</span>*s,<span class="number">50</span>)</span><br><span class="line">DegreeCurve(<span class="number">20</span>, <span class="number">50</span>*s, <span class="number">-1</span>)</span><br><span class="line">t.circle(<span class="number">400</span>*s,<span class="number">60</span>)</span><br><span class="line">DegreeCurve(<span class="number">18</span>, <span class="number">50</span>*s)</span><br><span class="line">t.fd(<span class="number">250</span>*s)</span><br><span class="line">t.right(<span class="number">150</span>)</span><br><span class="line">t.circle(<span class="number">-500</span>*s,<span class="number">12</span>)</span><br><span class="line">t.left(<span class="number">140</span>)</span><br><span class="line">t.circle(<span class="number">550</span>*s,<span class="number">110</span>)</span><br><span class="line">t.left(<span class="number">27</span>)</span><br><span class="line">t.circle(<span class="number">650</span>*s,<span class="number">100</span>)</span><br><span class="line">t.left(<span class="number">130</span>)</span><br><span class="line">t.circle(<span class="number">-300</span>*s,<span class="number">20</span>)</span><br><span class="line">t.right(<span class="number">123</span>)</span><br><span class="line">t.circle(<span class="number">220</span>*s,<span class="number">57</span>)</span><br><span class="line">t.end_fill()</span><br><span class="line"><span class="comment"># 绘制花枝形状</span></span><br><span class="line">t.left(<span class="number">120</span>)</span><br><span class="line">t.fd(<span class="number">280</span>*s)</span><br><span class="line">t.left(<span class="number">115</span>)</span><br><span class="line">t.circle(<span class="number">300</span>*s,<span class="number">33</span>)</span><br><span class="line">t.left(<span class="number">180</span>)</span><br><span class="line">t.circle(<span class="number">-300</span>*s,<span class="number">33</span>)</span><br><span class="line">DegreeCurve(<span class="number">70</span>, <span class="number">225</span>*s, <span class="number">-1</span>)</span><br><span class="line">t.circle(<span class="number">350</span>*s,<span class="number">104</span>)</span><br><span class="line">t.left(<span class="number">90</span>)</span><br><span class="line">t.circle(<span class="number">200</span>*s,<span class="number">105</span>)</span><br><span class="line">t.circle(<span class="number">-500</span>*s,<span class="number">63</span>)</span><br><span class="line">t.penup()</span><br><span class="line">t.goto(<span class="number">170</span>*s,<span class="number">-30</span>*s)</span><br><span class="line">t.pendown()</span><br><span class="line">t.left(<span class="number">160</span>)</span><br><span class="line">DegreeCurve(<span class="number">20</span>, <span class="number">2500</span>*s)</span><br><span class="line">DegreeCurve(<span class="number">220</span>, <span class="number">250</span>*s, <span class="number">-1</span>)</span><br><span class="line"><span class="comment"># 绘制一个绿色叶子</span></span><br><span class="line">t.fillcolor(<span class="string">'green'</span>)</span><br><span class="line">t.penup()</span><br><span class="line">t.goto(<span class="number">670</span>*s,<span class="number">-180</span>*s)</span><br><span class="line">t.pendown()</span><br><span class="line">t.right(<span class="number">140</span>)</span><br><span class="line">t.begin_fill()</span><br><span class="line">t.circle(<span class="number">300</span>*s,<span class="number">120</span>)</span><br><span class="line">t.left(<span class="number">60</span>)</span><br><span class="line">t.circle(<span class="number">300</span>*s,<span class="number">120</span>)</span><br><span class="line">t.end_fill()</span><br><span class="line">t.penup()</span><br><span class="line">t.goto(<span class="number">180</span>*s,<span class="number">-550</span>*s)</span><br><span class="line">t.pendown()</span><br><span class="line">t.right(<span class="number">85</span>)</span><br><span class="line">t.circle(<span class="number">600</span>*s,<span class="number">40</span>)</span><br><span class="line"><span class="comment"># 绘制另一个绿色叶子</span></span><br><span class="line">t.penup()</span><br><span class="line">t.goto(<span class="number">-150</span>*s,<span class="number">-1000</span>*s)</span><br><span class="line">t.pendown()</span><br><span class="line">t.begin_fill()</span><br><span class="line">t.rt(<span class="number">120</span>)</span><br><span class="line">t.circle(<span class="number">300</span>*s,<span class="number">115</span>)</span><br><span class="line">t.left(<span class="number">75</span>)</span><br><span class="line">t.circle(<span class="number">300</span>*s,<span class="number">100</span>)</span><br><span class="line">t.end_fill()</span><br><span class="line">t.penup()</span><br><span class="line">t.goto(<span class="number">430</span>*s,<span class="number">-1070</span>*s)</span><br><span class="line">t.pendown()</span><br><span class="line">t.right(<span class="number">30</span>)</span><br><span class="line">t.circle(<span class="number">-600</span>*s,<span class="number">35</span>)</span><br><span class="line">t.done()</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="wangjiaxi 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="wangjiaxi 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/04/嵩天老师Python(8)程序设计方法学/" rel="next" title="嵩天老师Python(8)程序设计方法学">
+                <i class="fa fa-chevron-left"></i> 嵩天老师Python(8)程序设计方法学
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/04/Python数据分析之Numpy库入门/" rel="prev" title="数据分析之Numpy库入门">
+                数据分析之Numpy库入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="wangjiaxi">
+            
+              <p class="site-author-name" itemprop="name">wangjiaxi</p>
+              <div class="site-description motion-element" itemprop="description">做个正常人</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">29</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/wangjiaxi/" title="GitHub &rarr; https://github.com/wangjiaxi/" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:wangjiaxi.cv@qq.com" title="E-Mail &rarr; mailto:wangjiaxi.cv@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#从数据处理到人工智能"><span class="nav-number">1.</span> <span class="nav-text">从数据处理到人工智能</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Python库之数据分析"><span class="nav-number">1.1.</span> <span class="nav-text">Python库之数据分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Numpy-表达N维数组的最基础库"><span class="nav-number">1.1.1.</span> <span class="nav-text">Numpy: 表达N维数组的最基础库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pandas-Python数据分析高层次应用库"><span class="nav-number">1.1.2.</span> <span class="nav-text">Pandas: Python数据分析高层次应用库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SciPy-数学、科学和工程计算功能库"><span class="nav-number">1.1.3.</span> <span class="nav-text">SciPy: 数学、科学和工程计算功能库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python库之数据可视化"><span class="nav-number">1.2.</span> <span class="nav-text">Python库之数据可视化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Matplotlib-高质量的二维数据可视化功能库"><span class="nav-number">1.2.1.</span> <span class="nav-text">Matplotlib: 高质量的二维数据可视化功能库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Seaborn-统计类数据可视化功能库"><span class="nav-number">1.2.2.</span> <span class="nav-text">Seaborn: 统计类数据可视化功能库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mayavi：三维科学数据可视化功能库"><span class="nav-number">1.2.3.</span> <span class="nav-text">Mayavi：三维科学数据可视化功能库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python之文本处理"><span class="nav-number">1.3.</span> <span class="nav-text">Python之文本处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PyPDF2：用来处理pdf文件的工具集"><span class="nav-number">1.3.1.</span> <span class="nav-text">PyPDF2：用来处理pdf文件的工具集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NLTK：自然语言文本处理第三方库"><span class="nav-number">1.3.2.</span> <span class="nav-text">NLTK：自然语言文本处理第三方库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-docx：创建或更新Microsoft-Word文件的第三方库"><span class="nav-number">1.3.3.</span> <span class="nav-text">Python-docx：创建或更新Microsoft Word文件的第三方库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python之机器学习"><span class="nav-number">1.4.</span> <span class="nav-text">Python之机器学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Scikit-learn：机器学习方法工具集"><span class="nav-number">1.4.1.</span> <span class="nav-text">Scikit-learn：机器学习方法工具集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TensorFlow：AlphaGo背后的机器学习计算框架"><span class="nav-number">1.4.2.</span> <span class="nav-text">TensorFlow：AlphaGo背后的机器学习计算框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MXNet：基于神经网络的深度学习计算框架"><span class="nav-number">1.4.3.</span> <span class="nav-text">MXNet：基于神经网络的深度学习计算框架</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实例：霍兰德人格分析雷达图"><span class="nav-number">2.</span> <span class="nav-text">实例：霍兰德人格分析雷达图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题分析"><span class="nav-number">2.1.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">2.2.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#从Web解析到网络空间"><span class="nav-number">3.</span> <span class="nav-text">从Web解析到网络空间</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Python库之网络爬虫"><span class="nav-number">3.1.</span> <span class="nav-text">Python库之网络爬虫</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Requests-最友好的网络爬虫功能库"><span class="nav-number">3.1.1.</span> <span class="nav-text">Requests: 最友好的网络爬虫功能库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Scrapy-优秀的网络爬虫框架"><span class="nav-number">3.1.2.</span> <span class="nav-text">Scrapy: 优秀的网络爬虫框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pyspider-强大的Web页面爬取系统"><span class="nav-number">3.1.3.</span> <span class="nav-text">pyspider: 强大的Web页面爬取系统</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python库之Web信息提取"><span class="nav-number">3.2.</span> <span class="nav-text">Python库之Web信息提取</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Beautiful-Soup-HTML和XML的解析库"><span class="nav-number">3.2.1.</span> <span class="nav-text">Beautiful Soup: HTML和XML的解析库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Re-正则表达式解析和处理功能库"><span class="nav-number">3.2.2.</span> <span class="nav-text">Re: 正则表达式解析和处理功能库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-Goose-提取文章类型Web页面的功能库"><span class="nav-number">3.2.3.</span> <span class="nav-text">Python-Goose: 提取文章类型Web页面的功能库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python库之Web网站开发"><span class="nav-number">3.3.</span> <span class="nav-text">Python库之Web网站开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Django-最流行的Web应用框架"><span class="nav-number">3.3.1.</span> <span class="nav-text">Django: 最流行的Web应用框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pyramid-规模适中的Web应用框架"><span class="nav-number">3.3.2.</span> <span class="nav-text">Pyramid: 规模适中的Web应用框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Flask-Web应用开发微框架"><span class="nav-number">3.3.3.</span> <span class="nav-text">Flask: Web应用开发微框架</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python库之网络应用开发"><span class="nav-number">3.4.</span> <span class="nav-text">Python库之网络应用开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#WeRoBot-微信公众号开发框架"><span class="nav-number">3.4.1.</span> <span class="nav-text">WeRoBot: 微信公众号开发框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#aip-百度AI开放平台接口"><span class="nav-number">3.4.2.</span> <span class="nav-text">aip: 百度AI开放平台接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyQR-二维码生成第三方库"><span class="nav-number">3.4.3.</span> <span class="nav-text">MyQR: 二维码生成第三方库</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#从人机交互到艺术设计"><span class="nav-number">4.</span> <span class="nav-text">从人机交互到艺术设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Python库之图形用户界面"><span class="nav-number">4.1.</span> <span class="nav-text">Python库之图形用户界面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PyQt5-Qt开发框架的Python接口"><span class="nav-number">4.1.1.</span> <span class="nav-text">PyQt5: Qt开发框架的Python接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wxPython-跨平台GUI开发框架"><span class="nav-number">4.1.2.</span> <span class="nav-text">wxPython: 跨平台GUI开发框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PyGObject-使用GTK-开发GUI的功能库"><span class="nav-number">4.1.3.</span> <span class="nav-text">PyGObject: 使用GTK+开发GUI的功能库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python库之游戏开发"><span class="nav-number">4.2.</span> <span class="nav-text">Python库之游戏开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PyGame-简单的游戏开发功能库"><span class="nav-number">4.2.1.</span> <span class="nav-text">PyGame: 简单的游戏开发功能库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Panda3D-开源、跨平台的3D渲染和游戏开发库"><span class="nav-number">4.2.2.</span> <span class="nav-text">Panda3D: 开源、跨平台的3D渲染和游戏开发库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cocos2d-构建2D游戏和图形界面交互式应用的框架"><span class="nav-number">4.2.3.</span> <span class="nav-text">cocos2d: 构建2D游戏和图形界面交互式应用的框架</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python库之虚拟现实"><span class="nav-number">4.3.</span> <span class="nav-text">Python库之虚拟现实</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#VR-Zero-在树莓派上开发VR应用的Python库"><span class="nav-number">4.3.1.</span> <span class="nav-text">VR Zero: 在树莓派上开发VR应用的Python库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pyovr-Oculus-Rift的Python开发接口"><span class="nav-number">4.3.2.</span> <span class="nav-text">pyovr: Oculus Rift的Python开发接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vizard-基于Python的通用VR开发引擎"><span class="nav-number">4.3.3.</span> <span class="nav-text">Vizard: 基于Python的通用VR开发引擎</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python库之图形艺术"><span class="nav-number">4.4.</span> <span class="nav-text">Python库之图形艺术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Quads-迭代的艺术"><span class="nav-number">4.4.1.</span> <span class="nav-text">Quads: 迭代的艺术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ascii-art-ASCII艺术库"><span class="nav-number">4.4.2.</span> <span class="nav-text">ascii_art: ASCII艺术库</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实例-玫瑰花绘制"><span class="nav-number">5.</span> <span class="nav-text">实例: 玫瑰花绘制</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+	  
+	  
+		<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+		<div class="widget-wrap">
+			<h3 class="widget-title">Tag Cloud</h3>
+			<div id="myCanvasContainer" class="widget tagcloud">
+				<canvas width="250" height="250" id="resCanvas" style="width=100%">
+					<ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MOOC机器学习/">MOOC机器学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据开发/">大数据开发</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据分析/">数据分析</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/机器学习/">机器学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏/">游戏</a><span class="tag-list-count">3</span></li></ul>
+				</canvas>
+			</div>
+		</div>
+	  
+    </div>
+	
+	
+
+	<!--music163-->
+	<div>
+	<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="298" height="52" src="//music.163.com/outchain/player?type=2&id=1321392652&auto=0&height=32"></iframe>
+	</div>
+
+
+<!--地图-->
+<script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?d=DiyLQFzLWJOA6TEEKEjObyjOKq5ZeN9P4gEJGShFkxY&cl=ffffff&w=a"></script>
+
+
+
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 – <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangjiaxi</span>
+
+  
+
+  
+</div>
+
+
+  <script src="https://unpkg.com/mermaid@/dist/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize("");
+    }
+  </script>
+
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.1.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/three/three.min.js"></script>
+
+  
+  <script src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: '7AqAfY0UTLGCzrqwgoLDeAqh-gzGzoHsz',
+    appKey: 'sqdLgSwc2tD97Dq102IaJ609',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/algolia-search.js?v=7.1.0"></script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+<script>
+if ($('body').find('div.pdf').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/pdfobject@2.1.1/pdfobject.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      $('body').find('div.pdf').each(function(i, o) {
+        PDFObject.embed($(o).attr('target'), $(o), {
+          pdfOpenParams: {
+            navpanes: 0,
+            toolbar: 0,
+            statusbar: 0,
+            pagemode: 'thumbs',
+            view: 'FitH'
+          },
+          PDFJS_URL: '/lib/pdf/web/viewer.html',
+          height: $(o).attr('height') || '500px'
+        });
+      });
+    },
+  });
+}
+</script>
+
+
+  
+<script>
+if ($('body').find('pre.mermaid').length) {
+  $.ajax({
+    type: 'GET',
+    url: '//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js',
+    dataType: 'script',
+    cache: true,
+    success: function() {
+      mermaid.initialize({
+        theme: 'default',
+        logLevel: 3,
+        flowchart: { curve: 'linear' },
+        gantt: { axisFormat: '%m/%d/%Y' },
+        sequence: { actorMargin: 50 }
+      });
+    }
+  });
+}
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+        if (result) $(this).text('复制成功');
+        else $(this).text('复制失败');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('复制');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+</body>
+</html>
