@@ -14,12 +14,12 @@
      console.log('tag cloud plugin rock and roll!');
 
      try {
-         TagCanvas.textFont = 'Helvetica, Helvetica';
+         TagCanvas.textFont = 'Helvetica';
          TagCanvas.textColour = '#FFFFFF';
          TagCanvas.textHeight = 20;
          TagCanvas.outlineColour = '#000000';
          TagCanvas.maxSpeed = 0.5;
-         TagCanvas.freezeActive = false;
+         TagCanvas.freezeActive = true;
          TagCanvas.outlineMethod = 'block';
          TagCanvas.minBrightness = 0.2;
          TagCanvas.depth = 0.92;
