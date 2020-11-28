@@ -2,11 +2,6 @@
 <search>
   <entry>
     <title><![CDATA[PygameZero制作Pacman]]></title>
-    <url>%2F2020%2F11%2F28%2FPygameZero%E5%88%B6%E4%BD%9CPacman-1%2F</url>
-    <content type="text"></content>
-  </entry>
-  <entry>
-    <title><![CDATA[PygameZero制作Pacman]]></title>
     <url>%2F2020%2F11%2F28%2FPygameZero%E5%88%B6%E4%BD%9CPacman%2F</url>
     <content type="text"><![CDATA[本篇来介绍Pacman的PygameZero实现。 先上代码，后边补上讲解 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758import pgzrunimport randomWIDTH = 500HEIGHT = 500pacman = Actor('向右的吃豆人')pacman.pos = [250, 250]bean1 = Actor('豆子')bean1.x = random.randint(100, 400)bean1.y = random.randint(100, 400)bean2 = Actor('豆子')bean2.x = random.randint(100, 400)bean2.y = random.randint(100, 400)bean3 = Actor('豆子')bean3.x = random.randint(100, 400)bean3.y = random.randint(100, 400)beans = [bean1, bean2, bean3]score = 0def draw(): screen.blit('游戏背景', [0, 0]) pacman.draw() for i in beans: i.draw() screen.draw.text(str(score), [15, 15], color='orange', fontsize=30)def on_key_down(key): if key == keys.LEFT: pacman.image = '向左的吃豆人' if key == keys.RIGHT: pacman.image = '向右的吃豆人' if key == keys.UP: pacman.image = '向上的吃豆人' if key == keys.DOWN: pacman.image = '向下的吃豆人' if key == keys.SPACE: print(score)def update(): global score if pacman.image == '向左的吃豆人': pacman.x -= 5 if pacman.image == '向右的吃豆人': pacman.x += 5 if pacman.image == '向上的吃豆人': pacman.y -= 5 if pacman.image == '向下的吃豆人': pacman.y += 5 for i in beans: if pacman.colliderect(i): i.x = random.randint(100, 400) i.y = random.randint(100, 400) score += 1 print(score) if pacman.x &lt; 0 or pacman.x &gt; 500 or pacman.y &lt; 0 or pacman.y &gt; 500: score -= 3 print(score) pacman.pos = [250, 250] if score &lt; 0: exit()pgzrun.go()]]></content>
       <categories>
