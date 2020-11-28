@@ -129,18 +129,20 @@
 
 
 
-  <meta name="description" content="Flume的配置">
-<meta name="keywords" content="大数据开发">
+  <meta name="description" content="本篇来介绍Pacman的PygameZero实现。">
+<meta name="keywords" content="Python,游戏">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Flume+Kafka实时数据采集">
-<meta property="og:url" content="http://yoursite.com/2019/04/04/Flume-Kafka实时数据采集/index.html">
+<meta property="og:title" content="PygameZero制作Pacman">
+<meta property="og:url" content="http://yoursite.com/2020/11/28/PygameZero制作Pacman/index.html">
 <meta property="og:site_name" content="Ward&#39;s notebook">
-<meta property="og:description" content="Flume的配置">
+<meta property="og:description" content="本篇来介绍Pacman的PygameZero实现。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-11-24T15:27:56.502Z">
+<meta property="og:image" content="http://yoursite.com/2020/11/28/PygameZero制作Pacman/pacman.png">
+<meta property="og:updated_time" content="2020-11-28T15:08:50.741Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Flume+Kafka实时数据采集">
-<meta name="twitter:description" content="Flume的配置">
+<meta name="twitter:title" content="PygameZero制作Pacman">
+<meta name="twitter:description" content="本篇来介绍Pacman的PygameZero实现。">
+<meta name="twitter:image" content="http://yoursite.com/2020/11/28/PygameZero制作Pacman/pacman.png">
 
 
 
@@ -148,7 +150,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2019/04/04/Flume-Kafka实时数据采集/">
+  <link rel="canonical" href="http://yoursite.com/2020/11/28/PygameZero制作Pacman/">
 
 
 
@@ -167,7 +169,7 @@
         }
     })();
 </script>
-  <title>Flume+Kafka实时数据采集 | Ward's notebook</title>
+  <title>PygameZero制作Pacman | Ward's notebook</title>
   
 
 
@@ -429,7 +431,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/04/Flume-Kafka实时数据采集/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/28/PygameZero制作Pacman/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ward Wang">
@@ -446,7 +448,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Flume+Kafka实时数据采集
+          <h1 class="post-title" itemprop="name headline">PygameZero制作Pacman
 
               
             
@@ -472,24 +474,12 @@
                 
               
 
-              <time title="创建时间：2019-04-04 15:36:41" itemprop="dateCreated datePublished" datetime="2019-04-04T15:36:41+08:00">2019-04-04</time>
+              <time title="创建时间：2020-11-28 22:39:06 / 修改时间：23:08:50" itemprop="dateCreated datePublished" datetime="2020-11-28T22:39:06+08:00">2020-11-28</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-11-24 23:27:56" itemprop="dateModified" datetime="2020-11-24T23:27:56+08:00">2020-11-24</time>
               
             
           </span>
@@ -506,7 +496,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/大数据开发/" itemprop="url" rel="index"><span itemprop="name">大数据开发</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
 
                 
                 
@@ -525,8 +515,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/2019/04/04/Flume-Kafka实时数据采集/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/04/Flume-Kafka实时数据采集/" itemprop="commentCount"></span>
+                <a href="/2020/11/28/PygameZero制作Pacman/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/11/28/PygameZero制作Pacman/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -554,16 +544,11 @@
       
 
       
-        <p>Flume的配置</p>
+        <p>本篇来介绍Pacman的PygameZero实现。</p>
+<img src="/2020/11/28/PygameZero制作Pacman/pacman.png">
 <a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># avro-memory-kafka.conf</span></span><br><span class="line">avro-memory-kafka.sources = avro-source</span><br><span class="line">avro-memory-kafka.sinks = kafka-sink</span><br><span class="line">avro-memory-kafka.channels = memory-channel</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.type = avro</span><br><span class="line">avro-memory-kafka.sources.avro-source.bind = bigdata-01</span><br><span class="line">avro-memory-kafka.sources.avro-source.port = 44444</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.type = org.apache.flume.sink.kafka.KafkaSink</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.brokerList = bigdata-01:9092</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.topic = hello_topic</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.batchSize = 5</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.requiredAcks = 1</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.channels.memory-channel.type = memory</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.channels = memory-channel</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.channel = memory-channel</span><br></pre></td></tr></table></figure>
-<p>启动Flume<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">flume-ng agent \</span><br><span class="line">--name avro-memory-kafka \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/avro-memory-kafka.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br><span class="line"></span><br><span class="line">flume-ng agent \</span><br><span class="line">--name <span class="built_in">exec</span>-memory-avro \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/<span class="built_in">exec</span>-memory-avro.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure></p>
-<p>启动消费者进行监控<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-console-consumer.sh --zookeeper bigdata-01:2181 -topic hello_topic</span><br></pre></td></tr></table></figure></p>
-<p>向日志文件中追加内容<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@bigdata-01 ~]<span class="comment"># cd data/</span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># ll</span></span><br><span class="line">total 4</span><br><span class="line">-rw-r--r--. 1 root root 112 Feb  6 05:37 data.log</span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark2 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark3 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark4 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark5 &gt;&gt; data.log</span></span><br></pre></td></tr></table></figure></p>
-<p>这时，消费者就可以消费到日志文件中的新内容了。</p>
-<blockquote>
-<p>Flume的版本不同，配置文件（*.conf）需要配置的内容也不完全相同。</p>
-</blockquote>
+<p>先上代码，后边补上讲解</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pgzrun</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">WIDTH = <span class="number">500</span></span><br><span class="line">HEIGHT = <span class="number">500</span></span><br><span class="line">pacman = Actor(<span class="string">'向右的吃豆人'</span>)</span><br><span class="line">pacman.pos = [<span class="number">250</span>, <span class="number">250</span>]</span><br><span class="line">bean1 = Actor(<span class="string">'豆子'</span>)</span><br><span class="line">bean1.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean1.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean2 = Actor(<span class="string">'豆子'</span>)</span><br><span class="line">bean2.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean2.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean3 = Actor(<span class="string">'豆子'</span>)</span><br><span class="line">bean3.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean3.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">beans = [bean1, bean2, bean3]</span><br><span class="line">score = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span><span class="params">()</span>:</span></span><br><span class="line">    screen.blit(<span class="string">'游戏背景'</span>, [<span class="number">0</span>, <span class="number">0</span>])</span><br><span class="line">    pacman.draw()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> beans:</span><br><span class="line">        i.draw()</span><br><span class="line">    screen.draw.text(str(score), [<span class="number">15</span>, <span class="number">15</span>], color=<span class="string">'orange'</span>, fontsize=<span class="number">30</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_key_down</span><span class="params">(key)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.LEFT:</span><br><span class="line">        pacman.image = <span class="string">'向左的吃豆人'</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.RIGHT:</span><br><span class="line">        pacman.image = <span class="string">'向右的吃豆人'</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.UP:</span><br><span class="line">        pacman.image = <span class="string">'向上的吃豆人'</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.DOWN:</span><br><span class="line">        pacman.image = <span class="string">'向下的吃豆人'</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.SPACE:</span><br><span class="line">        print(score)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> score</span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">'向左的吃豆人'</span>:</span><br><span class="line">        pacman.x -= <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">'向右的吃豆人'</span>:</span><br><span class="line">        pacman.x += <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">'向上的吃豆人'</span>:</span><br><span class="line">        pacman.y -= <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">'向下的吃豆人'</span>:</span><br><span class="line">        pacman.y += <span class="number">5</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> beans:</span><br><span class="line">        <span class="keyword">if</span> pacman.colliderect(i):</span><br><span class="line">            i.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">            i.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">            score += <span class="number">1</span></span><br><span class="line">            print(score)</span><br><span class="line">    <span class="keyword">if</span> pacman.x &lt; <span class="number">0</span> <span class="keyword">or</span> pacman.x &gt; <span class="number">500</span> <span class="keyword">or</span> pacman.y &lt; <span class="number">0</span> <span class="keyword">or</span> pacman.y &gt; <span class="number">500</span>:</span><br><span class="line">        score -= <span class="number">3</span></span><br><span class="line">        print(score)</span><br><span class="line">        pacman.pos = [<span class="number">250</span>, <span class="number">250</span>]</span><br><span class="line">    <span class="keyword">if</span> score &lt; <span class="number">0</span>:</span><br><span class="line">        exit()</span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -620,7 +605,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/大数据开发/" rel="tag"># 大数据开发</a>
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/游戏/" rel="tag"># 游戏</a>
           
         </div>
       
@@ -633,14 +620,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2020/05/13/Python输出百分比和有效数字/" rel="next" title="Python输出百分比和有效数字">
+                <i class="fa fa-chevron-left"></i> Python输出百分比和有效数字
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/04/04/HDFS基本配置属性/" rel="prev" title="HDFS基本配置属性">
-                HDFS基本配置属性 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/11/28/PygameZero制作Pacman-1/" rel="prev" title="PygameZero制作Pacman">
+                PygameZero制作Pacman <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
