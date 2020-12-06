@@ -1,6 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[SQL必知必会(5)高级过滤数据]]></title>
+    <url>%2F2020%2F12%2F06%2FSQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-5-%E9%AB%98%E7%BA%A7%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE%2F</url>
+    <content type="text"><![CDATA[操作符（operator）：用来连接或改变WHERE子句中的子句的关键字，也称为逻辑操作符（logical operator）。 AND操作符：要通过不止一个列进行过滤。 123SELECT prod_id, prod_price, prod_nameFROM ProductsWHERE vend_id = ‘DLL01’ AND prod_price &lt;= 4; prod_id prod_price prod_name BNBG01 3.49 Fish bean bag toy BNBG02 3.49 Bird bean bag toy BNBG03 3.49 Rabbit bean bag toy OR操作符：多个条件，满足任意一个即可。 123SELECT prod_name, prod_priceFROM ProductsWHERE vend_id = ‘DLL01’ OR vend_id = ‘BRS01’; prod_name prod_price 8 inch teddy bear 5.99 12 inch teddy bear 8.99 18 inch teddy bear 11.99 Fish bean bag toy 3.49 Bird bean bag toy 3.49 Rabbit bean bag toy 3.49 Raggedy Ann 4.99 求值顺序：目标：想要列出价格为10美元及以上，且由DLL01或BRS01制造的所有产品。 12345/*------------错误示例------------*/SELECT prod_name, prod_priceFROM ProductsWHERE vend_id = ‘DLL01’ OR vend_id = ‘BRS01’ AND prod_price &gt;= 10; prod_name prod_price 18 inch teddy bear 11.99 Fish bean bag toy 3.49 Bird bean bag toy 3.49 Rabbit bean bag toy 3.49 Raggedy Ann 4.99 SQL在处理OR操作符之前，优先处理AND操作符。 12345/*------------正确示例------------*/SELECT prod_name, prod_priceFROM ProductsWHERE (vend_id = ‘DLL01’ OR vend_id = ‘BRS01’) AND prod_price &gt;= 10; prod_name prod_price 18 inch teddy bear 11.99 圆括号比AND或OR具有更高的优先级，任何时候使用具有AND、OR的WHERE子句，都可以使用圆括号消除歧义。 IN操作符：用来指定条件范围，范围中的每个条件都可以进行匹配。 1234SELECT prod_name, prod_priceFROM ProductsWHERE vend_id IN (‘DLL01’, ‘BRS01’)ORDER BY prod_name; prod_name prod_price 12 inch teddy bear 8.99 18 inch teddy bear 11.99 8 inch teddy bear 5.99 Bird bean bag toy 3.49 Fish bean bag toy 3.49 Rabbit bean bag toy 3.49 Raggedy Ann 4.99 IN操作符与OR具有相同功能。 使用IN操作符的优点： 在有很多合法选项时，IN更加清楚直观； 在于其他AND、OR组合使用IN时，求值顺序易管理； IN比一组OR执行更快； IN可以包含其他SELECT语句，能够更动态的建立WHERE子句。 NOT操作符：WHERE子句中用来否定其后条件的关键字。 1234SELECT prod_name FROM ProductsWHERE NOT vend_id = ‘DLL01’ORDER BY prod_name; prod_name 12 inch teddy bear 18 inch teddy bear 8 inch teddy bear King doll Queen doll +——————–+ 上面的例子，也可以用&lt;&gt;来完成。]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SQL必知必会(4)过滤数据]]></title>
+    <url>%2F2020%2F12%2F06%2FSQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-4-%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE%2F</url>
+    <content type="text"><![CDATA[在SELECT语句中，数据根据WHERE子句中指定的搜索条件进行过滤。 WHERE子句在表名（FROM子句）之后。 123SELECT prod_name, prod_price FROM ProductsWHERE prod_price = 3.49; prod_name prod_price Fish bean bag toy 3.49 Bird bean bag toy 3.49 Rabbit bean bag toy 3.49 WHERE子句的位置。如果同时使用ORDER BY和WHERE子句时，应该让ORDER BY位于WHERE之后，否则报错。 WHERE子句操作符 操作符 说明 操作符 说明 = 等于 &gt; 大于 &lt;&gt; 不等于 &gt;= 大于等于 != 不等于 !&gt; 不大于 &lt; 小于 BETWEEN 在指定的两个值之间 &lt;= 小于等于 IS NULL 为NULL值 !&lt; 不小于 检查单个值： 123SELECT prod_name, prod_priceFROM ProductsWHERE prod_price &lt; 10; prod_name prod_price Fish bean bag toy 3.49 Bird bean bag toy 3.49 Rabbit bean bag toy 3.49 8 inch teddy bear 5.99 12 inch teddy bear 8.99 Raggedy Ann 4.99 King doll 9.49 Queen doll 9.49 不匹配检查： 123SELECT vend_id, prod_nameFROM ProductsWHERE vend_id &lt;&gt; 'DLL01'; vend_id prod_name BRS01 8 inch teddy bear BRS01 12 inch teddy bear BRS01 18 inch teddy bear FNG01 King doll FNG01 Queen doll &lt;&gt; 和!=通常可以互换，但取决于DBMS是否支持。 范围值检查： 123SELECT prod_name, prod_priceFROM ProductsWHERE prod_price BETWEEN 5 AND 10; prod_name prod_price 8 inch teddy bear 5.99 12 inch teddy bear 8.99 King doll 9.49 Queen doll 9.49 使用BETWEEN时，必须指定两个值，这两个值必须用AND关键字分隔。BETWEEN匹配的是“闭区间”。 空值检查：NULL：无值，它与字段包含0、空字符串和空格都不同。 123SELECT prod_nameFROM ProductsWHERE prod_price IS NULL; Empty set (0.00 sec) 123SELECT cust_nameFROM CustomersWHERE cust_email IS NULL; cust_name Kids Place The Toy Store 确定值是否为NULL，不能直接检查是否 = NULL。 NULL和非匹配。“未知”有特殊的含义，数据库不知道它们是否匹配，所以在进行匹配过滤或非匹配过滤时，不会返回含有NULL的行。过滤数据时，一定要验证被过滤列中含NULL的行，确实出现在返回的数据中。]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SQL必知必会(3)排序检索数据]]></title>
+    <url>%2F2020%2F12%2F06%2FSQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-3-%E6%8E%92%E5%BA%8F%E6%A3%80%E7%B4%A2%E6%95%B0%E6%8D%AE%2F</url>
+    <content type="text"><![CDATA[子句：SQL语句由子句构成，有些子句是必须的，有些是可选的。 排序数据： 12SELECT prod_nameFROM Products; prod_name Fish bean bag toy Bird bean bag toy Rabbit bean bag toy 8 inch teddy bear 12 inch teddy bear 18 inch teddy bear Raggedy Ann King doll Queen doll 123SELECT prod_nameFROM ProductsORDER BY prod_name; prod_name 12 inch teddy bear 18 inch teddy bear 8 inch teddy bear Bird bean bag toy Fish bean bag toy King doll Queen doll Rabbit bean bag toy Raggedy Ann 在指定一条ORDER BY子句时，应该保证它是SELECT语句中最后一条子句。否则报错。 通常ORDER BY子句中使用的列，是为显示而选择的列。但是用非检索的列排序数据是完全合法的。 按多个列排序：检索3列，先按价格然后按名称排序。 123SELECT prod_id, prod_price, prod_nameFROM ProductsORDER BY prod_price, prod_name; prod_id prod_price prod_name BNBG02 3.49 Bird bean bag toy BNBG01 3.49 Fish bean bag toy BNBG03 3.49 Rabbit bean bag toy RGAN01 4.99 Raggedy Ann BR01 5.99 8 inch teddy bear BR02 8.99 12 inch teddy bear RYL01 9.49 King doll RYL02 9.49 Queen doll BR03 11.99 18 inch teddy bear 按列位置排序： 123SELECT prod_id, prod_price, prod_nameFROM ProductsORDER BY 2, 3; prod_id prod_price prod_name BNBG02 3.49 Bird bean bag toy BNBG01 3.49 Fish bean bag toy BNBG03 3.49 Rabbit bean bag toy RGAN01 4.99 Raggedy Ann BR01 5.99 8 inch teddy bear BR02 8.99 12 inch teddy bear RYL01 9.49 King doll RYL02 9.49 Queen doll BR03 11.99 18 inch teddy bear ORDER BY 2,3 表示按SELECT清单中，先按第2列排序，再按第3列排序。 当想排序的列没有出现在SELECT清单中时，不能使用这项技术。 指定排序方向（升序、降序）： 123SELECT prod_id, prod_price, prod_nameFROM ProductsORDER BY prod_price DESC; prod_id prod_price prod_name BR03 11.99 18 inch teddy bear RYL01 9.49 King doll RYL02 9.49 Queen doll BR02 8.99 12 inch teddy bear BR01 5.99 8 inch teddy bear RGAN01 4.99 Raggedy Ann BNBG01 3.49 Fish bean bag toy BNBG02 3.49 Bird bean bag toy BNBG03 3.49 Rabbit bean bag toy 默认升序，使用DESC关键字实现降序。 用多个列排序： 123SELECT prod_id, prod_price, prod_nameFROM ProductsORDER BY prod_price DESC, prod_name; prod_id prod_price prod_name BR03 11.99 18 inch teddy bear RYL01 9.49 King doll RYL02 9.49 Queen doll BR02 8.99 12 inch teddy bear BR01 5.99 8 inch teddy bear RGAN01 4.99 Raggedy Ann BNBG02 3.49 Bird bean bag toy BNBG01 3.49 Fish bean bag toy BNBG03 3.49 Rabbit bean bag toy DESC关键字只应用到直接位于其前面的列名。 如果想在多个列上进行降序排序，必须对每一列都指定DESC关键字。 DESC - DESCENDING，ASC - ASCENDING。 区分大小写和排序顺序：在字典排序顺序中，A与a相同，这是大多数数据库管理系统默认的。]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SQL必知必会(2)检索数据]]></title>
+    <url>%2F2020%2F12%2F06%2FSQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-2-%E6%A3%80%E7%B4%A2%E6%95%B0%E6%8D%AE%2F</url>
+    <content type="text"><![CDATA[关键字（keyword）：作为SQL组成部分的保留字。关键字不能用作表或列的名字。 SELECT语句：从一个或多个表中检索信息，必须给出想选择什么，以及从什么地方选择。 检索单个列： 12SELECT prod_nameFROM Products; prod_name Fish bean bag toy Bird bean bag toy Rabbit bean bag toy 8 inch teddy bear 12 inch teddy bear 18 inch teddy bear Raggedy Ann King doll Queen doll SQL不区分大小写，一般对关键字使用大写，并将SQL语句分成多行，这样会使代码易于阅读和调试。 检索多个列： 12SELECT prod_id, prod_name, prod_priceFROM Products; prod_id prod_name prod_price BNBG01 Fish bean bag toy 3.49 BNBG02 Bird bean bag toy 3.49 BNBG03 Rabbit bean bag toy 3.49 BR01 8 inch teddy bear 5.99 BR02 12 inch teddy bear 8.99 BR03 18 inch teddy bear 11.99 RGAN01 Raggedy Ann 4.99 RYL01 King doll 9.49 RYL02 Queen doll 9.49 检索所有列： 12SELECT *FROM Products; 略 略 使用通配符 * 的优点：可以检索出名字未知的列。 检索不同的值： 12SELECT vend_id FROM Products; vend_id BRS01 BRS01 BRS01 DLL01 DLL01 DLL01 DLL01 FNG01 FNG01 12SELECT DISTINCT vend_idFROM Products; vend_id BRS01 DLL01 FNG01 关键字DISTINCT可以去重，但会作用于所有的列，不仅是跟在它后边的那一列。 限制结果：如果想检索一定数量的行，比如只检索5行，以MySQL为例。 123SELECT prod_nameFROM ProductsLIMIT 5; prod_name Fish bean bag toy Bird bean bag toy Rabbit bean bag toy 8 inch teddy bear 12 inch teddy bear 要想得到后5行数据，需要指定从哪开始以及检索的行数： 123SELECT prod_nameFROM ProductsLIMIT 5 OFFSET 5; prod_name 18 inch teddy bear Raggedy Ann King doll Queen doll 表中共9行，所以检索只返回4行。 第一个检索的行是第0行。 LIMIT 4 OFFSET 3可以简化：LIMIT 3,4。需要注意数字顺序相反。 注释： 12345SELECT prod_name --这是一条注释FROM Products;# 这是一条注释/*这是一条注释*/]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SQL必知必会(1)了解SQL]]></title>
+    <url>%2F2020%2F12%2F06%2FSQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-1-%E4%BA%86%E8%A7%A3SQL%2F</url>
+    <content type="text"><![CDATA[数据库（database）：保存有组织的数据的容器（通常是一个文件或一组文件）。 表（table）：某种特定类型数据的结构化清单。 模式：关于数据库和表的布局及特性的信息。 列（column）：表中的一个字段。所有表都是由一个或多个列组成的。 数据类型：所允许的数据的类型。每个表列都有相应的数据类型，它限制（或允许）该列中存储的数据。 行（row）：表中的一个记录。 主键（primary key）：一列（或一组列），其值能够唯一标识表中每一行。]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[使用turtle实现动画效果]]></title>
     <url>%2F2020%2F12%2F02%2F%E4%BD%BF%E7%94%A8turtle%E5%AE%9E%E7%8E%B0%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C%2F</url>
     <content type="text"><![CDATA[众所周知，turtle能够像画笔一样来作图。一个绘图程序运行后，我们能够像看动画一样观看整个绘图过程。但是今天说的动画可和它不太一样。 我们可以用下面的函数调整画笔的速度。 12turtle.speed(1)turtle.speed(10) 在官方文档中，turtle.speed()的参数是0-10的整数，从1到10速度递增。0比较特殊，速度最快，几乎是瞬间完成。 12345678910111213141516171819202122import turtle, timet1 = turtle.Turtle()t2 = turtle.Turtle()t3 = turtle.Turtle()pens = [t1, t2, t3]for i in range(len(pens)): pens[i].pu() pens[i].goto(-100, -100 + 50 * i) pens[i].pd()t1.speed(1)t2.speed(5)t3.speed(0)t1.fd(300)time.sleep(2)t2.fd(300)time.sleep(2)t3.fd(300) 效果比较明显： 可以说，这是一种动画的效果，毕竟能够看到绘画的全过程嘛。但是这个不是今天的重点，今天要讲的是真正的动画。 赶紧进入正题，要想使画面动起来，肯定是先画出主体，再将它移动。这里我们先看一个奇葩转圈图。 “很快啊！” ——马老师 下面看一下代码，为什么画完之后会转起来？ 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253import turtleturtle.speed(0)turtle.Screen().bgcolor('black')# 这个函数主要是画出一个奇葩图形，你想转什么就画什么def arm(col): turtle.begin_fill() turtle.color(col) turtle.fd(60) turtle.lt(60) turtle.fd(60) turtle.rt(60) turtle.fd(60) turtle.rt(60) turtle.fd(60) turtle.lt(60) turtle.fd(60) turtle.lt(120) turtle.fd(120) turtle.lt(60) turtle.fd(120) turtle.lt(60) turtle.fd(120) turtle.lt(120) turtle.end_fill()# 这个函数可以画出我们转动的主体，我的主体是6个不同颜色的armdef turn(angle): turtle.seth(angle) arm('red') turtle.lt(60) arm('orange') turtle.lt(60) arm('yellow') turtle.lt(60) arm('green') turtle.lt(60) arm('blue') turtle.lt(60) arm('purple') turtle.lt(60) turtle.hideturtle()angle = 0 # 设置一个初始角度while True: turtle.clear() turn(angle) turtle.tracer(n=1000000000) angle += 15 # 每次循环角度都增加15度 这里两个自定义函数都很好理解，主要看一下 turtle.tracer()，它的意思大概是将之前画过的作品重复一次，n的大小就是重复的速度，也就是说n如果很大，就可以瞬间完成刚才的画作。所以循环中的过程可以理解为（图有些丑）： graph TD B((开始)) -->C{while True} C --> D[clear清屏] D[clear清屏] --> E[seth改变角度] E[seth改变角度] --> F[tracer再画一次] F[tracer再画一次] --> G[角度增加15] G[角度增加15] --> C 所以，图中的6个arm就转起来了，修改每次循环的角度可以调整旋转速度和方向哦。（负数为反方向）]]></content>
