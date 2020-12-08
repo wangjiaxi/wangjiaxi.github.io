@@ -129,18 +129,24 @@
 
 
 
-  <meta name="description" content="python中有时候会使用if语句，后边直接加一个变量，而不是一个布尔表达式，这是在判断神马呢？">
-<meta name="keywords" content="Python">
+  <meta name="keywords" content="Python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python中if后直接加变量">
-<meta property="og:url" content="http://yoursite.com/2019/12/23/Python中if后直接加变量/index.html">
+<meta property="og:title" content="Python递归绘制科赫雪花">
+<meta property="og:url" content="http://yoursite.com/2020/12/08/Python递归绘制科赫雪花/index.html">
 <meta property="og:site_name" content="Ward&#39;s notebook">
-<meta property="og:description" content="python中有时候会使用if语句，后边直接加一个变量，而不是一个布尔表达式，这是在判断神马呢？">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-11-24T15:29:51.684Z">
+<meta property="og:image" content="http://yoursite.com/2020/12/08/Python递归绘制科赫雪花/snowflake.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/08/Python递归绘制科赫雪花/fact.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/08/Python递归绘制科赫雪花/fib.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/08/Python递归绘制科赫雪花/fibline.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/08/Python递归绘制科赫雪花/koch1.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/08/Python递归绘制科赫雪花/koch2.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/08/Python递归绘制科赫雪花/koch3.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/08/Python递归绘制科赫雪花/snowflake.png">
+<meta property="og:updated_time" content="2020-12-08T12:46:04.850Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python中if后直接加变量">
-<meta name="twitter:description" content="python中有时候会使用if语句，后边直接加一个变量，而不是一个布尔表达式，这是在判断神马呢？">
+<meta name="twitter:title" content="Python递归绘制科赫雪花">
+<meta name="twitter:image" content="http://yoursite.com/2020/12/08/Python递归绘制科赫雪花/snowflake.png">
 
 
 
@@ -148,7 +154,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2019/12/23/Python中if后直接加变量/">
+  <link rel="canonical" href="http://yoursite.com/2020/12/08/Python递归绘制科赫雪花/">
 
 
 
@@ -167,7 +173,7 @@
         }
     })();
 </script>
-  <title>Python中if后直接加变量 | Ward's notebook</title>
+  <title>Python递归绘制科赫雪花 | Ward's notebook</title>
   
 
 
@@ -429,7 +435,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/23/Python中if后直接加变量/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/08/Python递归绘制科赫雪花/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ward Wang">
@@ -446,7 +452,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Python中if后直接加变量
+          <h1 class="post-title" itemprop="name headline">Python递归绘制科赫雪花
 
               
             
@@ -472,24 +478,12 @@
                 
               
 
-              <time title="创建时间：2019-12-23 16:29:17" itemprop="dateCreated datePublished" datetime="2019-12-23T16:29:17+08:00">2019-12-23</time>
+              <time title="创建时间：2020-12-08 19:44:33 / 修改时间：20:46:04" itemprop="dateCreated datePublished" datetime="2020-12-08T19:44:33+08:00">2020-12-08</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2020-11-24 23:29:51" itemprop="dateModified" datetime="2020-11-24T23:29:51+08:00">2020-11-24</time>
               
             
           </span>
@@ -525,8 +519,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/2019/12/23/Python中if后直接加变量/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/12/23/Python中if后直接加变量/" itemprop="commentCount"></span>
+                <a href="/2020/12/08/Python递归绘制科赫雪花/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/12/08/Python递归绘制科赫雪花/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -554,11 +548,69 @@
       
 
       
-        <p>python中有时候会使用if语句，后边直接加一个变量，而不是一个布尔表达式，这是在判断神马呢？</p>
+        <img src="/2020/12/08/Python递归绘制科赫雪花/snowflake.png">
 <a id="more"></a>
-<p>其实意思是判断这个变量是否有值，这个值需要是<strong>非零非空</strong>的值，这行代码返回<code>True</code>或<code>False</code>。<br>Python中除了’’、””、0、()、[]、{}、None为False之外，其他的都是True。<br>举例</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ls = [[], <span class="number">0</span>, <span class="string">''</span>, <span class="string">""</span>, &#123;&#125;, (), [<span class="number">1</span>], <span class="number">2</span>, <span class="string">'3'</span>, <span class="string">"4"</span>, &#123;<span class="number">5</span>&#125;, (<span class="number">6</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> ls:</span><br><span class="line">    <span class="keyword">if</span> i:</span><br><span class="line">        print(<span class="string">'i ='</span>, i, <span class="string">'有值'</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">'i ='</span>, i, <span class="string">'没值'</span>)</span><br></pre></td></tr></table></figure>
-<p>结果<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">i = [] 没值</span><br><span class="line">i = <span class="number">0</span> 没值</span><br><span class="line">i =  没值</span><br><span class="line">i =  没值</span><br><span class="line">i = &#123;&#125; 没值</span><br><span class="line">i = () 没值</span><br><span class="line">i = [<span class="number">1</span>] 有值</span><br><span class="line">i = <span class="number">2</span> 有值</span><br><span class="line">i = <span class="number">3</span> 有值</span><br><span class="line">i = <span class="number">4</span> 有值</span><br><span class="line">i = &#123;<span class="number">5</span>&#125; 有值</span><br><span class="line">i = <span class="number">6</span> 有值</span><br></pre></td></tr></table></figure></p>
+<h1 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h1><h2 id="递归的定义"><a href="#递归的定义" class="headerlink" title="递归的定义"></a>递归的定义</h2><p>递归通常指：函数定义中调用函数自身的方式。</p>
+<p>也就是说，我们在定义函数的时候，函数的内部调用了它自己。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 伪代码</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></span><br><span class="line">    func()</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>电影《盗梦空间》本质就是递归：主角在做梦，梦的内容是自己在做梦，梦的内容是自己在做梦……</p>
+</blockquote>
+<p>递归具有两个关键特征：</p>
+<ol>
+<li>链条：计算过程存在递归链条</li>
+<li>基例：存在一个或多个不需要再次递归的基例</li>
+</ol>
+<p>类似于数学归纳法：假设n(k)成立，证明n(k+1)成立。</p>
+<h2 id="递归的调用过程"><a href="#递归的调用过程" class="headerlink" title="递归的调用过程"></a>递归的调用过程</h2><p>这里我们使用一个小栗子，它就是阶乘。</p>
+<p>什么是阶乘呢？这里有一个阶乘的定义：</p>
+<img src="/2020/12/08/Python递归绘制科赫雪花/fact.png">
+<p>阶乘的定义中，又出现了阶乘本身。这就是<strong>递归</strong>。</p>
+<p>我们编写一个函数来求任意一个数的阶乘：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fact</span><span class="params">(n)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> n * fact(n - <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>由此我们可以总结出：</p>
+<ul>
+<li>递归本身是一个函数，需要函数定义方式描述</li>
+<li>函数内部需要用分支语句对参数进行判断</li>
+<li>对<strong>基例</strong>和<strong>链条</strong>，分别编写对应代码</li>
+</ul>
+<p>下面我们来看一个经典数列——斐波那契数列。</p>
+<p>斐波那契数列又叫“兔子数列”，它指的是这样一个数列：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144...</span><br></pre></td></tr></table></figure>
+<p>从第3项开始，每一项都是前边挨着两项的和。它的定义就是：</p>
+<img src="/2020/12/08/Python递归绘制科赫雪花/fib.png">
+<p>很容易理解，这个定义中的n=1和n=2的情况是基例，而F(n)=F(n-1)+F(n-2)是链条。这样我们可以编写一个函数，求出斐波那契数列的第n项。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(n)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">1</span> <span class="keyword">or</span> n == <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> fib(n - <span class="number">1</span>) + fib(n - <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<p>接下来，我们可以循环打印一下数列的前几项。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">15</span>):</span><br><span class="line">    print(fib(i), end=<span class="string">" "</span>)</span><br></pre></td></tr></table></figure>
+<p>结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 1 2 3 5 8 13 21 34 55 89 144 233 377</span><br></pre></td></tr></table></figure>
+<p>如果加入海龟绘图，还可以直接绘制出斐波那契曲线：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> turtle</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(n)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">1</span> <span class="keyword">or</span> n == <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> fib(n - <span class="number">1</span>) + fib(n - <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">turtle.seth(<span class="number">180</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">15</span>):</span><br><span class="line">    turtle.circle(fib(i), <span class="number">90</span>)</span><br><span class="line">    print(fib(i))</span><br><span class="line"></span><br><span class="line">turtle.done()</span><br></pre></td></tr></table></figure>
+<img src="/2020/12/08/Python递归绘制科赫雪花/fibline.png">
+<h1 id="科赫曲线"><a href="#科赫曲线" class="headerlink" title="科赫曲线"></a>科赫曲线</h1><h2 id="分形几何"><a href="#分形几何" class="headerlink" title="分形几何"></a>分形几何</h2><p>在大自然中，有很多植物的形状是局部的自己在复制整体的自己。</p>
+<h2 id="科赫曲线-1"><a href="#科赫曲线-1" class="headerlink" title="科赫曲线"></a>科赫曲线</h2><p>科赫曲线是指这样一种曲线：当阶数为0时，科赫曲线是一条直线；当阶数不为0时，科赫曲线是一种带凸起的曲线。</p>
+<img src="/2020/12/08/Python递归绘制科赫雪花/koch1.png">
+<p>科赫曲线具有阶数，每一阶都会将上一阶的所有线段做一次变换。</p>
+<img src="/2020/12/08/Python递归绘制科赫雪花/koch2.png">
+<p>因此我们定义一个函数<code>def koch(size, n)</code>，得出它的的基例和链条：</p>
+<ul>
+<li>基例：n=0时，绘制一条直线</li>
+<li>链条：n≠0时，对n-1阶的每一条线段都做一次变换</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">koch</span><span class="params">(size, n)</span>:</span>  <span class="comment"># size是初始线段长度</span></span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">        turtle.fd(size)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        turtle.lt(<span class="number">0</span>)</span><br><span class="line">        koch(size / <span class="number">3</span>, n - <span class="number">1</span>)</span><br><span class="line">        turtle.lt(<span class="number">60</span>)</span><br><span class="line">        koch(size / <span class="number">3</span>, n - <span class="number">1</span>)</span><br><span class="line">        turtle.rt(<span class="number">120</span>)</span><br><span class="line">        koch(size / <span class="number">3</span>, n - <span class="number">1</span>)</span><br><span class="line">        turtle.lt(<span class="number">60</span>)</span><br><span class="line">        koch(size / <span class="number">3</span>, n - <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>将重复的代码改为for循环，右转改为左转：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> turtle</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">koch</span><span class="params">(size, n)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">        turtle.fd(size)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">for</span> angle <span class="keyword">in</span> [<span class="number">0</span>, <span class="number">60</span>, <span class="number">-120</span>, <span class="number">60</span>]:</span><br><span class="line">            turtle.lt(angle)</span><br><span class="line">            koch(size / <span class="number">3</span>, n - <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>调用该函数<code>koch(300, 3)</code>，绘制一段3阶科赫曲线如下：</p>
+<img src="/2020/12/08/Python递归绘制科赫雪花/koch3.png">
+<h2 id="科赫雪花"><a href="#科赫雪花" class="headerlink" title="科赫雪花"></a>科赫雪花</h2><p>其实掌握了科赫曲线，科赫雪花绘制就比较简单，只要将科赫曲线重复3次即可拼成一个雪花的形状。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">turtle.pu()</span><br><span class="line">turtle.goto(<span class="number">150</span>, <span class="number">120</span>)</span><br><span class="line">turtle.pd()</span><br><span class="line"></span><br><span class="line">turtle.bgcolor(<span class="string">'skyblue'</span>)</span><br><span class="line">turtle.color(<span class="string">'white'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绘制雪花主体</span></span><br><span class="line">turtle.begin_fill()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">    turtle.rt(<span class="number">120</span>)</span><br><span class="line">    koch(<span class="number">300</span>, <span class="number">3</span>)</span><br><span class="line">turtle.end_fill()</span><br><span class="line"></span><br><span class="line">turtle.hideturtle()</span><br><span class="line">turtle.done()</span><br></pre></td></tr></table></figure>
+<p>画完的效果就是头图啦~</p>
+<img src="/2020/12/08/Python递归绘制科赫雪花/snowflake.png">
+<hr>
+<blockquote>
+<p>转自嵩天老师的课程《Python语言程序设计》-  <a href="https://www.icourse163.org/course/BIT-268001" target="_blank" rel="noopener">https://www.icourse163.org/course/BIT-268001</a></p>
+</blockquote>
 
       
     </div>
@@ -628,8 +680,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/11/12/实用SQL/" rel="next" title="实用SQL">
-                <i class="fa fa-chevron-left"></i> 实用SQL
+              <a href="/2020/12/06/SQL必知必会-5-高级过滤数据/" rel="next" title="SQL必知必会(5)高级过滤数据">
+                <i class="fa fa-chevron-left"></i> SQL必知必会(5)高级过滤数据
               </a>
             
           </div>
@@ -637,10 +689,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/12/23/PyCharm控制台自动换行/" rel="prev" title="PyCharm控制台自动换行">
-                PyCharm控制台自动换行 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -688,8 +736,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -806,6 +863,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#递归"><span class="nav-number">1.</span> <span class="nav-text">递归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#递归的定义"><span class="nav-number">1.1.</span> <span class="nav-text">递归的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#递归的调用过程"><span class="nav-number">1.2.</span> <span class="nav-text">递归的调用过程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#科赫曲线"><span class="nav-number">2.</span> <span class="nav-text">科赫曲线</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分形几何"><span class="nav-number">2.1.</span> <span class="nav-text">分形几何</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#科赫曲线-1"><span class="nav-number">2.2.</span> <span class="nav-text">科赫曲线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#科赫雪花"><span class="nav-number">2.3.</span> <span class="nav-text">科赫雪花</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
