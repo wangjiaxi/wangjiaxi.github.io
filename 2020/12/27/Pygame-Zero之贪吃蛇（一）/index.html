@@ -141,21 +141,25 @@
 
 
 
-  <meta name="description" content="梯度的重构利用像素之间的梯度值和虚拟深度值对图像进行重构，根据灰度变化来模拟人类视觉的明暗程度。">
-<meta name="keywords" content="Python">
+  <meta name="description" content="搞了这么久Python，玩个🐍吧！">
+<meta name="keywords" content="Python,游戏">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python实现照片的手绘效果">
-<meta property="og:url" content="http://yoursite.com/2019/04/04/Python实现照片的手绘效果/index.html">
+<meta property="og:title" content="Pygame Zero之贪吃蛇（一）">
+<meta property="og:url" content="http://yoursite.com/2020/12/27/Pygame-Zero之贪吃蛇（一）/index.html">
 <meta property="og:site_name" content="Ward&#39;s notebook">
-<meta property="og:description" content="梯度的重构利用像素之间的梯度值和虚拟深度值对图像进行重构，根据灰度变化来模拟人类视觉的明暗程度。">
+<meta property="og:description" content="搞了这么久Python，玩个🐍吧！">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/2019/04/04/Python实现照片的手绘效果/yunwuyue.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/04/04/Python实现照片的手绘效果/yunwuyueHD.jpg">
-<meta property="og:updated_time" content="2019-04-07T14:43:30.000Z">
+<meta property="og:image" content="http://yoursite.com/2020/12/27/Pygame-Zero之贪吃蛇（一）/图片文件.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/27/Pygame-Zero之贪吃蛇（一）/效果.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/27/Pygame-Zero之贪吃蛇（一）/snake1.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/12/27/Pygame-Zero之贪吃蛇（一）/snake2.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/12/27/Pygame-Zero之贪吃蛇（一）/snake3.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/12/27/Pygame-Zero之贪吃蛇（一）/snake4.jpg">
+<meta property="og:updated_time" content="2020-12-27T15:56:51.457Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python实现照片的手绘效果">
-<meta name="twitter:description" content="梯度的重构利用像素之间的梯度值和虚拟深度值对图像进行重构，根据灰度变化来模拟人类视觉的明暗程度。">
-<meta name="twitter:image" content="http://yoursite.com/2019/04/04/Python实现照片的手绘效果/yunwuyue.jpg">
+<meta name="twitter:title" content="Pygame Zero之贪吃蛇（一）">
+<meta name="twitter:description" content="搞了这么久Python，玩个🐍吧！">
+<meta name="twitter:image" content="http://yoursite.com/2020/12/27/Pygame-Zero之贪吃蛇（一）/图片文件.png">
 
 
 
@@ -163,7 +167,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/2019/04/04/Python实现照片的手绘效果/">
+  <link rel="canonical" href="http://yoursite.com/2020/12/27/Pygame-Zero之贪吃蛇（一）/">
 
 
 
@@ -182,7 +186,7 @@
         }
     })();
 </script>
-  <title>Python实现照片的手绘效果 | Ward's notebook</title>
+  <title>Pygame Zero之贪吃蛇（一） | Ward's notebook</title>
   
 
 
@@ -444,7 +448,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/04/Python实现照片的手绘效果/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/27/Pygame-Zero之贪吃蛇（一）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ward Wang">
@@ -461,7 +465,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Python实现照片的手绘效果
+          <h1 class="post-title" itemprop="name headline">Pygame Zero之贪吃蛇（一）
 
               
             
@@ -487,24 +491,12 @@
                 
               
 
-              <time title="创建时间：2019-04-04 15:46:57" itemprop="dateCreated datePublished" datetime="2019-04-04T15:46:57+08:00">2019-04-04</time>
+              <time title="创建时间：2020-12-27 23:23:06 / 修改时间：23:56:51" itemprop="dateCreated datePublished" datetime="2020-12-27T23:23:06+08:00">2020-12-27</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-04-07 22:43:30" itemprop="dateModified" datetime="2019-04-07T22:43:30+08:00">2019-04-07</time>
               
             
           </span>
@@ -540,8 +532,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/2019/04/04/Python实现照片的手绘效果/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/04/Python实现照片的手绘效果/" itemprop="commentCount"></span>
+                <a href="/2020/12/27/Pygame-Zero之贪吃蛇（一）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/12/27/Pygame-Zero之贪吃蛇（一）/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -569,19 +561,24 @@
       
 
       
-        <h1 id="梯度的重构"><a href="#梯度的重构" class="headerlink" title="梯度的重构"></a>梯度的重构</h1><p>利用像素之间的梯度值和虚拟深度值对图像进行重构，根据灰度变化来模拟人类视觉的明暗程度。</p>
+        <p>搞了这么久Python，玩个🐍吧！</p>
 <a id="more"></a>
-<h1 id="手绘效果的特征"><a href="#手绘效果的特征" class="headerlink" title="手绘效果的特征"></a>手绘效果的特征</h1><ol>
-<li>黑白灰色</li>
-<li>边界线条较重</li>
-<li>相同或相近色彩趋于白色</li>
-<li>略有光源效果</li>
-</ol>
-<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><p>用到的第三方库安装：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pillow,numpy</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#image.py</span></span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a = np.asarray(Image.open(<span class="string">'./yunwuyue.jpg'</span>).convert(<span class="string">'L'</span>)).astype(<span class="string">'float'</span>)</span><br><span class="line"></span><br><span class="line">depth = <span class="number">10.</span>     <span class="comment">#预设深度值为10，取值范围0-100</span></span><br><span class="line">grad = np.gradient(a)       <span class="comment">#提取x和y方向的梯度值</span></span><br><span class="line">grad_x, grad_y = grad</span><br><span class="line"><span class="comment">#根据深度值调整x和y方向的梯度值</span></span><br><span class="line">grad_x = grad_x * depth / <span class="number">100.</span></span><br><span class="line">grad_y = grad_y * depth / <span class="number">100.</span></span><br><span class="line">A = np.sqrt(grad_x**<span class="number">2</span> + grad_y**<span class="number">2</span> + <span class="number">1.</span>)</span><br><span class="line">uni_x = grad_x / A</span><br><span class="line">uni_y = grad_y / A</span><br><span class="line">uni_z = <span class="number">1.</span> / A</span><br><span class="line"></span><br><span class="line">vec_el = np.pi / <span class="number">2.2</span></span><br><span class="line">vec_az = np.pi / <span class="number">4</span></span><br><span class="line">dx = np.cos(vec_el) * np.cos(vec_az)</span><br><span class="line">dy = np.cos(vec_el) * np.sin(vec_az)</span><br><span class="line">dz = np.sin(vec_el)</span><br><span class="line"></span><br><span class="line">b = <span class="number">255</span> * (dx * uni_x + dy * uni_y + dz * uni_z)</span><br><span class="line">b = b.clip(<span class="number">0</span>, <span class="number">255</span>)</span><br><span class="line"></span><br><span class="line">im = Image.fromarray(b.astype(<span class="string">'uint8'</span>))</span><br><span class="line">im.save(<span class="string">'./yunwuyueHD.jpg'</span>)</span><br></pre></td></tr></table></figure>
-<h1 id="展示"><a href="#展示" class="headerlink" title="展示"></a>展示</h1><p><img src="/2019/04/04/Python实现照片的手绘效果/yunwuyue.jpg" alt></p>
-<p><img src="/2019/04/04/Python实现照片的手绘效果/yunwuyueHD.jpg" alt></p>
-
+<p>贪吃蛇是个经典游戏，它的规则也是十分简单：控制小蛇上下左右移动，吃到食物以后，长度增加1；蛇头碰到屏幕边缘或者自己的身体，游戏失败。</p>
+<p>今天这个阶段，我们来把小蛇创建出来。</p>
+<p>下面有4个小方块，我们可以用他们来创建4个不同颜色的小蛇。</p>
+<img src="/2020/12/27/Pygame-Zero之贪吃蛇（一）/图片文件.png">
+<p>小蛇的构造，就是用这些小方块拼在一起。我们可以设置它的初始长度为5个小方块。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pgzrun</span><br><span class="line"></span><br><span class="line">TILE_SIZE = <span class="number">20</span></span><br><span class="line">WIDTH = <span class="number">40</span> * TILE_SIZE</span><br><span class="line">HEIGHT = <span class="number">30</span> * TILE_SIZE</span><br><span class="line"></span><br><span class="line">snakehead = Actor(<span class="string">'snake1'</span>)</span><br><span class="line">snakehead.x = WIDTH / <span class="number">2</span></span><br><span class="line">snakehead.y = HEIGHT / <span class="number">2</span></span><br><span class="line"></span><br><span class="line">Snake = []</span><br><span class="line">Snake.append(snakehead)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">4</span>):</span><br><span class="line">    snakebody = Actor(<span class="string">'snake1'</span>)</span><br><span class="line">    snakebody.x = Snake[i].x - TILE_SIZE</span><br><span class="line">    snakebody.y = Snake[i].y</span><br><span class="line">    Snake.append(snakebody)</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span><span class="params">()</span>:</span></span><br><span class="line">    screen.clear()</span><br><span class="line">    <span class="keyword">for</span> snakebody <span class="keyword">in</span> Snake:</span><br><span class="line">        snakebody.draw()</span><br><span class="line"></span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure>
+<p>运行效果如下：</p>
+<img src="/2020/12/27/Pygame-Zero之贪吃蛇（一）/效果.png">
+<hr>
+<blockquote>
+<p>同学们可以右键保存下边的图片到你的<code>images</code>文件夹</p>
+</blockquote>
+<img src="/2020/12/27/Pygame-Zero之贪吃蛇（一）/snake1.jpg">
+<img src="/2020/12/27/Pygame-Zero之贪吃蛇（一）/snake2.jpg">
+<img src="/2020/12/27/Pygame-Zero之贪吃蛇（一）/snake3.jpg">
+<img src="/2020/12/27/Pygame-Zero之贪吃蛇（一）/snake4.jpg">
       
     </div>
 
@@ -639,6 +636,8 @@
           
             <a href="/tags/Python/" rel="tag"># Python</a>
           
+            <a href="/tags/游戏/" rel="tag"># 游戏</a>
+          
         </div>
       
 
@@ -650,8 +649,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/04/Matplotlib绘制引力波/" rel="next" title="Matplotlib绘制引力波">
-                <i class="fa fa-chevron-left"></i> Matplotlib绘制引力波
+              <a href="/2020/12/19/turtle如何自定义画笔形状/" rel="next" title="turtle如何自定义画笔形状">
+                <i class="fa fa-chevron-left"></i> turtle如何自定义画笔形状
               </a>
             
           </div>
@@ -659,10 +658,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/15/嵩天老师Python(2)基本图形绘制/" rel="prev" title="嵩天老师Python(2)基本图形绘制">
-                嵩天老师Python(2)基本图形绘制 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -710,17 +705,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -835,23 +821,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#梯度的重构"><span class="nav-number">1.</span> <span class="nav-text">梯度的重构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#手绘效果的特征"><span class="nav-number">2.</span> <span class="nav-text">手绘效果的特征</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码实现"><span class="nav-number">3.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#展示"><span class="nav-number">4.</span> <span class="nav-text">展示</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       

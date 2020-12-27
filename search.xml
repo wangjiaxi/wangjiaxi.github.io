@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Pygame Zero之贪吃蛇（一）]]></title>
+    <url>%2F2020%2F12%2F27%2FPygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[搞了这么久Python，玩个🐍吧！ 贪吃蛇是个经典游戏，它的规则也是十分简单：控制小蛇上下左右移动，吃到食物以后，长度增加1；蛇头碰到屏幕边缘或者自己的身体，游戏失败。 今天这个阶段，我们来把小蛇创建出来。 下面有4个小方块，我们可以用他们来创建4个不同颜色的小蛇。 小蛇的构造，就是用这些小方块拼在一起。我们可以设置它的初始长度为5个小方块。 1234567891011121314151617181920212223242526import pgzrunTILE_SIZE = 20WIDTH = 40 * TILE_SIZEHEIGHT = 30 * TILE_SIZEsnakehead = Actor('snake1')snakehead.x = WIDTH / 2snakehead.y = HEIGHT / 2Snake = []Snake.append(snakehead)for i in range(4): snakebody = Actor('snake1') snakebody.x = Snake[i].x - TILE_SIZE snakebody.y = Snake[i].y Snake.append(snakebody) def draw(): screen.clear() for snakebody in Snake: snakebody.draw()pgzrun.go() 运行效果如下： 同学们可以右键保存下边的图片到你的images文件夹]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>游戏</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[turtle如何自定义画笔形状]]></title>
     <url>%2F2020%2F12%2F19%2Fturtle%E5%A6%82%E4%BD%95%E8%87%AA%E5%AE%9A%E4%B9%89%E7%94%BB%E7%AC%94%E5%BD%A2%E7%8A%B6%2F</url>
     <content type="text"><![CDATA[turtle内置的画笔形状一共只有这么几种： 1"arrow", "turtle", "circle", "square", "triangle", "classic" 那么总有一些时候，我们希望画笔的形状是可以自定义的，比如导入一张png图片作为shape。 内置形状我们可以循环的创建一下画笔，每个画笔一个形状，一排摆开。 123456789import turtleshps = ["arrow", "turtle", "circle", "square", "triangle", "classic"]for s in range(len(shps)): t = turtle.Turtle() t.pu() t.goto(100 * s -300, 0) t.shape(shps[s]) 画出来以后，原来它们是这个样子： 其中turtle和classic是最常用的两个形状了，一个是默认的小箭头，另一个是萌萌的小海龟~ 自定义形状用turtle绘制当我查看turtle的官方文档，有一个神秘的链接出现在shape的附近。 点击一下，文档会滚动到下边的位置，哦原来是「设置与特殊方法」。 官方文档的描述是如此的繁琐，再加上一层机器翻译，更难理解了（字我都认识，放在一起怎么就晕了呢？）。 简单来说，我们可以注册一个画笔，注册后就可以对它进行一个使用。 这里的例子，就解释了内置形状的triangle的由来，它是如何注册的。 那么我们可以注册一个新的三角形： 123456789101112import turtle as tscreen = t.Screen()# 注册一个新的形状，叫做 triangle222 ，三点相连形成screen.register_shape("triangle222", ((10,-6), (0,50), (-10,-6)))# 设置画笔形状为 triangle222t.shape("triangle222")# 走两步试试~t.fd(100) 看看效果吧： 还不错哦，有了这个方法我们可以自己画一个画笔的形状了！ 导入图片作为画笔形状这才是本文的重点啊！ 我们可以直接注册一个gif来作为画笔的形状，这里我推荐一个免费的图标库iconfont，因为画笔最好还是小一些比较好，所以一个好看的图标正合适。我们下载一个小汽车图片。 啊，有点大了，用工具将它改的小一些，并将后缀名改为gif。和上边的步骤一样，将这个文件注册为一个shape。 123456789101112import turtle as tscreen = t.Screen()# 注册一个新的形状，直接导入图片screen.register_shape("小汽车.gif")# 设置画笔形状为 小汽车.gift.shape("小汽车.gif")# 走两步试试~t.fd(200) 看看效果吧： 简直完美！ 这样我们就可以自己选择喜欢的图片来作为画笔形状了。 参考文献：python学习turtle(更改海龟图标)]]></content>
