@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Pygame Zero之贪吃蛇（二）]]></title>
+    <url>%2F2021%2F01%2F01%2FPygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[本文来研究如何移动小蛇，而且仅限于向右移动，严格的说其实是「前进」。这里需要思考的问题是：为什么不是上下左右移动呢？ 因为在游戏中，上下左右是相对于游戏窗口的，小蛇的移动方向只有前进，也就是朝着蛇头的方向（小蛇是不能倒退的哦）。如果想要往其他方向移动，只能改变蛇头的方向，这时蛇的形状就会发生改变，我们下次再来研究。 在小蛇向右移动一格的时，大概经历了下边的过程。 移动一格分为两步完成： 在旧蛇头右侧添加一个新蛇头，旧蛇头编程蛇身的一部分 删除旧蛇尾，原来挨着旧蛇尾的蛇身变成了新蛇尾 这样，我们可以在update()函数中编写这部分代码： 1234567891011# 前置代码见9-1.pydef update(): newSnakeHead = Actor('snake1') # 创建新蛇头 newSnakeHead.x = Snake[0].x + TILE_SIZE # 初始化新蛇头横坐标，为旧蛇头加一个格子宽 newSnakeHead.y = Snake[0].y # 初始化新蛇头纵坐标，和旧蛇一样 Snake.insert(0, newSnakeHead) # 列表中插入新蛇头 del Snake[len(Snake) - 1] # 列表中删除旧蛇尾 pgzrun.go() 结果如下： 可以看到小蛇移动速度非常快，因此我们可以导入time库来减速。比如每次update()以后，暂停0.2秒： 12345678910111213import time# 前置代码见9-1.pydef update(): newSnakeHead = Actor('snake1') newSnakeHead.x = Snake[0].x + TILE_SIZE newSnakeHead.y = Snake[0].y Snake.insert(0, newSnakeHead) del Snake[len(Snake) - 1] time.sleep(0.2) # 暂停0.2秒pgzrun.go() 运行程序，有一种古老游戏的感觉了，小蛇看起来是在一格一格的前进！]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>游戏</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Pygame Zero之贪吃蛇（一）]]></title>
     <url>%2F2020%2F12%2F27%2FPygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89%2F</url>
     <content type="text"><![CDATA[搞了这么久Python，玩个🐍吧！ 贪吃蛇是个经典游戏，它的规则也是十分简单：控制小蛇上下左右移动，吃到食物以后，长度增加1；蛇头碰到屏幕边缘或者自己的身体，游戏失败。 今天这个阶段，我们来把小蛇创建出来。 下面有4个小方块，我们可以用他们来创建4个不同颜色的小蛇。 小蛇的构造，就是用这些小方块拼在一起。我们可以设置它的初始长度为5个小方块。 1234567891011121314151617181920212223242526import pgzrunTILE_SIZE = 20WIDTH = 40 * TILE_SIZEHEIGHT = 30 * TILE_SIZEsnakehead = Actor('snake1')snakehead.x = WIDTH / 2snakehead.y = HEIGHT / 2Snake = []Snake.append(snakehead)for i in range(4): snakebody = Actor('snake1') snakebody.x = Snake[i].x - TILE_SIZE snakebody.y = Snake[i].y Snake.append(snakebody) def draw(): screen.clear() for snakebody in Snake: snakebody.draw()pgzrun.go() 运行效果如下： 同学们可以右键保存下边的图片到你的images文件夹]]></content>
