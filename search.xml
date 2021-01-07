@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Pygame Zero之贪吃蛇（三）]]></title>
+    <url>%2F2021%2F01%2F07%2FPygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[本文继续来研究如何移动小蛇，这一次是让小蛇左转和右转。上一篇讲到小蛇只能前进，今天就让小蛇学会转弯。 如果小蛇本来是向右移动的，那么右转以后，小蛇就会向下移动，只需要把新蛇头的位置设置在旧蛇头Snake[0]的下方 12345678910# 前置代码见9-2.pydef update(): newSnakeHead = Actor('snake1') # 创建新蛇头 # 设定新蛇头的坐标，小蛇向下移动，新蛇头在旧蛇头下方 newSnakeHead.x = Snake[0].x newSnakeHead.y = Snake[0].y + TILE_SIZE Snake.insert(0, newSnakeHead) # 把新蛇头加入列表的最前面 del Snake[len(Snake) - 1] # 删除旧蛇尾 time.sleep(0.2) 类似的，我们就可以完成小蛇的所有方向移动了。定义一个变量来表示小蛇的移动方向。在update函数中，判断这个变量的值，就可以控制小蛇向不同的方向移动。 1234567891011121314151617181920212223# 前置代码见9-2.pydirection = 'right' # 控制小蛇运动方向，默认向右def update(): newSnakeHead = Actor('snake1') # 创建新蛇头 # 判断变量direction的值，执行相应操作 if direction == 'up': newSnakeHead.x = Snake[0].x newSnakeHead.y = Snake[0].y - TILE_SIZE if direction == 'down': newSnakeHead.x = Snake[0].x newSnakeHead.y = Snake[0].y + TILE_SIZE if direction == 'left': newSnakeHead.x = Snake[0].x - TILE_SIZE newSnakeHead.y = Snake[0].y if direction == 'right': newSnakeHead.x = Snake[0].x + TILE_SIZE newSnakeHead.y = Snake[0].y Snake.insert(0, newSnakeHead) del Snake[len(Snake) - 1] time.sleep(0.2) 现在小蛇已经可以向四个方向移动了，我们需要加上一个控制的功能。通过按下方向键来修改direction的值就可以了。 1234567891011121314151617181920212223242526272829direction = 'right' # 控制小蛇运动方向，默认向右def update(): global direction # 将direction设为全局变量 if keyboard.left: direction = 'left' if keyboard.right: direction = 'right' if keyboard.up: direction = 'up' if keyboard.down: direction = 'down' newSnakeHead = Actor('snake1') # 创建新蛇头 if direction == 'up': newSnakeHead.x = Snake[0].x newSnakeHead.y = Snake[0].y - TILE_SIZE if direction == 'down': newSnakeHead.x = Snake[0].x newSnakeHead.y = Snake[0].y + TILE_SIZE if direction == 'left': newSnakeHead.x = Snake[0].x - TILE_SIZE newSnakeHead.y = Snake[0].y if direction == 'right': newSnakeHead.x = Snake[0].x + TILE_SIZE newSnakeHead.y = Snake[0].y Snake.insert(0, newSnakeHead) del Snake[len(Snake) - 1] time.sleep(0.2) 看一看效果图吧：]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>游戏</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Pygame Zero之贪吃蛇（二）]]></title>
     <url>%2F2021%2F01%2F01%2FPygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89%2F</url>
     <content type="text"><![CDATA[本文来研究如何移动小蛇，而且仅限于向右移动，严格的说其实是「前进」。这里需要思考的问题是：为什么不是上下左右移动呢？ 因为在游戏中，上下左右是相对于游戏窗口的，小蛇的移动方向只有前进，也就是朝着蛇头的方向（小蛇是不能倒退的哦）。如果想要往其他方向移动，只能改变蛇头的方向，这时蛇的形状就会发生改变，我们下次再来研究。 在小蛇向右移动一格的时，大概经历了下边的过程。 移动一格分为两步完成： 在旧蛇头右侧添加一个新蛇头，旧蛇头编程蛇身的一部分 删除旧蛇尾，原来挨着旧蛇尾的蛇身变成了新蛇尾 这样，我们可以在update()函数中编写这部分代码： 1234567891011# 前置代码见9-1.pydef update(): newSnakeHead = Actor('snake1') # 创建新蛇头 newSnakeHead.x = Snake[0].x + TILE_SIZE # 初始化新蛇头横坐标，为旧蛇头加一个格子宽 newSnakeHead.y = Snake[0].y # 初始化新蛇头纵坐标，和旧蛇一样 Snake.insert(0, newSnakeHead) # 列表中插入新蛇头 del Snake[len(Snake) - 1] # 列表中删除旧蛇尾 pgzrun.go() 结果如下： 可以看到小蛇移动速度非常快，因此我们可以导入time库来减速。比如每次update()以后，暂停0.2秒： 12345678910111213import time# 前置代码见9-1.pydef update(): newSnakeHead = Actor('snake1') newSnakeHead.x = Snake[0].x + TILE_SIZE newSnakeHead.y = Snake[0].y Snake.insert(0, newSnakeHead) del Snake[len(Snake) - 1] time.sleep(0.2) # 暂停0.2秒pgzrun.go() 运行程序，有一种古老游戏的感觉了，小蛇看起来是在一格一格的前进！]]></content>
