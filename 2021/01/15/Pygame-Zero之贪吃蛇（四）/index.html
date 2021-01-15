@@ -141,16 +141,22 @@
 
 
 
-  <meta name="description" content="没事儿搞搞Python">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Ward&#39;s notebook">
-<meta property="og:url" content="http://yoursite.com/archives/2019/page/2/index.html">
+  <meta name="description" content="本篇来给贪吃蛇增加游戏规则判定并加入食物和分数，制作一个完整的贪吃蛇游戏。">
+<meta name="keywords" content="Python,游戏">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pygame Zero之贪吃蛇（四）">
+<meta property="og:url" content="http://yoursite.com/2021/01/15/Pygame-Zero之贪吃蛇（四）/index.html">
 <meta property="og:site_name" content="Ward&#39;s notebook">
-<meta property="og:description" content="没事儿搞搞Python">
+<meta property="og:description" content="本篇来给贪吃蛇增加游戏规则判定并加入食物和分数，制作一个完整的贪吃蛇游戏。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2021/01/15/Pygame-Zero之贪吃蛇（四）/lose.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/15/Pygame-Zero之贪吃蛇（四）/cookie.jpg">
+<meta property="og:image" content="http://yoursite.com/2021/01/15/Pygame-Zero之贪吃蛇（四）/game.png">
+<meta property="og:updated_time" content="2021-01-15T12:45:19.811Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ward&#39;s notebook">
-<meta name="twitter:description" content="没事儿搞搞Python">
+<meta name="twitter:title" content="Pygame Zero之贪吃蛇（四）">
+<meta name="twitter:description" content="本篇来给贪吃蛇增加游戏规则判定并加入食物和分数，制作一个完整的贪吃蛇游戏。">
+<meta name="twitter:image" content="http://yoursite.com/2021/01/15/Pygame-Zero之贪吃蛇（四）/lose.png">
 
 
 
@@ -158,7 +164,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/archives/2019/page/2/">
+  <link rel="canonical" href="http://yoursite.com/2021/01/15/Pygame-Zero之贪吃蛇（四）/">
 
 
 
@@ -177,7 +183,7 @@
         }
     })();
 </script>
-  <title>归档 | Ward's notebook</title>
+  <title>Pygame Zero之贪吃蛇（四） | Ward's notebook</title>
   
 
 
@@ -236,7 +242,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -342,7 +348,7 @@
         
         
           
-          <li class="menu-item menu-item-archives menu-item-active">
+          <li class="menu-item menu-item-archives">
 
     
     
@@ -371,28 +377,6 @@
 
   
     
-
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
 
   
 
@@ -445,256 +429,275 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
 
-      
-      <span class="archive-page-counter">
-        
-        
-         
-        
-        还行! 目前共计 43 篇日志。 继续努力。
-      </span>
-      
+  
 
-      
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/15/Pygame-Zero之贪吃蛇（四）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ward Wang">
+      <meta itemprop="description" content="没事儿搞搞Python">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ward's notebook">
+    </span>
+
+    
+      <header class="post-header">
 
         
         
+          <h1 class="post-title" itemprop="name headline">Pygame Zero之贪吃蛇（四）
+
+              
+            
+          </h1>
         
 
-        
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2021-01-15 18:42:35 / 修改时间：20:45:19" itemprop="dateCreated datePublished" datetime="2021-01-15T18:42:35+08:00">2021-01-15</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/04/04/嵩天老师Python(7)文件和数据格式化/" itemprop="url">
+            <span class="post-category">
             
-              <span itemprop="name">嵩天老师Python(7)文件和数据格式化</span>
+              <span class="post-meta-divider">|</span>
             
-          </a>
-        
-      </h2>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a></span>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-04T15:39:03+08:00" content="2019-04-04">
-          04-04
-        </time>
-      </div>
+                
+                
+              
+            </span>
+          
 
-    </header>
-  </article>
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2021/01/15/Pygame-Zero之贪吃蛇（四）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2021/01/15/Pygame-Zero之贪吃蛇（四）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
+          
+          
 
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/04/04/嵩天老师Python(6)组合数据类型/" itemprop="url">
-            
-              <span itemprop="name">嵩天老师Python(6)组合数据类型</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-04T15:38:43+08:00" content="2019-04-04">
-          04-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/04/04/嵩天老师Python(1)基本语法元素/" itemprop="url">
-            
-              <span itemprop="name">嵩天老师Python(1)基本语法元素</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-04T15:38:23+08:00" content="2019-04-04">
-          04-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>本篇来给贪吃蛇增加游戏规则判定并加入食物和分数，制作一个完整的贪吃蛇游戏。</p>
+<a id="more"></a>
+<h1 id="游戏规则判定"><a href="#游戏规则判定" class="headerlink" title="游戏规则判定"></a>游戏规则判定</h1><p>在游戏中，出现两种情况则视为游戏失败：</p>
+<ul>
+<li>小蛇撞墙，即蛇头碰到屏幕边界</li>
+<li>小蛇吃自己，即蛇头碰到身体</li>
+</ul>
+<p>首先定义一个布尔类型的变量，用来记录游戏是否失败。稍后通过条件判断来修改变量的值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">isLose = <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+<h2 id="小蛇撞墙"><a href="#小蛇撞墙" class="headerlink" title="小蛇撞墙"></a>小蛇撞墙</h2><p>首先判断第一种情况，当小蛇撞墙时，游戏失败。</p>
+<p>由于小蛇一直是蛇头走在最前面，所以在update中只需要判断蛇头的坐标是否超过窗口边界坐标。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> newSnakeHead.y &lt; <span class="number">0</span> <span class="keyword">or</span> newSnakeHead.y &gt; HEIGHT <span class="keyword">or</span> newSnakeHead.x &lt; <span class="number">0</span> <span class="keyword">or</span> newSnakeHead.x &gt; WIDTH:</span><br><span class="line">    isLose = <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<p>在<code>draw()</code>函数中，添加游戏失败的显示信息：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span><span class="params">()</span>:</span></span><br><span class="line">    screen.clear()</span><br><span class="line">    <span class="keyword">for</span> snakebody <span class="keyword">in</span> Snake:</span><br><span class="line">        snakebody.draw()</span><br><span class="line">    <span class="comment"># 显示游戏失败信息</span></span><br><span class="line">    <span class="keyword">if</span> isLose:</span><br><span class="line">        screen.draw.text(<span class="string">"Game over!"</span>, (<span class="number">180</span>, HEIGHT / <span class="number">2</span> - <span class="number">100</span>), fontsize=<span class="number">100</span>, color=<span class="string">'skyblue'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="小蛇吃自己"><a href="#小蛇吃自己" class="headerlink" title="小蛇吃自己"></a>小蛇吃自己</h2><p>当小蛇吃到自己时，同样游戏结束。遍历每一个身体方块，当蛇头和任一身体坐标重合时，那就是吃到蛇肉啦。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> snakebody <span class="keyword">in</span> Snake:</span><br><span class="line">  <span class="keyword">if</span> newSnakeHead.x == snakebody.x <span class="keyword">and</span> newSnakeHead.y == snakebody.y:</span><br><span class="line">    isLose = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<img src="/2021/01/15/Pygame-Zero之贪吃蛇（四）/lose.png">
+<h1 id="食物的随机出现"><a href="#食物的随机出现" class="headerlink" title="食物的随机出现"></a>食物的随机出现</h1><h2 id="食物初始状态"><a href="#食物初始状态" class="headerlink" title="食物初始状态"></a>食物初始状态</h2><p>首先需要将食物的图片放在<code>images</code>文件夹中。</p>
+<img src="/2021/01/15/Pygame-Zero之贪吃蛇（四）/cookie.jpg">
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始位置随机</span></span><br><span class="line">cookie = Actor(<span class="string">'cookie'</span>)</span><br><span class="line">cookie.x = random.randint(<span class="number">10</span>,<span class="number">30</span>)*TILE_SIZE</span><br><span class="line">cookie.y = random.randint(<span class="number">10</span>,<span class="number">30</span>)*TILE_SIZE</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span><span class="params">()</span>:</span></span><br><span class="line">    cookie.draw()</span><br></pre></td></tr></table></figure>
+<h2 id="吃到食物增加长度"><a href="#吃到食物增加长度" class="headerlink" title="吃到食物增加长度"></a>吃到食物增加长度</h2><p>如果在一次移动中，小蛇没有吃到食物，那么就需要删除旧的蛇尾。如果小蛇吃到了食物，那么就不需要删除旧蛇尾了，直接在食物的位置添加一个新的蛇头即可。</p>
+<p>怎样算吃到食物？<code>newSnakeHead.x == cookie.x and newSnakeHead.y == cookie.y</code></p>
+<p>在之前的<code>update()</code>函数中修改：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># 小蛇吃到食物后无需删除蛇尾，将食物位置重新随机</span></span><br><span class="line">    <span class="keyword">if</span> newSnakeHead.x == cookie.x <span class="keyword">and</span> newSnakeHead.y == cookie.y:</span><br><span class="line">        cookie.x = random.randint(<span class="number">5</span>, <span class="number">35</span>) * TILE_SIZE</span><br><span class="line">        cookie.y = random.randint(<span class="number">5</span>, <span class="number">25</span>) * TILE_SIZE</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">del</span> Snake[len(Snake) - <span class="number">1</span>]</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br></pre></td></tr></table></figure>
+<p>到目前为止，整体游戏效果已经比较完整！</p>
+<h1 id="显示得分"><a href="#显示得分" class="headerlink" title="显示得分"></a>显示得分</h1><p>接下来的功能是一个优化，就是分数的显示。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">score = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在窗口左上角显示分数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span><span class="params">()</span>:</span></span><br><span class="line">    screen.draw.text(<span class="string">"Score:"</span> + str(score), (<span class="number">20</span>, <span class="number">20</span>), fontsize=<span class="number">25</span>, color=<span class="string">'white'</span>)</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="comment"># 吃到食物加1分</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> score</span><br><span class="line">    <span class="keyword">if</span> newSnakeHead.x == cookie.x <span class="keyword">and</span> newSnakeHead.y == cookie.y:</span><br><span class="line">        score += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>看看最后的整体效果吧！</p>
+<img src="/2021/01/15/Pygame-Zero之贪吃蛇（四）/game.png">
+<hr>
+<p>附项目完整代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pgzrun</span><br><span class="line"></span><br><span class="line">TILE_SIZE = <span class="number">20</span></span><br><span class="line">WIDTH = <span class="number">40</span> * TILE_SIZE</span><br><span class="line">HEIGHT = <span class="number">30</span> * TILE_SIZE</span><br><span class="line">isLose = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">snakehead = Actor(<span class="string">'snake1'</span>)</span><br><span class="line">snakehead.x = WIDTH / <span class="number">2</span></span><br><span class="line">snakehead.y = HEIGHT / <span class="number">2</span></span><br><span class="line"></span><br><span class="line">cookie = Actor(<span class="string">'cookie'</span>)</span><br><span class="line">cookie.x = random.randint(<span class="number">10</span>, <span class="number">30</span>) * TILE_SIZE</span><br><span class="line">cookie.y = random.randint(<span class="number">10</span>, <span class="number">30</span>) * TILE_SIZE</span><br><span class="line"></span><br><span class="line">Snake = [snakehead]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">4</span>):</span><br><span class="line">    snakebody = Actor(<span class="string">'snake1'</span>)</span><br><span class="line">    snakebody.x = Snake[i].x - TILE_SIZE</span><br><span class="line">    snakebody.y = Snake[i].y</span><br><span class="line">    Snake.append(snakebody)</span><br><span class="line"></span><br><span class="line">direction = <span class="string">'right'</span></span><br><span class="line">score = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span><span class="params">()</span>:</span></span><br><span class="line">    screen.clear()</span><br><span class="line">    cookie.draw()</span><br><span class="line">    <span class="keyword">for</span> snakebody <span class="keyword">in</span> Snake:</span><br><span class="line">        snakebody.draw()</span><br><span class="line">    <span class="keyword">if</span> isLose:</span><br><span class="line">        screen.draw.text(<span class="string">"Game over!"</span>, (<span class="number">180</span>, HEIGHT / <span class="number">2</span> - <span class="number">100</span>), fontsize=<span class="number">100</span>,</span><br><span class="line">                         color=<span class="string">'skyblue'</span>)</span><br><span class="line">    screen.draw.text(<span class="string">"Score: "</span> + str(score), (<span class="number">20</span>, <span class="number">20</span>), fontsize=<span class="number">25</span>,</span><br><span class="line">                     color=<span class="string">'white'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">global</span> direction, isLose, score</span><br><span class="line">    <span class="keyword">if</span> keyboard.left:</span><br><span class="line">        direction = <span class="string">'left'</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.right:</span><br><span class="line">        direction = <span class="string">'right'</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.up:</span><br><span class="line">        direction = <span class="string">'up'</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.down:</span><br><span class="line">        direction = <span class="string">'down'</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">'snake1'</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">'up'</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y - TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">'down'</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">'left'</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x - TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">'right'</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> newSnakeHead.y &lt; <span class="number">0</span> <span class="keyword">or</span> newSnakeHead.y &gt; HEIGHT <span class="keyword">or</span> newSnakeHead.x &lt; <span class="number">0</span> <span class="keyword">or</span> newSnakeHead.x &gt; WIDTH:</span><br><span class="line">        isLose = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">for</span> body <span class="keyword">in</span> Snake:</span><br><span class="line">        <span class="keyword">if</span> newSnakeHead.x == body.x <span class="keyword">and</span> newSnakeHead.y == body.y:</span><br><span class="line">            isLose = <span class="literal">True</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> newSnakeHead.x == cookie.x <span class="keyword">and</span> newSnakeHead.y == cookie.y:</span><br><span class="line">        score += <span class="number">1</span></span><br><span class="line">        cookie.x = random.randint(<span class="number">5</span>, <span class="number">35</span>) * TILE_SIZE</span><br><span class="line">        cookie.y = random.randint(<span class="number">5</span>, <span class="number">25</span>) * TILE_SIZE</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">del</span> Snake[len(Snake) - <span class="number">1</span>]</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/04/04/HDFS客户端API/" itemprop="url">
-            
-              <span itemprop="name">HDFS客户端API</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-04T15:37:40+08:00" content="2019-04-04">
-          04-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/04/04/HDFS基本配置属性/" itemprop="url">
-            
-              <span itemprop="name">HDFS基本配置属性</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-04T15:37:30+08:00" content="2019-04-04">
-          04-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/04/04/Flume-Kafka实时数据采集/" itemprop="url">
-            
-              <span itemprop="name">Flume+Kafka实时数据采集</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-04T15:36:41+08:00" content="2019-04-04">
-          04-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="Ward Wang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="Ward Wang 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/游戏/" rel="tag"># 游戏</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/01/07/Pygame-Zero之贪吃蛇（三）/" rel="next" title="Pygame Zero之贪吃蛇（三）">
+                <i class="fa fa-chevron-left"></i> Pygame Zero之贪吃蛇（三）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2019/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/2019/">1</a><span class="page-number current">2</span>
-  </nav>
+  </article>
 
 
+  </div>
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
 
         </div>
         
@@ -714,8 +717,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -830,6 +842,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#游戏规则判定"><span class="nav-number">1.</span> <span class="nav-text">游戏规则判定</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#小蛇撞墙"><span class="nav-number">1.1.</span> <span class="nav-text">小蛇撞墙</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小蛇吃自己"><span class="nav-number">1.2.</span> <span class="nav-text">小蛇吃自己</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#食物的随机出现"><span class="nav-number">2.</span> <span class="nav-text">食物的随机出现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#食物初始状态"><span class="nav-number">2.1.</span> <span class="nav-text">食物初始状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#吃到食物增加长度"><span class="nav-number">2.2.</span> <span class="nav-text">吃到食物增加长度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#显示得分"><span class="nav-number">3.</span> <span class="nav-text">显示得分</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -996,6 +1025,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
 
   
 
@@ -1041,6 +1074,8 @@
 
 
 
+
+  
 
 
   
