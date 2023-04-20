@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/favicon32.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/black/pace-theme-big-counter.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/f7028396.js","daovoice")
+  daovoice('init', {
+      app_id: "f7028396"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeInDown","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInDown","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="K-means算法原理K-means聚类算法以k为参数，把n个对象分为k个簇，使簇内具有较高的相似度，而簇间的相似度较低。  随机选择k个点作为初始的聚类中心。 对于剩下的点，根据其与聚类中心的距离，将其归入最近的簇。 对每个簇，计算所有点的均值作为新的聚类中心。 重复2、3直到聚类中心不再改变。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="无监督学习的聚类算法及应用">
+<meta property="og:url" content="http://yoursite.com/2019/04/18/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/index.html">
+<meta property="og:site_name" content="Ward&#39;s notebook">
+<meta property="og:description" content="K-means算法原理K-means聚类算法以k为参数，把n个对象分为k个簇，使簇内具有较高的相似度，而簇间的相似度较低。  随机选择k个点作为初始的聚类中心。 对于剩下的点，根据其与聚类中心的距离，将其归入最近的簇。 对每个簇，计算所有点的均值作为新的聚类中心。 重复2、3直到聚类中心不再改变。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2019/04/18/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/city3.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/04/18/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/city4.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/04/18/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/ssn.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/04/18/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/ssn.png">
+<meta property="article:published_time" content="2019-04-18T15:43:40.000Z">
+<meta property="article:modified_time" content="2020-12-18T13:37:08.211Z">
+<meta property="article:author" content="Ward Wang">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="机器学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/18/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/city3.jpg">
+
+
+<link rel="canonical" href="http://yoursite.com/2019/04/18/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yoursite.com/2019/04/18/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/","path":"2019/04/18/无监督学习的聚类算法及应用/","title":"无监督学习的聚类算法及应用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>无监督学习的聚类算法及应用 | Ward's notebook</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-145825566-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-145825566-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Ward's notebook</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">都是瞎写</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#K-means%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">K-means算法原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#K-means%E7%AE%97%E6%B3%95%E5%BA%94%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">K-means算法应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82"><span class="nav-number">2.1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%AE%97%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">使用算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E8%BF%87%E7%A8%8B"><span class="nav-number">2.3.</span> <span class="nav-text">实现过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">2.4.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C"><span class="nav-number">2.5.</span> <span class="nav-text">结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%93%E5%B1%95-amp-%E6%94%B9%E8%BF%9B"><span class="nav-number">2.6.</span> <span class="nav-text">拓展&amp;改进</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DBSCAN%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">DBSCAN算法原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DBSCAN%E5%AF%86%E5%BA%A6%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">DBSCAN密度聚类算法流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DBSCAN%E7%AE%97%E6%B3%95%E5%BA%94%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">DBSCAN算法应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">5.1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82-1"><span class="nav-number">5.2.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-number">5.3.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E8%BF%87%E7%A8%8B-1"><span class="nav-number">5.4.</span> <span class="nav-text">实现过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-number">5.5.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C%E5%B1%95%E7%A4%BA"><span class="nav-number">5.6.</span> <span class="nav-text">结果展示</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ward Wang"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Ward Wang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wangjiaxi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangjiaxi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wangjiaxi.cv@qq.com" title="E-Mail → mailto:wangjiaxi.cv@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/18/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Ward Wang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ward's notebook">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          无监督学习的聚类算法及应用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-04-18 23:43:40" itemprop="dateCreated datePublished" datetime="2019-04-18T23:43:40+08:00">2019-04-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-12-18 21:37:08" itemprop="dateModified" datetime="2020-12-18T21:37:08+08:00">2020-12-18</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="K-means算法原理"><a href="#K-means算法原理" class="headerlink" title="K-means算法原理"></a>K-means算法原理</h2><p>K-means聚类算法以k为参数，把n个对象分为k个簇，使簇内具有较高的相似度，而簇间的相似度较低。</p>
+<ol>
+<li>随机选择k个点作为初始的聚类中心。</li>
+<li>对于剩下的点，根据其与聚类中心的距离，将其归入最近的簇。</li>
+<li>对每个簇，计算所有点的均值作为新的聚类中心。</li>
+<li>重复2、3直到聚类中心不再改变。</li>
+</ol>
+<span id="more"></span>
+
+<h2 id="K-means算法应用"><a href="#K-means算法应用" class="headerlink" title="K-means算法应用"></a>K-means算法应用</h2><h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>通过聚类，了解1999年各个省份的消费水平在国内的情况。</p>
+<h3 id="使用算法"><a href="#使用算法" class="headerlink" title="使用算法"></a>使用算法</h3><p>K-means聚类算法</p>
+<h3 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h3><ol>
+<li>建立工程，导入sklearn相关包</li>
+<li>加载数据，创建K-means算法实例，并进行训练，获得标签</li>
+<li>输出标签，查看结果</li>
+</ol>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Created on Thu Apr 18 22:59:44 2019</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@author: Jiaxi Wang</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.cluster <span class="keyword">import</span> KMeans</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loadData</span>(<span class="params">filePath</span>):</span></span><br><span class="line">    fr = <span class="built_in">open</span>(filePath,<span class="string">&#x27;r+&#x27;</span>)</span><br><span class="line">    lines = fr.readlines()</span><br><span class="line">    retData = []</span><br><span class="line">    retCityName = []</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> lines:</span><br><span class="line">        items = line.strip().split(<span class="string">&quot;,&quot;</span>)</span><br><span class="line">        retCityName.append(items[<span class="number">0</span>])</span><br><span class="line">        retData.append([<span class="built_in">float</span>(items[i]) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="built_in">len</span>(items))])</span><br><span class="line">    <span class="keyword">return</span> retData,retCityName</span><br><span class="line"> </span><br><span class="line">     </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    data,cityName = loadData(<span class="string">&#x27;city.txt&#x27;</span>)</span><br><span class="line">    km = KMeans(n_clusters=<span class="number">4</span>)</span><br><span class="line">    label = km.fit_predict(data)</span><br><span class="line">    expenses = np.<span class="built_in">sum</span>(km.cluster_centers_,axis=<span class="number">1</span>)</span><br><span class="line">    <span class="comment">#print(expenses)</span></span><br><span class="line">    CityCluster = [[],[],[],[]]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(cityName)):</span><br><span class="line">        CityCluster[label[i]].append(cityName[i])</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(CityCluster)):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Expenses:%.2f&quot;</span> % expenses[i])</span><br><span class="line">        <span class="built_in">print</span>(CityCluster[i])</span><br></pre></td></tr></table></figure>
+
+<h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><p>聚成3类<br><img src="/2019/04/18/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/city3.jpg"></p>
+<p>聚成4类<br><img src="/2019/04/18/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/city4.jpg"></p>
+<h3 id="拓展-amp-改进"><a href="#拓展-amp-改进" class="headerlink" title="拓展&amp;改进"></a>拓展&amp;改进</h3><p>计算两条数据的相似性时，sklearn的K-means默认使用的时欧氏距离。该算法并没有设定<strong>更改距离计算方法</strong>的参数。</p>
+<h2 id="DBSCAN算法原理"><a href="#DBSCAN算法原理" class="headerlink" title="DBSCAN算法原理"></a>DBSCAN算法原理</h2><p>DBSCAN算法是一种基于密度的聚类算法：</p>
+<ul>
+<li>聚类的时候不需要预先指定簇的个数</li>
+<li>最终的簇的个数不定</li>
+</ul>
+<p>DBSCAN算法将数据点分为3类：</p>
+<ol>
+<li>核心店：在半径Eps内含有超过MinPts数目的点。</li>
+<li>边界点：在半径Eps内点的数量少于MinPts，但是落在核心点的邻域内。</li>
+<li>噪音点：既不是核心点也不是边界点的点。</li>
+</ol>
+<h2 id="DBSCAN密度聚类算法流程"><a href="#DBSCAN密度聚类算法流程" class="headerlink" title="DBSCAN密度聚类算法流程"></a>DBSCAN密度聚类算法流程</h2><ul>
+<li>将所有点标记为核心点、边界点或噪声点</li>
+<li>删除噪声点</li>
+<li>为距离在Eps之内的所有核心点之间赋予一条边</li>
+<li>每组连通的核心点形成一个簇</li>
+<li>将每个边界点指派到一个与之关联的核心点的簇中（哪一个核心点的半径范围之内）</li>
+</ul>
+<h2 id="DBSCAN算法应用"><a href="#DBSCAN算法应用" class="headerlink" title="DBSCAN算法应用"></a>DBSCAN算法应用</h2><h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>现有某大学校园网的日志数据，290条大学生的校园网使用情况数据，数据包括用户ID，设备MAC地址，IP地址，开始上网时间，停止上网时间，上网时长，校园网套餐等。利用已有数据，分析学生的上网模式。</p>
+<h3 id="需求-1"><a href="#需求-1" class="headerlink" title="需求"></a>需求</h3><p>通过DBSCAN聚类，分析学生<strong>上网时间</strong>和<strong>上网时长</strong>的模式。</p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ol>
+<li>建立工程，引入相关包</li>
+<li>加载数据，预处理数据</li>
+<li>上网时长的聚类分析、上网时间的聚类分析</li>
+<li>分析结果</li>
+</ol>
+<h3 id="实现过程-1"><a href="#实现过程-1" class="headerlink" title="实现过程"></a>实现过程</h3><ol>
+<li>建立工程，导入sklearn相关包</li>
+<li>读入数据并进行处理</li>
+<li>上网时间/上网时长聚类，创建DBSCAN算法实例，并进行训练，获得标签</li>
+<li>输出标签，查看结果</li>
+<li>画直方图，分析实验结果</li>
+<li>数据分布 vs 聚类</li>
+</ol>
+<h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Created on Thu Apr 18 23:35:39 2019</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@author: Jiaxi Wang</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> sklearn.cluster <span class="keyword">as</span> skc</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> metrics</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">mac2id=<span class="built_in">dict</span>()</span><br><span class="line">onlinetimes=[]</span><br><span class="line">f=<span class="built_in">open</span>(<span class="string">&#x27;TestData.txt&#x27;</span>,encoding=<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">    mac=line.split(<span class="string">&#x27;,&#x27;</span>)[<span class="number">2</span>]</span><br><span class="line">    onlinetime=<span class="built_in">int</span>(line.split(<span class="string">&#x27;,&#x27;</span>)[<span class="number">6</span>])</span><br><span class="line">    starttime=<span class="built_in">int</span>(line.split(<span class="string">&#x27;,&#x27;</span>)[<span class="number">4</span>].split(<span class="string">&#x27; &#x27;</span>)[<span class="number">1</span>].split(<span class="string">&#x27;:&#x27;</span>)[<span class="number">0</span>])</span><br><span class="line">    <span class="keyword">if</span> mac <span class="keyword">not</span> <span class="keyword">in</span> mac2id:</span><br><span class="line">        mac2id[mac]=<span class="built_in">len</span>(onlinetimes)</span><br><span class="line">        onlinetimes.append((starttime,onlinetime))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        onlinetimes[mac2id[mac]]=[(starttime,onlinetime)]</span><br><span class="line">real_X=np.array(onlinetimes).reshape((-<span class="number">1</span>,<span class="number">2</span>))</span><br><span class="line"> </span><br><span class="line">X=real_X[:,<span class="number">0</span>:<span class="number">1</span>]</span><br><span class="line"> </span><br><span class="line">db=skc.DBSCAN(eps=<span class="number">0.01</span>,min_samples=<span class="number">20</span>).fit(X)</span><br><span class="line">labels = db.labels_</span><br><span class="line"> </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;Labels:&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(labels)</span><br><span class="line">raito=<span class="built_in">len</span>(labels[labels[:] == -<span class="number">1</span>]) / <span class="built_in">len</span>(labels)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;Noise raito:&#x27;</span>,<span class="built_in">format</span>(raito, <span class="string">&#x27;.2%&#x27;</span>))</span><br><span class="line"> </span><br><span class="line">n_clusters_ = <span class="built_in">len</span>(<span class="built_in">set</span>(labels)) - (<span class="number">1</span> <span class="keyword">if</span> -<span class="number">1</span> <span class="keyword">in</span> labels <span class="keyword">else</span> <span class="number">0</span>)</span><br><span class="line"> </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;Estimated number of clusters: %d&#x27;</span> % n_clusters_)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Silhouette Coefficient: %0.3f&quot;</span>% metrics.silhouette_score(X, labels))</span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n_clusters_):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Cluster &#x27;</span>,i,<span class="string">&#x27;:&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">list</span>(X[labels == i].flatten()))</span><br><span class="line">     </span><br><span class="line">plt.hist(X,<span class="number">24</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h3><p><img src="/2019/04/18/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/ssn.jpg"><br><img src="/2019/04/18/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/ssn.png"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a cup of coffee</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Ward Wang 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Ward Wang 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> 机器学习</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/04/15/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(2)%E5%9F%BA%E6%9C%AC%E5%9B%BE%E5%BD%A2%E7%BB%98%E5%88%B6/" rel="prev" title="嵩天老师Python(2)基本图形绘制">
+                  <i class="fa fa-chevron-left"></i> 嵩天老师Python(2)基本图形绘制
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/04/24/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E9%99%8D%E7%BB%B4%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/" rel="next" title="无监督学习的降维算法及应用">
+                  无监督学习的降维算法及应用 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ward Wang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.7/pdfobject.min.js","integrity":"sha256-ph3Dk89VmuTVXG6x/RDzk53SU9LPdAh1tpv0UvnDZ2I="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"wangjiaxi","repo":"gitalkRepo","client_id":"f6d1b8482adec3ff7d51","client_secret":"058ab630876a1c29a2d059beb8b089e9f48bb79e","admin_user":"wangjiaxi","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"ed32e9ff04de7b33c4efbe2723bf9e2c"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+
+  <!--彩带2.自动飘动-->
+  <!-- <% if (theme.ribbon_flow){ %> -->
+      <!-- <script src="https://g.joyinshare.com/hc/piao.js" type="text/javascript"></script> -->
+      <script type="text/javascript" src="/js/ribbon_flow.js"></script>
+  <!-- <% } %> -->
+
+
+</body>
+</html>

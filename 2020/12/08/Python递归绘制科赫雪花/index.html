@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/favicon32.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/black/pace-theme-big-counter.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/f7028396.js","daovoice")
+  daovoice('init', {
+      app_id: "f7028396"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeInDown","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInDown","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python递归绘制科赫雪花">
+<meta property="og:url" content="http://yoursite.com/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/index.html">
+<meta property="og:site_name" content="Ward&#39;s notebook">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/snowflake.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/fact.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/fib.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/fibline.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/koch1.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/koch2.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/koch3.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/snowflake.png">
+<meta property="article:published_time" content="2020-12-08T11:44:33.000Z">
+<meta property="article:modified_time" content="2020-12-08T12:46:04.850Z">
+<meta property="article:author" content="Ward Wang">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/snowflake.png">
+
+
+<link rel="canonical" href="http://yoursite.com/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yoursite.com/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/","path":"2020/12/08/Python递归绘制科赫雪花/","title":"Python递归绘制科赫雪花"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Python递归绘制科赫雪花 | Ward's notebook</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-145825566-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-145825566-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Ward's notebook</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">都是瞎写</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%92%E5%BD%92"><span class="nav-number">1.</span> <span class="nav-text">递归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%92%E5%BD%92%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.</span> <span class="nav-text">递归的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%92%E5%BD%92%E7%9A%84%E8%B0%83%E7%94%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">递归的调用过程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A7%91%E8%B5%AB%E6%9B%B2%E7%BA%BF"><span class="nav-number">2.</span> <span class="nav-text">科赫曲线</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%BD%A2%E5%87%A0%E4%BD%95"><span class="nav-number">2.1.</span> <span class="nav-text">分形几何</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%91%E8%B5%AB%E6%9B%B2%E7%BA%BF-1"><span class="nav-number">2.2.</span> <span class="nav-text">科赫曲线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1"><span class="nav-number">2.3.</span> <span class="nav-text">科赫雪花</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ward Wang"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Ward Wang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wangjiaxi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangjiaxi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wangjiaxi.cv@qq.com" title="E-Mail → mailto:wangjiaxi.cv@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Ward Wang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ward's notebook">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python递归绘制科赫雪花
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2020-12-08 19:44:33 / 修改时间：20:46:04" itemprop="dateCreated datePublished" datetime="2020-12-08T19:44:33+08:00">2020-12-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <img src="/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/snowflake.png" class>
+
+<span id="more"></span>
+
+<h1 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h1><h2 id="递归的定义"><a href="#递归的定义" class="headerlink" title="递归的定义"></a>递归的定义</h2><p>递归通常指：函数定义中调用函数自身的方式。</p>
+<p>也就是说，我们在定义函数的时候，函数的内部调用了它自己。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 伪代码</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span>():</span></span><br><span class="line">    func()</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>电影《盗梦空间》本质就是递归：主角在做梦，梦的内容是自己在做梦，梦的内容是自己在做梦……</p>
+</blockquote>
+<p>递归具有两个关键特征：</p>
+<ol>
+<li>链条：计算过程存在递归链条</li>
+<li>基例：存在一个或多个不需要再次递归的基例</li>
+</ol>
+<p>类似于数学归纳法：假设n(k)成立，证明n(k+1)成立。</p>
+<h2 id="递归的调用过程"><a href="#递归的调用过程" class="headerlink" title="递归的调用过程"></a>递归的调用过程</h2><p>这里我们使用一个小栗子，它就是阶乘。</p>
+<p>什么是阶乘呢？这里有一个阶乘的定义：</p>
+<img src="/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/fact.png" class>
+
+<p>阶乘的定义中，又出现了阶乘本身。这就是<strong>递归</strong>。</p>
+<p>我们编写一个函数来求任意一个数的阶乘：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fact</span>(<span class="params">n</span>):</span></span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> n * fact(n - <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>由此我们可以总结出：</p>
+<ul>
+<li>递归本身是一个函数，需要函数定义方式描述</li>
+<li>函数内部需要用分支语句对参数进行判断</li>
+<li>对<strong>基例</strong>和<strong>链条</strong>，分别编写对应代码</li>
+</ul>
+<p>下面我们来看一个经典数列——斐波那契数列。</p>
+<p>斐波那契数列又叫“兔子数列”，它指的是这样一个数列：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144...</span><br></pre></td></tr></table></figure>
+
+<p>从第3项开始，每一项都是前边挨着两项的和。它的定义就是：</p>
+<img src="/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/fib.png" class>
+
+<p>很容易理解，这个定义中的n=1和n=2的情况是基例，而F(n)=F(n-1)+F(n-2)是链条。这样我们可以编写一个函数，求出斐波那契数列的第n项。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span>(<span class="params">n</span>):</span></span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">1</span> <span class="keyword">or</span> n == <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> fib(n - <span class="number">1</span>) + fib(n - <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+<p>接下来，我们可以循环打印一下数列的前几项。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">15</span>):</span><br><span class="line">    <span class="built_in">print</span>(fib(i), end=<span class="string">&quot; &quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 1 2 3 5 8 13 21 34 55 89 144 233 377</span><br></pre></td></tr></table></figure>
+
+<p>如果加入海龟绘图，还可以直接绘制出斐波那契曲线：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> turtle</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span>(<span class="params">n</span>):</span></span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">1</span> <span class="keyword">or</span> n == <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> fib(n - <span class="number">1</span>) + fib(n - <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">turtle.seth(<span class="number">180</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">15</span>):</span><br><span class="line">    turtle.circle(fib(i), <span class="number">90</span>)</span><br><span class="line">    <span class="built_in">print</span>(fib(i))</span><br><span class="line"></span><br><span class="line">turtle.done()</span><br></pre></td></tr></table></figure>
+
+<img src="/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/fibline.png" class>
+
+<h1 id="科赫曲线"><a href="#科赫曲线" class="headerlink" title="科赫曲线"></a>科赫曲线</h1><h2 id="分形几何"><a href="#分形几何" class="headerlink" title="分形几何"></a>分形几何</h2><p>在大自然中，有很多植物的形状是局部的自己在复制整体的自己。</p>
+<h2 id="科赫曲线-1"><a href="#科赫曲线-1" class="headerlink" title="科赫曲线"></a>科赫曲线</h2><p>科赫曲线是指这样一种曲线：当阶数为0时，科赫曲线是一条直线；当阶数不为0时，科赫曲线是一种带凸起的曲线。</p>
+<img src="/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/koch1.png" class>
+
+<p>科赫曲线具有阶数，每一阶都会将上一阶的所有线段做一次变换。</p>
+<img src="/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/koch2.png" class>
+
+<p>因此我们定义一个函数<code>def koch(size, n)</code>，得出它的的基例和链条：</p>
+<ul>
+<li>基例：n=0时，绘制一条直线</li>
+<li>链条：n≠0时，对n-1阶的每一条线段都做一次变换</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">koch</span>(<span class="params">size, n</span>):</span>  <span class="comment"># size是初始线段长度</span></span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">        turtle.fd(size)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        turtle.lt(<span class="number">0</span>)</span><br><span class="line">        koch(size / <span class="number">3</span>, n - <span class="number">1</span>)</span><br><span class="line">        turtle.lt(<span class="number">60</span>)</span><br><span class="line">        koch(size / <span class="number">3</span>, n - <span class="number">1</span>)</span><br><span class="line">        turtle.rt(<span class="number">120</span>)</span><br><span class="line">        koch(size / <span class="number">3</span>, n - <span class="number">1</span>)</span><br><span class="line">        turtle.lt(<span class="number">60</span>)</span><br><span class="line">        koch(size / <span class="number">3</span>, n - <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>将重复的代码改为for循环，右转改为左转：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> turtle</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">koch</span>(<span class="params">size, n</span>):</span></span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">        turtle.fd(size)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">for</span> angle <span class="keyword">in</span> [<span class="number">0</span>, <span class="number">60</span>, -<span class="number">120</span>, <span class="number">60</span>]:</span><br><span class="line">            turtle.lt(angle)</span><br><span class="line">            koch(size / <span class="number">3</span>, n - <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>调用该函数<code>koch(300, 3)</code>，绘制一段3阶科赫曲线如下：</p>
+<img src="/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/koch3.png" class>
+
+<h2 id="科赫雪花"><a href="#科赫雪花" class="headerlink" title="科赫雪花"></a>科赫雪花</h2><p>其实掌握了科赫曲线，科赫雪花绘制就比较简单，只要将科赫曲线重复3次即可拼成一个雪花的形状。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">turtle.pu()</span><br><span class="line">turtle.goto(<span class="number">150</span>, <span class="number">120</span>)</span><br><span class="line">turtle.pd()</span><br><span class="line"></span><br><span class="line">turtle.bgcolor(<span class="string">&#x27;skyblue&#x27;</span>)</span><br><span class="line">turtle.color(<span class="string">&#x27;white&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绘制雪花主体</span></span><br><span class="line">turtle.begin_fill()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">    turtle.rt(<span class="number">120</span>)</span><br><span class="line">    koch(<span class="number">300</span>, <span class="number">3</span>)</span><br><span class="line">turtle.end_fill()</span><br><span class="line"></span><br><span class="line">turtle.hideturtle()</span><br><span class="line">turtle.done()</span><br></pre></td></tr></table></figure>
+
+<p>画完的效果就是头图啦~</p>
+<img src="/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/snowflake.png" class>
+
+<hr>
+<blockquote>
+<p>转自嵩天老师的课程《Python语言程序设计》-  <a target="_blank" rel="noopener" href="https://www.icourse163.org/course/BIT-268001">https://www.icourse163.org/course/BIT-268001</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a cup of coffee</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Ward Wang 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Ward Wang 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/12/06/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-5-%E9%AB%98%E7%BA%A7%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE/" rel="prev" title="SQL必知必会(5)高级过滤数据">
+                  <i class="fa fa-chevron-left"></i> SQL必知必会(5)高级过滤数据
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/12/17/%E5%8D%87%E7%BA%A7%E7%89%88Turtle-Race/" rel="next" title="升级版Turtle Race">
+                  升级版Turtle Race <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ward Wang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.7/pdfobject.min.js","integrity":"sha256-ph3Dk89VmuTVXG6x/RDzk53SU9LPdAh1tpv0UvnDZ2I="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"wangjiaxi","repo":"gitalkRepo","client_id":"f6d1b8482adec3ff7d51","client_secret":"058ab630876a1c29a2d059beb8b089e9f48bb79e","admin_user":"wangjiaxi","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"660f2b9f4c30907a9d9c562d258ce62c"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+
+  <!--彩带2.自动飘动-->
+  <!-- <% if (theme.ribbon_flow){ %> -->
+      <!-- <script src="https://g.joyinshare.com/hc/piao.js" type="text/javascript"></script> -->
+      <script type="text/javascript" src="/js/ribbon_flow.js"></script>
+  <!-- <% } %> -->
+
+
+</body>
+</html>

@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/favicon32.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/black/pace-theme-big-counter.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/f7028396.js","daovoice")
+  daovoice('init', {
+      app_id: "f7028396"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeInDown","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInDown","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="文件的使用文件的类型文件的理解文件是数据的抽象和集合  文件是存储在辅助存储器上的数据序列 文件是数据存储的一种形式 文件展现形态：文本文件和二进制文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵩天老师Python(7)文件和数据格式化">
+<meta property="og:url" content="http://yoursite.com/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/index.html">
+<meta property="og:site_name" content="Ward&#39;s notebook">
+<meta property="og:description" content="文件的使用文件的类型文件的理解文件是数据的抽象和集合  文件是存储在辅助存储器上的数据序列 文件是数据存储的一种形式 文件展现形态：文本文件和二进制文件">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/%E8%87%AA%E5%8A%A8%E8%BD%A8%E8%BF%B9%E7%BB%98%E5%88%B6.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/pywordcloud.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/zhongwenciyun.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/GovRpWordCloudv1%E4%B8%AD%E7%89%B9.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/GovRpWordCloudv1%E5%86%9C%E6%9D%91.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/GovRpWordCloudv1%E4%B8%AD%E7%89%B915.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/GovRpWordCloudv1%E5%86%9C%E6%9D%9115.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/GovRpWordCloudv1%E4%B8%AD%E7%89%B9%E4%BA%94%E6%98%9F.png">
+<meta property="og:image" content="http://yoursite.com/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/GovRpWordCloudv1%E5%86%9C%E6%9D%91%E5%9C%B0%E5%9B%BE.png">
+<meta property="article:published_time" content="2019-04-04T07:39:03.000Z">
+<meta property="article:modified_time" content="2021-07-01T07:26:36.020Z">
+<meta property="article:author" content="Ward Wang">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/%E8%87%AA%E5%8A%A8%E8%BD%A8%E8%BF%B9%E7%BB%98%E5%88%B6.jpg">
+
+
+<link rel="canonical" href="http://yoursite.com/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yoursite.com/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/","path":"2019/04/04/嵩天老师Python(7)文件和数据格式化/","title":"嵩天老师Python(7)文件和数据格式化"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>嵩天老师Python(7)文件和数据格式化 | Ward's notebook</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-145825566-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-145825566-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Ward's notebook</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">都是瞎写</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">文件的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">文件的类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E7%90%86%E8%A7%A3"><span class="nav-number">1.1.1.</span> <span class="nav-text">文件的理解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E6%89%93%E5%BC%80%E5%92%8C%E5%85%B3%E9%97%AD"><span class="nav-number">1.2.</span> <span class="nav-text">文件的打开和关闭</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E7%9A%84%E8%AF%BB%E5%8F%96"><span class="nav-number">1.3.</span> <span class="nav-text">文件内容的读取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%87%E4%BB%B6%E5%86%99%E5%85%A5"><span class="nav-number">1.4.</span> <span class="nav-text">数据的文件写入</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%EF%BC%9A%E8%87%AA%E5%8A%A8%E8%BD%A8%E8%BF%B9%E7%BB%98%E5%88%B6"><span class="nav-number">2.</span> <span class="nav-text">实例：自动轨迹绘制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="nav-number">2.1.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%80%9D%E8%B7%AF"><span class="nav-number">2.2.</span> <span class="nav-text">基本思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E7%A8%8B%E5%BA%8F"><span class="nav-number">2.3.</span> <span class="nav-text">编写程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.4.</span> <span class="nav-text">数据文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C"><span class="nav-number">2.5.</span> <span class="nav-text">运行结果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E7%BB%B4%E6%95%B0%E6%8D%AE%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%92%8C%E5%A4%84%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">一维数据的格式化和处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%84%E7%BB%87%E7%9A%84%E7%BB%B4%E5%BA%A6"><span class="nav-number">3.1.</span> <span class="nav-text">数据组织的维度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E7%BB%B4%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A1%A8%E7%A4%BA"><span class="nav-number">3.2.</span> <span class="nav-text">一维数据的表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E7%BB%B4%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AD%98%E5%82%A8"><span class="nav-number">3.3.</span> <span class="nav-text">一维数据的存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E7%BB%B4%E6%95%B0%E6%8D%AE%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">3.4.</span> <span class="nav-text">一维数据的处理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E7%BB%B4%E6%95%B0%E6%8D%AE%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%92%8C%E5%A4%84%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">二维数据的格式化和处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E7%BB%B4%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A1%A8%E7%A4%BA"><span class="nav-number">4.1.</span> <span class="nav-text">二维数据的表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSV%E6%A0%BC%E5%BC%8F%E4%B8%8E%E4%BA%8C%E7%BB%B4%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AD%98%E5%82%A8"><span class="nav-number">4.2.</span> <span class="nav-text">CSV格式与二维数据的存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E7%BB%B4%E6%95%B0%E6%8D%AE%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">4.3.</span> <span class="nav-text">二维数据的处理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#wordcloud%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">wordcloud库的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="nav-number">5.1.</span> <span class="nav-text">基本介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E"><span class="nav-number">5.2.</span> <span class="nav-text">使用说明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%EF%BC%9A%E6%94%BF%E5%BA%9C%E5%B7%A5%E4%BD%9C%E6%8A%A5%E5%91%8A%E8%AF%8D%E4%BA%91"><span class="nav-number">6.</span> <span class="nav-text">实例：政府工作报告词云</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90-1"><span class="nav-number">6.1.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%80%9D%E8%B7%AF%E5%92%8C%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">6.2.</span> <span class="nav-text">基本思路和代码实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E8%83%BD%E5%8A%9B"><span class="nav-number">6.3.</span> <span class="nav-text">扩展能力</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ward Wang"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Ward Wang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wangjiaxi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangjiaxi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wangjiaxi.cv@qq.com" title="E-Mail → mailto:wangjiaxi.cv@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Ward Wang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ward's notebook">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          嵩天老师Python(7)文件和数据格式化
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-04-04 15:39:03" itemprop="dateCreated datePublished" datetime="2019-04-04T15:39:03+08:00">2019-04-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-07-01 15:26:36" itemprop="dateModified" datetime="2021-07-01T15:26:36+08:00">2021-07-01</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="文件的使用"><a href="#文件的使用" class="headerlink" title="文件的使用"></a>文件的使用</h1><h2 id="文件的类型"><a href="#文件的类型" class="headerlink" title="文件的类型"></a>文件的类型</h2><h3 id="文件的理解"><a href="#文件的理解" class="headerlink" title="文件的理解"></a>文件的理解</h3><p>文件是数据的抽象和集合</p>
+<ul>
+<li>文件是存储在辅助存储器上的数据序列</li>
+<li>文件是数据存储的一种形式</li>
+<li>文件展现形态：文本文件和二进制文件</li>
+</ul>
+<span id="more"></span>
+
+<p>文本文件 vs 二进制文件</p>
+<ul>
+<li>文本文件和二进制文件只是文件的展示方式</li>
+<li>本质上，所有文件都是二进制形式存储</li>
+<li>形式上，所有文件采用两种方式展示</li>
+</ul>
+<p>文本文件</p>
+<ul>
+<li>由<strong>单一特定编码</strong>组成的文件，如UTF-8编码</li>
+<li>由于存在编码，也被看成是存储着的长字符串</li>
+<li>适用于例如：.txt文件、.py文件</li>
+</ul>
+<p>二进制文件</p>
+<ul>
+<li>直接由比特0和1组成，<strong>没有统一字符编码</strong></li>
+<li>一般存在二进制0和1的组织结构，即文件格式</li>
+<li>适用于例如：.png文件、.avi文件等</li>
+</ul>
+<h2 id="文件的打开和关闭"><a href="#文件的打开和关闭" class="headerlink" title="文件的打开和关闭"></a>文件的打开和关闭</h2><p>文件处理的步骤：打开-操作-关闭</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">文件的存储状态-&gt;&gt;文件的占用状态: a = open( , )</span><br><span class="line">文件的占用状态-&gt;&gt;文件的存储状态: a.close()</span><br></pre></td></tr></table></figure>
+
+<p>文件打开以后就可以对文件进行读写</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//读文件函数</span><br><span class="line">a.read(size)</span><br><span class="line">a.readline(size)</span><br><span class="line">a.readlines(hint)</span><br><span class="line"></span><br><span class="line">//写文件函数</span><br><span class="line">a.write(s)</span><br><span class="line">a.writelines(lines)</span><br><span class="line">a.seek(offset)</span><br></pre></td></tr></table></figure>
+<p>文件路径</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;变量名&gt; = <span class="built_in">open</span>(&lt;文件名&gt;, &lt;打开模式&gt;)</span><br></pre></td></tr></table></figure>
+<p>打开模式</p>
+<table>
+<thead>
+<tr>
+<th>文件的打开模式</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>‘r’</td>
+<td>只读模式，默认值，如果文件不存在，返回FileNotFoundError</td>
+</tr>
+<tr>
+<td>‘w’</td>
+<td>覆盖写模式，文件不存在则创建，存在则完全覆盖</td>
+</tr>
+<tr>
+<td>‘x’</td>
+<td>创建写模式，文件不存在则创建，存在则返回FileExistsError</td>
+</tr>
+<tr>
+<td>‘a’</td>
+<td>追加写模式，文件不存在则创建，存在则在文件最后追加内容</td>
+</tr>
+<tr>
+<td>‘b’</td>
+<td>二进制文件模式</td>
+</tr>
+<tr>
+<td>‘t’</td>
+<td>文本文件模式，默认值</td>
+</tr>
+<tr>
+<td>‘+’</td>
+<td>与r/w/x/a一同使用，在原功能基础上增加同时读写功能</td>
+</tr>
+</tbody></table>
+<p>文件的关闭</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;文件名&gt;.close()</span><br></pre></td></tr></table></figure>
+
+<h2 id="文件内容的读取"><a href="#文件内容的读取" class="headerlink" title="文件内容的读取"></a>文件内容的读取</h2><table>
+<thead>
+<tr>
+<th>操作方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><f>.read(size=-1)</f></td>
+<td>读入全部内容，如果给出参数，读入前size长度</td>
+</tr>
+<tr>
+<td><f>.readline(size=-1)</f></td>
+<td>读入全部内容，如果给出参数，读入该行前size长度</td>
+</tr>
+<tr>
+<td><f>.readlines(hint=-1)</f></td>
+<td>读入文件所有行，以每行为元素形成列表，如果给出参数，读入前hint行</td>
+</tr>
+</tbody></table>
+<p>文件的全文本操作</p>
+<ul>
+<li><p>遍历全文本：方法一</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fname = <span class="built_in">input</span>(<span class="string">&quot;请输入要打开的文件名称：&quot;</span>)</span><br><span class="line">fo = <span class="built_in">open</span>(fname,<span class="string">&quot;r&quot;</span>)</span><br><span class="line">txt = fo.read()</span><br><span class="line"><span class="comment">#对全文txt进行处理</span></span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure></li>
+<li><p>遍历全文本：方法二</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fname = <span class="built_in">input</span>(<span class="string">&quot;请输入要打开的文件名称：&quot;</span>)</span><br><span class="line">fo = <span class="built_in">open</span>(fname,<span class="string">&quot;r&quot;</span>)</span><br><span class="line">txt = fo.read(<span class="number">2</span>)</span><br><span class="line"><span class="keyword">while</span> txt != <span class="string">&quot;&quot;</span>:</span><br><span class="line">    <span class="comment">#对txt进行处理</span></span><br><span class="line">    txt = fo.read(<span class="number">2</span>)</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>文件的逐行操作</p>
+<ul>
+<li><p>逐行遍历文件：方法一</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fname = <span class="built_in">input</span>(<span class="string">&quot;请输入要打开的文件名称：&quot;</span>)</span><br><span class="line">fo = <span class="built_in">open</span>(fname,<span class="string">&quot;r&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fo.readlines():</span><br><span class="line">    <span class="built_in">print</span>(line)</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure></li>
+<li><p>逐行遍历文件：方法二</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fname = <span class="built_in">input</span>(<span class="string">&quot;请输入要打开的文件名称：&quot;</span>)</span><br><span class="line">fo = <span class="built_in">open</span>(fname,<span class="string">&quot;r&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fo:</span><br><span class="line">    <span class="built_in">print</span>(line)</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="数据的文件写入"><a href="#数据的文件写入" class="headerlink" title="数据的文件写入"></a>数据的文件写入</h2><table>
+<thead>
+<tr>
+<th>操作方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><f>.write(s)</f></td>
+<td>向文件写入一个字符串或字节流</td>
+</tr>
+<tr>
+<td><f>.writelines(lines)</f></td>
+<td>将一个元素全为字符串的列表写入文件</td>
+</tr>
+<tr>
+<td><f>.seek(offset)</f></td>
+<td>改变当前文件操作指针的位置，offset含义如下：0-文件开头，1-当前位置，2-文件结尾</td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fo = <span class="built_in">open</span>(<span class="string">&quot;output.txt&quot;</span>,<span class="string">&quot;w+&quot;</span>)</span><br><span class="line">ls = [<span class="string">&quot;中国&quot;</span>,<span class="string">&quot;法国&quot;</span>,<span class="string">&quot;美国&quot;</span>]</span><br><span class="line">fo.writelines(ls)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fo:</span><br><span class="line">      <span class="built_in">print</span>(line)</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure>
+<p>此时控制台没有任何输出</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fo = <span class="built_in">open</span>(<span class="string">&quot;output.txt&quot;</span>,<span class="string">&quot;w+&quot;</span>)</span><br><span class="line">ls = [<span class="string">&quot;中国&quot;</span>,<span class="string">&quot;法国&quot;</span>,<span class="string">&quot;美国&quot;</span>]</span><br><span class="line">fo.writelines(ls)</span><br><span class="line">fo.seek(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fo:</span><br><span class="line">      <span class="built_in">print</span>(line)</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure>
+<p>此时输出“中国法国美国”</p>
+<h1 id="实例：自动轨迹绘制"><a href="#实例：自动轨迹绘制" class="headerlink" title="实例：自动轨迹绘制"></a>实例：自动轨迹绘制</h1><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><ul>
+<li>需求：根据脚本来绘制图形</li>
+<li>不是写代码而是数据绘制图形</li>
+<li>数据脚本是自动化最重要的第一步</li>
+</ul>
+<h2 id="基本思路"><a href="#基本思路" class="headerlink" title="基本思路"></a>基本思路</h2><ul>
+<li>步骤1：定义数据文件格式（接口）</li>
+<li>步骤2：编写程序，根据文件接口解析参数绘制图形</li>
+<li>步骤3：编制数据文件</li>
+</ul>
+<h2 id="编写程序"><a href="#编写程序" class="headerlink" title="编写程序"></a>编写程序</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#AutoTraceDraw.py</span></span><br><span class="line"><span class="keyword">import</span> turtle <span class="keyword">as</span> t</span><br><span class="line">t.title(<span class="string">&#x27;自动轨迹绘制&#x27;</span>)</span><br><span class="line">t.setup(<span class="number">800</span>,<span class="number">600</span>,<span class="number">0</span>,<span class="number">0</span>)</span><br><span class="line">t.pencolor(<span class="string">&quot;red&quot;</span>)</span><br><span class="line">t.pensize(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#数据读取</span></span><br><span class="line">datals = []</span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&quot;data.txt&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">      line = line.replace(<span class="string">&quot;\n&quot;</span>,<span class="string">&quot;&quot;</span>)</span><br><span class="line">      datals.append(<span class="built_in">list</span>(<span class="built_in">map</span>(<span class="built_in">eval</span>, line.split(<span class="string">&quot;,&quot;</span>))))</span><br><span class="line"></span><br><span class="line"><span class="comment">#自动绘制</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(datals)):</span><br><span class="line">      t.pencolor(datals[i][<span class="number">3</span>],datals[i][<span class="number">4</span>],datals[i][<span class="number">5</span>])</span><br><span class="line">      t.fd(datals[i][<span class="number">0</span>])</span><br><span class="line">      <span class="keyword">if</span> datals[i][<span class="number">1</span>]:</span><br><span class="line">            t.right(datals[i][<span class="number">2</span>])</span><br><span class="line">      <span class="keyword">else</span>:</span><br><span class="line">            t.left(datals[i][<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+
+<h2 id="数据文件"><a href="#数据文件" class="headerlink" title="数据文件"></a>数据文件</h2><p>data.txt</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">300,0,144,1,0,0</span><br><span class="line">300,0,144,0,1,0</span><br><span class="line">300,0,144,0,0,1</span><br><span class="line">300,0,144,1,1,0</span><br><span class="line">300,0,108,0,1,1</span><br><span class="line">184,0,72,1,0,1</span><br><span class="line">184,0,72,0,0,0</span><br><span class="line">184,0,72,0,0,0</span><br><span class="line">184,0,72,0,0,0</span><br><span class="line">184,1,72,1,0,1</span><br><span class="line">184,1,72,0,0,0</span><br><span class="line">184,1,72,0,0,0</span><br><span class="line">184,1,72,0,0,0</span><br><span class="line">184,1,72,0,0,0</span><br><span class="line">184,1,720,0,0,0</span><br></pre></td></tr></table></figure>
+
+<h2 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h2><p><img src="/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/%E8%87%AA%E5%8A%A8%E8%BD%A8%E8%BF%B9%E7%BB%98%E5%88%B6.jpg"></p>
+<h1 id="一维数据的格式化和处理"><a href="#一维数据的格式化和处理" class="headerlink" title="一维数据的格式化和处理"></a>一维数据的格式化和处理</h1><h2 id="数据组织的维度"><a href="#数据组织的维度" class="headerlink" title="数据组织的维度"></a>数据组织的维度</h2><p>从一个数据到一组数据：一个数据表达一个含义，一组数据表达一个或多个含义</p>
+<ul>
+<li>一维数据：由对等关系的有序或无序数据构成，采用线性方式组织，对应列表、数组、集合等概念。</li>
+<li>二维数据：由多个一维数据构成，是一维数据的组合形式。表格是典型的二维数据。</li>
+<li>多维数据：由一维或二维数据在新的维度上扩展形成</li>
+<li>高维数据：键值对</li>
+</ul>
+<p>数据的操作周期：存储&lt;-&gt;表示&lt;-&gt;操作</p>
+<h2 id="一维数据的表示"><a href="#一维数据的表示" class="headerlink" title="一维数据的表示"></a>一维数据的表示</h2><p>如果数据间有序：使用列表类型</p>
+<ul>
+<li>列表类型可以表达一维有序数据</li>
+<li>for循环可以遍历数据，进而对每个数据进行处理</li>
+</ul>
+<p>如果数据间无序：使用集合类型</p>
+<ul>
+<li>集合类型可以表达一维无需数据</li>
+<li>for循环可以遍历数据，进而对每个数据进行处理</li>
+</ul>
+<h2 id="一维数据的存储"><a href="#一维数据的存储" class="headerlink" title="一维数据的存储"></a>一维数据的存储</h2><ol>
+<li>存储方式一：空格分隔</li>
+</ol>
+<ul>
+<li>使用一个或多个空格分隔进行存储，不换行</li>
+<li>缺点：数据中不能存在空格</li>
+</ul>
+<ol start="2">
+<li>存储方式二：逗号分隔</li>
+</ol>
+<ul>
+<li>使用英文半角逗号分隔数据进行存储，不换行</li>
+<li>缺点：数据中不能有英文逗号</li>
+</ul>
+<ol start="3">
+<li>存储方式三：其他方式</li>
+</ol>
+<ul>
+<li>使用其他符号或符号组合分隔，建议采用特殊符号</li>
+<li>缺点：需要根据数据特点定义，通用性较差</li>
+</ul>
+<h2 id="一维数据的处理"><a href="#一维数据的处理" class="headerlink" title="一维数据的处理"></a>一维数据的处理</h2><p>从空格分割的文件中<strong>读入</strong>数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">txt = <span class="built_in">open</span>(fname).read()</span><br><span class="line">ls = txt.split()</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+
+<p>从特殊符号分割的文件中<strong>读入</strong>数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">txt = <span class="built_in">open</span>(fname).read()</span><br><span class="line">ls = txt.split(<span class="string">&quot;$&quot;</span>)</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+
+<p>采用空格分隔方式将数据写入文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ls = [<span class="string">&quot;中国&quot;</span>,<span class="string">&quot;美国&quot;</span>,<span class="string">&quot;日本&quot;</span>]</span><br><span class="line">f = <span class="built_in">open</span>(fname,<span class="string">&#x27;w&#x27;</span>)</span><br><span class="line">f.write(<span class="string">&#x27; &#x27;</span>.join(ls))</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+
+<h1 id="二维数据的格式化和处理"><a href="#二维数据的格式化和处理" class="headerlink" title="二维数据的格式化和处理"></a>二维数据的格式化和处理</h1><h2 id="二维数据的表示"><a href="#二维数据的表示" class="headerlink" title="二维数据的表示"></a>二维数据的表示</h2><p>使用列表类型（二维列表）</p>
+<ul>
+<li>使用两层for循环遍历每个元素</li>
+<li>外层列表中每个元素可以对应一行，也可以对应一列</li>
+</ul>
+<h2 id="CSV格式与二维数据的存储"><a href="#CSV格式与二维数据的存储" class="headerlink" title="CSV格式与二维数据的存储"></a>CSV格式与二维数据的存储</h2><p>CSV：Comma-Separated Values</p>
+<ul>
+<li>国际通用的一二维数据存储格式，一般.csv扩展名</li>
+<li>每行一个一维数据，采用逗号分隔，无空行</li>
+<li>Excel可读入输出，一般编辑软件都可以产生</li>
+<li>如果某个元素确缺失，逗号仍要保留</li>
+<li>二维数据的表头可以作为数据存储，也可以另行存储</li>
+</ul>
+<p>二维数据的存储</p>
+<ul>
+<li>按行存或按列存都可以，具体由程序决定</li>
+<li>一般索引习惯：<code>ls[row][column]</code>，先行后列</li>
+<li>根据一般习惯，外层列表每个元素是一行，按行存</li>
+</ul>
+<h2 id="二维数据的处理"><a href="#二维数据的处理" class="headerlink" title="二维数据的处理"></a>二维数据的处理</h2><p>从CSV文件中读入数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fo = <span class="built_in">open</span>(fname)</span><br><span class="line">ls =[]</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fo:</span><br><span class="line">    line = line.replace(<span class="string">&quot;\n&quot;</span>,<span class="string">&quot;&quot;</span>)</span><br><span class="line">    ls.append(line.split(<span class="string">&quot;,&quot;</span>))</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure>
+
+<p>将数据写入CSV文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ls = [[],[],[]]  <span class="comment">#二维列表</span></span><br><span class="line">f.<span class="built_in">open</span>(fname,<span class="string">&#x27;w&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> ls:</span><br><span class="line">    f.write(<span class="string">&#x27;,&#x27;</span>.join(item) + <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+
+<p>二维数据的逐一处理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ls = [[],[],[]]  <span class="comment">#二维列表</span></span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> ls:</span><br><span class="line">    <span class="keyword">for</span> column <span class="keyword">in</span> row:</span><br><span class="line">        <span class="built_in">print</span>(ls[row][column])</span><br></pre></td></tr></table></figure>
+
+<h1 id="wordcloud库的使用"><a href="#wordcloud库的使用" class="headerlink" title="wordcloud库的使用"></a>wordcloud库的使用</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>wordcloud是优秀的词云展示的第三方库，词云以词语为基本单位，更加直观和艺术的展示文本。</p>
+<ul>
+<li>安装命令<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install wordcloud</span><br></pre></td></tr></table></figure>
+<h2 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h2>wordcloud库把词云当作一个WordCloud对象</li>
+<li>wordcloud.WordCloud()代表一个文本对应的词云</li>
+<li>可以根据文本中词语出现的频率等参数绘制词云</li>
+<li>词云的形状、尺寸和颜色都可以设定</li>
+</ul>
+<p>wordcloud库常规方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">w = wordcloud.WordCloud()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>以WordCloud对象为基础</li>
+<li>配置参数、加载文本、输出文件</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>w.generate(txt)</td>
+<td>向WordCloud对象w中加载文本txt，<code>w.generate(&quot;python and wordcloud&quot;)</code></td>
+</tr>
+<tr>
+<td>w.to_file(filename)</td>
+<td>将词云输出成图像文件，.png或.jpg格式，<code>w.to_file(&quot;outfile.png&quot;)</code></td>
+</tr>
+</tbody></table>
+<ul>
+<li>步骤1：配置对象参数</li>
+<li>步骤2：加载词云文本</li>
+<li>步骤3：输出词云文件</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> wordcloud</span><br><span class="line">c = wordcloud.WordCloud()</span><br><span class="line">c.generate(<span class="string">&quot;wordcloud by python&quot;</span>)</span><br><span class="line">c.to_file(<span class="string">&quot;pywordcloud.png&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>从文本到图片，wordcloud做了哪些事情呢？</p>
+<ol>
+<li>分隔：以空格分隔单词</li>
+<li>统计：单词出现次数并过滤</li>
+<li>字体：根据统计配置字号</li>
+<li>布局：颜色环境尺寸</li>
+</ol>
+<p>wordcloud配置对象参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">w = wordcloud.WordCloud(&lt;参数&gt;)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>width</td>
+<td>指定词云对象生成图片的宽度，默认400像素</td>
+</tr>
+<tr>
+<td>height</td>
+<td>指定词云对象生成图片的高度，默认200像素</td>
+</tr>
+<tr>
+<td>min_font_size</td>
+<td>指定词云中字体的最小字号，默认4号</td>
+</tr>
+<tr>
+<td>max_font_size</td>
+<td>指定词云中字体的最大字号，根据高度自动调节</td>
+</tr>
+<tr>
+<td>font_step</td>
+<td>指定词云中字体字号的不进间隔，默认为1</td>
+</tr>
+<tr>
+<td>font_path</td>
+<td>指定字体文件的路径，默认None</td>
+</tr>
+<tr>
+<td>max_words</td>
+<td>指定词云显示的最大单词数量，默认为200</td>
+</tr>
+<tr>
+<td>stop_words</td>
+<td>指定词云的排除词列表，即不显示的单词列表</td>
+</tr>
+<tr>
+<td>mask</td>
+<td>指定词云形状，默认为长方形，需要引用imread()函数</td>
+</tr>
+<tr>
+<td>background_color</td>
+<td>指定词云图片的背景颜色，默认为黑色</td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#指定词云形状，默认为长方形，需要引用imread()函数</span></span><br><span class="line"><span class="keyword">from</span> scipy.misc <span class="keyword">import</span> imread </span><br><span class="line">mk = imread(<span class="string">&quot;pic.png&quot;</span>)</span><br><span class="line">w = wordcloud.WordCloud(mask = mk)</span><br></pre></td></tr></table></figure>
+
+<p>两个小demo</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> wordcloud</span><br><span class="line">txt = <span class="string">&quot;life is short, you need python&quot;</span></span><br><span class="line">w = wordcloud.WordCloud( \</span><br><span class="line">	background_color = <span class="string">&quot;white&quot;</span>)</span><br><span class="line">w.generate(txt)</span><br><span class="line">w.to_file(<span class="string">&quot;d:/pywordcloud.png&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/pywordcloud.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="keyword">import</span> wordcloud</span><br><span class="line">txt = <span class="string">&quot;程序设计语言是计算机能够理解和\</span></span><br><span class="line"><span class="string">识别用户操作意图的一种交互体系,它按照\</span></span><br><span class="line"><span class="string">特定规则组织计算机指令,使计算机能够自\</span></span><br><span class="line"><span class="string">动进行各种运算处理。&quot;</span></span><br><span class="line">w = wordcloud.WordCloud( width = <span class="number">1000</span>, \</span><br><span class="line">    font_path = <span class="string">&quot;msyh.ttc&quot;</span>, height = <span class="number">700</span>)</span><br><span class="line">w.generate(<span class="string">&quot; &quot;</span>.join(jieba.lcut(txt)))</span><br><span class="line">w.to_file(<span class="string">&quot;d:/zhongwenciyun.jpg&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/zhongwenciyun.jpg"></p>
+<h1 id="实例：政府工作报告词云"><a href="#实例：政府工作报告词云" class="headerlink" title="实例：政府工作报告词云"></a>实例：政府工作报告词云</h1><h2 id="问题分析-1"><a href="#问题分析-1" class="headerlink" title="问题分析"></a>问题分析</h2><p>直观理解政策文件</p>
+<ul>
+<li>需求：对于政府工作报告等政策文件，如何直观理解？</li>
+<li>体会直观的价值：生成词云 &amp; 优化词云</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">政府工作报告等文件 --&gt; 有效展示的词云</span><br></pre></td></tr></table></figure>
+
+<h2 id="基本思路和代码实现"><a href="#基本思路和代码实现" class="headerlink" title="基本思路和代码实现"></a>基本思路和代码实现</h2><ul>
+<li>步骤1：读取文件，分词整理</li>
+<li>步骤2：设置并输出词云</li>
+<li>步骤3：观察结果，优化迭代</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#GovRpWordCloudv1.py</span></span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="keyword">import</span> wordcloud</span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&quot;关于实施乡村振兴战略的意见.txt&quot;</span>,<span class="string">&quot;r&quot;</span>,encoding=<span class="string">&quot;utf-8&quot;</span>)</span><br><span class="line"><span class="comment">#f = open(&quot;新时代中国特色社会主义.txt&quot;,&quot;r&quot;,encoding=&quot;utf-8&quot;)</span></span><br><span class="line">t = f.read()</span><br><span class="line">f.close()</span><br><span class="line">ls = jieba.lcut(t)</span><br><span class="line">txt = <span class="string">&quot; &quot;</span>.join(ls)</span><br><span class="line"><span class="comment">#w = wordcloud.WordCloud(max_words = 15,font_path = &quot;msyh.ttc&quot;,width = 1000,height = 700,background_color = &quot;white&quot;)</span></span><br><span class="line">w = wordcloud.WordCloud(font_path = <span class="string">&quot;msyh.ttc&quot;</span>,width = <span class="number">1000</span>,height = <span class="number">700</span>,background_color = <span class="string">&quot;white&quot;</span>)</span><br><span class="line">w.generate(txt)</span><br><span class="line">w.to_file(<span class="string">&quot;GovRpWordCloudv1.png&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>运行程序后，两个报告的词云如下：</p>
+<p><img src="/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/GovRpWordCloudv1%E4%B8%AD%E7%89%B9.png" alt="image"></p>
+<p><img src="/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/GovRpWordCloudv1%E5%86%9C%E6%9D%91.png" alt="image"></p>
+<p>增加参数<code>max_words=15</code>，结果如下：</p>
+<p><img src="/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/GovRpWordCloudv1%E4%B8%AD%E7%89%B915.png" alt="image"></p>
+<p><img src="/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/GovRpWordCloudv1%E5%86%9C%E6%9D%9115.png" alt="image"></p>
+<p>增加形状<code>mask = mask</code>，词云图更加漂亮：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#GovRpWordCloudv1.py</span></span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="keyword">import</span> wordcloud</span><br><span class="line"><span class="keyword">from</span> scipy.misc <span class="keyword">import</span> imread</span><br><span class="line">mask = imread(<span class="string">&quot;chinamap.jpg&quot;</span>)</span><br><span class="line"><span class="comment">#mask = imread(&quot;fivestars.png&quot;)</span></span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&quot;关于实施乡村振兴战略的意见.txt&quot;</span>,<span class="string">&quot;r&quot;</span>,encoding=<span class="string">&quot;utf-8&quot;</span>)</span><br><span class="line"><span class="comment">#f = open(&quot;新时代中国特色社会主义.txt&quot;,&quot;r&quot;,encoding=&quot;utf-8&quot;)</span></span><br><span class="line">t = f.read()</span><br><span class="line">f.close()</span><br><span class="line">ls = jieba.lcut(t)</span><br><span class="line">txt = <span class="string">&quot; &quot;</span>.join(ls)</span><br><span class="line">w = wordcloud.WordCloud(mask = mask,font_path = <span class="string">&quot;msyh.ttc&quot;</span>,width = <span class="number">1000</span>,height = <span class="number">700</span>,background_color = <span class="string">&quot;white&quot;</span>)</span><br><span class="line">w.generate(txt)</span><br><span class="line">w.to_file(<span class="string">&quot;GovRpWordCloudv1.png&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>结果展示：<br><img src="/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/GovRpWordCloudv1%E4%B8%AD%E7%89%B9%E4%BA%94%E6%98%9F.png" alt="image"></p>
+<p><img src="/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/GovRpWordCloudv1%E5%86%9C%E6%9D%91%E5%9C%B0%E5%9B%BE.png" alt="image"></p>
+<h2 id="扩展能力"><a href="#扩展能力" class="headerlink" title="扩展能力"></a>扩展能力</h2><ul>
+<li>了解wordcloud更多参数，扩展词云能力</li>
+<li>特色词云：设计一款属于自己的特色词云风格</li>
+<li>更多文件：用更多文件练习词云生成</li>
+</ul>
+<blockquote>
+<p>练习素材下载：<br><a target="_blank" rel="noopener" href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/%E6%96%B0%E6%97%B6%E4%BB%A3%E4%B8%AD%E5%9B%BD%E7%89%B9%E8%89%B2%E7%A4%BE%E4%BC%9A%E4%B8%BB%E4%B9%89.txt">新时代中国特色社会主义.txt</a><br><a target="_blank" rel="noopener" href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/%E5%85%B3%E4%BA%8E%E5%AE%9E%E6%96%BD%E4%B9%A1%E6%9D%91%E6%8C%AF%E5%85%B4%E6%88%98%E7%95%A5%E7%9A%84%E6%84%8F%E8%A7%81.txt">关于实施乡村振兴战略的意见.txt</a><br><a target="_blank" rel="noopener" href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/chinamap.jpg">chinamap.jpg</a><br><a target="_blank" rel="noopener" href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/fivestars.png">fivestars.png</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a cup of coffee</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Ward Wang 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Ward Wang 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(6)%E7%BB%84%E5%90%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" rel="prev" title="嵩天老师Python(6)组合数据类型">
+                  <i class="fa fa-chevron-left"></i> 嵩天老师Python(6)组合数据类型
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(8)%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E5%AD%A6/" rel="next" title="嵩天老师Python(8)程序设计方法学">
+                  嵩天老师Python(8)程序设计方法学 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ward Wang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.7/pdfobject.min.js","integrity":"sha256-ph3Dk89VmuTVXG6x/RDzk53SU9LPdAh1tpv0UvnDZ2I="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"wangjiaxi","repo":"gitalkRepo","client_id":"f6d1b8482adec3ff7d51","client_secret":"058ab630876a1c29a2d059beb8b089e9f48bb79e","admin_user":"wangjiaxi","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"253b4ce6754be671624f73c4554ac823"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+
+  <!--彩带2.自动飘动-->
+  <!-- <% if (theme.ribbon_flow){ %> -->
+      <!-- <script src="https://g.joyinshare.com/hc/piao.js" type="text/javascript"></script> -->
+      <script type="text/javascript" src="/js/ribbon_flow.js"></script>
+  <!-- <% } %> -->
+
+
+</body>
+</html>

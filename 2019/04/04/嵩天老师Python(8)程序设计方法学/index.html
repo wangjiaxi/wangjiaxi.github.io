@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/favicon32.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/black/pace-theme-big-counter.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/f7028396.js","daovoice")
+  daovoice('init', {
+      app_id: "f7028396"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeInDown","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInDown","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="实例：体育竞技分析 高手过招，胜负只在毫厘之间  “体育竞技分析”问题分析体育竞技分析 需求：毫厘是多少？如何科学分析体育竞技比赛？  输入：球员的水平  输出：可预测的比赛成绩">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵩天老师Python(8)程序设计方法学">
+<meta property="og:url" content="http://yoursite.com/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(8)%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E5%AD%A6/index.html">
+<meta property="og:site_name" content="Ward&#39;s notebook">
+<meta property="og:description" content="实例：体育竞技分析 高手过招，胜负只在毫厘之间  “体育竞技分析”问题分析体育竞技分析 需求：毫厘是多少？如何科学分析体育竞技比赛？  输入：球员的水平  输出：可预测的比赛成绩">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(8)%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E5%AD%A6/result.png">
+<meta property="article:published_time" content="2019-04-04T07:42:39.000Z">
+<meta property="article:modified_time" content="2020-11-24T15:31:20.117Z">
+<meta property="article:author" content="Ward Wang">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(8)%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E5%AD%A6/result.png">
+
+
+<link rel="canonical" href="http://yoursite.com/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(8)%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E5%AD%A6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yoursite.com/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(8)%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E5%AD%A6/","path":"2019/04/04/嵩天老师Python(8)程序设计方法学/","title":"嵩天老师Python(8)程序设计方法学"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>嵩天老师Python(8)程序设计方法学 | Ward's notebook</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-145825566-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-145825566-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Ward's notebook</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">都是瞎写</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%EF%BC%9A%E4%BD%93%E8%82%B2%E7%AB%9E%E6%8A%80%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">实例：体育竞技分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%80%9C%E4%BD%93%E8%82%B2%E7%AB%9E%E6%8A%80%E5%88%86%E6%9E%90%E2%80%9D%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">“体育竞技分析”问题分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%93%E8%82%B2%E7%AB%9E%E6%8A%80%E5%88%86%E6%9E%90"><span class="nav-number">1.1.1.</span> <span class="nav-text">体育竞技分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%93%E8%82%B2%E7%AB%9E%E6%8A%80%E5%88%86%E6%9E%90%EF%BC%9A%E6%A8%A1%E6%8B%9FN%E5%9C%BA%E6%AF%94%E8%B5%9B"><span class="nav-number">1.1.2.</span> <span class="nav-text">体育竞技分析：模拟N场比赛</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AF%94%E8%B5%9B%E8%A7%84%E5%88%99"><span class="nav-number">1.1.3.</span> <span class="nav-text">比赛规则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E5%92%8C%E8%87%AA%E5%BA%95%E5%90%91%E4%B8%8A"><span class="nav-number">1.2.</span> <span class="nav-text">自顶向下和自底向上</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%EF%BC%88%E8%AE%BE%E8%AE%A1%EF%BC%89%E2%80%94%E2%80%94%E8%A7%A3%E5%86%B3%E5%A4%8D%E6%9D%82%E9%97%AE%E9%A2%98%E7%9A%84%E6%9C%89%E6%95%88%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.1.</span> <span class="nav-text">自顶向下（设计）——解决复杂问题的有效方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%BA%95%E5%90%91%E4%B8%8A%EF%BC%88%E6%89%A7%E8%A1%8C%EF%BC%89%E2%80%94%E2%80%94%E9%80%90%E6%AD%A5%E7%BB%84%E5%BB%BA%E5%A4%8D%E6%9D%82%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%9C%89%E6%95%88%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.2.</span> <span class="nav-text">自底向上（执行）——逐步组建复杂系统的有效测试方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.3.</span> <span class="nav-text">代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E6%80%BB%E4%BD%93%E6%A1%86%E6%9E%B6%E5%8F%8A%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.3.1.</span> <span class="nav-text">程序总体框架及步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E4%BB%A3%E7%A0%81"><span class="nav-number">1.3.2.</span> <span class="nav-text">全代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C%E5%B1%95%E7%A4%BA"><span class="nav-number">1.3.3.</span> <span class="nav-text">结果展示</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BE%E4%B8%80%E5%8F%8D%E4%B8%89"><span class="nav-number">1.4.</span> <span class="nav-text">举一反三</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Python%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%80%9D%E7%BB%B4"><span class="nav-number">2.</span> <span class="nav-text">Python程序设计思维</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%80%9D%E7%BB%B4"><span class="nav-number">2.1.</span> <span class="nav-text">计算思维</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E7%94%9F%E6%80%81%E4%B8%8EPython%E8%AF%AD%E8%A8%80"><span class="nav-number">2.2.</span> <span class="nav-text">计算生态与Python语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%9A%84%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.3.</span> <span class="nav-text">基本的程序设计模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Python%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E5%AE%89%E8%A3%85"><span class="nav-number">3.</span> <span class="nav-text">Python第三方库安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#os%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">os库的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#os%E5%BA%93%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="nav-number">4.1.</span> <span class="nav-text">os库基本介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#os%E5%BA%93%E7%9A%84%E8%B7%AF%E5%BE%84%E6%93%8D%E4%BD%9C"><span class="nav-number">4.2.</span> <span class="nav-text">os库的路径操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#os%E5%BA%93%E7%9A%84%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86"><span class="nav-number">4.3.</span> <span class="nav-text">os库的进程管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#os%E5%BA%93%E7%9A%84%E7%8E%AF%E5%A2%83%E5%8F%82%E6%95%B0"><span class="nav-number">4.4.</span> <span class="nav-text">os库的环境参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%EF%BC%9A%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC"><span class="nav-number">5.</span> <span class="nav-text">实例：第三方库安装脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="nav-number">5.1.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%E8%A7%A3%E6%9E%90"><span class="nav-number">5.2.</span> <span class="nav-text">实例解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BE%E4%B8%80%E5%8F%8D%E4%B8%89-1"><span class="nav-number">5.3.</span> <span class="nav-text">举一反三</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ward Wang"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Ward Wang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wangjiaxi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangjiaxi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wangjiaxi.cv@qq.com" title="E-Mail → mailto:wangjiaxi.cv@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(8)%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E5%AD%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Ward Wang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ward's notebook">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          嵩天老师Python(8)程序设计方法学
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-04-04 15:42:39" itemprop="dateCreated datePublished" datetime="2019-04-04T15:42:39+08:00">2019-04-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-11-24 23:31:20" itemprop="dateModified" datetime="2020-11-24T23:31:20+08:00">2020-11-24</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="实例：体育竞技分析"><a href="#实例：体育竞技分析" class="headerlink" title="实例：体育竞技分析"></a>实例：体育竞技分析</h1><blockquote>
+<p>高手过招，胜负只在毫厘之间</p>
+</blockquote>
+<h2 id="“体育竞技分析”问题分析"><a href="#“体育竞技分析”问题分析" class="headerlink" title="“体育竞技分析”问题分析"></a>“体育竞技分析”问题分析</h2><h3 id="体育竞技分析"><a href="#体育竞技分析" class="headerlink" title="体育竞技分析"></a>体育竞技分析</h3><ul>
+<li><p>需求：毫厘是多少？如何科学分析体育竞技比赛？</p>
+</li>
+<li><p>输入：球员的水平</p>
+</li>
+<li><p>输出：可预测的比赛成绩</p>
+<span id="more"></span></li>
+</ul>
+<h3 id="体育竞技分析：模拟N场比赛"><a href="#体育竞技分析：模拟N场比赛" class="headerlink" title="体育竞技分析：模拟N场比赛"></a>体育竞技分析：模拟N场比赛</h3><ul>
+<li>计算思维：抽象 + 自动化</li>
+<li>模拟：抽象比赛过程 + 自动化执行N场比赛</li>
+<li>当N越大时，比赛结果分析会越科学</li>
+</ul>
+<h3 id="比赛规则"><a href="#比赛规则" class="headerlink" title="比赛规则"></a>比赛规则</h3><ul>
+<li>双人击球比赛：A &amp; B，回合制，5局3胜</li>
+<li>开始时一方先发球，直至判分，接下来胜者发球</li>
+<li>球员只能在发球局得分，15分胜一局</li>
+</ul>
+<h2 id="自顶向下和自底向上"><a href="#自顶向下和自底向上" class="headerlink" title="自顶向下和自底向上"></a>自顶向下和自底向上</h2><h3 id="自顶向下（设计）——解决复杂问题的有效方法"><a href="#自顶向下（设计）——解决复杂问题的有效方法" class="headerlink" title="自顶向下（设计）——解决复杂问题的有效方法"></a>自顶向下（设计）——解决复杂问题的有效方法</h3><ul>
+<li>将一个总问题表达为若干个小问题组成的形式</li>
+<li>使用同样方法进一步分解小问题</li>
+<li>直至，小问题可以用计算机简单明了的解决</li>
+</ul>
+<h3 id="自底向上（执行）——逐步组建复杂系统的有效测试方法"><a href="#自底向上（执行）——逐步组建复杂系统的有效测试方法" class="headerlink" title="自底向上（执行）——逐步组建复杂系统的有效测试方法"></a>自底向上（执行）——逐步组建复杂系统的有效测试方法</h3><h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h3 id="程序总体框架及步骤"><a href="#程序总体框架及步骤" class="headerlink" title="程序总体框架及步骤"></a>程序总体框架及步骤</h3><ul>
+<li>步骤1：打印程序的介绍性信息               - printInfo()</li>
+<li>步骤2：获得程序运行参数：proA, proB, n    - getInputs()</li>
+<li>步骤3：利用球员A和B的能力值，模拟n局比赛  - simNGames()</li>
+<li>步骤4：输出球员A和B获胜比赛的场次及概率   - printSummary()</li>
+</ul>
+<h3 id="全代码"><a href="#全代码" class="headerlink" title="全代码"></a>全代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printIntro</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;这个程序模拟两个选手A和B的某种竞技比赛&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;程序运行需要A和B的能力值（以0到1之间的小数表示）&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getInputs</span>():</span></span><br><span class="line">    a = <span class="built_in">eval</span>(<span class="built_in">input</span>(<span class="string">&quot;请输入选手A的能力值（0-1）：&quot;</span>))</span><br><span class="line">    b = <span class="built_in">eval</span>(<span class="built_in">input</span>(<span class="string">&quot;请输入选手B的能力值（0-1）：&quot;</span>))</span><br><span class="line">    n = <span class="built_in">eval</span>(<span class="built_in">input</span>(<span class="string">&quot;模拟比赛的场次：&quot;</span>))</span><br><span class="line">    <span class="keyword">return</span> a, b, n</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printSummary</span>(<span class="params">winsA, winsB</span>):</span></span><br><span class="line">    n = winsA + winsB</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;竞技分析开始，共模拟&#123;&#125;场比赛&quot;</span>.<span class="built_in">format</span>(n))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;选手A获胜&#123;&#125;场比赛，占比&#123;:0.1%&#125;&quot;</span>.<span class="built_in">format</span>(winsA, winsA/n))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;选手B获胜&#123;&#125;场比赛，占比&#123;:0.1%&#125;&quot;</span>.<span class="built_in">format</span>(winsB, winsB/n))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gameOver</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    <span class="keyword">return</span> a==<span class="number">15</span> <span class="keyword">or</span> b==<span class="number">15</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simOneGame</span>(<span class="params">probA, probB</span>):</span></span><br><span class="line">    scoreA, scoreB = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    serving =<span class="string">&quot;A&quot;</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> gameOver(scoreA,scoreB):</span><br><span class="line">        <span class="keyword">if</span> serving == <span class="string">&quot;A&quot;</span>:</span><br><span class="line">            <span class="keyword">if</span> random() &lt; probA:</span><br><span class="line">                scoreA += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                serving = <span class="string">&quot;B&quot;</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> random() &lt; probB:</span><br><span class="line">                scoreB += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                serving = <span class="string">&quot;A&quot;</span></span><br><span class="line">    <span class="keyword">return</span> scoreA, scoreB</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simNGames</span>(<span class="params">n, probA, probB</span>):</span></span><br><span class="line">    winsA, winsB = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        scoreA, scoreB = simOneGame(probA, probB)</span><br><span class="line">        <span class="keyword">if</span> scoreA &gt; scoreB:</span><br><span class="line">            winsA += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            winsB += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> winsA, winsB</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    printIntro()</span><br><span class="line">    probA, probB, n = getInputs()</span><br><span class="line">    winsA, winsB = simNGames(n, probA, probB)</span><br><span class="line">    printSummary(winsA, winsB)</span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+
+<h3 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h3><img src="/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(8)%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E5%AD%A6/result.png" class>
+
+<h2 id="举一反三"><a href="#举一反三" class="headerlink" title="举一反三"></a>举一反三</h2><ol>
+<li>理解自顶向下和自底向上</li>
+</ol>
+<ul>
+<li>理解自顶向下的设计思维：分而治之</li>
+<li>理解自底向上的执行思维：模块化集成</li>
+<li>自顶向下是“系统”思维的简化</li>
+</ul>
+<ol start="2">
+<li>应用问题的扩展</li>
+</ol>
+<ul>
+<li>扩展比赛参数，增加对更多能力对比情况的判断</li>
+<li>扩展比赛设计，增加对真实比赛结果的预测</li>
+<li>扩展分析逻辑，反向推理，用胜率推算能力？</li>
+</ul>
+<h1 id="Python程序设计思维"><a href="#Python程序设计思维" class="headerlink" title="Python程序设计思维"></a>Python程序设计思维</h1><h2 id="计算思维"><a href="#计算思维" class="headerlink" title="计算思维"></a>计算思维</h2><p>第3种人类思维特征</p>
+<ul>
+<li>逻辑思维：推理和演绎，数学为代表，A-&gt;B B-&gt;C A-&gt;C</li>
+<li>实证思维：实验和验证，物理为代表，引力波&lt;-实验</li>
+<li>计算思维：设计和构造，计算机为代表，汉诺塔递归</li>
+</ul>
+<p>计算思维（Computational Thinking）：<strong>抽象</strong>问题的计算过程，利用计算机<strong>自动化</strong>求解，是基于计算机的思维方式。计算思维基于计算机强大的算力及海量数据，抽象计算过程，关注设计和构造，而非因果。</p>
+<h2 id="计算生态与Python语言"><a href="#计算生态与Python语言" class="headerlink" title="计算生态与Python语言"></a>计算生态与Python语言</h2><ul>
+<li>以开源项目为代表的大量第三方库</li>
+<li>库的建设经过野蛮生长和自然选择</li>
+<li>库之间相互关联使用，依存发展</li>
+<li>社区庞大，新技术更迭迅速</li>
+</ul>
+<p>计算生态的价值</p>
+<ul>
+<li>加速科技类应用创新的重要支撑</li>
+<li>发展科技产品商业价值的重要模式</li>
+<li>国家科技体系安全和稳固的基础</li>
+</ul>
+<h2 id="基本的程序设计模式"><a href="#基本的程序设计模式" class="headerlink" title="基本的程序设计模式"></a>基本的程序设计模式</h2><p>IPO<br>模块化设计<br>配置化设计</p>
+<h1 id="Python第三方库安装"><a href="#Python第三方库安装" class="headerlink" title="Python第三方库安装"></a>Python第三方库安装</h1><p>Python社区：<a target="_blank" rel="noopener" href="https://pypi.org/">https://pypi.org</a></p>
+<p>安装第三方库：</p>
+<ol>
+<li>主要方法：使用pip命令</li>
+<li>集成安装方法</li>
+<li>文件安装方法</li>
+</ol>
+<p>Anaconda： <a target="_blank" rel="noopener" href="https://www.continuum.io/">https://www.continuum.io</a></p>
+<ul>
+<li>支持近800个第三方库</li>
+<li>包含多个主流工具</li>
+<li>适合数据计算领域开发</li>
+</ul>
+<p>UCI页面： <a target="_blank" rel="noopener" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/">http://www.lfd.uci.edu/~gohlke/pythonlibs/</a></p>
+<ul>
+<li>在UCI页面上搜索&lt;库名称&gt;</li>
+<li>下载对应版本的文件</li>
+<li>使用pip install &lt;文件名&gt;安装</li>
+</ul>
+<h1 id="os库的使用"><a href="#os库的使用" class="headerlink" title="os库的使用"></a>os库的使用</h1><h2 id="os库基本介绍"><a href="#os库基本介绍" class="headerlink" title="os库基本介绍"></a>os库基本介绍</h2><p>os库提供通用的、基本的操作系统交互功能</p>
+<ul>
+<li>os库是Python标准库，包含几百个函数</li>
+<li>常用路径操作、进程管理、环境参数等几类<ul>
+<li>路径操作：os.path子库，处理文件路径及信息</li>
+<li>进程管理：启动系统中其他程序</li>
+<li>环境参数：获得系统软硬件信息等环境参数</li>
+</ul>
+</li>
+</ul>
+<h2 id="os库的路径操作"><a href="#os库的路径操作" class="headerlink" title="os库的路径操作"></a>os库的路径操作</h2><p>os.path子库以path为入口，用于操作和处理文件路径<br>| 函数                        | 描述                                  |<br>| ————————— | ——————————— |<br>| <code>os.path.abspath(path)</code>  | 返回path在当前系统中的绝对路径             |<br>| <code>os.path.normpath(path)</code>  | 归一化path的表示形式，统一用\\分隔路径      |<br>| <code>os.path.relpath(path)</code> | 返回当前程序与文件之间的相对路径（relative path）|<br>| <code>os.path.dirname(path)</code>   | 返回path中的目录名称                        |<br>| <code>os.path.basename(path)</code> | 返回path中最后的文件名称                  |<br>| <code>os.path.join(path,*paths)</code> | 组合path与paths，返回一个路径字符串         |<br>| <code>os.path.exists(path)</code> | 判断path对应文件或目录是否存在，返回True或False   |<br>| <code>os.path.isfile(path)</code>  | 判断path所对应是否为已存在的文件，返回True或False|<br>| <code>os.path.isdir(path)</code>  | 判断path所对应是否为已存在的目录，返回True或False |<br>| <code>os.path.getatime(path)</code>  | 返回path对应文件或目录上一次的访问时间        |<br>| <code>os.path.getmtime(path)</code>    | 返回path对应文件或目录最近一次的修改时间     |<br>| <code>os.path.getctime(path)</code>    | 返回path对应文件或目录创建时间             |<br>| <code>os.path.getsize(path)</code>     | 返回path对应文件的大小，以字节为单位        |</p>
+<h2 id="os库的进程管理"><a href="#os库的进程管理" class="headerlink" title="os库的进程管理"></a>os库的进程管理</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">os.system(command)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>执行程序或命令command</li>
+<li>在Windows操作系统中，返回值为cmd调用的返回信息</li>
+</ul>
+<h2 id="os库的环境参数"><a href="#os库的环境参数" class="headerlink" title="os库的环境参数"></a>os库的环境参数</h2><p>获取或改变系统环境信息<br>| 函数             | 描述                                            |<br>| —————- | ———————————————– |<br>| <code>os.chdir(path)</code> | 修改当前程序的操作路径                          |<br>| <code>os.getcwd()</code>    | 返回程序的当前路径                              |<br>| <code>os.getlogin()</code>  | 获得当前系统登录用户名称                        |<br>| <code>os.cpu_count()</code> | 获得当前系统CPU数量                             |<br>| <code>os.urandom(n)</code>  | 获得n个字节长度的随机字符串，通常用于加解密运算 |</p>
+<h1 id="实例：第三方库安装脚本"><a href="#实例：第三方库安装脚本" class="headerlink" title="实例：第三方库安装脚本"></a>实例：第三方库安装脚本</h1><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><ul>
+<li>需求：批量安装第三方库需要人工干预，能否自动安装？</li>
+<li>自动执行pip逐一根据需求安装</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>库名</th>
+<th>用途</th>
+<th>pip安装指令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NumPy</td>
+<td>N维数据表示和运算</td>
+<td>pip install numpy</td>
+</tr>
+<tr>
+<td>Matplotlib</td>
+<td>二维数据可视化</td>
+<td>pip install matplotlib</td>
+</tr>
+<tr>
+<td>PIL</td>
+<td>图像处理</td>
+<td>pip install pillow</td>
+</tr>
+<tr>
+<td>Scikit-Learn</td>
+<td>机器学习和数据挖掘</td>
+<td>pip install sklearn</td>
+</tr>
+<tr>
+<td>Requests</td>
+<td>HTTP协议访问及网络爬虫</td>
+<td>pip install requests</td>
+</tr>
+<tr>
+<td>Jieba</td>
+<td>中文分词</td>
+<td>pip install jieba</td>
+</tr>
+<tr>
+<td>Beautiful Soup</td>
+<td>HTML和XML解析器</td>
+<td>pip install beautifulsoup4</td>
+</tr>
+<tr>
+<td>Wheel Python</td>
+<td>第三方库文件打包工具</td>
+<td>pip install wheel</td>
+</tr>
+<tr>
+<td>PyInstaller</td>
+<td>打包Python源文件为可执行文件</td>
+<td>pip install pyinstall</td>
+</tr>
+<tr>
+<td>Flask</td>
+<td>轻量级Web开发框架</td>
+<td>pip install flask</td>
+</tr>
+<tr>
+<td>WeRoBot</td>
+<td>微信机器人开发框架</td>
+<td>pip install werobot</td>
+</tr>
+<tr>
+<td>SymPy</td>
+<td>数学符号计算工具</td>
+<td>pip install sympy</td>
+</tr>
+<tr>
+<td>Pandas</td>
+<td>高效数据分析和计算</td>
+<td>pip install pandas</td>
+</tr>
+<tr>
+<td>Networkx</td>
+<td>复杂网络和图结构的建模和分析</td>
+<td>pip install networkx</td>
+</tr>
+<tr>
+<td>PyQt5</td>
+<td>基于Qt的专业级GUI开发框架</td>
+<td>pip install pyqt5</td>
+</tr>
+<tr>
+<td>PyOpenGL</td>
+<td>多平台OpenGL开发接口</td>
+<td>pip install pyopengl</td>
+</tr>
+<tr>
+<td>PyPDF2</td>
+<td>PDF文件内容提取及处理</td>
+<td>pip install pypdf2</td>
+</tr>
+<tr>
+<td>docopt</td>
+<td>Python命令行解析</td>
+<td>pip install docopt</td>
+</tr>
+<tr>
+<td>PyGame</td>
+<td>简单小游戏开发框架</td>
+<td>pip install pygame</td>
+</tr>
+</tbody></table>
+<h2 id="实例解析"><a href="#实例解析" class="headerlink" title="实例解析"></a>实例解析</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#BatchInstall.py</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">libs = &#123;<span class="string">&quot;numpy&quot;</span>,<span class="string">&quot;matplotlib&quot;</span>,<span class="string">&quot;pillow&quot;</span>,<span class="string">&quot;sklearn&quot;</span>,<span class="string">&quot;requests&quot;</span>,\</span><br><span class="line">        <span class="string">&quot;jieba&quot;</span>,<span class="string">&quot;beautifulsoup4&quot;</span>,<span class="string">&quot;wheel&quot;</span>,<span class="string">&quot;networkx&quot;</span>,<span class="string">&quot;sympy&quot;</span>,\</span><br><span class="line">        <span class="string">&quot;pyinstaller&quot;</span>,<span class="string">&quot;django&quot;</span>,<span class="string">&quot;flask&quot;</span>,<span class="string">&quot;werobot&quot;</span>,<span class="string">&quot;pyqt5&quot;</span>,\</span><br><span class="line">        <span class="string">&quot;pandas&quot;</span>,<span class="string">&quot;pyopengl&quot;</span>,<span class="string">&quot;pypdf2&quot;</span>,<span class="string">&quot;docopt&quot;</span>,<span class="string">&quot;pygame&quot;</span>&#125;</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">for</span> lib <span class="keyword">in</span> libs:</span><br><span class="line">        os.system(<span class="string">&quot;pip install&quot;</span> + lib)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Successful&quot;</span>)</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Failed Somehow&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="举一反三-1"><a href="#举一反三-1" class="headerlink" title="举一反三"></a>举一反三</h2><p>自动化脚本+</p>
+<ul>
+<li>编写各类自动化运行程序的脚本，调用已有程序</li>
+<li>扩展应用：安装更多第三方库，增加配置文件</li>
+<li>扩展异常检测：捕获更多异常类型，程序更稳定友好</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a cup of coffee</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Ward Wang 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Ward Wang 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/" rel="prev" title="嵩天老师Python(7)文件和数据格式化">
+                  <i class="fa fa-chevron-left"></i> 嵩天老师Python(7)文件和数据格式化
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(9)Python%E8%AE%A1%E7%AE%97%E7%94%9F%E6%80%81/" rel="next" title="嵩天老师Python(9)Python计算生态">
+                  嵩天老师Python(9)Python计算生态 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ward Wang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.7/pdfobject.min.js","integrity":"sha256-ph3Dk89VmuTVXG6x/RDzk53SU9LPdAh1tpv0UvnDZ2I="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"wangjiaxi","repo":"gitalkRepo","client_id":"f6d1b8482adec3ff7d51","client_secret":"058ab630876a1c29a2d059beb8b089e9f48bb79e","admin_user":"wangjiaxi","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"2780c63188598bc37165e662eec0330a"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+
+  <!--彩带2.自动飘动-->
+  <!-- <% if (theme.ribbon_flow){ %> -->
+      <!-- <script src="https://g.joyinshare.com/hc/piao.js" type="text/javascript"></script> -->
+      <script type="text/javascript" src="/js/ribbon_flow.js"></script>
+  <!-- <% } %> -->
+
+
+</body>
+</html>

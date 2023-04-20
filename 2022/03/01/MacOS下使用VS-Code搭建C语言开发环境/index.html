@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/favicon32.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/black/pace-theme-big-counter.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/f7028396.js","daovoice")
+  daovoice('init', {
+      app_id: "f7028396"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeInDown","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInDown","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="本篇介绍如何在Mac上使用VS Code写C语言代码。VS Code是一个轻量级的IDE，相比CLion、Xcode等等体积小很多，并且在插件市场拥有丰富的插件，可以方便的安装使用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MacOS下使用VS Code搭建C语言开发环境">
+<meta property="og:url" content="http://yoursite.com/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/index.html">
+<meta property="og:site_name" content="Ward&#39;s notebook">
+<meta property="og:description" content="本篇介绍如何在Mac上使用VS Code写C语言代码。VS Code是一个轻量级的IDE，相比CLion、Xcode等等体积小很多，并且在插件市场拥有丰富的插件，可以方便的安装使用。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/1.png">
+<meta property="og:image" content="http://yoursite.com/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/3.png">
+<meta property="og:image" content="http://yoursite.com/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/4.png">
+<meta property="og:image" content="http://yoursite.com/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/5.png">
+<meta property="og:image" content="http://yoursite.com/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/6.png">
+<meta property="og:image" content="http://yoursite.com/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/8.png">
+<meta property="og:image" content="http://yoursite.com/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/9.png">
+<meta property="og:image" content="http://yoursite.com/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/10.png">
+<meta property="og:image" content="http://yoursite.com/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/11.png">
+<meta property="article:published_time" content="2022-03-01T03:22:18.000Z">
+<meta property="article:modified_time" content="2022-03-02T03:08:21.701Z">
+<meta property="article:author" content="Ward Wang">
+<meta property="article:tag" content="C">
+<meta property="article:tag" content="IDE">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/1.png">
+
+
+<link rel="canonical" href="http://yoursite.com/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yoursite.com/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/","path":"2022/03/01/MacOS下使用VS-Code搭建C语言开发环境/","title":"MacOS下使用VS Code搭建C语言开发环境"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MacOS下使用VS Code搭建C语言开发环境 | Ward's notebook</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-145825566-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-145825566-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Ward's notebook</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">都是瞎写</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BDVS-Code"><span class="nav-number">1.1.</span> <span class="nav-text">下载VS Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">安装插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">1.3.</span> <span class="nav-text">创建文件夹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%A6%E5%AD%98%E4%B8%BA%E4%B8%80%E4%B8%AA%E5%B7%A5%E4%BD%9C%E5%8C%BA"><span class="nav-number">1.4.</span> <span class="nav-text">另存为一个工作区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E4%B8%80%E4%B8%AAC%E6%96%87%E4%BB%B6%EF%BC%8C%E5%91%BD%E5%90%8D%E5%B9%B6%E4%BF%9D%E5%AD%98"><span class="nav-number">1.5.</span> <span class="nav-text">新建一个C文件，命名并保存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-c-cpp-properties-json"><span class="nav-number">2.1.</span> <span class="nav-text">配置 c_cpp_properties.json</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-tasks-json"><span class="nav-number">2.2.</span> <span class="nav-text">配置 tasks.json</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AElaunch-json"><span class="nav-number">2.3.</span> <span class="nav-text">配置launch.json</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ward Wang"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Ward Wang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wangjiaxi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangjiaxi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wangjiaxi.cv@qq.com" title="E-Mail → mailto:wangjiaxi.cv@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Ward Wang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ward's notebook">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MacOS下使用VS Code搭建C语言开发环境
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-01 11:22:18" itemprop="dateCreated datePublished" datetime="2022-03-01T11:22:18+08:00">2022-03-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2022-03-02 11:08:21" itemprop="dateModified" datetime="2022-03-02T11:08:21+08:00">2022-03-02</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/C-C/" itemprop="url" rel="index"><span itemprop="name">C/C++</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>本篇介绍如何在Mac上使用VS Code写C语言代码。VS Code是一个轻量级的IDE，相比CLion、Xcode等等体积小很多，并且在插件市场拥有丰富的插件，可以方便的安装使用。</p>
+<span id="more"></span>
+
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><h2 id="下载VS-Code"><a href="#下载VS-Code" class="headerlink" title="下载VS Code"></a>下载VS Code</h2><p>下载地址：<a target="_blank" rel="noopener" href="https://code.visualstudio.com/">https://code.visualstudio.com/</a></p>
+<blockquote>
+<p><img src="/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/1.png" alt="1"></p>
+</blockquote>
+<h2 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h2><p>打开VS Code，点击左侧的 Extensions（图标为“田”字右上角的格子起飞），在搜索框中输入 <code>C/C++</code>，选择紫色图标，作者为Microsoft，点击 Install 即可安装。</p>
+<blockquote>
+<p><img src="/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/3.png" alt="3"></p>
+</blockquote>
+<h2 id="创建文件夹"><a href="#创建文件夹" class="headerlink" title="创建文件夹"></a>创建文件夹</h2><p>在电脑中你希望保存代码的地方新建一个文件夹，我的是 <code>桌面-个人-学习-C/C++</code> ，创建好以后重启 VS Code。重启后，在欢迎页面点击 Open，并打开你刚创建的文件夹。</p>
+<blockquote>
+<p><img src="/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/4.png" alt="4"></p>
+</blockquote>
+<h2 id="另存为一个工作区"><a href="#另存为一个工作区" class="headerlink" title="另存为一个工作区"></a>另存为一个工作区</h2><p>点击 File &gt; Save Workspace As …，并命名。</p>
+<blockquote>
+<p><img src="/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/5.png" alt="5"></p>
+</blockquote>
+<h2 id="新建一个C文件，命名并保存"><a href="#新建一个C文件，命名并保存" class="headerlink" title="新建一个C文件，命名并保存"></a>新建一个C文件，命名并保存</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;hello VSCode!\n&quot;</span>);</span><br><span class="line">     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h2 id="配置-c-cpp-properties-json"><a href="#配置-c-cpp-properties-json" class="headerlink" title="配置 c_cpp_properties.json"></a>配置 <code>c_cpp_properties.json</code></h2><p>使用快捷键 <code>command</code> + <code>shift</code> + <code>P</code>打开命令行面板（Command Palette）</p>
+<p>输入 edit configurations，在弹出的列表中选择带 JSON 的 C/C++: Edit Configurations(JSON)</p>
+<blockquote>
+<p><img src="/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/6.png" alt="6"></p>
+</blockquote>
+<p>配置字段 includePath：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;includePath&quot;</span>: </span><br><span class="line">[</span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include/c++/v1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/usr/local/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include&quot;</span></span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+
+<p>你可能需要注意<br> <code>&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;,</code>中的版本号，可以进入Finder，按快捷键<code>command</code> + <code>shift</code> + <code>G</code> 输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/Library/Developer/CommandLineTools/usr/lib/clang/</span><br></pre></td></tr></table></figure>
+
+<p>在文件夹中查看clang版本</p>
+<blockquote>
+<p><img src="/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/8.png" alt="8"></p>
+</blockquote>
+<p>完成后保存。</p>
+<h2 id="配置-tasks-json"><a href="#配置-tasks-json" class="headerlink" title="配置 tasks.json"></a>配置 <code>tasks.json</code></h2><p>在打开.c文件的情况下（比如我这里的hello.c）打开命令行面板 <code>command</code> + <code>shift</code> + <code>P</code>，输入tasks:configure task，选择Tasks: Configure Task</p>
+<blockquote>
+<p><img src="/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/9.png" alt="9"></p>
+</blockquote>
+<p>点击C/C++:clang 生成活动文件</p>
+<blockquote>
+<p><img src="/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/10.png" alt="10"></p>
+</blockquote>
+<p>这里我们需要配置 args 字段</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;args&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;-g&quot;</span>,<span class="comment">//编译命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.c&quot;</span>,<span class="comment">//当前workspace下的hello.c文件</span></span><br><span class="line">    <span class="string">&quot;-o&quot;</span>,<span class="comment">//输出文件命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span><span class="comment">//生成的可执行文件的路径及名称</span></span><br><span class="line">    ],</span><br></pre></td></tr></table></figure>
+
+<p>你需要配置第二个参数和第四个参数，第二个是编制的文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.c</code>，第四个是生成的可执行文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.o</code> ，完成后保存。</p>
+<h2 id="配置launch-json"><a href="#配置launch-json" class="headerlink" title="配置launch.json"></a>配置<code>launch.json</code></h2><p>在 hello.c 中按<code>Fn</code> + <code>F5</code> ，软件会报错并自动打开一个 <code>launch.json</code> 文件，这里需要配置 <code>program</code> 字段：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;program&quot;</span>: <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span>,</span><br></pre></td></tr></table></figure>
+
+<p>再次运行：</p>
+<blockquote>
+<p><img src="/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/11.png" alt="11"></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>部分内容转自 <a target="_blank" rel="noopener" href="https://www.jianshu.com/u/69abdc363757">Robinone</a> 的 <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/83879b4aa3fe">https://www.jianshu.com/p/83879b4aa3fe</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a cup of coffee</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Ward Wang 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Ward Wang 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C</a>
+              <a href="/tags/IDE/" rel="tag"><i class="fa fa-tag"></i> IDE</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/02/18/Mac%E6%8F%90%E7%A4%BA%E3%80%8C%E8%BD%AF%E4%BB%B6%E5%B7%B2%E6%8D%9F%E5%9D%8F%EF%BC%8C%E8%AF%B7%E7%A7%BB%E5%88%B0%E5%BA%9F%E7%BA%B8%E7%AF%93%E3%80%8D%E8%A7%A3%E5%86%B3/" rel="prev" title="Mac提示「软件已损坏，请移到废纸篓」解决">
+                  <i class="fa fa-chevron-left"></i> Mac提示「软件已损坏，请移到废纸篓」解决
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/" rel="next" title="安装python库时遇到ValueError: check_hostname requires server_hostname问题及解决">
+                  安装python库时遇到ValueError: check_hostname requires server_hostname问题及解决 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ward Wang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.7/pdfobject.min.js","integrity":"sha256-ph3Dk89VmuTVXG6x/RDzk53SU9LPdAh1tpv0UvnDZ2I="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"wangjiaxi","repo":"gitalkRepo","client_id":"f6d1b8482adec3ff7d51","client_secret":"058ab630876a1c29a2d059beb8b089e9f48bb79e","admin_user":"wangjiaxi","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"732f4349e75d42a2b6e93952711e7610"}</script>
+<script src="/js/third-party/comments/gitalk.js"></script>
+
+
+  <!--彩带2.自动飘动-->
+  <!-- <% if (theme.ribbon_flow){ %> -->
+      <!-- <script src="https://g.joyinshare.com/hc/piao.js" type="text/javascript"></script> -->
+      <script type="text/javascript" src="/js/ribbon_flow.js"></script>
+  <!-- <% } %> -->
+
+
+</body>
+</html>
