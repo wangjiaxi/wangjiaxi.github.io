@@ -270,33 +270,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Pygame Zero之贪吃蛇（三）</title>
-    <url>/2021/01/07/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89/</url>
-    <content><![CDATA[<p>本文继续来研究如何移动小蛇，这一次是让小蛇左转和右转。上一篇讲到小蛇只能前进，今天就让小蛇学会转弯。</p>
-<span id="more"></span>
-
-<p>如果小蛇本来是向右移动的，那么右转以后，小蛇就会向下移动，只需要把新蛇头的位置设置在旧蛇头<code>Snake[0]</code>的下方</p>
-<img src="/2021/01/07/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89/%E5%90%91%E4%B8%8B%E7%A7%BB%E5%8A%A8.png" class>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 前置代码见9-2.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="comment"># 设定新蛇头的坐标，小蛇向下移动，新蛇头在旧蛇头下方</span></span><br><span class="line">    newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">    newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)  <span class="comment"># 把新蛇头加入列表的最前面</span></span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]  <span class="comment"># 删除旧蛇尾</span></span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure>
-
-<p>类似的，我们就可以完成小蛇的所有方向移动了。定义一个变量来表示小蛇的移动方向。在<code>update</code>函数中，判断这个变量的值，就可以控制小蛇向不同的方向移动。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 前置代码见9-2.py</span></span><br><span class="line"></span><br><span class="line">direction = <span class="string">&#x27;right&#x27;</span>  <span class="comment"># 控制小蛇运动方向，默认向右</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="comment"># 判断变量direction的值，执行相应操作</span></span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;up&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y - TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;down&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;left&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x - TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;right&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]</span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure>
-
-<p>现在小蛇已经可以向四个方向移动了，我们需要加上一个控制的功能。通过按下方向键来修改<code>direction</code>的值就可以了。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">direction = <span class="string">&#x27;right&#x27;</span>  <span class="comment"># 控制小蛇运动方向，默认向右</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="keyword">global</span> direction  <span class="comment"># 将direction设为全局变量</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.left:</span><br><span class="line">        direction = <span class="string">&#x27;left&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.right:</span><br><span class="line">        direction = <span class="string">&#x27;right&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.up:</span><br><span class="line">        direction = <span class="string">&#x27;up&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.down:</span><br><span class="line">        direction = <span class="string">&#x27;down&#x27;</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;up&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y - TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;down&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;left&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x - TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;right&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]</span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure>
-
-<p>看一看效果图吧：</p>
-<img src="/2021/01/07/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89/%E4%B8%8A%E4%B8%8B%E5%B7%A6%E5%8F%B3.gif" class>]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>游戏</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Pygame Zero之贪吃蛇（一）</title>
     <url>/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<p>搞了这么久Python，玩个🐍吧！</p>
@@ -324,6 +297,33 @@
 <img src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/snake3.jpg" class>
 
 <img src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/snake4.jpg" class>]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>游戏</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Pygame Zero之贪吃蛇（三）</title>
+    <url>/2021/01/07/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89/</url>
+    <content><![CDATA[<p>本文继续来研究如何移动小蛇，这一次是让小蛇左转和右转。上一篇讲到小蛇只能前进，今天就让小蛇学会转弯。</p>
+<span id="more"></span>
+
+<p>如果小蛇本来是向右移动的，那么右转以后，小蛇就会向下移动，只需要把新蛇头的位置设置在旧蛇头<code>Snake[0]</code>的下方</p>
+<img src="/2021/01/07/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89/%E5%90%91%E4%B8%8B%E7%A7%BB%E5%8A%A8.png" class>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 前置代码见9-2.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="comment"># 设定新蛇头的坐标，小蛇向下移动，新蛇头在旧蛇头下方</span></span><br><span class="line">    newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">    newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)  <span class="comment"># 把新蛇头加入列表的最前面</span></span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]  <span class="comment"># 删除旧蛇尾</span></span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure>
+
+<p>类似的，我们就可以完成小蛇的所有方向移动了。定义一个变量来表示小蛇的移动方向。在<code>update</code>函数中，判断这个变量的值，就可以控制小蛇向不同的方向移动。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 前置代码见9-2.py</span></span><br><span class="line"></span><br><span class="line">direction = <span class="string">&#x27;right&#x27;</span>  <span class="comment"># 控制小蛇运动方向，默认向右</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="comment"># 判断变量direction的值，执行相应操作</span></span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;up&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y - TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;down&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;left&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x - TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;right&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]</span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure>
+
+<p>现在小蛇已经可以向四个方向移动了，我们需要加上一个控制的功能。通过按下方向键来修改<code>direction</code>的值就可以了。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">direction = <span class="string">&#x27;right&#x27;</span>  <span class="comment"># 控制小蛇运动方向，默认向右</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="keyword">global</span> direction  <span class="comment"># 将direction设为全局变量</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.left:</span><br><span class="line">        direction = <span class="string">&#x27;left&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.right:</span><br><span class="line">        direction = <span class="string">&#x27;right&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.up:</span><br><span class="line">        direction = <span class="string">&#x27;up&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.down:</span><br><span class="line">        direction = <span class="string">&#x27;down&#x27;</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;up&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y - TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;down&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;left&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x - TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;right&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]</span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure>
+
+<p>看一看效果图吧：</p>
+<img src="/2021/01/07/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89/%E4%B8%8A%E4%B8%8B%E5%B7%A6%E5%8F%B3.gif" class>]]></content>
       <categories>
         <category>Python</category>
       </categories>
@@ -909,6 +909,68 @@
       </tags>
   </entry>
   <entry>
+    <title>Python输出百分比和有效数字</title>
+    <url>/2020/05/13/Python%E8%BE%93%E5%87%BA%E7%99%BE%E5%88%86%E6%AF%94%E5%92%8C%E6%9C%89%E6%95%88%E6%95%B0%E5%AD%97/</url>
+    <content><![CDATA[<p>目录：</p>
+<ul>
+<li><p>输出百分数</p>
+</li>
+<li><p>输出有效数字</p>
+</li>
+</ul>
+<span id="more"></span>
+<h1 id="输出百分数"><a href="#输出百分数" class="headerlink" title="输出百分数"></a>输出百分数</h1><h2 id="方式1：直接使用参数格式化：-2"><a href="#方式1：直接使用参数格式化：-2" class="headerlink" title="方式1：直接使用参数格式化：{:.2%}"></a>方式1：直接使用参数格式化：<code>&#123;:.2%&#125;</code></h2><p><code>&#123;:.2%&#125;</code>： 显示小数点后2位</p>
+<ul>
+<li>显示小数点后2位：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.2%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.00</span>%</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>不显示小数位：<code>&#123;:.0%&#125;</code>，即，将2改为0：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.0%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84</span>%</span><br></pre></td></tr></table></figure>
+
+<h2 id="方式2：格式化为float，然后处理成-格式：-2f"><a href="#方式2：格式化为float，然后处理成-格式：-2f" class="headerlink" title="方式2：格式化为float，然后处理成%格式： {:.2f}%"></a>方式2：格式化为float，然后处理成%格式： <code>&#123;:.2f&#125;%</code></h2><p>与方式1的区别是：</p>
+<ol>
+<li>需要对42/50乘以 100 。</li>
+<li>方式2的%在{ }外边，方式1的%在{ }里边。</li>
+</ol>
+<ul>
+<li>显示小数点后2位：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.2f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.00</span>%</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>显示小数点后1位：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.1f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.0</span>%</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>只显示整数位：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.0f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84</span>%</span><br></pre></td></tr></table></figure>
+
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p><code>&#123; &#125; </code>的意思是对应<code>format()</code>的一个参数，按默认顺序对应，参数序号从0开始，<code>&#123;0&#125;</code>对应<code>format()</code>的第一个参数，<code>&#123;1&#125;</code>对应第二个参数。例如：</p>
+<ul>
+<li>默认顺序：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent1: &#123;:.2%&#125;, percent2: &#123;:.1%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>, <span class="number">42</span> / <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent1: <span class="number">84.00</span>%, percent2: <span class="number">42.0</span>%</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>指定顺序：<br><code>&#123;1:.1%&#125;</code>对应第2个参数； <code>&#123;0:.1%&#125;</code>对应第1个参数。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent2: &#123;1:.1%&#125;, percent1: &#123;0:.1%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>, <span class="number">42</span> / <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent2: <span class="number">42.0</span>%, percent1: <span class="number">84.0</span>%</span><br></pre></td></tr></table></figure>
+
+<h1 id="输出有效数字"><a href="#输出有效数字" class="headerlink" title="输出有效数字"></a>输出有效数字</h1><p>用自带的decimal模块</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> decimal <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">getcontext().prec = <span class="number">6</span></span><br><span class="line">Decimal(<span class="number">1</span>)/Decimal(<span class="number">7</span>)</span><br><span class="line"><span class="comment"># 结果为Decimal(&#x27;0.142857&#x27;)，六个有效数字</span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>数据分析之Numpy库入门</title>
     <url>/2019/04/04/Python%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E4%B9%8BNumpy%E5%BA%93%E5%85%A5%E9%97%A8/</url>
     <content><![CDATA[<h1 id="数据的维度"><a href="#数据的维度" class="headerlink" title="数据的维度"></a>数据的维度</h1><p>一个数据表达一个含义<br>一组数据表达一个或多个含义</p>
@@ -1285,68 +1347,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Python输出百分比和有效数字</title>
-    <url>/2020/05/13/Python%E8%BE%93%E5%87%BA%E7%99%BE%E5%88%86%E6%AF%94%E5%92%8C%E6%9C%89%E6%95%88%E6%95%B0%E5%AD%97/</url>
-    <content><![CDATA[<p>目录：</p>
-<ul>
-<li><p>输出百分数</p>
-</li>
-<li><p>输出有效数字</p>
-</li>
-</ul>
-<span id="more"></span>
-<h1 id="输出百分数"><a href="#输出百分数" class="headerlink" title="输出百分数"></a>输出百分数</h1><h2 id="方式1：直接使用参数格式化：-2"><a href="#方式1：直接使用参数格式化：-2" class="headerlink" title="方式1：直接使用参数格式化：{:.2%}"></a>方式1：直接使用参数格式化：<code>&#123;:.2%&#125;</code></h2><p><code>&#123;:.2%&#125;</code>： 显示小数点后2位</p>
-<ul>
-<li>显示小数点后2位：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.2%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.00</span>%</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>不显示小数位：<code>&#123;:.0%&#125;</code>，即，将2改为0：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.0%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84</span>%</span><br></pre></td></tr></table></figure>
-
-<h2 id="方式2：格式化为float，然后处理成-格式：-2f"><a href="#方式2：格式化为float，然后处理成-格式：-2f" class="headerlink" title="方式2：格式化为float，然后处理成%格式： {:.2f}%"></a>方式2：格式化为float，然后处理成%格式： <code>&#123;:.2f&#125;%</code></h2><p>与方式1的区别是：</p>
-<ol>
-<li>需要对42/50乘以 100 。</li>
-<li>方式2的%在{ }外边，方式1的%在{ }里边。</li>
-</ol>
-<ul>
-<li>显示小数点后2位：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.2f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.00</span>%</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>显示小数点后1位：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.1f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.0</span>%</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>只显示整数位：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.0f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84</span>%</span><br></pre></td></tr></table></figure>
-
-<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p><code>&#123; &#125; </code>的意思是对应<code>format()</code>的一个参数，按默认顺序对应，参数序号从0开始，<code>&#123;0&#125;</code>对应<code>format()</code>的第一个参数，<code>&#123;1&#125;</code>对应第二个参数。例如：</p>
-<ul>
-<li>默认顺序：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent1: &#123;:.2%&#125;, percent2: &#123;:.1%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>, <span class="number">42</span> / <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent1: <span class="number">84.00</span>%, percent2: <span class="number">42.0</span>%</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>指定顺序：<br><code>&#123;1:.1%&#125;</code>对应第2个参数； <code>&#123;0:.1%&#125;</code>对应第1个参数。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent2: &#123;1:.1%&#125;, percent1: &#123;0:.1%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>, <span class="number">42</span> / <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent2: <span class="number">42.0</span>%, percent1: <span class="number">84.0</span>%</span><br></pre></td></tr></table></figure>
-
-<h1 id="输出有效数字"><a href="#输出有效数字" class="headerlink" title="输出有效数字"></a>输出有效数字</h1><p>用自带的decimal模块</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> decimal <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">getcontext().prec = <span class="number">6</span></span><br><span class="line">Decimal(<span class="number">1</span>)/Decimal(<span class="number">7</span>)</span><br><span class="line"><span class="comment"># 结果为Decimal(&#x27;0.142857&#x27;)，六个有效数字</span></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Python递归绘制科赫雪花</title>
     <url>/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/</url>
     <content><![CDATA[<img src="/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/snowflake.png" class>
@@ -1536,6 +1536,24 @@
       </tags>
   </entry>
   <entry>
+    <title>SQL必知必会(1)了解SQL</title>
+    <url>/2020/12/06/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-1-%E4%BA%86%E8%A7%A3SQL/</url>
+    <content><![CDATA[<p>数据库（database）：保存有组织的数据的容器（通常是一个文件或一组文件）。</p>
+<p>表（table）：某种特定类型数据的结构化清单。</p>
+<p>模式：关于数据库和表的布局及特性的信息。</p>
+<p>列（column）：表中的一个字段。所有表都是由一个或多个列组成的。</p>
+<p>数据类型：所允许的数据的类型。每个表列都有相应的数据类型，它限制（或允许）该列中存储的数据。</p>
+<p>行（row）：表中的一个记录。</p>
+<p>主键（primary key）：一列（或一组列），其值能够唯一标识表中每一行。</p>
+]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SQL基础语句复习</title>
     <url>/2019/04/04/SQL%E5%9F%BA%E7%A1%80%E8%AF%AD%E5%8F%A5%E5%A4%8D%E4%B9%A0/</url>
     <content><![CDATA[<h1 id="一些最重要的-SQL-命令"><a href="#一些最重要的-SQL-命令" class="headerlink" title="一些最重要的 SQL 命令"></a>一些最重要的 SQL 命令</h1><p>不能忘</p>
@@ -1642,24 +1660,6 @@
 <p>WHERE子句指定需要删除哪些记录。如果省略了WHERE子句，表中所有记录都将被删除！</p>
 <p>删除所有数据：可以删除表中的所有行，而不需要删除该表。这意味着表的结构、属性和索引将保持不变</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> table_name;</span><br><span class="line"><span class="comment">/*或者*/</span></span><br><span class="line"><span class="keyword">DELETE</span> <span class="operator">*</span> <span class="keyword">FROM</span> table_name;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>SQL</category>
-      </categories>
-      <tags>
-        <tag>SQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SQL必知必会(1)了解SQL</title>
-    <url>/2020/12/06/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-1-%E4%BA%86%E8%A7%A3SQL/</url>
-    <content><![CDATA[<p>数据库（database）：保存有组织的数据的容器（通常是一个文件或一组文件）。</p>
-<p>表（table）：某种特定类型数据的结构化清单。</p>
-<p>模式：关于数据库和表的布局及特性的信息。</p>
-<p>列（column）：表中的一个字段。所有表都是由一个或多个列组成的。</p>
-<p>数据类型：所允许的数据的类型。每个表列都有相应的数据类型，它限制（或允许）该列中存储的数据。</p>
-<p>行（row）：表中的一个记录。</p>
-<p>主键（primary key）：一列（或一组列），其值能够唯一标识表中每一行。</p>
-]]></content>
       <categories>
         <category>SQL</category>
       </categories>
