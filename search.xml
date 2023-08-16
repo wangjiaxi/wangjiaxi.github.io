@@ -28,25 +28,6 @@
       </tags>
   </entry>
   <entry>
-    <title>HDFS客户端API</title>
-    <url>/2019/04/04/HDFS%E5%AE%A2%E6%88%B7%E7%AB%AFAPI/</url>
-    <content><![CDATA[<p>手动导入需要用的jars，也可以使用maven。</p>
-<span id="more"></span>
-
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * HDFS的客户端api功能无非就是操作HDFS上的文件或文件夹</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HdfsClientDemo</span> </span>&#123;</span><br><span class="line">	FileSystem hdfsClient;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Before</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">		conf.addResource(<span class="string">&quot;myconf.xml&quot;</span>);</span><br><span class="line">		conf.set(<span class="string">&quot;dfs.replication&quot;</span>, <span class="string">&quot;2&quot;</span>);</span><br><span class="line">		conf.set(<span class="string">&quot;dfs.blocksize&quot;</span>, <span class="string">&quot;32m&quot;</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 创建一个HDFS客户端对象</span></span><br><span class="line">		hdfsClient = FileSystem.get(<span class="keyword">new</span> URI(<span class="string">&quot;hdfs://hdp-nn-01:9000/&quot;</span>), conf, <span class="string">&quot;root&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 上传一个文件</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testPutFile</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		hdfsClient.copyFromLocalFile(<span class="keyword">new</span> Path(<span class="string">&quot;d:/jdk-8u191-linux-x64.tar.gz&quot;</span>), <span class="keyword">new</span> Path(<span class="string">&quot;/jdk8.gz&quot;</span>));</span><br><span class="line">		hdfsClient.close();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 测试取文件</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testGetFile</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		hdfsClient.copyToLocalFile(<span class="keyword">false</span>, <span class="keyword">new</span> Path(<span class="string">&quot;/jdk8.gz&quot;</span>), <span class="keyword">new</span> Path(<span class="string">&quot;d:/&quot;</span>), <span class="keyword">true</span>);</span><br><span class="line">		hdfsClient.close();</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>注意</strong>：HDFS客户端从HDFS上读取数据写入本地磁盘时，可以使用Hadoop自己开发的本地库操作，也可以使用java 的原生库来操作本地文件。 参数就是useRawLocalFileSystem，如果为true，则使用java原生库；false则使用Hadoop自己的本地库。如果要使用Hadoop的本地库来操作本地文件，要配置Hadoop在本地的环境。</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 文件夹创建</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMkdir</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		<span class="comment">// 如果创建文件夹时，指定权限信息，但创建的结果并不会跟指定的信息完全一致，因为想指定的信息还会经过一个参数值的掩码运算</span></span><br><span class="line">		hdfsClient.mkdirs(<span class="keyword">new</span> Path(<span class="string">&quot;/xxx/yyy&quot;</span>), <span class="keyword">new</span> FsPermission((<span class="keyword">short</span>) <span class="number">777</span>));</span><br><span class="line">		hdfsClient.close();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 文件夹删除</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDeldir</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">		hdfsClient.delete(<span class="keyword">new</span> Path(<span class="string">&quot;/xxx&quot;</span>), <span class="keyword">true</span>);</span><br><span class="line">		hdfsClient.close();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 文件夹重命名</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRenamedir</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">		hdfsClient.rename(<span class="keyword">new</span> Path(<span class="string">&quot;/xxx&quot;</span>), <span class="keyword">new</span> Path(<span class="string">&quot;/ooo&quot;</span>));</span><br><span class="line">		hdfsClient.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>大数据开发</category>
-      </categories>
-      <tags>
-        <tag>大数据开发</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>HDFS基本配置属性</title>
     <url>/2019/04/04/HDFS%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7/</url>
     <content><![CDATA[<h1 id="块大小"><a href="#块大小" class="headerlink" title="块大小"></a>块大小</h1><p>HDFS中存储的文件块的块大小，默认128M</p>
@@ -88,6 +69,25 @@
 <li>在新机器上手动启动一个DataNode进程：<code>hadoop-daemon.sh start datanode</code></li>
 </ol>
 ]]></content>
+      <categories>
+        <category>大数据开发</category>
+      </categories>
+      <tags>
+        <tag>大数据开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HDFS客户端API</title>
+    <url>/2019/04/04/HDFS%E5%AE%A2%E6%88%B7%E7%AB%AFAPI/</url>
+    <content><![CDATA[<p>手动导入需要用的jars，也可以使用maven。</p>
+<span id="more"></span>
+
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * HDFS的客户端api功能无非就是操作HDFS上的文件或文件夹</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HdfsClientDemo</span> </span>&#123;</span><br><span class="line">	FileSystem hdfsClient;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Before</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">		conf.addResource(<span class="string">&quot;myconf.xml&quot;</span>);</span><br><span class="line">		conf.set(<span class="string">&quot;dfs.replication&quot;</span>, <span class="string">&quot;2&quot;</span>);</span><br><span class="line">		conf.set(<span class="string">&quot;dfs.blocksize&quot;</span>, <span class="string">&quot;32m&quot;</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 创建一个HDFS客户端对象</span></span><br><span class="line">		hdfsClient = FileSystem.get(<span class="keyword">new</span> URI(<span class="string">&quot;hdfs://hdp-nn-01:9000/&quot;</span>), conf, <span class="string">&quot;root&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 上传一个文件</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testPutFile</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		hdfsClient.copyFromLocalFile(<span class="keyword">new</span> Path(<span class="string">&quot;d:/jdk-8u191-linux-x64.tar.gz&quot;</span>), <span class="keyword">new</span> Path(<span class="string">&quot;/jdk8.gz&quot;</span>));</span><br><span class="line">		hdfsClient.close();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 测试取文件</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testGetFile</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		hdfsClient.copyToLocalFile(<span class="keyword">false</span>, <span class="keyword">new</span> Path(<span class="string">&quot;/jdk8.gz&quot;</span>), <span class="keyword">new</span> Path(<span class="string">&quot;d:/&quot;</span>), <span class="keyword">true</span>);</span><br><span class="line">		hdfsClient.close();</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>注意</strong>：HDFS客户端从HDFS上读取数据写入本地磁盘时，可以使用Hadoop自己开发的本地库操作，也可以使用java 的原生库来操作本地文件。 参数就是useRawLocalFileSystem，如果为true，则使用java原生库；false则使用Hadoop自己的本地库。如果要使用Hadoop的本地库来操作本地文件，要配置Hadoop在本地的环境。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 文件夹创建</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMkdir</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		<span class="comment">// 如果创建文件夹时，指定权限信息，但创建的结果并不会跟指定的信息完全一致，因为想指定的信息还会经过一个参数值的掩码运算</span></span><br><span class="line">		hdfsClient.mkdirs(<span class="keyword">new</span> Path(<span class="string">&quot;/xxx/yyy&quot;</span>), <span class="keyword">new</span> FsPermission((<span class="keyword">short</span>) <span class="number">777</span>));</span><br><span class="line">		hdfsClient.close();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 文件夹删除</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDeldir</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">		hdfsClient.delete(<span class="keyword">new</span> Path(<span class="string">&quot;/xxx&quot;</span>), <span class="keyword">true</span>);</span><br><span class="line">		hdfsClient.close();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 文件夹重命名</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRenamedir</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">		hdfsClient.rename(<span class="keyword">new</span> Path(<span class="string">&quot;/xxx&quot;</span>), <span class="keyword">new</span> Path(<span class="string">&quot;/ooo&quot;</span>));</span><br><span class="line">		hdfsClient.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>大数据开发</category>
       </categories>
@@ -222,22 +222,6 @@
       </tags>
   </entry>
   <entry>
-    <title>PyCharm控制台自动换行</title>
-    <url>/2019/12/23/PyCharm%E6%8E%A7%E5%88%B6%E5%8F%B0%E8%87%AA%E5%8A%A8%E6%8D%A2%E8%A1%8C/</url>
-    <content><![CDATA[<p>点击File -&gt; Settings -&gt; Editor -&gt; General -&gt; Console,勾选下图项即可。</p>
-<span id="more"></span>
-
-<p><img src="https://img2018.cnblogs.com/blog/1473452/201911/1473452-20191113105919785-2031005404.png"><br><img src="https://img2018.cnblogs.com/blog/1473452/201911/1473452-20191113110043184-87443107.png"></p>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>bug</tag>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Pycharm Out of memory 解决办法</title>
     <url>/2021/05/26/Pycharm-Out-of-memory-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
     <content><![CDATA[<p>最近使用Pycharm敲代码突然卡住，并且蹦出一个错误：<code>Out of memory</code>。</p>
@@ -303,6 +287,22 @@
       <tags>
         <tag>Python</tag>
         <tag>游戏</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PyCharm控制台自动换行</title>
+    <url>/2019/12/23/PyCharm%E6%8E%A7%E5%88%B6%E5%8F%B0%E8%87%AA%E5%8A%A8%E6%8D%A2%E8%A1%8C/</url>
+    <content><![CDATA[<p>点击File -&gt; Settings -&gt; Editor -&gt; General -&gt; Console,勾选下图项即可。</p>
+<span id="more"></span>
+
+<p><img src="https://img2018.cnblogs.com/blog/1473452/201911/1473452-20191113105919785-2031005404.png"><br><img src="https://img2018.cnblogs.com/blog/1473452/201911/1473452-20191113110043184-87443107.png"></p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>bug</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -662,115 +662,6 @@
       </tags>
   </entry>
   <entry>
-    <title>PygameZero制作Pacman</title>
-    <url>/2020/11/28/PygameZero%E5%88%B6%E4%BD%9CPacman/</url>
-    <content><![CDATA[<p>本篇来介绍Pacman的PygameZero实现。</p>
-<img src="/2020/11/28/PygameZero%E5%88%B6%E4%BD%9CPacman/pacman.png" class>
-
-<span id="more"></span>
-
-<p>先上代码，后边补上讲解</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pgzrun</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">WIDTH = <span class="number">500</span></span><br><span class="line">HEIGHT = <span class="number">500</span></span><br><span class="line">pacman = Actor(<span class="string">&#x27;向右的吃豆人&#x27;</span>)</span><br><span class="line">pacman.pos = [<span class="number">250</span>, <span class="number">250</span>]</span><br><span class="line">bean1 = Actor(<span class="string">&#x27;豆子&#x27;</span>)</span><br><span class="line">bean1.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean1.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean2 = Actor(<span class="string">&#x27;豆子&#x27;</span>)</span><br><span class="line">bean2.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean2.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean3 = Actor(<span class="string">&#x27;豆子&#x27;</span>)</span><br><span class="line">bean3.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean3.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">beans = [bean1, bean2, bean3]</span><br><span class="line">score = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    screen.blit(<span class="string">&#x27;游戏背景&#x27;</span>, [<span class="number">0</span>, <span class="number">0</span>])</span><br><span class="line">    pacman.draw()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> beans:</span><br><span class="line">        i.draw()</span><br><span class="line">    screen.draw.text(<span class="built_in">str</span>(score), [<span class="number">15</span>, <span class="number">15</span>], color=<span class="string">&#x27;orange&#x27;</span>, fontsize=<span class="number">30</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_key_down</span>(<span class="params">key</span>):</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.LEFT:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向左的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.RIGHT:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向右的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.UP:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向上的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.DOWN:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向下的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.SPACE:</span><br><span class="line">        <span class="built_in">print</span>(score)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="keyword">global</span> score</span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向左的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.x -= <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向右的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.x += <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向上的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.y -= <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向下的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.y += <span class="number">5</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> beans:</span><br><span class="line">        <span class="keyword">if</span> pacman.colliderect(i):</span><br><span class="line">            i.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">            i.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">            score += <span class="number">1</span></span><br><span class="line">            <span class="built_in">print</span>(score)</span><br><span class="line">    <span class="keyword">if</span> pacman.x &lt; <span class="number">0</span> <span class="keyword">or</span> pacman.x &gt; <span class="number">500</span> <span class="keyword">or</span> pacman.y &lt; <span class="number">0</span> <span class="keyword">or</span> pacman.y &gt; <span class="number">500</span>:</span><br><span class="line">        score -= <span class="number">3</span></span><br><span class="line">        <span class="built_in">print</span>(score)</span><br><span class="line">        pacman.pos = [<span class="number">250</span>, <span class="number">250</span>]</span><br><span class="line">    <span class="keyword">if</span> score &lt; <span class="number">0</span>:</span><br><span class="line">        exit()</span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>游戏</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python中if后直接加变量</title>
-    <url>/2019/12/23/Python%E4%B8%ADif%E5%90%8E%E7%9B%B4%E6%8E%A5%E5%8A%A0%E5%8F%98%E9%87%8F/</url>
-    <content><![CDATA[<p>python中有时候会使用if语句，后边直接加一个变量，而不是一个布尔表达式，这是在判断神马呢？</p>
-<span id="more"></span>
-
-<p>其实意思是判断这个变量是否有值，这个值需要是<strong>非零非空</strong>的值，这行代码返回<code>True</code>或<code>False</code>。<br>Python中除了’’、””、0、()、[]、{}、None为False之外，其他的都是True。<br>举例</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ls = [[], <span class="number">0</span>, <span class="string">&#x27;&#x27;</span>, <span class="string">&quot;&quot;</span>, &#123;&#125;, (), [<span class="number">1</span>], <span class="number">2</span>, <span class="string">&#x27;3&#x27;</span>, <span class="string">&quot;4&quot;</span>, &#123;<span class="number">5</span>&#125;, (<span class="number">6</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> ls:</span><br><span class="line">    <span class="keyword">if</span> i:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;i =&#x27;</span>, i, <span class="string">&#x27;有值&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;i =&#x27;</span>, i, <span class="string">&#x27;没值&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p>结果</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">i = [] 没值</span><br><span class="line">i = <span class="number">0</span> 没值</span><br><span class="line">i =  没值</span><br><span class="line">i =  没值</span><br><span class="line">i = &#123;&#125; 没值</span><br><span class="line">i = () 没值</span><br><span class="line">i = [<span class="number">1</span>] 有值</span><br><span class="line">i = <span class="number">2</span> 有值</span><br><span class="line">i = <span class="number">3</span> 有值</span><br><span class="line">i = <span class="number">4</span> 有值</span><br><span class="line">i = &#123;<span class="number">5</span>&#125; 有值</span><br><span class="line">i = <span class="number">6</span> 有值</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python切片</title>
-    <url>/2019/11/11/Python%E5%88%87%E7%89%87/</url>
-    <content><![CDATA[<p>在组合数据类型中，经常会用到切片操作，也就是从列表（或其他）中取出特定范围或者按一定规律来取出元素，这个就叫切片。Python中使用中括号<code>[]</code>切片非常方便，可以简化代码。</p>
-<span id="more"></span>
-
-<h1 id="什么是切片"><a href="#什么是切片" class="headerlink" title="什么是切片"></a>什么是切片</h1><p>取一个<code>list</code>或<code>tuple</code>的部分元素是非常常见的操作，这个应该就叫<strong>切片</strong>了。比如，一个<code>list</code>如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; L = [&#x27;Michael&#x27;, &#x27;Sarah&#x27;, &#x27;Tracy&#x27;, &#x27;Bob&#x27;, &#x27;Jack&#x27;]</span><br></pre></td></tr></table></figure>
-
-<p>取前3个元素，应该怎么做？</p>
-<p>笨办法：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; [L[0], L[1], L[2]]</span><br><span class="line">[&#x27;Michael&#x27;, &#x27;Sarah&#x27;, &#x27;Tracy&#x27;]</span><br></pre></td></tr></table></figure>
-
-<p>之所以是笨办法是因为，扩展一下——取前N个元素就没辙了。</p>
-<p>取前N个元素，也就是索引为0-(N-1)的元素，可以用循环：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; r = []</span><br><span class="line">&gt;&gt;&gt; n = 3</span><br><span class="line">&gt;&gt;&gt; for i in range(n):</span><br><span class="line">...     r.append(L[i])</span><br><span class="line">... </span><br><span class="line">&gt;&gt;&gt; r</span><br><span class="line">[&#x27;Michael&#x27;, &#x27;Sarah&#x27;, &#x27;Tracy&#x27;]</span><br></pre></td></tr></table></figure>
-
-<h1 id="切片来了"><a href="#切片来了" class="headerlink" title="切片来了"></a>切片来了</h1><p>对这种经常取指定索引范围的操作，用循环十分繁琐，因此，Python提供了切片（Slice）操作符，能大大简化这种操作。</p>
-<p>对应上面的问题，取前3个元素，用一行代码就可以完成切片：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; L[0:3]</span><br><span class="line">[&#x27;Michael&#x27;, &#x27;Sarah&#x27;, &#x27;Tracy&#x27;]</span><br></pre></td></tr></table></figure>
-
-<p><code>L[0:3]</code>表示，从索引0开始取，直到索引3为止，但不包括索引3。即索引0，1，2，正好是3个元素。</p>
-<p>如果第一个索引是0，还可以省略：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; L[:3]</span><br><span class="line">[&#x27;Michael&#x27;, &#x27;Sarah&#x27;, &#x27;Tracy&#x27;]</span><br></pre></td></tr></table></figure>
-
-<p>也可以从索引1开始，取出2个元素出来：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; L[1:3]</span><br><span class="line">[&#x27;Sarah&#x27;, &#x27;Tracy&#x27;]</span><br></pre></td></tr></table></figure>
-
-<p>类似的，既然Python支持<code>L[-1]</code>取倒数第一个元素，那么它同样支持倒数切片，试试：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; L[-2:]</span><br><span class="line">[&#x27;Bob&#x27;, &#x27;Jack&#x27;]</span><br><span class="line">&gt;&gt;&gt; L[-2:-1]</span><br><span class="line">[&#x27;Bob&#x27;]</span><br></pre></td></tr></table></figure>
-
-<p>记住倒数第一个元素的索引是-1。</p>
-<p>切片操作十分有用。我们先创建一个0-99的数列：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; L = list(range(100))</span><br><span class="line">&gt;&gt;&gt; L</span><br><span class="line">[0, 1, 2, 3, ..., 99]</span><br></pre></td></tr></table></figure>
-
-<p>可以通过切片轻松取出某一段数列。比如前10个数：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; L[:10]</span><br><span class="line">[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span><br></pre></td></tr></table></figure>
-
-<p>后10个数：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; L[-10:]</span><br><span class="line">[90, 91, 92, 93, 94, 95, 96, 97, 98, 99]</span><br></pre></td></tr></table></figure>
-
-<p>前11-20个数：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; L[10:20]</span><br><span class="line">[10, 11, 12, 13, 14, 15, 16, 17, 18, 19]</span><br></pre></td></tr></table></figure>
-
-<p>前10个数，每两个取一个：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; L[:10:2]</span><br><span class="line">[0, 2, 4, 6, 8]</span><br></pre></td></tr></table></figure>
-
-<p>所有数，每5个取一个：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; L[::5]</span><br><span class="line">[0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95]</span><br></pre></td></tr></table></figure>
-
-<p>甚至什么都不写，只写<code>[:]</code>就可以原样复制一个<code>list</code>：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; L[:]</span><br><span class="line">[0, 1, 2, 3, ..., 99]</span><br></pre></td></tr></table></figure>
-
-<p><code>tuple</code>也是一种<code>list</code>，唯一区别是tuple不可变。因此，<code>tuple</code>也可以用切片操作，只是操作的结果仍是<code>tuple</code>：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; (0, 1, 2, 3, 4, 5)[:3]</span><br><span class="line">(0, 1, 2)</span><br></pre></td></tr></table></figure>
-
-<p>字符串<code>&#39;xxx&#39;</code>也可以看成是一种<code>list</code>，每个元素就是一个字符。因此，字符串也可以用切片操作，只是操作结果仍是字符串：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; &#x27;ABCDEFG&#x27;[:3]</span><br><span class="line">&#x27;ABC&#x27;</span><br><span class="line">&gt;&gt;&gt; &#x27;ABCDEFG&#x27;[::2]</span><br><span class="line">&#x27;ACEG&#x27;</span><br></pre></td></tr></table></figure>
-
-<p>在很多编程语言中，针对字符串提供了很多各种截取函数（例如<code>substring</code>），其实目的就是对字符串切片。</p>
-<p>Python没有针对字符串的截取函数，只需要切片一个操作就可以完成，非常简单。</p>
-<blockquote>
-<p>参考：<a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017269965565856">https://www.liaoxuefeng.com/wiki/1016959663602400/1017269965565856</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>PygameZero中文文档 - 3</title>
     <url>/2019/08/28/PygameZero%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3%20-%203/</url>
     <content><![CDATA[<p>Pygame Zero会自动识别并调用您定义的事件钩，这种方法可以使您不必自己实现事件循环机制。</p>
@@ -882,6 +773,115 @@
       </tags>
   </entry>
   <entry>
+    <title>PygameZero制作Pacman</title>
+    <url>/2020/11/28/PygameZero%E5%88%B6%E4%BD%9CPacman/</url>
+    <content><![CDATA[<p>本篇来介绍Pacman的PygameZero实现。</p>
+<img src="/2020/11/28/PygameZero%E5%88%B6%E4%BD%9CPacman/pacman.png" class>
+
+<span id="more"></span>
+
+<p>先上代码，后边补上讲解</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pgzrun</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">WIDTH = <span class="number">500</span></span><br><span class="line">HEIGHT = <span class="number">500</span></span><br><span class="line">pacman = Actor(<span class="string">&#x27;向右的吃豆人&#x27;</span>)</span><br><span class="line">pacman.pos = [<span class="number">250</span>, <span class="number">250</span>]</span><br><span class="line">bean1 = Actor(<span class="string">&#x27;豆子&#x27;</span>)</span><br><span class="line">bean1.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean1.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean2 = Actor(<span class="string">&#x27;豆子&#x27;</span>)</span><br><span class="line">bean2.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean2.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean3 = Actor(<span class="string">&#x27;豆子&#x27;</span>)</span><br><span class="line">bean3.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean3.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">beans = [bean1, bean2, bean3]</span><br><span class="line">score = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    screen.blit(<span class="string">&#x27;游戏背景&#x27;</span>, [<span class="number">0</span>, <span class="number">0</span>])</span><br><span class="line">    pacman.draw()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> beans:</span><br><span class="line">        i.draw()</span><br><span class="line">    screen.draw.text(<span class="built_in">str</span>(score), [<span class="number">15</span>, <span class="number">15</span>], color=<span class="string">&#x27;orange&#x27;</span>, fontsize=<span class="number">30</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_key_down</span>(<span class="params">key</span>):</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.LEFT:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向左的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.RIGHT:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向右的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.UP:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向上的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.DOWN:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向下的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.SPACE:</span><br><span class="line">        <span class="built_in">print</span>(score)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="keyword">global</span> score</span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向左的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.x -= <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向右的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.x += <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向上的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.y -= <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向下的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.y += <span class="number">5</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> beans:</span><br><span class="line">        <span class="keyword">if</span> pacman.colliderect(i):</span><br><span class="line">            i.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">            i.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">            score += <span class="number">1</span></span><br><span class="line">            <span class="built_in">print</span>(score)</span><br><span class="line">    <span class="keyword">if</span> pacman.x &lt; <span class="number">0</span> <span class="keyword">or</span> pacman.x &gt; <span class="number">500</span> <span class="keyword">or</span> pacman.y &lt; <span class="number">0</span> <span class="keyword">or</span> pacman.y &gt; <span class="number">500</span>:</span><br><span class="line">        score -= <span class="number">3</span></span><br><span class="line">        <span class="built_in">print</span>(score)</span><br><span class="line">        pacman.pos = [<span class="number">250</span>, <span class="number">250</span>]</span><br><span class="line">    <span class="keyword">if</span> score &lt; <span class="number">0</span>:</span><br><span class="line">        exit()</span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>游戏</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python中if后直接加变量</title>
+    <url>/2019/12/23/Python%E4%B8%ADif%E5%90%8E%E7%9B%B4%E6%8E%A5%E5%8A%A0%E5%8F%98%E9%87%8F/</url>
+    <content><![CDATA[<p>python中有时候会使用if语句，后边直接加一个变量，而不是一个布尔表达式，这是在判断神马呢？</p>
+<span id="more"></span>
+
+<p>其实意思是判断这个变量是否有值，这个值需要是<strong>非零非空</strong>的值，这行代码返回<code>True</code>或<code>False</code>。<br>Python中除了’’、””、0、()、[]、{}、None为False之外，其他的都是True。<br>举例</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ls = [[], <span class="number">0</span>, <span class="string">&#x27;&#x27;</span>, <span class="string">&quot;&quot;</span>, &#123;&#125;, (), [<span class="number">1</span>], <span class="number">2</span>, <span class="string">&#x27;3&#x27;</span>, <span class="string">&quot;4&quot;</span>, &#123;<span class="number">5</span>&#125;, (<span class="number">6</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> ls:</span><br><span class="line">    <span class="keyword">if</span> i:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;i =&#x27;</span>, i, <span class="string">&#x27;有值&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;i =&#x27;</span>, i, <span class="string">&#x27;没值&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>结果</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">i = [] 没值</span><br><span class="line">i = <span class="number">0</span> 没值</span><br><span class="line">i =  没值</span><br><span class="line">i =  没值</span><br><span class="line">i = &#123;&#125; 没值</span><br><span class="line">i = () 没值</span><br><span class="line">i = [<span class="number">1</span>] 有值</span><br><span class="line">i = <span class="number">2</span> 有值</span><br><span class="line">i = <span class="number">3</span> 有值</span><br><span class="line">i = <span class="number">4</span> 有值</span><br><span class="line">i = &#123;<span class="number">5</span>&#125; 有值</span><br><span class="line">i = <span class="number">6</span> 有值</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python切片</title>
+    <url>/2019/11/11/Python%E5%88%87%E7%89%87/</url>
+    <content><![CDATA[<p>在组合数据类型中，经常会用到切片操作，也就是从列表（或其他）中取出特定范围或者按一定规律来取出元素，这个就叫切片。Python中使用中括号<code>[]</code>切片非常方便，可以简化代码。</p>
+<span id="more"></span>
+
+<h1 id="什么是切片"><a href="#什么是切片" class="headerlink" title="什么是切片"></a>什么是切片</h1><p>取一个<code>list</code>或<code>tuple</code>的部分元素是非常常见的操作，这个应该就叫<strong>切片</strong>了。比如，一个<code>list</code>如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; L = [&#x27;Michael&#x27;, &#x27;Sarah&#x27;, &#x27;Tracy&#x27;, &#x27;Bob&#x27;, &#x27;Jack&#x27;]</span><br></pre></td></tr></table></figure>
+
+<p>取前3个元素，应该怎么做？</p>
+<p>笨办法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; [L[0], L[1], L[2]]</span><br><span class="line">[&#x27;Michael&#x27;, &#x27;Sarah&#x27;, &#x27;Tracy&#x27;]</span><br></pre></td></tr></table></figure>
+
+<p>之所以是笨办法是因为，扩展一下——取前N个元素就没辙了。</p>
+<p>取前N个元素，也就是索引为0-(N-1)的元素，可以用循环：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; r = []</span><br><span class="line">&gt;&gt;&gt; n = 3</span><br><span class="line">&gt;&gt;&gt; for i in range(n):</span><br><span class="line">...     r.append(L[i])</span><br><span class="line">... </span><br><span class="line">&gt;&gt;&gt; r</span><br><span class="line">[&#x27;Michael&#x27;, &#x27;Sarah&#x27;, &#x27;Tracy&#x27;]</span><br></pre></td></tr></table></figure>
+
+<h1 id="切片来了"><a href="#切片来了" class="headerlink" title="切片来了"></a>切片来了</h1><p>对这种经常取指定索引范围的操作，用循环十分繁琐，因此，Python提供了切片（Slice）操作符，能大大简化这种操作。</p>
+<p>对应上面的问题，取前3个元素，用一行代码就可以完成切片：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; L[0:3]</span><br><span class="line">[&#x27;Michael&#x27;, &#x27;Sarah&#x27;, &#x27;Tracy&#x27;]</span><br></pre></td></tr></table></figure>
+
+<p><code>L[0:3]</code>表示，从索引0开始取，直到索引3为止，但不包括索引3。即索引0，1，2，正好是3个元素。</p>
+<p>如果第一个索引是0，还可以省略：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; L[:3]</span><br><span class="line">[&#x27;Michael&#x27;, &#x27;Sarah&#x27;, &#x27;Tracy&#x27;]</span><br></pre></td></tr></table></figure>
+
+<p>也可以从索引1开始，取出2个元素出来：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; L[1:3]</span><br><span class="line">[&#x27;Sarah&#x27;, &#x27;Tracy&#x27;]</span><br></pre></td></tr></table></figure>
+
+<p>类似的，既然Python支持<code>L[-1]</code>取倒数第一个元素，那么它同样支持倒数切片，试试：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; L[-2:]</span><br><span class="line">[&#x27;Bob&#x27;, &#x27;Jack&#x27;]</span><br><span class="line">&gt;&gt;&gt; L[-2:-1]</span><br><span class="line">[&#x27;Bob&#x27;]</span><br></pre></td></tr></table></figure>
+
+<p>记住倒数第一个元素的索引是-1。</p>
+<p>切片操作十分有用。我们先创建一个0-99的数列：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; L = list(range(100))</span><br><span class="line">&gt;&gt;&gt; L</span><br><span class="line">[0, 1, 2, 3, ..., 99]</span><br></pre></td></tr></table></figure>
+
+<p>可以通过切片轻松取出某一段数列。比如前10个数：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; L[:10]</span><br><span class="line">[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span><br></pre></td></tr></table></figure>
+
+<p>后10个数：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; L[-10:]</span><br><span class="line">[90, 91, 92, 93, 94, 95, 96, 97, 98, 99]</span><br></pre></td></tr></table></figure>
+
+<p>前11-20个数：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; L[10:20]</span><br><span class="line">[10, 11, 12, 13, 14, 15, 16, 17, 18, 19]</span><br></pre></td></tr></table></figure>
+
+<p>前10个数，每两个取一个：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; L[:10:2]</span><br><span class="line">[0, 2, 4, 6, 8]</span><br></pre></td></tr></table></figure>
+
+<p>所有数，每5个取一个：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; L[::5]</span><br><span class="line">[0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95]</span><br></pre></td></tr></table></figure>
+
+<p>甚至什么都不写，只写<code>[:]</code>就可以原样复制一个<code>list</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; L[:]</span><br><span class="line">[0, 1, 2, 3, ..., 99]</span><br></pre></td></tr></table></figure>
+
+<p><code>tuple</code>也是一种<code>list</code>，唯一区别是tuple不可变。因此，<code>tuple</code>也可以用切片操作，只是操作的结果仍是<code>tuple</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; (0, 1, 2, 3, 4, 5)[:3]</span><br><span class="line">(0, 1, 2)</span><br></pre></td></tr></table></figure>
+
+<p>字符串<code>&#39;xxx&#39;</code>也可以看成是一种<code>list</code>，每个元素就是一个字符。因此，字符串也可以用切片操作，只是操作结果仍是字符串：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; &#x27;ABCDEFG&#x27;[:3]</span><br><span class="line">&#x27;ABC&#x27;</span><br><span class="line">&gt;&gt;&gt; &#x27;ABCDEFG&#x27;[::2]</span><br><span class="line">&#x27;ACEG&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>在很多编程语言中，针对字符串提供了很多各种截取函数（例如<code>substring</code>），其实目的就是对字符串切片。</p>
+<p>Python没有针对字符串的截取函数，只需要切片一个操作就可以完成，非常简单。</p>
+<blockquote>
+<p>参考：<a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017269965565856">https://www.liaoxuefeng.com/wiki/1016959663602400/1017269965565856</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python实现照片的手绘效果</title>
     <url>/2019/04/04/Python%E5%AE%9E%E7%8E%B0%E7%85%A7%E7%89%87%E7%9A%84%E6%89%8B%E7%BB%98%E6%95%88%E6%9E%9C/</url>
     <content><![CDATA[<h1 id="梯度的重构"><a href="#梯度的重构" class="headerlink" title="梯度的重构"></a>梯度的重构</h1><p>利用像素之间的梯度值和虚拟深度值对图像进行重构，根据灰度变化来模拟人类视觉的明暗程度。</p>
@@ -901,68 +901,6 @@
 <h1 id="展示"><a href="#展示" class="headerlink" title="展示"></a>展示</h1><p><img src="/2019/04/04/Python%E5%AE%9E%E7%8E%B0%E7%85%A7%E7%89%87%E7%9A%84%E6%89%8B%E7%BB%98%E6%95%88%E6%9E%9C/yunwuyue.jpg"></p>
 <p><img src="/2019/04/04/Python%E5%AE%9E%E7%8E%B0%E7%85%A7%E7%89%87%E7%9A%84%E6%89%8B%E7%BB%98%E6%95%88%E6%9E%9C/yunwuyueHD.jpg"></p>
 ]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python输出百分比和有效数字</title>
-    <url>/2020/05/13/Python%E8%BE%93%E5%87%BA%E7%99%BE%E5%88%86%E6%AF%94%E5%92%8C%E6%9C%89%E6%95%88%E6%95%B0%E5%AD%97/</url>
-    <content><![CDATA[<p>目录：</p>
-<ul>
-<li><p>输出百分数</p>
-</li>
-<li><p>输出有效数字</p>
-</li>
-</ul>
-<span id="more"></span>
-<h1 id="输出百分数"><a href="#输出百分数" class="headerlink" title="输出百分数"></a>输出百分数</h1><h2 id="方式1：直接使用参数格式化：-2"><a href="#方式1：直接使用参数格式化：-2" class="headerlink" title="方式1：直接使用参数格式化：{:.2%}"></a>方式1：直接使用参数格式化：<code>&#123;:.2%&#125;</code></h2><p><code>&#123;:.2%&#125;</code>： 显示小数点后2位</p>
-<ul>
-<li>显示小数点后2位：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.2%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.00</span>%</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>不显示小数位：<code>&#123;:.0%&#125;</code>，即，将2改为0：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.0%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84</span>%</span><br></pre></td></tr></table></figure>
-
-<h2 id="方式2：格式化为float，然后处理成-格式：-2f"><a href="#方式2：格式化为float，然后处理成-格式：-2f" class="headerlink" title="方式2：格式化为float，然后处理成%格式： {:.2f}%"></a>方式2：格式化为float，然后处理成%格式： <code>&#123;:.2f&#125;%</code></h2><p>与方式1的区别是：</p>
-<ol>
-<li>需要对42/50乘以 100 。</li>
-<li>方式2的%在{ }外边，方式1的%在{ }里边。</li>
-</ol>
-<ul>
-<li>显示小数点后2位：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.2f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.00</span>%</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>显示小数点后1位：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.1f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.0</span>%</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>只显示整数位：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.0f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84</span>%</span><br></pre></td></tr></table></figure>
-
-<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p><code>&#123; &#125; </code>的意思是对应<code>format()</code>的一个参数，按默认顺序对应，参数序号从0开始，<code>&#123;0&#125;</code>对应<code>format()</code>的第一个参数，<code>&#123;1&#125;</code>对应第二个参数。例如：</p>
-<ul>
-<li>默认顺序：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent1: &#123;:.2%&#125;, percent2: &#123;:.1%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>, <span class="number">42</span> / <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent1: <span class="number">84.00</span>%, percent2: <span class="number">42.0</span>%</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>指定顺序：<br><code>&#123;1:.1%&#125;</code>对应第2个参数； <code>&#123;0:.1%&#125;</code>对应第1个参数。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent2: &#123;1:.1%&#125;, percent1: &#123;0:.1%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>, <span class="number">42</span> / <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent2: <span class="number">42.0</span>%, percent1: <span class="number">84.0</span>%</span><br></pre></td></tr></table></figure>
-
-<h1 id="输出有效数字"><a href="#输出有效数字" class="headerlink" title="输出有效数字"></a>输出有效数字</h1><p>用自带的decimal模块</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> decimal <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">getcontext().prec = <span class="number">6</span></span><br><span class="line">Decimal(<span class="number">1</span>)/Decimal(<span class="number">7</span>)</span><br><span class="line"><span class="comment"># 结果为Decimal(&#x27;0.142857&#x27;)，六个有效数字</span></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Python</category>
       </categories>
@@ -1344,6 +1282,68 @@
       <tags>
         <tag>Python</tag>
         <tag>数据分析</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python输出百分比和有效数字</title>
+    <url>/2020/05/13/Python%E8%BE%93%E5%87%BA%E7%99%BE%E5%88%86%E6%AF%94%E5%92%8C%E6%9C%89%E6%95%88%E6%95%B0%E5%AD%97/</url>
+    <content><![CDATA[<p>目录：</p>
+<ul>
+<li><p>输出百分数</p>
+</li>
+<li><p>输出有效数字</p>
+</li>
+</ul>
+<span id="more"></span>
+<h1 id="输出百分数"><a href="#输出百分数" class="headerlink" title="输出百分数"></a>输出百分数</h1><h2 id="方式1：直接使用参数格式化：-2"><a href="#方式1：直接使用参数格式化：-2" class="headerlink" title="方式1：直接使用参数格式化：{:.2%}"></a>方式1：直接使用参数格式化：<code>&#123;:.2%&#125;</code></h2><p><code>&#123;:.2%&#125;</code>： 显示小数点后2位</p>
+<ul>
+<li>显示小数点后2位：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.2%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.00</span>%</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>不显示小数位：<code>&#123;:.0%&#125;</code>，即，将2改为0：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.0%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84</span>%</span><br></pre></td></tr></table></figure>
+
+<h2 id="方式2：格式化为float，然后处理成-格式：-2f"><a href="#方式2：格式化为float，然后处理成-格式：-2f" class="headerlink" title="方式2：格式化为float，然后处理成%格式： {:.2f}%"></a>方式2：格式化为float，然后处理成%格式： <code>&#123;:.2f&#125;%</code></h2><p>与方式1的区别是：</p>
+<ol>
+<li>需要对42/50乘以 100 。</li>
+<li>方式2的%在{ }外边，方式1的%在{ }里边。</li>
+</ol>
+<ul>
+<li>显示小数点后2位：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.2f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.00</span>%</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>显示小数点后1位：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.1f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.0</span>%</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>只显示整数位：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.0f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84</span>%</span><br></pre></td></tr></table></figure>
+
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p><code>&#123; &#125; </code>的意思是对应<code>format()</code>的一个参数，按默认顺序对应，参数序号从0开始，<code>&#123;0&#125;</code>对应<code>format()</code>的第一个参数，<code>&#123;1&#125;</code>对应第二个参数。例如：</p>
+<ul>
+<li>默认顺序：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent1: &#123;:.2%&#125;, percent2: &#123;:.1%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>, <span class="number">42</span> / <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent1: <span class="number">84.00</span>%, percent2: <span class="number">42.0</span>%</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>指定顺序：<br><code>&#123;1:.1%&#125;</code>对应第2个参数； <code>&#123;0:.1%&#125;</code>对应第1个参数。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent2: &#123;1:.1%&#125;, percent1: &#123;0:.1%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>, <span class="number">42</span> / <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent2: <span class="number">42.0</span>%, percent1: <span class="number">84.0</span>%</span><br></pre></td></tr></table></figure>
+
+<h1 id="输出有效数字"><a href="#输出有效数字" class="headerlink" title="输出有效数字"></a>输出有效数字</h1><p>用自带的decimal模块</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> decimal <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">getcontext().prec = <span class="number">6</span></span><br><span class="line">Decimal(<span class="number">1</span>)/Decimal(<span class="number">7</span>)</span><br><span class="line"><span class="comment"># 结果为Decimal(&#x27;0.142857&#x27;)，六个有效数字</span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -5039,7 +5039,8 @@
   <entry>
     <title>题解：1066_满足条件的数累加</title>
     <url>/2023/08/16/%E9%A2%98%E8%A7%A3%EF%BC%9A1066-%E6%BB%A1%E8%B6%B3%E6%9D%A1%E4%BB%B6%E7%9A%84%E6%95%B0%E7%B4%AF%E5%8A%A0/</url>
-    <content><![CDATA[<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>将正整数m和n之间(包括m和n)能被17整除的数累加，其中，<code>0&lt;m&lt;n&lt;1000</code>。</p>
+    <content><![CDATA[<span id="more"></span>
+<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>将正整数m和n之间(包括m和n)能被17整除的数累加，其中，<code>0&lt;m&lt;n&lt;1000</code>。</p>
 <h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>一行，包含两个整数m和n，其间，以一个空格间隔。</p>
 <h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>输出一行，包行一个整数，表示累加的结果。</p>
 <h2 id="输入样例"><a href="#输入样例" class="headerlink" title="输入样例"></a>输入样例</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">50 85</span><br></pre></td></tr></table></figure>
