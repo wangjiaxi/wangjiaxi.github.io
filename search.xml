@@ -96,6 +96,40 @@
       </tags>
   </entry>
   <entry>
+    <title>Mac提示「软件已损坏，请移到废纸篓」解决</title>
+    <url>/2022/02/18/Mac%E6%8F%90%E7%A4%BA%E3%80%8C%E8%BD%AF%E4%BB%B6%E5%B7%B2%E6%8D%9F%E5%9D%8F%EF%BC%8C%E8%AF%B7%E7%A7%BB%E5%88%B0%E5%BA%9F%E7%BA%B8%E7%AF%93%E3%80%8D%E8%A7%A3%E5%86%B3/</url>
+    <content><![CDATA[<blockquote>
+<p>在使用macOS安装<strong>某些</strong>软件时，系统可能会提示「xxx已损坏，请移到废纸篓」</p>
+</blockquote>
+<p>结论：打开终端，输入一下命令</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">xattr -r -d com.apple.quarantine /Applications/APP名</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p><strong>请确保软件的安全性。</strong></p>
+<p><strong>请确保软件的安全性。</strong></p>
+<p><strong>请确保软件的安全性。</strong></p>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><ol>
+<li>打开终端</li>
+<li>输入以下命令</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">xattr -r -d com.apple.quarantine /Applications/APP名</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>重新运行该程序</li>
+</ol>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>以上命令能够移除这个应用的安全隔离属性。</p>
+<hr>
+<blockquote>
+<p>注意：app名如果包含空格，使用 <code>\</code> 转义</p>
+<p>出处：<a href="https://www.jianshu.com/p/6f02003b767f">https://www.jianshu.com/p/6f02003b767f</a></p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>bug</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MacOS下使用VS Code搭建C语言开发环境</title>
     <url>/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
     <content><![CDATA[<p>本篇介绍如何在Mac上使用VS Code写C语言代码。VS Code是一个轻量级的IDE，相比CLion、Xcode等等体积小很多，并且在插件市场拥有丰富的插件，可以方便的安装使用。</p>
@@ -168,40 +202,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Mac提示「软件已损坏，请移到废纸篓」解决</title>
-    <url>/2022/02/18/Mac%E6%8F%90%E7%A4%BA%E3%80%8C%E8%BD%AF%E4%BB%B6%E5%B7%B2%E6%8D%9F%E5%9D%8F%EF%BC%8C%E8%AF%B7%E7%A7%BB%E5%88%B0%E5%BA%9F%E7%BA%B8%E7%AF%93%E3%80%8D%E8%A7%A3%E5%86%B3/</url>
-    <content><![CDATA[<blockquote>
-<p>在使用macOS安装<strong>某些</strong>软件时，系统可能会提示「xxx已损坏，请移到废纸篓」</p>
-</blockquote>
-<p>结论：打开终端，输入一下命令</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">xattr -r -d com.apple.quarantine /Applications/APP名</span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p><strong>请确保软件的安全性。</strong></p>
-<p><strong>请确保软件的安全性。</strong></p>
-<p><strong>请确保软件的安全性。</strong></p>
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><ol>
-<li>打开终端</li>
-<li>输入以下命令</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">xattr -r -d com.apple.quarantine /Applications/APP名</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>重新运行该程序</li>
-</ol>
-<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>以上命令能够移除这个应用的安全隔离属性。</p>
-<hr>
-<blockquote>
-<p>注意：app名如果包含空格，使用 <code>\</code> 转义</p>
-<p>出处：<a href="https://www.jianshu.com/p/6f02003b767f">https://www.jianshu.com/p/6f02003b767f</a></p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>bug</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Matplotlib绘制引力波</title>
     <url>/2019/04/04/Matplotlib%E7%BB%98%E5%88%B6%E5%BC%95%E5%8A%9B%E6%B3%A2/</url>
     <content><![CDATA[<p>2016年6月16日，LIGO合作组宣布2015年12月26日 03:38:53（UTC），两台不同位置的引力波探测器同时探测到了一个引力波信号。</p>
@@ -264,45 +264,9 @@
         <category>Python</category>
       </categories>
       <tags>
-        <tag>IDE</tag>
         <tag>bug</tag>
+        <tag>IDE</tag>
         <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Pygame Zero之贪吃蛇（一）</title>
-    <url>/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<p>搞了这么久Python，玩个🐍吧！</p>
-<span id="more"></span>
-
-<p>贪吃蛇是个经典游戏，它的规则也是十分简单：控制小蛇上下左右移动，吃到食物以后，长度增加1；蛇头碰到屏幕边缘或者自己的身体，游戏失败。</p>
-<p>今天这个阶段，我们来把小蛇创建出来。</p>
-<p>下面有4个小方块，我们可以用他们来创建4个不同颜色的小蛇。</p>
-<img src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/%E5%9B%BE%E7%89%87%E6%96%87%E4%BB%B6.png" class>
-
-<p>小蛇的构造，就是用这些小方块拼在一起。我们可以设置它的初始长度为5个小方块。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pgzrun</span><br><span class="line"></span><br><span class="line">TILE_SIZE = <span class="number">20</span></span><br><span class="line">WIDTH = <span class="number">40</span> * TILE_SIZE</span><br><span class="line">HEIGHT = <span class="number">30</span> * TILE_SIZE</span><br><span class="line"></span><br><span class="line">snakehead = Actor(<span class="string">&#x27;snake1&#x27;</span>)</span><br><span class="line">snakehead.x = WIDTH / <span class="number">2</span></span><br><span class="line">snakehead.y = HEIGHT / <span class="number">2</span></span><br><span class="line"></span><br><span class="line">Snake = []</span><br><span class="line">Snake.append(snakehead)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    snakebody = Actor(<span class="string">&#x27;snake1&#x27;</span>)</span><br><span class="line">    snakebody.x = Snake[i].x - TILE_SIZE</span><br><span class="line">    snakebody.y = Snake[i].y</span><br><span class="line">    Snake.append(snakebody)</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    screen.clear()</span><br><span class="line">    <span class="keyword">for</span> snakebody <span class="keyword">in</span> Snake:</span><br><span class="line">        snakebody.draw()</span><br><span class="line"></span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure>
-
-<p>运行效果如下：</p>
-<img src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/%E6%95%88%E6%9E%9C.png" class>
-
-<hr>
-<blockquote>
-<p>同学们可以右键保存下边的图片到你的<code>images</code>文件夹</p>
-</blockquote>
-<img src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/snake1.jpg" class>
-
-<img src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/snake2.jpg" class>
-
-<img src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/snake3.jpg" class>
-
-<img src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/snake4.jpg" class>]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>游戏</tag>
       </tags>
   </entry>
   <entry>
@@ -360,6 +324,42 @@
 
 <p>运行程序，有一种古老游戏的感觉了，小蛇看起来是在一格一格的前进！</p>
 ]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>游戏</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Pygame Zero之贪吃蛇（一）</title>
+    <url>/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<p>搞了这么久Python，玩个🐍吧！</p>
+<span id="more"></span>
+
+<p>贪吃蛇是个经典游戏，它的规则也是十分简单：控制小蛇上下左右移动，吃到食物以后，长度增加1；蛇头碰到屏幕边缘或者自己的身体，游戏失败。</p>
+<p>今天这个阶段，我们来把小蛇创建出来。</p>
+<p>下面有4个小方块，我们可以用他们来创建4个不同颜色的小蛇。</p>
+<img src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/%E5%9B%BE%E7%89%87%E6%96%87%E4%BB%B6.png" class>
+
+<p>小蛇的构造，就是用这些小方块拼在一起。我们可以设置它的初始长度为5个小方块。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pgzrun</span><br><span class="line"></span><br><span class="line">TILE_SIZE = <span class="number">20</span></span><br><span class="line">WIDTH = <span class="number">40</span> * TILE_SIZE</span><br><span class="line">HEIGHT = <span class="number">30</span> * TILE_SIZE</span><br><span class="line"></span><br><span class="line">snakehead = Actor(<span class="string">&#x27;snake1&#x27;</span>)</span><br><span class="line">snakehead.x = WIDTH / <span class="number">2</span></span><br><span class="line">snakehead.y = HEIGHT / <span class="number">2</span></span><br><span class="line"></span><br><span class="line">Snake = []</span><br><span class="line">Snake.append(snakehead)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    snakebody = Actor(<span class="string">&#x27;snake1&#x27;</span>)</span><br><span class="line">    snakebody.x = Snake[i].x - TILE_SIZE</span><br><span class="line">    snakebody.y = Snake[i].y</span><br><span class="line">    Snake.append(snakebody)</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    screen.clear()</span><br><span class="line">    <span class="keyword">for</span> snakebody <span class="keyword">in</span> Snake:</span><br><span class="line">        snakebody.draw()</span><br><span class="line"></span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure>
+
+<p>运行效果如下：</p>
+<img src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/%E6%95%88%E6%9E%9C.png" class>
+
+<hr>
+<blockquote>
+<p>同学们可以右键保存下边的图片到你的<code>images</code>文件夹</p>
+</blockquote>
+<img src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/snake1.jpg" class>
+
+<img src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/snake2.jpg" class>
+
+<img src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/snake3.jpg" class>
+
+<img src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/snake4.jpg" class>]]></content>
       <categories>
         <category>Python</category>
       </categories>
@@ -662,26 +662,6 @@
       </tags>
   </entry>
   <entry>
-    <title>PygameZero制作Pacman</title>
-    <url>/2020/11/28/PygameZero%E5%88%B6%E4%BD%9CPacman/</url>
-    <content><![CDATA[<p>本篇来介绍Pacman的PygameZero实现。</p>
-<img src="/2020/11/28/PygameZero%E5%88%B6%E4%BD%9CPacman/pacman.png" class>
-
-<span id="more"></span>
-
-<p>先上代码，后边补上讲解</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pgzrun</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">WIDTH = <span class="number">500</span></span><br><span class="line">HEIGHT = <span class="number">500</span></span><br><span class="line">pacman = Actor(<span class="string">&#x27;向右的吃豆人&#x27;</span>)</span><br><span class="line">pacman.pos = [<span class="number">250</span>, <span class="number">250</span>]</span><br><span class="line">bean1 = Actor(<span class="string">&#x27;豆子&#x27;</span>)</span><br><span class="line">bean1.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean1.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean2 = Actor(<span class="string">&#x27;豆子&#x27;</span>)</span><br><span class="line">bean2.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean2.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean3 = Actor(<span class="string">&#x27;豆子&#x27;</span>)</span><br><span class="line">bean3.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean3.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">beans = [bean1, bean2, bean3]</span><br><span class="line">score = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    screen.blit(<span class="string">&#x27;游戏背景&#x27;</span>, [<span class="number">0</span>, <span class="number">0</span>])</span><br><span class="line">    pacman.draw()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> beans:</span><br><span class="line">        i.draw()</span><br><span class="line">    screen.draw.text(<span class="built_in">str</span>(score), [<span class="number">15</span>, <span class="number">15</span>], color=<span class="string">&#x27;orange&#x27;</span>, fontsize=<span class="number">30</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_key_down</span>(<span class="params">key</span>):</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.LEFT:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向左的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.RIGHT:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向右的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.UP:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向上的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.DOWN:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向下的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.SPACE:</span><br><span class="line">        <span class="built_in">print</span>(score)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="keyword">global</span> score</span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向左的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.x -= <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向右的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.x += <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向上的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.y -= <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向下的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.y += <span class="number">5</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> beans:</span><br><span class="line">        <span class="keyword">if</span> pacman.colliderect(i):</span><br><span class="line">            i.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">            i.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">            score += <span class="number">1</span></span><br><span class="line">            <span class="built_in">print</span>(score)</span><br><span class="line">    <span class="keyword">if</span> pacman.x &lt; <span class="number">0</span> <span class="keyword">or</span> pacman.x &gt; <span class="number">500</span> <span class="keyword">or</span> pacman.y &lt; <span class="number">0</span> <span class="keyword">or</span> pacman.y &gt; <span class="number">500</span>:</span><br><span class="line">        score -= <span class="number">3</span></span><br><span class="line">        <span class="built_in">print</span>(score)</span><br><span class="line">        pacman.pos = [<span class="number">250</span>, <span class="number">250</span>]</span><br><span class="line">    <span class="keyword">if</span> score &lt; <span class="number">0</span>:</span><br><span class="line">        exit()</span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>游戏</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>PygameZero中文文档 - 3</title>
     <url>/2019/08/28/PygameZero%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3%20-%203/</url>
     <content><![CDATA[<p>Pygame Zero会自动识别并调用您定义的事件钩，这种方法可以使您不必自己实现事件循环机制。</p>
@@ -793,6 +773,26 @@
       </tags>
   </entry>
   <entry>
+    <title>PygameZero制作Pacman</title>
+    <url>/2020/11/28/PygameZero%E5%88%B6%E4%BD%9CPacman/</url>
+    <content><![CDATA[<p>本篇来介绍Pacman的PygameZero实现。</p>
+<img src="/2020/11/28/PygameZero%E5%88%B6%E4%BD%9CPacman/pacman.png" class>
+
+<span id="more"></span>
+
+<p>先上代码，后边补上讲解</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pgzrun</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">WIDTH = <span class="number">500</span></span><br><span class="line">HEIGHT = <span class="number">500</span></span><br><span class="line">pacman = Actor(<span class="string">&#x27;向右的吃豆人&#x27;</span>)</span><br><span class="line">pacman.pos = [<span class="number">250</span>, <span class="number">250</span>]</span><br><span class="line">bean1 = Actor(<span class="string">&#x27;豆子&#x27;</span>)</span><br><span class="line">bean1.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean1.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean2 = Actor(<span class="string">&#x27;豆子&#x27;</span>)</span><br><span class="line">bean2.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean2.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean3 = Actor(<span class="string">&#x27;豆子&#x27;</span>)</span><br><span class="line">bean3.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean3.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">beans = [bean1, bean2, bean3]</span><br><span class="line">score = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    screen.blit(<span class="string">&#x27;游戏背景&#x27;</span>, [<span class="number">0</span>, <span class="number">0</span>])</span><br><span class="line">    pacman.draw()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> beans:</span><br><span class="line">        i.draw()</span><br><span class="line">    screen.draw.text(<span class="built_in">str</span>(score), [<span class="number">15</span>, <span class="number">15</span>], color=<span class="string">&#x27;orange&#x27;</span>, fontsize=<span class="number">30</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_key_down</span>(<span class="params">key</span>):</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.LEFT:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向左的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.RIGHT:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向右的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.UP:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向上的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.DOWN:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向下的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.SPACE:</span><br><span class="line">        <span class="built_in">print</span>(score)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="keyword">global</span> score</span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向左的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.x -= <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向右的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.x += <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向上的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.y -= <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向下的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.y += <span class="number">5</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> beans:</span><br><span class="line">        <span class="keyword">if</span> pacman.colliderect(i):</span><br><span class="line">            i.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">            i.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">            score += <span class="number">1</span></span><br><span class="line">            <span class="built_in">print</span>(score)</span><br><span class="line">    <span class="keyword">if</span> pacman.x &lt; <span class="number">0</span> <span class="keyword">or</span> pacman.x &gt; <span class="number">500</span> <span class="keyword">or</span> pacman.y &lt; <span class="number">0</span> <span class="keyword">or</span> pacman.y &gt; <span class="number">500</span>:</span><br><span class="line">        score -= <span class="number">3</span></span><br><span class="line">        <span class="built_in">print</span>(score)</span><br><span class="line">        pacman.pos = [<span class="number">250</span>, <span class="number">250</span>]</span><br><span class="line">    <span class="keyword">if</span> score &lt; <span class="number">0</span>:</span><br><span class="line">        exit()</span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>游戏</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python中if后直接加变量</title>
     <url>/2019/12/23/Python%E4%B8%ADif%E5%90%8E%E7%9B%B4%E6%8E%A5%E5%8A%A0%E5%8F%98%E9%87%8F/</url>
     <content><![CDATA[<p>python中有时候会使用if语句，后边直接加一个变量，而不是一个布尔表达式，这是在判断神马呢？</p>
@@ -802,33 +802,6 @@
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ls = [[], <span class="number">0</span>, <span class="string">&#x27;&#x27;</span>, <span class="string">&quot;&quot;</span>, &#123;&#125;, (), [<span class="number">1</span>], <span class="number">2</span>, <span class="string">&#x27;3&#x27;</span>, <span class="string">&quot;4&quot;</span>, &#123;<span class="number">5</span>&#125;, (<span class="number">6</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> ls:</span><br><span class="line">    <span class="keyword">if</span> i:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;i =&#x27;</span>, i, <span class="string">&#x27;有值&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;i =&#x27;</span>, i, <span class="string">&#x27;没值&#x27;</span>)</span><br></pre></td></tr></table></figure>
 <p>结果</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">i = [] 没值</span><br><span class="line">i = <span class="number">0</span> 没值</span><br><span class="line">i =  没值</span><br><span class="line">i =  没值</span><br><span class="line">i = &#123;&#125; 没值</span><br><span class="line">i = () 没值</span><br><span class="line">i = [<span class="number">1</span>] 有值</span><br><span class="line">i = <span class="number">2</span> 有值</span><br><span class="line">i = <span class="number">3</span> 有值</span><br><span class="line">i = <span class="number">4</span> 有值</span><br><span class="line">i = &#123;<span class="number">5</span>&#125; 有值</span><br><span class="line">i = <span class="number">6</span> 有值</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python实现照片的手绘效果</title>
-    <url>/2019/04/04/Python%E5%AE%9E%E7%8E%B0%E7%85%A7%E7%89%87%E7%9A%84%E6%89%8B%E7%BB%98%E6%95%88%E6%9E%9C/</url>
-    <content><![CDATA[<h1 id="梯度的重构"><a href="#梯度的重构" class="headerlink" title="梯度的重构"></a>梯度的重构</h1><p>利用像素之间的梯度值和虚拟深度值对图像进行重构，根据灰度变化来模拟人类视觉的明暗程度。</p>
-<span id="more"></span>
-
-<h1 id="手绘效果的特征"><a href="#手绘效果的特征" class="headerlink" title="手绘效果的特征"></a>手绘效果的特征</h1><ol>
-<li>黑白灰色</li>
-<li>边界线条较重</li>
-<li>相同或相近色彩趋于白色</li>
-<li>略有光源效果</li>
-</ol>
-<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><p>用到的第三方库安装：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install pillow,numpy</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#image.py</span></span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a = np.asarray(Image.<span class="built_in">open</span>(<span class="string">&#x27;./yunwuyue.jpg&#x27;</span>).convert(<span class="string">&#x27;L&#x27;</span>)).astype(<span class="string">&#x27;float&#x27;</span>)</span><br><span class="line"></span><br><span class="line">depth = <span class="number">10.</span>     <span class="comment">#预设深度值为10，取值范围0-100</span></span><br><span class="line">grad = np.gradient(a)       <span class="comment">#提取x和y方向的梯度值</span></span><br><span class="line">grad_x, grad_y = grad</span><br><span class="line"><span class="comment">#根据深度值调整x和y方向的梯度值</span></span><br><span class="line">grad_x = grad_x * depth / <span class="number">100.</span></span><br><span class="line">grad_y = grad_y * depth / <span class="number">100.</span></span><br><span class="line">A = np.sqrt(grad_x**<span class="number">2</span> + grad_y**<span class="number">2</span> + <span class="number">1.</span>)</span><br><span class="line">uni_x = grad_x / A</span><br><span class="line">uni_y = grad_y / A</span><br><span class="line">uni_z = <span class="number">1.</span> / A</span><br><span class="line"></span><br><span class="line">vec_el = np.pi / <span class="number">2.2</span></span><br><span class="line">vec_az = np.pi / <span class="number">4</span></span><br><span class="line">dx = np.cos(vec_el) * np.cos(vec_az)</span><br><span class="line">dy = np.cos(vec_el) * np.sin(vec_az)</span><br><span class="line">dz = np.sin(vec_el)</span><br><span class="line"></span><br><span class="line">b = <span class="number">255</span> * (dx * uni_x + dy * uni_y + dz * uni_z)</span><br><span class="line">b = b.clip(<span class="number">0</span>, <span class="number">255</span>)</span><br><span class="line"></span><br><span class="line">im = Image.fromarray(b.astype(<span class="string">&#x27;uint8&#x27;</span>))</span><br><span class="line">im.save(<span class="string">&#x27;./yunwuyueHD.jpg&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h1 id="展示"><a href="#展示" class="headerlink" title="展示"></a>展示</h1><p><img src="/2019/04/04/Python%E5%AE%9E%E7%8E%B0%E7%85%A7%E7%89%87%E7%9A%84%E6%89%8B%E7%BB%98%E6%95%88%E6%9E%9C/yunwuyue.jpg"></p>
-<p><img src="/2019/04/04/Python%E5%AE%9E%E7%8E%B0%E7%85%A7%E7%89%87%E7%9A%84%E6%89%8B%E7%BB%98%E6%95%88%E6%9E%9C/yunwuyueHD.jpg"></p>
-]]></content>
       <categories>
         <category>Python</category>
       </categories>
@@ -909,60 +882,25 @@
       </tags>
   </entry>
   <entry>
-    <title>Python输出百分比和有效数字</title>
-    <url>/2020/05/13/Python%E8%BE%93%E5%87%BA%E7%99%BE%E5%88%86%E6%AF%94%E5%92%8C%E6%9C%89%E6%95%88%E6%95%B0%E5%AD%97/</url>
-    <content><![CDATA[<p>目录：</p>
-<ul>
-<li><p>输出百分数</p>
-</li>
-<li><p>输出有效数字</p>
-</li>
-</ul>
+    <title>Python实现照片的手绘效果</title>
+    <url>/2019/04/04/Python%E5%AE%9E%E7%8E%B0%E7%85%A7%E7%89%87%E7%9A%84%E6%89%8B%E7%BB%98%E6%95%88%E6%9E%9C/</url>
+    <content><![CDATA[<h1 id="梯度的重构"><a href="#梯度的重构" class="headerlink" title="梯度的重构"></a>梯度的重构</h1><p>利用像素之间的梯度值和虚拟深度值对图像进行重构，根据灰度变化来模拟人类视觉的明暗程度。</p>
 <span id="more"></span>
-<h1 id="输出百分数"><a href="#输出百分数" class="headerlink" title="输出百分数"></a>输出百分数</h1><h2 id="方式1：直接使用参数格式化：-2"><a href="#方式1：直接使用参数格式化：-2" class="headerlink" title="方式1：直接使用参数格式化：{:.2%}"></a>方式1：直接使用参数格式化：<code>&#123;:.2%&#125;</code></h2><p><code>&#123;:.2%&#125;</code>： 显示小数点后2位</p>
-<ul>
-<li>显示小数点后2位：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.2%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.00</span>%</span><br></pre></td></tr></table></figure>
 
-<ul>
-<li>不显示小数位：<code>&#123;:.0%&#125;</code>，即，将2改为0：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.0%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84</span>%</span><br></pre></td></tr></table></figure>
-
-<h2 id="方式2：格式化为float，然后处理成-格式：-2f"><a href="#方式2：格式化为float，然后处理成-格式：-2f" class="headerlink" title="方式2：格式化为float，然后处理成%格式： {:.2f}%"></a>方式2：格式化为float，然后处理成%格式： <code>&#123;:.2f&#125;%</code></h2><p>与方式1的区别是：</p>
-<ol>
-<li>需要对42/50乘以 100 。</li>
-<li>方式2的%在{ }外边，方式1的%在{ }里边。</li>
+<h1 id="手绘效果的特征"><a href="#手绘效果的特征" class="headerlink" title="手绘效果的特征"></a>手绘效果的特征</h1><ol>
+<li>黑白灰色</li>
+<li>边界线条较重</li>
+<li>相同或相近色彩趋于白色</li>
+<li>略有光源效果</li>
 </ol>
-<ul>
-<li>显示小数点后2位：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.2f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.00</span>%</span><br></pre></td></tr></table></figure>
+<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><p>用到的第三方库安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install pillow,numpy</span><br></pre></td></tr></table></figure>
 
-<ul>
-<li>显示小数点后1位：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.1f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.0</span>%</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#image.py</span></span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a = np.asarray(Image.<span class="built_in">open</span>(<span class="string">&#x27;./yunwuyue.jpg&#x27;</span>).convert(<span class="string">&#x27;L&#x27;</span>)).astype(<span class="string">&#x27;float&#x27;</span>)</span><br><span class="line"></span><br><span class="line">depth = <span class="number">10.</span>     <span class="comment">#预设深度值为10，取值范围0-100</span></span><br><span class="line">grad = np.gradient(a)       <span class="comment">#提取x和y方向的梯度值</span></span><br><span class="line">grad_x, grad_y = grad</span><br><span class="line"><span class="comment">#根据深度值调整x和y方向的梯度值</span></span><br><span class="line">grad_x = grad_x * depth / <span class="number">100.</span></span><br><span class="line">grad_y = grad_y * depth / <span class="number">100.</span></span><br><span class="line">A = np.sqrt(grad_x**<span class="number">2</span> + grad_y**<span class="number">2</span> + <span class="number">1.</span>)</span><br><span class="line">uni_x = grad_x / A</span><br><span class="line">uni_y = grad_y / A</span><br><span class="line">uni_z = <span class="number">1.</span> / A</span><br><span class="line"></span><br><span class="line">vec_el = np.pi / <span class="number">2.2</span></span><br><span class="line">vec_az = np.pi / <span class="number">4</span></span><br><span class="line">dx = np.cos(vec_el) * np.cos(vec_az)</span><br><span class="line">dy = np.cos(vec_el) * np.sin(vec_az)</span><br><span class="line">dz = np.sin(vec_el)</span><br><span class="line"></span><br><span class="line">b = <span class="number">255</span> * (dx * uni_x + dy * uni_y + dz * uni_z)</span><br><span class="line">b = b.clip(<span class="number">0</span>, <span class="number">255</span>)</span><br><span class="line"></span><br><span class="line">im = Image.fromarray(b.astype(<span class="string">&#x27;uint8&#x27;</span>))</span><br><span class="line">im.save(<span class="string">&#x27;./yunwuyueHD.jpg&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<ul>
-<li>只显示整数位：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.0f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84</span>%</span><br></pre></td></tr></table></figure>
-
-<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p><code>&#123; &#125; </code>的意思是对应<code>format()</code>的一个参数，按默认顺序对应，参数序号从0开始，<code>&#123;0&#125;</code>对应<code>format()</code>的第一个参数，<code>&#123;1&#125;</code>对应第二个参数。例如：</p>
-<ul>
-<li>默认顺序：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent1: &#123;:.2%&#125;, percent2: &#123;:.1%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>, <span class="number">42</span> / <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent1: <span class="number">84.00</span>%, percent2: <span class="number">42.0</span>%</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>指定顺序：<br><code>&#123;1:.1%&#125;</code>对应第2个参数； <code>&#123;0:.1%&#125;</code>对应第1个参数。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent2: &#123;1:.1%&#125;, percent1: &#123;0:.1%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>, <span class="number">42</span> / <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent2: <span class="number">42.0</span>%, percent1: <span class="number">84.0</span>%</span><br></pre></td></tr></table></figure>
-
-<h1 id="输出有效数字"><a href="#输出有效数字" class="headerlink" title="输出有效数字"></a>输出有效数字</h1><p>用自带的decimal模块</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> decimal <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">getcontext().prec = <span class="number">6</span></span><br><span class="line">Decimal(<span class="number">1</span>)/Decimal(<span class="number">7</span>)</span><br><span class="line"><span class="comment"># 结果为Decimal(&#x27;0.142857&#x27;)，六个有效数字</span></span><br></pre></td></tr></table></figure>]]></content>
+<h1 id="展示"><a href="#展示" class="headerlink" title="展示"></a>展示</h1><p><img src="/2019/04/04/Python%E5%AE%9E%E7%8E%B0%E7%85%A7%E7%89%87%E7%9A%84%E6%89%8B%E7%BB%98%E6%95%88%E6%9E%9C/yunwuyue.jpg"></p>
+<p><img src="/2019/04/04/Python%E5%AE%9E%E7%8E%B0%E7%85%A7%E7%89%87%E7%9A%84%E6%89%8B%E7%BB%98%E6%95%88%E6%9E%9C/yunwuyueHD.jpg"></p>
+]]></content>
       <categories>
         <category>Python</category>
       </categories>
@@ -1347,24 +1285,60 @@
       </tags>
   </entry>
   <entry>
-    <title>Python题目 - 回文质数</title>
-    <url>/2020/01/09/Python%E9%A2%98%E7%9B%AE%20-%20%E5%9B%9E%E6%96%87%E8%B4%A8%E6%95%B0/</url>
-    <content><![CDATA[<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>因为 151 既是一个质数又是一个回文数（从左到右和从右到左是看一样的），所以 151 是回文质数。</p>
-<p>写一个程序来找出范围 [a,b] (5 \le a &lt; b \le 100,000,000)<a href="5%E2%89%A4*a*%3C*b*%E2%89%A4100,000,000"><em>a</em>,<em>b</em></a>( 一亿)间的所有回文质数。</p>
-<h1 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h1><p>第 1 行: 二个整数 a 和 b .</p>
-<h1 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h1><p>输出一个回文质数的列表，一行一个。</p>
+    <title>Python输出百分比和有效数字</title>
+    <url>/2020/05/13/Python%E8%BE%93%E5%87%BA%E7%99%BE%E5%88%86%E6%AF%94%E5%92%8C%E6%9C%89%E6%95%88%E6%95%B0%E5%AD%97/</url>
+    <content><![CDATA[<p>目录：</p>
+<ul>
+<li><p>输出百分数</p>
+</li>
+<li><p>输出有效数字</p>
+</li>
+</ul>
 <span id="more"></span>
+<h1 id="输出百分数"><a href="#输出百分数" class="headerlink" title="输出百分数"></a>输出百分数</h1><h2 id="方式1：直接使用参数格式化：-2"><a href="#方式1：直接使用参数格式化：-2" class="headerlink" title="方式1：直接使用参数格式化：{:.2%}"></a>方式1：直接使用参数格式化：<code>&#123;:.2%&#125;</code></h2><p><code>&#123;:.2%&#125;</code>： 显示小数点后2位</p>
+<ul>
+<li>显示小数点后2位：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.2%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.00</span>%</span><br></pre></td></tr></table></figure>
 
-<h1 id="输入输出样例"><a href="#输入输出样例" class="headerlink" title="输入输出样例"></a>输入输出样例</h1><h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">5</span> <span class="number">500</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>不显示小数位：<code>&#123;:.0%&#125;</code>，即，将2改为0：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.0%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84</span>%</span><br></pre></td></tr></table></figure>
 
-<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">7</span></span><br><span class="line"><span class="number">11</span></span><br><span class="line"><span class="number">101</span></span><br><span class="line"><span class="number">131</span></span><br><span class="line"><span class="number">151</span></span><br><span class="line"><span class="number">181</span></span><br><span class="line"><span class="number">191</span></span><br><span class="line"><span class="number">313</span></span><br><span class="line"><span class="number">353</span></span><br><span class="line"><span class="number">373</span></span><br><span class="line"><span class="number">383</span></span><br></pre></td></tr></table></figure>
+<h2 id="方式2：格式化为float，然后处理成-格式：-2f"><a href="#方式2：格式化为float，然后处理成-格式：-2f" class="headerlink" title="方式2：格式化为float，然后处理成%格式： {:.2f}%"></a>方式2：格式化为float，然后处理成%格式： <code>&#123;:.2f&#125;%</code></h2><p>与方式1的区别是：</p>
+<ol>
+<li>需要对42/50乘以 100 。</li>
+<li>方式2的%在{ }外边，方式1的%在{ }里边。</li>
+</ol>
+<ul>
+<li>显示小数点后2位：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.2f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.00</span>%</span><br></pre></td></tr></table></figure>
 
-<h1 id="超时实现"><a href="#超时实现" class="headerlink" title="超时实现"></a>超时实现</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 获得输入</span></span><br><span class="line">ab = <span class="built_in">input</span>().split()</span><br><span class="line">a = <span class="built_in">int</span>(ab[<span class="number">0</span>])</span><br><span class="line">b = <span class="built_in">int</span>(ab[<span class="number">1</span>])</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(a, b + <span class="number">1</span>):</span><br><span class="line">    <span class="keyword">if</span> i % <span class="number">2</span> == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">str</span>(i)[::-<span class="number">1</span>] == <span class="built_in">str</span>(i): <span class="comment"># 判断是否回文数</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, <span class="built_in">int</span>(i ** <span class="number">0.5</span>) + <span class="number">1</span>): <span class="comment"># 判断是否质数</span></span><br><span class="line">                <span class="keyword">if</span> i % j == <span class="number">0</span>:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="built_in">print</span>(i) <span class="comment"># 是则打印</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>显示小数点后1位：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.1f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.0</span>%</span><br></pre></td></tr></table></figure>
 
-<h1 id="大佬方法"><a href="#大佬方法" class="headerlink" title="大佬方法"></a>大佬方法</h1><p>埃氏筛</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">prime_numbers</span>(<span class="params">n</span>):</span></span><br><span class="line">    number = [<span class="number">1</span>]*(n+<span class="number">1</span>)  <span class="comment"># 初始化，1表示全部为质数</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, <span class="built_in">int</span>((n**<span class="number">0.5</span>))+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> number[i]:  <span class="comment"># 如果下标i对应的数字i是素数</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i*i, n+<span class="number">1</span>, i):  <span class="comment"># 素数i的各个倍数</span></span><br><span class="line">                number[j] = <span class="number">0</span></span><br><span class="line">                j += <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, n+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> number[x]:</span><br><span class="line">            <span class="built_in">print</span>(x)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>只显示整数位：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.0f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84</span>%</span><br></pre></td></tr></table></figure>
 
-]]></content>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p><code>&#123; &#125; </code>的意思是对应<code>format()</code>的一个参数，按默认顺序对应，参数序号从0开始，<code>&#123;0&#125;</code>对应<code>format()</code>的第一个参数，<code>&#123;1&#125;</code>对应第二个参数。例如：</p>
+<ul>
+<li>默认顺序：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent1: &#123;:.2%&#125;, percent2: &#123;:.1%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>, <span class="number">42</span> / <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent1: <span class="number">84.00</span>%, percent2: <span class="number">42.0</span>%</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>指定顺序：<br><code>&#123;1:.1%&#125;</code>对应第2个参数； <code>&#123;0:.1%&#125;</code>对应第1个参数。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent2: &#123;1:.1%&#125;, percent1: &#123;0:.1%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>, <span class="number">42</span> / <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent2: <span class="number">42.0</span>%, percent1: <span class="number">84.0</span>%</span><br></pre></td></tr></table></figure>
+
+<h1 id="输出有效数字"><a href="#输出有效数字" class="headerlink" title="输出有效数字"></a>输出有效数字</h1><p>用自带的decimal模块</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> decimal <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">getcontext().prec = <span class="number">6</span></span><br><span class="line">Decimal(<span class="number">1</span>)/Decimal(<span class="number">7</span>)</span><br><span class="line"><span class="comment"># 结果为Decimal(&#x27;0.142857&#x27;)，六个有效数字</span></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Python</category>
       </categories>
@@ -1457,6 +1431,32 @@
 <blockquote>
 <p>转自嵩天老师的课程《Python语言程序设计》-  <a href="https://www.icourse163.org/course/BIT-268001">https://www.icourse163.org/course/BIT-268001</a></p>
 </blockquote>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python题目 - 回文质数</title>
+    <url>/2020/01/09/Python%E9%A2%98%E7%9B%AE%20-%20%E5%9B%9E%E6%96%87%E8%B4%A8%E6%95%B0/</url>
+    <content><![CDATA[<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>因为 151 既是一个质数又是一个回文数（从左到右和从右到左是看一样的），所以 151 是回文质数。</p>
+<p>写一个程序来找出范围 [a,b] (5 \le a &lt; b \le 100,000,000)<a href="5%E2%89%A4*a*%3C*b*%E2%89%A4100,000,000"><em>a</em>,<em>b</em></a>( 一亿)间的所有回文质数。</p>
+<h1 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h1><p>第 1 行: 二个整数 a 和 b .</p>
+<h1 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h1><p>输出一个回文质数的列表，一行一个。</p>
+<span id="more"></span>
+
+<h1 id="输入输出样例"><a href="#输入输出样例" class="headerlink" title="输入输出样例"></a>输入输出样例</h1><h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">5</span> <span class="number">500</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">7</span></span><br><span class="line"><span class="number">11</span></span><br><span class="line"><span class="number">101</span></span><br><span class="line"><span class="number">131</span></span><br><span class="line"><span class="number">151</span></span><br><span class="line"><span class="number">181</span></span><br><span class="line"><span class="number">191</span></span><br><span class="line"><span class="number">313</span></span><br><span class="line"><span class="number">353</span></span><br><span class="line"><span class="number">373</span></span><br><span class="line"><span class="number">383</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="超时实现"><a href="#超时实现" class="headerlink" title="超时实现"></a>超时实现</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 获得输入</span></span><br><span class="line">ab = <span class="built_in">input</span>().split()</span><br><span class="line">a = <span class="built_in">int</span>(ab[<span class="number">0</span>])</span><br><span class="line">b = <span class="built_in">int</span>(ab[<span class="number">1</span>])</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(a, b + <span class="number">1</span>):</span><br><span class="line">    <span class="keyword">if</span> i % <span class="number">2</span> == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">str</span>(i)[::-<span class="number">1</span>] == <span class="built_in">str</span>(i): <span class="comment"># 判断是否回文数</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, <span class="built_in">int</span>(i ** <span class="number">0.5</span>) + <span class="number">1</span>): <span class="comment"># 判断是否质数</span></span><br><span class="line">                <span class="keyword">if</span> i % j == <span class="number">0</span>:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="built_in">print</span>(i) <span class="comment"># 是则打印</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="大佬方法"><a href="#大佬方法" class="headerlink" title="大佬方法"></a>大佬方法</h1><p>埃氏筛</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">prime_numbers</span>(<span class="params">n</span>):</span></span><br><span class="line">    number = [<span class="number">1</span>]*(n+<span class="number">1</span>)  <span class="comment"># 初始化，1表示全部为质数</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, <span class="built_in">int</span>((n**<span class="number">0.5</span>))+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> number[i]:  <span class="comment"># 如果下标i对应的数字i是素数</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i*i, n+<span class="number">1</span>, i):  <span class="comment"># 素数i的各个倍数</span></span><br><span class="line">                number[j] = <span class="number">0</span></span><br><span class="line">                j += <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, n+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> number[x]:</span><br><span class="line">            <span class="built_in">print</span>(x)</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>Python</category>
@@ -1642,6 +1642,24 @@
 <p>WHERE子句指定需要删除哪些记录。如果省略了WHERE子句，表中所有记录都将被删除！</p>
 <p>删除所有数据：可以删除表中的所有行，而不需要删除该表。这意味着表的结构、属性和索引将保持不变</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> table_name;</span><br><span class="line"><span class="comment">/*或者*/</span></span><br><span class="line"><span class="keyword">DELETE</span> <span class="operator">*</span> <span class="keyword">FROM</span> table_name;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SQL必知必会(1)了解SQL</title>
+    <url>/2020/12/06/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-1-%E4%BA%86%E8%A7%A3SQL/</url>
+    <content><![CDATA[<p>数据库（database）：保存有组织的数据的容器（通常是一个文件或一组文件）。</p>
+<p>表（table）：某种特定类型数据的结构化清单。</p>
+<p>模式：关于数据库和表的布局及特性的信息。</p>
+<p>列（column）：表中的一个字段。所有表都是由一个或多个列组成的。</p>
+<p>数据类型：所允许的数据的类型。每个表列都有相应的数据类型，它限制（或允许）该列中存储的数据。</p>
+<p>行（row）：表中的一个记录。</p>
+<p>主键（primary key）：一列（或一组列），其值能够唯一标识表中每一行。</p>
+]]></content>
       <categories>
         <category>SQL</category>
       </categories>
@@ -1885,24 +1903,6 @@
 </blockquote>
 <p>注释：</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name     <span class="comment">--这是一条注释</span></span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br><span class="line"># 这是一条注释</span><br><span class="line"><span class="comment">/*这是</span></span><br><span class="line"><span class="comment">一条注释*/</span></span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>SQL</category>
-      </categories>
-      <tags>
-        <tag>SQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SQL必知必会(1)了解SQL</title>
-    <url>/2020/12/06/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-1-%E4%BA%86%E8%A7%A3SQL/</url>
-    <content><![CDATA[<p>数据库（database）：保存有组织的数据的容器（通常是一个文件或一组文件）。</p>
-<p>表（table）：某种特定类型数据的结构化清单。</p>
-<p>模式：关于数据库和表的布局及特性的信息。</p>
-<p>列（column）：表中的一个字段。所有表都是由一个或多个列组成的。</p>
-<p>数据类型：所允许的数据的类型。每个表列都有相应的数据类型，它限制（或允许）该列中存储的数据。</p>
-<p>行（row）：表中的一个记录。</p>
-<p>主键（primary key）：一列（或一组列），其值能够唯一标识表中每一行。</p>
-]]></content>
       <categories>
         <category>SQL</category>
       </categories>
@@ -4843,62 +4843,15 @@
       </tags>
   </entry>
   <entry>
-    <title>无监督学习的降维算法及应用</title>
-    <url>/2019/04/24/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E9%99%8D%E7%BB%B4%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/</url>
-    <content><![CDATA[<h1 id="PCA算法及应用"><a href="#PCA算法及应用" class="headerlink" title="PCA算法及应用"></a>PCA算法及应用</h1><h2 id="主成分分析（PCA）"><a href="#主成分分析（PCA）" class="headerlink" title="主成分分析（PCA）"></a>主成分分析（PCA）</h2><p>主成分分析（Principal Component Analysis,PCA）是最常用的一种降维方法，通常用于高位数据集的探索与可视化，还可以用作数据压缩和预处理等。</p>
-<p>PCA可以吧具有相关性的高位变量合称为线性无关的低维变量，称为主成分。主成分能够尽可能保留原始数据的信息。</p>
-<span id="more"></span>
-
-<h2 id="相关术语"><a href="#相关术语" class="headerlink" title="相关术语"></a>相关术语</h2><h3 id="方差"><a href="#方差" class="headerlink" title="方差"></a>方差</h3><p>方差是各个样本和样本均值的差和平方和的均值，用来度量一组数据的分散程度。</p>
-<p><a href="https://www.codecogs.com/eqnedit.php?latex=s^{2}=\frac{\sum_{i=1}^{n}(x_{i}-x)^{2}}{n-1}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?s^{2}=\frac{\sum_{i=1}^{n}(x_{i}-x)^{2}}{n-1}" title="s^{2}=\frac{\sum_{i=1}^{n}(x_{i}-x)^{2}}{n-1}"></a></p>
-<h3 id="协方差"><a href="#协方差" class="headerlink" title="协方差"></a>协方差</h3><p>协方差用于度量两个变量之间的线性相关程度，若两个变量的协方差为0，则可认为二者线性无关。协方差矩阵则是由变量的协方差值构成的矩阵（对称阵）。</p>
-<p><a href="https://www.codecogs.com/eqnedit.php?latex=Cov(X,Y)=\frac{\sum_{i=1}^{n}(X_{i}-\overline{X})(Y_{i}-\overline{Y})}{n-1}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?Cov(X,Y)=\frac{\sum_{i=1}^{n}(X_{i}-\overline{X})(Y_{i}-\overline{Y})}{n-1}" title="Cov(X,Y)=\frac{\sum_{i=1}^{n}(X_{i}-\overline{X})(Y_{i}-\overline{Y})}{n-1}"></a></p>
-<h3 id="特征向量"><a href="#特征向量" class="headerlink" title="特征向量"></a>特征向量</h3><p>矩阵的特征向量是描述数据集结构的非零向量，并满足如下公式</p>
-<p><a href="https://www.codecogs.com/eqnedit.php?latex=A\overrightarrow{v}=\lambda&space;\overrightarrow{v}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?A\overrightarrow{v}=\lambda&space;\overrightarrow{v}" title="A\overrightarrow{v}=\lambda \overrightarrow{v}"></a></p>
-<p>A是方阵，v是特征向量，λ是特征值</p>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>原理：矩阵的主成分就是其协方差矩阵对应的特征向量，按照对应的特征值大小进行排序，最大的特征值就是第一主成分，其次是第二主成分，以此类推。</p>
-<h2 id="PCA算法应用"><a href="#PCA算法应用" class="headerlink" title="PCA算法应用"></a>PCA算法应用</h2><h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>PCA实现高维数据可视化<br>已知鸢尾花数据是4维的，共三类样本。使用PCA实现对鸢尾花数据进行降维，实现在二维平面上的可视化。</p>
-<h3 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h3><ol>
-<li>建立工程，导入sklearn相关包</li>
-<li>加载数据并进行降维</li>
-<li>按类别对降维后的数据进行保存</li>
-<li>降维后数据点的可视化</li>
-</ol>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Created on Tue Apr 23 15:12:43 2019</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@author: Jiaxi Wang</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> sklearn.decomposition <span class="keyword">import</span> PCA</span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris</span><br><span class="line"></span><br><span class="line">data = load_iris()</span><br><span class="line">y = data.target</span><br><span class="line">x = data.data</span><br><span class="line">pca = PCA(n_components = <span class="number">2</span>)</span><br><span class="line">reduced_X = pca.fit_transform(X)</span><br><span class="line"></span><br><span class="line">red_x, red_y = [], []</span><br><span class="line">blue_x, blue_y = [], []</span><br><span class="line">green_x, green_y = [], []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(reduced_X)):</span><br><span class="line">    <span class="keyword">if</span> y[i] == <span class="number">0</span>:</span><br><span class="line">        red_x.append(reduced_X[i][<span class="number">0</span>])</span><br><span class="line">        red_y.append(reduced_X[i][<span class="number">1</span>])</span><br><span class="line">    <span class="keyword">elif</span> y[i] == <span class="number">1</span>:</span><br><span class="line">        blue_x.append(reduced_X[i][<span class="number">0</span>])</span><br><span class="line">        blue_y.append(reduced_X[i][<span class="number">1</span>])</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        green_x.append(reduced_X[i][<span class="number">0</span>])</span><br><span class="line">        green_y.append(reduced_X[i][<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">plt.scatter(red_x, red_y, c = <span class="string">&#x27;r&#x27;</span>, marker = <span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">plt.scatter(blue_x, blue_y, c = <span class="string">&#x27;b&#x27;</span>, marker = <span class="string">&#x27;D&#x27;</span>)</span><br><span class="line">plt.scatter(green_x, green_y, c = <span class="string">&#x27;g&#x27;</span>, marker = <span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
-<h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><p><img src="/2019/04/24/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E9%99%8D%E7%BB%B4%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/flower_pca.png"></p>
-<h3 id="拓展-amp-改进"><a href="#拓展-amp-改进" class="headerlink" title="拓展&amp;改进"></a>拓展&amp;改进</h3><h1 id="NMF算法及实例"><a href="#NMF算法及实例" class="headerlink" title="NMF算法及实例"></a>NMF算法及实例</h1><h2 id="非负矩阵分解（NMF）"><a href="#非负矩阵分解（NMF）" class="headerlink" title="非负矩阵分解（NMF）"></a>非负矩阵分解（NMF）</h2><p>非负矩阵分解（Non-negative Matrix Factorization，NMF）实在矩阵中所有元素均为非负数约束条件之下的矩阵分解方法。</p>
-<p>基本思想：给定一个非负矩阵V，NMF能够找到一个非负矩阵W和一个非负矩阵H，使得矩阵W和H的乘积近似等于矩阵V中的值。</p>
-<p><a href="https://www.codecogs.com/eqnedit.php?latex=V_{n*m}=W_{n*k}*H_{k*m}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?V_{n*m}=W_{n*k}*H_{k*m}" title="V_{n*m}=W_{n*k}*H_{k*m}"></a></p>
-<ul>
-<li>W矩阵：基础图像矩阵，相当于从原矩阵V中抽取出来的特征。</li>
-<li>矩阵：系数矩阵。</li>
-<li>NMF能够广泛应用于图像分析、文本挖掘和语音处理等领域。</li>
-</ul>
-<p>矩阵分解优化目标：最小化W矩阵H矩阵的乘积和原始矩阵之间的差别。</p>
-<p><a href="https://www.codecogs.com/eqnedit.php?latex=argmin\frac{1}{2}\left&space;\|&space;X-WH&space;\right&space;\|^{2}=\frac{1}{2}\sum_{i,j}^{&space;}&space;(X_{ij}-WH_{ij})^{2}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?argmin\frac{1}{2}\left&space;\|&space;X-WH&space;\right&space;\|^{2}=\frac{1}{2}\sum_{i,j}^{&space;}&space;(X_{ij}-WH_{ij})^{2}" title="argmin\frac{1}{2}\left \| X-WH \right \|^{2}=\frac{1}{2}\sum_{i,j}^{ } (X_{ij}-WH_{ij})^{2}"></a></p>
-<p>基于KL的优化目标，损失函数如下：</p>
-<p><a href="https://www.codecogs.com/eqnedit.php?latex=argminJ(WH)=\sum_{ij}^{&space;}(X_{ij}ln\frac{X_{ij}}{WH_{ij}}-X_{ij}&plus;WH_{ij})" target="_blank"><img src="https://latex.codecogs.com/gif.latex?argminJ(WH)=\sum_{ij}^{&space;}(X_{ij}ln\frac{X_{ij}}{WH_{ij}}-X_{ij}&plus;WH_{ij})" title="argminJ(WH)=\sum_{ij}^{ }(X_{ij}ln\frac{X_{ij}}{WH_{ij}}-X_{ij}+WH_{ij})"></a></p>
-<h2 id="NMF算法应用"><a href="#NMF算法应用" class="headerlink" title="NMF算法应用"></a>NMF算法应用</h2><h3 id="需求-1"><a href="#需求-1" class="headerlink" title="需求"></a>需求</h3><p>现有某大学校园网的日志数据，290条大学生的校园网使用情况数据，数据包括用户ID，设备MAC地址，IP地址，开始上网时间，停止上网时间，上网时长，校园网套餐等。利用已有数据，分析学生的上网模式。</p>
-<h3 id="需求-2"><a href="#需求-2" class="headerlink" title="需求"></a>需求</h3><p>NMF人脸数据特征提取<br>目标：Olivetti人脸数据共400个，每个数据是64*64大小。由于NMF分解得到的W矩阵相当于从原始矩阵中提取的特征，那么就可以使用NMF对400个人脸数据进行特征提取。</p>
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>通过设置k的大小，设置提取的特征的数目。在本实验中设置k=6，随后将提取的特征以图像的形式展示出来。</p>
-<ol>
-<li>建立工程，引入相关包</li>
-<li>设置基本参数并加载数据</li>
-<li>设置图像的展示方式</li>
-<li>创建特征提取的对象NMF，使用PCA作为对比</li>
-<li>降维后数据点的可视化</li>
-</ol>
-<h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Created on Wed Apr 24 10:41:47 2019</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@author: Jiaxi Wang</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> numpy.random <span class="keyword">import</span> RandomState</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> fetch_olivetti_faces</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> decomposition</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">n_row, n_col = <span class="number">2</span>, <span class="number">3</span></span><br><span class="line">n_components = n_row * n_col</span><br><span class="line">image_shape = (<span class="number">64</span>, <span class="number">64</span>)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">###############################################################################</span></span><br><span class="line"><span class="comment"># Load faces data</span></span><br><span class="line">dataset = fetch_olivetti_faces(shuffle=<span class="literal">True</span>, random_state=RandomState(<span class="number">0</span>))</span><br><span class="line">faces = dataset.data</span><br><span class="line"> </span><br><span class="line"><span class="comment">###############################################################################</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_gallery</span>(<span class="params">title, images, n_col=n_col, n_row=n_row</span>):</span></span><br><span class="line">    plt.figure(figsize=(<span class="number">2.</span> * n_col, <span class="number">2.26</span> * n_row)) </span><br><span class="line">    plt.suptitle(title, size=<span class="number">16</span>)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> i, comp <span class="keyword">in</span> <span class="built_in">enumerate</span>(images):</span><br><span class="line">        plt.subplot(n_row, n_col, i + <span class="number">1</span>)</span><br><span class="line">        vmax = <span class="built_in">max</span>(comp.<span class="built_in">max</span>(), -comp.<span class="built_in">min</span>())</span><br><span class="line"> </span><br><span class="line">        plt.imshow(comp.reshape(image_shape), cmap=plt.cm.gray,</span><br><span class="line">                   interpolation=<span class="string">&#x27;nearest&#x27;</span>, vmin=-vmax, vmax=vmax)</span><br><span class="line">        plt.xticks(())</span><br><span class="line">        plt.yticks(())</span><br><span class="line">    plt.subplots_adjust(<span class="number">0.01</span>, <span class="number">0.05</span>, <span class="number">0.99</span>, <span class="number">0.94</span>, <span class="number">0.04</span>, <span class="number">0.</span>)</span><br><span class="line"> </span><br><span class="line">     </span><br><span class="line">plot_gallery(<span class="string">&quot;First centered Olivetti faces&quot;</span>, faces[:n_components])</span><br><span class="line"><span class="comment">###############################################################################</span></span><br><span class="line"> </span><br><span class="line">estimators = [</span><br><span class="line">    (<span class="string">&#x27;Eigenfaces - PCA using randomized SVD&#x27;</span>,</span><br><span class="line">         decomposition.PCA(n_components=<span class="number">6</span>,whiten=<span class="literal">True</span>)),</span><br><span class="line"> </span><br><span class="line">    (<span class="string">&#x27;Non-negative components - NMF&#x27;</span>,</span><br><span class="line">         decomposition.NMF(n_components=<span class="number">6</span>, init=<span class="string">&#x27;nndsvda&#x27;</span>, tol=<span class="number">5e-3</span>))</span><br><span class="line">]</span><br><span class="line"> </span><br><span class="line"><span class="comment">###############################################################################</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> name, estimator <span class="keyword">in</span> estimators:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Extracting the top %d %s...&quot;</span> % (n_components, name))</span><br><span class="line">    <span class="built_in">print</span>(faces.shape)</span><br><span class="line">    estimator.fit(faces)</span><br><span class="line">    components_ = estimator.components_</span><br><span class="line">    plot_gallery(name, components_[:n_components])</span><br><span class="line"> </span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
-<h3 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h3><p><img src="/2019/04/24/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E9%99%8D%E7%BB%B4%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/first_centered_olivetti_faces.png"><br><img src="/2019/04/24/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E9%99%8D%E7%BB%B4%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/pca.png"><br><img src="/2019/04/24/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E9%99%8D%E7%BB%B4%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/nmf.png"></p>
+    <title>拥抱一下变化</title>
+    <url>/2023/10/28/%E6%8B%A5%E6%8A%B1%E4%B8%80%E4%B8%8B%E5%8F%98%E5%8C%96/</url>
+    <content><![CDATA[<p><img src="/2023/10/28/%E6%8B%A5%E6%8A%B1%E4%B8%80%E4%B8%8B%E5%8F%98%E5%8C%96/py311.png" alt="拥抱一下变化"></p>
 ]]></content>
       <categories>
-        <category>机器学习</category>
+        <category>Python</category>
       </categories>
       <tags>
         <tag>Python</tag>
-        <tag>机器学习</tag>
       </tags>
   </entry>
   <entry>
@@ -4972,20 +4925,63 @@
       </tags>
   </entry>
   <entry>
-    <title>编译和解释的区别</title>
-    <url>/2021/12/08/%E7%BC%96%E8%AF%91%E5%92%8C%E8%A7%A3%E9%87%8A%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[<p>有些编程语言是编译运行，有些则是解释运行，那它们的区别是什么呢？</p>
+    <title>无监督学习的降维算法及应用</title>
+    <url>/2019/04/24/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E9%99%8D%E7%BB%B4%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/</url>
+    <content><![CDATA[<h1 id="PCA算法及应用"><a href="#PCA算法及应用" class="headerlink" title="PCA算法及应用"></a>PCA算法及应用</h1><h2 id="主成分分析（PCA）"><a href="#主成分分析（PCA）" class="headerlink" title="主成分分析（PCA）"></a>主成分分析（PCA）</h2><p>主成分分析（Principal Component Analysis,PCA）是最常用的一种降维方法，通常用于高位数据集的探索与可视化，还可以用作数据压缩和预处理等。</p>
+<p>PCA可以吧具有相关性的高位变量合称为线性无关的低维变量，称为主成分。主成分能够尽可能保留原始数据的信息。</p>
 <span id="more"></span>
-<h1 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h1><p>编译过程可以比作<strong>“笔译”</strong></p>
-<p>编译程序对整个源程序经过编译处理，产生一个与源程序等价的目标程序，再通过连接程序将所有需要的程序组合成一个完整的可执行程序，最后运行。</p>
-<p><img src="/2021/12/08/%E7%BC%96%E8%AF%91%E5%92%8C%E8%A7%A3%E9%87%8A%E7%9A%84%E5%8C%BA%E5%88%AB/%E7%BC%96%E8%AF%91.png" alt="编译"></p>
-<h1 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h1><p>解释过程可以比作<strong>“同声翻译”</strong></p>
-<p>解释程序对源程序逐句分析，将语句翻译成机器指令，然后立即执行指令。不会产生目标程序。</p>
-<p><img src="/2021/12/08/%E7%BC%96%E8%AF%91%E5%92%8C%E8%A7%A3%E9%87%8A%E7%9A%84%E5%8C%BA%E5%88%AB/%E8%A7%A3%E9%87%8A.png" alt="解释"></p>
-<blockquote>
-<p>大学计算机（第7版) 龚沛曾 杨志强</p>
-</blockquote>
+
+<h2 id="相关术语"><a href="#相关术语" class="headerlink" title="相关术语"></a>相关术语</h2><h3 id="方差"><a href="#方差" class="headerlink" title="方差"></a>方差</h3><p>方差是各个样本和样本均值的差和平方和的均值，用来度量一组数据的分散程度。</p>
+<p><a href="https://www.codecogs.com/eqnedit.php?latex=s^{2}=\frac{\sum_{i=1}^{n}(x_{i}-x)^{2}}{n-1}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?s^{2}=\frac{\sum_{i=1}^{n}(x_{i}-x)^{2}}{n-1}" title="s^{2}=\frac{\sum_{i=1}^{n}(x_{i}-x)^{2}}{n-1}"></a></p>
+<h3 id="协方差"><a href="#协方差" class="headerlink" title="协方差"></a>协方差</h3><p>协方差用于度量两个变量之间的线性相关程度，若两个变量的协方差为0，则可认为二者线性无关。协方差矩阵则是由变量的协方差值构成的矩阵（对称阵）。</p>
+<p><a href="https://www.codecogs.com/eqnedit.php?latex=Cov(X,Y)=\frac{\sum_{i=1}^{n}(X_{i}-\overline{X})(Y_{i}-\overline{Y})}{n-1}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?Cov(X,Y)=\frac{\sum_{i=1}^{n}(X_{i}-\overline{X})(Y_{i}-\overline{Y})}{n-1}" title="Cov(X,Y)=\frac{\sum_{i=1}^{n}(X_{i}-\overline{X})(Y_{i}-\overline{Y})}{n-1}"></a></p>
+<h3 id="特征向量"><a href="#特征向量" class="headerlink" title="特征向量"></a>特征向量</h3><p>矩阵的特征向量是描述数据集结构的非零向量，并满足如下公式</p>
+<p><a href="https://www.codecogs.com/eqnedit.php?latex=A\overrightarrow{v}=\lambda&space;\overrightarrow{v}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?A\overrightarrow{v}=\lambda&space;\overrightarrow{v}" title="A\overrightarrow{v}=\lambda \overrightarrow{v}"></a></p>
+<p>A是方阵，v是特征向量，λ是特征值</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>原理：矩阵的主成分就是其协方差矩阵对应的特征向量，按照对应的特征值大小进行排序，最大的特征值就是第一主成分，其次是第二主成分，以此类推。</p>
+<h2 id="PCA算法应用"><a href="#PCA算法应用" class="headerlink" title="PCA算法应用"></a>PCA算法应用</h2><h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>PCA实现高维数据可视化<br>已知鸢尾花数据是4维的，共三类样本。使用PCA实现对鸢尾花数据进行降维，实现在二维平面上的可视化。</p>
+<h3 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h3><ol>
+<li>建立工程，导入sklearn相关包</li>
+<li>加载数据并进行降维</li>
+<li>按类别对降维后的数据进行保存</li>
+<li>降维后数据点的可视化</li>
+</ol>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Created on Tue Apr 23 15:12:43 2019</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@author: Jiaxi Wang</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> sklearn.decomposition <span class="keyword">import</span> PCA</span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> load_iris</span><br><span class="line"></span><br><span class="line">data = load_iris()</span><br><span class="line">y = data.target</span><br><span class="line">x = data.data</span><br><span class="line">pca = PCA(n_components = <span class="number">2</span>)</span><br><span class="line">reduced_X = pca.fit_transform(X)</span><br><span class="line"></span><br><span class="line">red_x, red_y = [], []</span><br><span class="line">blue_x, blue_y = [], []</span><br><span class="line">green_x, green_y = [], []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(reduced_X)):</span><br><span class="line">    <span class="keyword">if</span> y[i] == <span class="number">0</span>:</span><br><span class="line">        red_x.append(reduced_X[i][<span class="number">0</span>])</span><br><span class="line">        red_y.append(reduced_X[i][<span class="number">1</span>])</span><br><span class="line">    <span class="keyword">elif</span> y[i] == <span class="number">1</span>:</span><br><span class="line">        blue_x.append(reduced_X[i][<span class="number">0</span>])</span><br><span class="line">        blue_y.append(reduced_X[i][<span class="number">1</span>])</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        green_x.append(reduced_X[i][<span class="number">0</span>])</span><br><span class="line">        green_y.append(reduced_X[i][<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">plt.scatter(red_x, red_y, c = <span class="string">&#x27;r&#x27;</span>, marker = <span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">plt.scatter(blue_x, blue_y, c = <span class="string">&#x27;b&#x27;</span>, marker = <span class="string">&#x27;D&#x27;</span>)</span><br><span class="line">plt.scatter(green_x, green_y, c = <span class="string">&#x27;g&#x27;</span>, marker = <span class="string">&#x27;.&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><p><img src="/2019/04/24/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E9%99%8D%E7%BB%B4%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/flower_pca.png"></p>
+<h3 id="拓展-amp-改进"><a href="#拓展-amp-改进" class="headerlink" title="拓展&amp;改进"></a>拓展&amp;改进</h3><h1 id="NMF算法及实例"><a href="#NMF算法及实例" class="headerlink" title="NMF算法及实例"></a>NMF算法及实例</h1><h2 id="非负矩阵分解（NMF）"><a href="#非负矩阵分解（NMF）" class="headerlink" title="非负矩阵分解（NMF）"></a>非负矩阵分解（NMF）</h2><p>非负矩阵分解（Non-negative Matrix Factorization，NMF）实在矩阵中所有元素均为非负数约束条件之下的矩阵分解方法。</p>
+<p>基本思想：给定一个非负矩阵V，NMF能够找到一个非负矩阵W和一个非负矩阵H，使得矩阵W和H的乘积近似等于矩阵V中的值。</p>
+<p><a href="https://www.codecogs.com/eqnedit.php?latex=V_{n*m}=W_{n*k}*H_{k*m}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?V_{n*m}=W_{n*k}*H_{k*m}" title="V_{n*m}=W_{n*k}*H_{k*m}"></a></p>
+<ul>
+<li>W矩阵：基础图像矩阵，相当于从原矩阵V中抽取出来的特征。</li>
+<li>矩阵：系数矩阵。</li>
+<li>NMF能够广泛应用于图像分析、文本挖掘和语音处理等领域。</li>
+</ul>
+<p>矩阵分解优化目标：最小化W矩阵H矩阵的乘积和原始矩阵之间的差别。</p>
+<p><a href="https://www.codecogs.com/eqnedit.php?latex=argmin\frac{1}{2}\left&space;\|&space;X-WH&space;\right&space;\|^{2}=\frac{1}{2}\sum_{i,j}^{&space;}&space;(X_{ij}-WH_{ij})^{2}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?argmin\frac{1}{2}\left&space;\|&space;X-WH&space;\right&space;\|^{2}=\frac{1}{2}\sum_{i,j}^{&space;}&space;(X_{ij}-WH_{ij})^{2}" title="argmin\frac{1}{2}\left \| X-WH \right \|^{2}=\frac{1}{2}\sum_{i,j}^{ } (X_{ij}-WH_{ij})^{2}"></a></p>
+<p>基于KL的优化目标，损失函数如下：</p>
+<p><a href="https://www.codecogs.com/eqnedit.php?latex=argminJ(WH)=\sum_{ij}^{&space;}(X_{ij}ln\frac{X_{ij}}{WH_{ij}}-X_{ij}&plus;WH_{ij})" target="_blank"><img src="https://latex.codecogs.com/gif.latex?argminJ(WH)=\sum_{ij}^{&space;}(X_{ij}ln\frac{X_{ij}}{WH_{ij}}-X_{ij}&plus;WH_{ij})" title="argminJ(WH)=\sum_{ij}^{ }(X_{ij}ln\frac{X_{ij}}{WH_{ij}}-X_{ij}+WH_{ij})"></a></p>
+<h2 id="NMF算法应用"><a href="#NMF算法应用" class="headerlink" title="NMF算法应用"></a>NMF算法应用</h2><h3 id="需求-1"><a href="#需求-1" class="headerlink" title="需求"></a>需求</h3><p>现有某大学校园网的日志数据，290条大学生的校园网使用情况数据，数据包括用户ID，设备MAC地址，IP地址，开始上网时间，停止上网时间，上网时长，校园网套餐等。利用已有数据，分析学生的上网模式。</p>
+<h3 id="需求-2"><a href="#需求-2" class="headerlink" title="需求"></a>需求</h3><p>NMF人脸数据特征提取<br>目标：Olivetti人脸数据共400个，每个数据是64*64大小。由于NMF分解得到的W矩阵相当于从原始矩阵中提取的特征，那么就可以使用NMF对400个人脸数据进行特征提取。</p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>通过设置k的大小，设置提取的特征的数目。在本实验中设置k=6，随后将提取的特征以图像的形式展示出来。</p>
+<ol>
+<li>建立工程，引入相关包</li>
+<li>设置基本参数并加载数据</li>
+<li>设置图像的展示方式</li>
+<li>创建特征提取的对象NMF，使用PCA作为对比</li>
+<li>降维后数据点的可视化</li>
+</ol>
+<h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Created on Wed Apr 24 10:41:47 2019</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@author: Jiaxi Wang</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> numpy.random <span class="keyword">import</span> RandomState</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> fetch_olivetti_faces</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> decomposition</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">n_row, n_col = <span class="number">2</span>, <span class="number">3</span></span><br><span class="line">n_components = n_row * n_col</span><br><span class="line">image_shape = (<span class="number">64</span>, <span class="number">64</span>)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">###############################################################################</span></span><br><span class="line"><span class="comment"># Load faces data</span></span><br><span class="line">dataset = fetch_olivetti_faces(shuffle=<span class="literal">True</span>, random_state=RandomState(<span class="number">0</span>))</span><br><span class="line">faces = dataset.data</span><br><span class="line"> </span><br><span class="line"><span class="comment">###############################################################################</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_gallery</span>(<span class="params">title, images, n_col=n_col, n_row=n_row</span>):</span></span><br><span class="line">    plt.figure(figsize=(<span class="number">2.</span> * n_col, <span class="number">2.26</span> * n_row)) </span><br><span class="line">    plt.suptitle(title, size=<span class="number">16</span>)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> i, comp <span class="keyword">in</span> <span class="built_in">enumerate</span>(images):</span><br><span class="line">        plt.subplot(n_row, n_col, i + <span class="number">1</span>)</span><br><span class="line">        vmax = <span class="built_in">max</span>(comp.<span class="built_in">max</span>(), -comp.<span class="built_in">min</span>())</span><br><span class="line"> </span><br><span class="line">        plt.imshow(comp.reshape(image_shape), cmap=plt.cm.gray,</span><br><span class="line">                   interpolation=<span class="string">&#x27;nearest&#x27;</span>, vmin=-vmax, vmax=vmax)</span><br><span class="line">        plt.xticks(())</span><br><span class="line">        plt.yticks(())</span><br><span class="line">    plt.subplots_adjust(<span class="number">0.01</span>, <span class="number">0.05</span>, <span class="number">0.99</span>, <span class="number">0.94</span>, <span class="number">0.04</span>, <span class="number">0.</span>)</span><br><span class="line"> </span><br><span class="line">     </span><br><span class="line">plot_gallery(<span class="string">&quot;First centered Olivetti faces&quot;</span>, faces[:n_components])</span><br><span class="line"><span class="comment">###############################################################################</span></span><br><span class="line"> </span><br><span class="line">estimators = [</span><br><span class="line">    (<span class="string">&#x27;Eigenfaces - PCA using randomized SVD&#x27;</span>,</span><br><span class="line">         decomposition.PCA(n_components=<span class="number">6</span>,whiten=<span class="literal">True</span>)),</span><br><span class="line"> </span><br><span class="line">    (<span class="string">&#x27;Non-negative components - NMF&#x27;</span>,</span><br><span class="line">         decomposition.NMF(n_components=<span class="number">6</span>, init=<span class="string">&#x27;nndsvda&#x27;</span>, tol=<span class="number">5e-3</span>))</span><br><span class="line">]</span><br><span class="line"> </span><br><span class="line"><span class="comment">###############################################################################</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> name, estimator <span class="keyword">in</span> estimators:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Extracting the top %d %s...&quot;</span> % (n_components, name))</span><br><span class="line">    <span class="built_in">print</span>(faces.shape)</span><br><span class="line">    estimator.fit(faces)</span><br><span class="line">    components_ = estimator.components_</span><br><span class="line">    plot_gallery(name, components_[:n_components])</span><br><span class="line"> </span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<h3 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h3><p><img src="/2019/04/24/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E9%99%8D%E7%BB%B4%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/first_centered_olivetti_faces.png"><br><img src="/2019/04/24/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E9%99%8D%E7%BB%B4%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/pca.png"><br><img src="/2019/04/24/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E9%99%8D%E7%BB%B4%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/nmf.png"></p>
 ]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>机器学习</tag>
+      </tags>
   </entry>
   <entry>
     <title>熟悉键盘</title>
@@ -5006,6 +5002,22 @@
   </div>
 </div>
 <script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+  </entry>
+  <entry>
+    <title>编译和解释的区别</title>
+    <url>/2021/12/08/%E7%BC%96%E8%AF%91%E5%92%8C%E8%A7%A3%E9%87%8A%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<p>有些编程语言是编译运行，有些则是解释运行，那它们的区别是什么呢？</p>
+<span id="more"></span>
+<h1 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h1><p>编译过程可以比作<strong>“笔译”</strong></p>
+<p>编译程序对整个源程序经过编译处理，产生一个与源程序等价的目标程序，再通过连接程序将所有需要的程序组合成一个完整的可执行程序，最后运行。</p>
+<p><img src="/2021/12/08/%E7%BC%96%E8%AF%91%E5%92%8C%E8%A7%A3%E9%87%8A%E7%9A%84%E5%8C%BA%E5%88%AB/%E7%BC%96%E8%AF%91.png" alt="编译"></p>
+<h1 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h1><p>解释过程可以比作<strong>“同声翻译”</strong></p>
+<p>解释程序对源程序逐句分析，将语句翻译成机器指令，然后立即执行指令。不会产生目标程序。</p>
+<p><img src="/2021/12/08/%E7%BC%96%E8%AF%91%E5%92%8C%E8%A7%A3%E9%87%8A%E7%9A%84%E5%8C%BA%E5%88%AB/%E8%A7%A3%E9%87%8A.png" alt="解释"></p>
+<blockquote>
+<p>大学计算机（第7版) 龚沛曾 杨志强</p>
+</blockquote>
+]]></content>
   </entry>
   <entry>
     <title>许久没更新了…</title>
