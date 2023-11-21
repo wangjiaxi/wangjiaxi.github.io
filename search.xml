@@ -96,40 +96,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Mac提示「软件已损坏，请移到废纸篓」解决</title>
-    <url>/2022/02/18/Mac%E6%8F%90%E7%A4%BA%E3%80%8C%E8%BD%AF%E4%BB%B6%E5%B7%B2%E6%8D%9F%E5%9D%8F%EF%BC%8C%E8%AF%B7%E7%A7%BB%E5%88%B0%E5%BA%9F%E7%BA%B8%E7%AF%93%E3%80%8D%E8%A7%A3%E5%86%B3/</url>
-    <content><![CDATA[<blockquote>
-<p>在使用macOS安装<strong>某些</strong>软件时，系统可能会提示「xxx已损坏，请移到废纸篓」</p>
-</blockquote>
-<p>结论：打开终端，输入一下命令</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">xattr -r -d com.apple.quarantine /Applications/APP名</span><br></pre></td></tr></table></figure>
-
-<span id="more"></span>
-
-<h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p><strong>请确保软件的安全性。</strong></p>
-<p><strong>请确保软件的安全性。</strong></p>
-<p><strong>请确保软件的安全性。</strong></p>
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><ol>
-<li>打开终端</li>
-<li>输入以下命令</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">xattr -r -d com.apple.quarantine /Applications/APP名</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>重新运行该程序</li>
-</ol>
-<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>以上命令能够移除这个应用的安全隔离属性。</p>
-<hr>
-<blockquote>
-<p>注意：app名如果包含空格，使用 <code>\</code> 转义</p>
-<p>出处：<a href="https://www.jianshu.com/p/6f02003b767f">https://www.jianshu.com/p/6f02003b767f</a></p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>bug</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>MacOS下使用VS Code搭建C语言开发环境</title>
     <url>/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
     <content><![CDATA[<p>本篇介绍如何在Mac上使用VS Code写C语言代码。VS Code是一个轻量级的IDE，相比CLion、Xcode等等体积小很多，并且在插件市场拥有丰富的插件，可以方便的安装使用。</p>
@@ -202,23 +168,37 @@
       </tags>
   </entry>
   <entry>
-    <title>Matplotlib绘制引力波</title>
-    <url>/2019/04/04/Matplotlib%E7%BB%98%E5%88%B6%E5%BC%95%E5%8A%9B%E6%B3%A2/</url>
-    <content><![CDATA[<p>2016年6月16日，LIGO合作组宣布2015年12月26日 03:38:53（UTC），两台不同位置的引力波探测器同时探测到了一个引力波信号。</p>
-<span id="more"></span>
-<h1 id="引力波"><a href="#引力波" class="headerlink" title="引力波"></a>引力波</h1><p>物理学中，引力波是因为时空弯曲对外以辐射形式传播的能量。<br>爱因斯坦基于广义相对论语言了引力波的存在。<br>2016年6月16日，LIGO合作组宣布2015年12月26日 03:38:53（UTC），两台不同位置的引力波探测器同时探测到了一个引力波信号。</p>
-<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Created on Sun Feb 24 10:17:31 2019</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@author: Administrator</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#引力波</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> scipy.io <span class="keyword">import</span> wavfile</span><br><span class="line"></span><br><span class="line"><span class="comment">#产生时间序列</span></span><br><span class="line">rate_h, hstrain = wavfile.read(<span class="string">r&quot;H1_Strain.wav&quot;</span>,<span class="string">&quot;rb&quot;</span>)</span><br><span class="line">rate_l, lstrain = wavfile.read(<span class="string">r&quot;L1_Strain.wav&quot;</span>,<span class="string">&quot;rb&quot;</span>)</span><br><span class="line">reftime, ref_H1 = np.genfromtxt(<span class="string">&#x27;wf_template.txt&#x27;</span>).transpose()</span><br><span class="line"></span><br><span class="line"><span class="comment">#读取应变数据</span></span><br><span class="line">htime_interval = <span class="number">1</span> / rate_h</span><br><span class="line">ltime_interval = <span class="number">1</span> / rate_l</span><br><span class="line"></span><br><span class="line">htime_len = hstrain.shape[<span class="number">0</span>] / rate_h</span><br><span class="line">htime = np.arange(-htime_len / <span class="number">2</span>, htime_len / <span class="number">2</span>, htime_interval)</span><br><span class="line">ltime_len = lstrain.shape[<span class="number">0</span>] / rate_l</span><br><span class="line">ltime = np.arange(-ltime_len / <span class="number">2</span>, ltime_len / <span class="number">2</span>, ltime_interval)</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用来自“H1”探测器的数据作图</span></span><br><span class="line">fig = plt.figure(figsize = (<span class="number">12</span>, <span class="number">6</span>))  <span class="comment">#创建一个12*6的绘图空间</span></span><br><span class="line"></span><br><span class="line">plth = fig.add_subplot(<span class="number">221</span>)</span><br><span class="line">plth.plot(htime, hstrain, <span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">plth.set_xlabel(<span class="string">&#x27;Time(seconds)&#x27;</span>)</span><br><span class="line">plth.set_ylabel(<span class="string">&#x27;H1 Strain&#x27;</span>)</span><br><span class="line">plth.set_title(<span class="string">&#x27;H1 Strain&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#绘制L1 Strain 和 Template</span></span><br><span class="line">pltl = fig.add_subplot(<span class="number">222</span>)</span><br><span class="line">pltl.plot(ltime, lstrain, <span class="string">&#x27;g&#x27;</span>)</span><br><span class="line">pltl.set_xlabel(<span class="string">&#x27;Time(seconds)&#x27;</span>)</span><br><span class="line">pltl.set_ylabel(<span class="string">&#x27;L1 Strain&#x27;</span>)</span><br><span class="line">pltl.set_title(<span class="string">&#x27;L1 Strain&#x27;</span>)</span><br><span class="line"></span><br><span class="line">pltref = fig.add_subplot(<span class="number">212</span>)</span><br><span class="line">pltref.plot(reftime, ref_H1, <span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">pltref.set_xlabel(<span class="string">&#x27;Time(seconds)&#x27;</span>)</span><br><span class="line">pltref.set_ylabel(<span class="string">&#x27;Template Strain&#x27;</span>)</span><br><span class="line">pltref.set_title(<span class="string">&#x27;Template&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#自动调整图像外部边缘</span></span><br><span class="line">fig.tight_layout()</span><br><span class="line"></span><br><span class="line">plt.savefig(<span class="string">&quot;Gravitational_Waves_Original.png&quot;</span>)</span><br><span class="line">plt.show()</span><br><span class="line">plt.close(fig)</span><br></pre></td></tr></table></figure>
+    <title>Mac提示「软件已损坏，请移到废纸篓」解决</title>
+    <url>/2022/02/18/Mac%E6%8F%90%E7%A4%BA%E3%80%8C%E8%BD%AF%E4%BB%B6%E5%B7%B2%E6%8D%9F%E5%9D%8F%EF%BC%8C%E8%AF%B7%E7%A7%BB%E5%88%B0%E5%BA%9F%E7%BA%B8%E7%AF%93%E3%80%8D%E8%A7%A3%E5%86%B3/</url>
+    <content><![CDATA[<blockquote>
+<p>在使用macOS安装<strong>某些</strong>软件时，系统可能会提示「xxx已损坏，请移到废纸篓」</p>
+</blockquote>
+<p>结论：打开终端，输入一下命令</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">xattr -r -d com.apple.quarantine /Applications/APP名</span><br></pre></td></tr></table></figure>
 
-<h1 id="图像展示"><a href="#图像展示" class="headerlink" title="图像展示"></a>图像展示</h1><p>c</p>
-<h1 id="数据源"><a href="#数据源" class="headerlink" title="数据源"></a>数据源</h1><p><a href="http://python123.io/dv/grawave.html">http://python123.io/dv/grawave.html</a></p>
-<p><a href="http://python123.io/dv/H1_Strain.wav">http://python123.io/dv/H1_Strain.wav</a><br><a href="http://python123.io/dv/L1_Strain.wav">http://python123.io/dv/L1_Strain.wav</a><br><a href="http://python123.io/dv/wf_template.txt">http://python123.io/dv/wf_template.txt</a></p>
+<span id="more"></span>
+
+<h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p><strong>请确保软件的安全性。</strong></p>
+<p><strong>请确保软件的安全性。</strong></p>
+<p><strong>请确保软件的安全性。</strong></p>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><ol>
+<li>打开终端</li>
+<li>输入以下命令</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">xattr -r -d com.apple.quarantine /Applications/APP名</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>重新运行该程序</li>
+</ol>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>以上命令能够移除这个应用的安全隔离属性。</p>
+<hr>
+<blockquote>
+<p>注意：app名如果包含空格，使用 <code>\</code> 转义</p>
+<p>出处：<a href="https://www.jianshu.com/p/6f02003b767f">https://www.jianshu.com/p/6f02003b767f</a></p>
+</blockquote>
 ]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
       <tags>
-        <tag>Python</tag>
-        <tag>数据分析</tag>
+        <tag>bug</tag>
       </tags>
   </entry>
   <entry>
@@ -264,8 +244,8 @@
         <category>Python</category>
       </categories>
       <tags>
-        <tag>bug</tag>
         <tag>IDE</tag>
+        <tag>bug</tag>
         <tag>Python</tag>
       </tags>
   </entry>
@@ -807,6 +787,26 @@
       </categories>
       <tags>
         <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Matplotlib绘制引力波</title>
+    <url>/2019/04/04/Matplotlib%E7%BB%98%E5%88%B6%E5%BC%95%E5%8A%9B%E6%B3%A2/</url>
+    <content><![CDATA[<p>2016年6月16日，LIGO合作组宣布2015年12月26日 03:38:53（UTC），两台不同位置的引力波探测器同时探测到了一个引力波信号。</p>
+<span id="more"></span>
+<h1 id="引力波"><a href="#引力波" class="headerlink" title="引力波"></a>引力波</h1><p>物理学中，引力波是因为时空弯曲对外以辐射形式传播的能量。<br>爱因斯坦基于广义相对论语言了引力波的存在。<br>2016年6月16日，LIGO合作组宣布2015年12月26日 03:38:53（UTC），两台不同位置的引力波探测器同时探测到了一个引力波信号。</p>
+<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Created on Sun Feb 24 10:17:31 2019</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@author: Administrator</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#引力波</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> scipy.io <span class="keyword">import</span> wavfile</span><br><span class="line"></span><br><span class="line"><span class="comment">#产生时间序列</span></span><br><span class="line">rate_h, hstrain = wavfile.read(<span class="string">r&quot;H1_Strain.wav&quot;</span>,<span class="string">&quot;rb&quot;</span>)</span><br><span class="line">rate_l, lstrain = wavfile.read(<span class="string">r&quot;L1_Strain.wav&quot;</span>,<span class="string">&quot;rb&quot;</span>)</span><br><span class="line">reftime, ref_H1 = np.genfromtxt(<span class="string">&#x27;wf_template.txt&#x27;</span>).transpose()</span><br><span class="line"></span><br><span class="line"><span class="comment">#读取应变数据</span></span><br><span class="line">htime_interval = <span class="number">1</span> / rate_h</span><br><span class="line">ltime_interval = <span class="number">1</span> / rate_l</span><br><span class="line"></span><br><span class="line">htime_len = hstrain.shape[<span class="number">0</span>] / rate_h</span><br><span class="line">htime = np.arange(-htime_len / <span class="number">2</span>, htime_len / <span class="number">2</span>, htime_interval)</span><br><span class="line">ltime_len = lstrain.shape[<span class="number">0</span>] / rate_l</span><br><span class="line">ltime = np.arange(-ltime_len / <span class="number">2</span>, ltime_len / <span class="number">2</span>, ltime_interval)</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用来自“H1”探测器的数据作图</span></span><br><span class="line">fig = plt.figure(figsize = (<span class="number">12</span>, <span class="number">6</span>))  <span class="comment">#创建一个12*6的绘图空间</span></span><br><span class="line"></span><br><span class="line">plth = fig.add_subplot(<span class="number">221</span>)</span><br><span class="line">plth.plot(htime, hstrain, <span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">plth.set_xlabel(<span class="string">&#x27;Time(seconds)&#x27;</span>)</span><br><span class="line">plth.set_ylabel(<span class="string">&#x27;H1 Strain&#x27;</span>)</span><br><span class="line">plth.set_title(<span class="string">&#x27;H1 Strain&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#绘制L1 Strain 和 Template</span></span><br><span class="line">pltl = fig.add_subplot(<span class="number">222</span>)</span><br><span class="line">pltl.plot(ltime, lstrain, <span class="string">&#x27;g&#x27;</span>)</span><br><span class="line">pltl.set_xlabel(<span class="string">&#x27;Time(seconds)&#x27;</span>)</span><br><span class="line">pltl.set_ylabel(<span class="string">&#x27;L1 Strain&#x27;</span>)</span><br><span class="line">pltl.set_title(<span class="string">&#x27;L1 Strain&#x27;</span>)</span><br><span class="line"></span><br><span class="line">pltref = fig.add_subplot(<span class="number">212</span>)</span><br><span class="line">pltref.plot(reftime, ref_H1, <span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">pltref.set_xlabel(<span class="string">&#x27;Time(seconds)&#x27;</span>)</span><br><span class="line">pltref.set_ylabel(<span class="string">&#x27;Template Strain&#x27;</span>)</span><br><span class="line">pltref.set_title(<span class="string">&#x27;Template&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#自动调整图像外部边缘</span></span><br><span class="line">fig.tight_layout()</span><br><span class="line"></span><br><span class="line">plt.savefig(<span class="string">&quot;Gravitational_Waves_Original.png&quot;</span>)</span><br><span class="line">plt.show()</span><br><span class="line">plt.close(fig)</span><br></pre></td></tr></table></figure>
+
+<h1 id="图像展示"><a href="#图像展示" class="headerlink" title="图像展示"></a>图像展示</h1><p>c</p>
+<h1 id="数据源"><a href="#数据源" class="headerlink" title="数据源"></a>数据源</h1><p><a href="http://python123.io/dv/grawave.html">http://python123.io/dv/grawave.html</a></p>
+<p><a href="http://python123.io/dv/H1_Strain.wav">http://python123.io/dv/H1_Strain.wav</a><br><a href="http://python123.io/dv/L1_Strain.wav">http://python123.io/dv/L1_Strain.wav</a><br><a href="http://python123.io/dv/wf_template.txt">http://python123.io/dv/wf_template.txt</a></p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>数据分析</tag>
       </tags>
   </entry>
   <entry>
@@ -2743,49 +2743,6 @@
       </tags>
   </entry>
   <entry>
-    <title>ChatGPT首次会晤</title>
-    <url>/2023/02/16/chatGPT%E9%A6%96%E6%AC%A1%E4%BC%9A%E6%99%A4/</url>
-    <content><![CDATA[<blockquote>
-<p>为节省时间，本文部分内容由ChatGPT生成。</p>
-</blockquote>
-<span id="more"></span>
-<h1 id="什么是ChatGPT？"><a href="#什么是ChatGPT？" class="headerlink" title="什么是ChatGPT？"></a>什么是ChatGPT？</h1><p>ChatGPT是一种基于自然语言处理技术的聊天机器人，它可以通过对话与用户进行交互。它是由OpenAI开发的，采用了最新的GPT（Generative Pre-training Transformer）模型，可以实现对话的生成和理解。与传统的聊天机器人不同，ChatGPT可以模拟人类对话的风格和方式，从而实现更加自然、流畅的交流。ChatGPT的应用场景包括但不限于自然语言交互、文本生成、智能客服、语音交互等。</p>
-<h1 id="ChatGPT为什么突然火了？"><a href="#ChatGPT为什么突然火了？" class="headerlink" title="ChatGPT为什么突然火了？"></a>ChatGPT为什么突然火了？</h1><p>ChatGPT突然火起来主要是由于其所使用的GPT模型的出色表现和实用性。GPT是一种自然语言处理技术，能够在未知上下文中生成自然语言文本。在最近几年的发展中，GPT已经实现了极大的进步，成为自然语言生成的最先进技术之一。而ChatGPT则将这种技术应用到聊天机器人中，实现了更加自然、流畅的对话体验，从而得到了广泛的关注和使用。</p>
-<p>另外，随着社交媒体和在线社区的兴起，人们的社交活动也越来越多地发生在网络中。在这种情况下，ChatGPT的普及也得益于其方便快捷的聊天体验，用户可以在不受时间和空间限制的情况下与ChatGPT进行交互，获取所需的信息和支持。</p>
-<p>总之，ChatGPT的突然火起来是由于其使用的GPT技术的出色表现和实用性，以及社交活动向网络化转移的趋势所推动的。</p>
-<h1 id="如何使用ChatGPT"><a href="#如何使用ChatGPT" class="headerlink" title="如何使用ChatGPT"></a>如何使用ChatGPT</h1><p>要使用ChatGPT进行对话，可以按照以下步骤进行：</p>
-<ol>
-<li><p>找到可以访问ChatGPT的平台。例如，OpenAI官方网站上提供了一个在线的ChatGPT接口，用户可以直接在网页上与ChatGPT进行交互。</p>
-</li>
-<li><p>进入ChatGPT界面后，输入您想要与ChatGPT进行对话的内容。ChatGPT会根据您的输入内容，生成相应的回复，并返回给您。</p>
-</li>
-<li><p>根据ChatGPT的回复内容，继续与ChatGPT进行对话。您可以通过不断地输入内容和观察ChatGPT的回复，逐渐深入对话，获取您想要的信息或体验愉快的聊天时光。</p>
-</li>
-</ol>
-<p>除了在OpenAI官方网站上，还有其他许多平台和应用程序支持ChatGPT，例如智能音箱、聊天应用程序等。使用这些应用程序时，用户可以通过语音输入或者文本输入与ChatGPT进行交互，享受更为便捷和自然的聊天体验。</p>
-<p>需要注意的是，尽管ChatGPT能够产生人类类似的对话，但它并不能完全代替人类交互。ChatGPT目前仍有其局限性和缺陷，需要持续的技术发展和改进。因此，在使用ChatGPT时，需要保持谨慎和理性，同时遵守相应的法律法规和使用规范。</p>
-<h1 id="中国用户如何注册openai账号？"><a href="#中国用户如何注册openai账号？" class="headerlink" title="中国用户如何注册openai账号？"></a>中国用户如何注册openai账号？</h1><p>由于目前OpenAI官方网站仅支持英文界面，因此对于中国用户来说，注册OpenAI账号可能会有一些难度。以下是一个简要的注册流程：</p>
-<ol>
-<li><p>打开OpenAI官方网站<a href="https://openai.com/">https://openai.com/</a>，进入网站首页。</p>
-</li>
-<li><p>点击右上角的“Sign Up”按钮，进入注册页面。</p>
-</li>
-<li><p>在注册页面上，需要填写邮箱地址、密码、用户名等信息，以完成账号注册。请注意，OpenAI官方网站要求密码必须包含字母和数字，并且长度不得少于8位。</p>
-</li>
-<li><p>注册成功后，您可以登录OpenAI官方网站，进入ChatGPT接口页面，开始与ChatGPT进行交互。</p>
-</li>
-</ol>
-<p>需要注意的是，由于OpenAI接口目前需要访问国外服务器，可能会受到网络访问的影响。同时，OpenAI的访问权限和服务范围也受到一些限制，用户需要注意遵守相关规定，并在使用过程中保持谨慎和理性。</p>
-]]></content>
-      <categories>
-        <category>AI</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>ChatGPT</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>kaggle项目之泰坦尼克幸存预测</title>
     <url>/2020/05/12/kaggle%E9%A1%B9%E7%9B%AE%20-%20%E6%B3%B0%E5%9D%A6%E5%B0%BC%E5%85%8B%E5%B9%B8%E5%AD%98%E9%A2%84%E6%B5%8B/</url>
     <content><![CDATA[<p>kaggle是一个机器学习竞赛平台。</p>
@@ -2864,22 +2821,6 @@
         <tag>bug</tag>
         <tag>Python</tag>
         <tag>游戏</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>macOS安装VEX Tournament Manager端口占用问题</title>
-    <url>/2023/02/02/macOS%E5%AE%89%E8%A3%85VEX-Tournament-Manager%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>Hi!</p>
-<span id="more"></span>
-<h1 id="安装VEX-Tournament-Manager"><a href="#安装VEX-Tournament-Manager" class="headerlink" title="安装VEX Tournament Manager"></a>安装VEX Tournament Manager</h1><p>准备学习VEX机器人了，在安装VEX Tournament Manager时遇到了打不开的情形，并收获<strong>3连弹</strong>，如下图所示：<br><img src="/2023/02/02/macOS%E5%AE%89%E8%A3%85VEX-Tournament-Manager%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E9%97%AE%E9%A2%98/error1.png" alt="error1"><br><img src="/2023/02/02/macOS%E5%AE%89%E8%A3%85VEX-Tournament-Manager%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E9%97%AE%E9%A2%98/error2.png" alt="error2"><br><img src="/2023/02/02/macOS%E5%AE%89%E8%A3%85VEX-Tournament-Manager%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E9%97%AE%E9%A2%98/error3.png" alt="error3"></p>
-<h1 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h1><p>打开系统设置 - 通用 - 隔空投送与接力<br>关闭 <code>隔空播放接收器</code><br><img src="/2023/02/02/macOS%E5%AE%89%E8%A3%85VEX-Tournament-Manager%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E9%97%AE%E9%A2%98/solve1.png" alt="solve1"><br><img src="/2023/02/02/macOS%E5%AE%89%E8%A3%85VEX-Tournament-Manager%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E9%97%AE%E9%A2%98/solve2.png" alt="solve2"></p>
-]]></content>
-      <categories>
-        <category>机器人编程</category>
-      </categories>
-      <tags>
-        <tag>bug</tag>
-        <tag>VEX</tag>
       </tags>
   </entry>
   <entry>
@@ -2966,51 +2907,46 @@
       </tags>
   </entry>
   <entry>
-    <title>python三个数比较</title>
-    <url>/2021/07/21/python%E4%B8%89%E4%B8%AA%E6%95%B0%E6%AF%94%E8%BE%83/</url>
-    <content><![CDATA[<p>如何进行三个数的大小比较？</p>
-<span id="more"></span>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 方法1</span></span><br><span class="line">a, b, c = <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span></span><br><span class="line"><span class="keyword">if</span> a != b <span class="keyword">and</span> b != c <span class="keyword">and</span> a != c:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;三个数都不相等&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法2</span></span><br><span class="line">a, b, c = <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span></span><br><span class="line"><span class="keyword">if</span> a != b != c:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;三个数都不相等&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>运行上面的程序，得出结果如下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">三个数都不相等</span><br><span class="line">三个数都不相等</span><br></pre></td></tr></table></figure>
-
-<p>而对于方法2，我们赋值时<code>a</code>和<code>c</code>是相等的，程序并没有判断<code>a</code>和<code>c</code>的关系。</p>
-<p>因此结论是：当比较三个数是否大小相等时，要严格按照<strong>两两比较</strong>的形式，即<strong>方法1是正确的</strong>。</p>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>运算符</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>tkinter中如何给控件的command传递参数</title>
-    <url>/2022/09/30/tkinter%E4%B8%AD%E5%A6%82%E4%BD%95%E7%BB%99%E6%8E%A7%E4%BB%B6%E7%9A%84command%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/</url>
-    <content><![CDATA[<p>踩坑了，务必记录一下。</p>
-<span id="more"></span>
-
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>在tkinter程序中，<code>Button</code>绑定的函数是不能带返回值的，编写代码时<code>command=</code>后边的函数名不能带有括号（不能直接执行）。</p>
-<p>那如果想要传入<strong>带参数的函数</strong>该怎么办呢？（必须带括号的函数）</p>
-<h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><h2 id="非循环"><a href="#非循环" class="headerlink" title="非循环"></a>非循环</h2><p>假如在程序中，你会改变<code>Entry</code>中的值，然后<code>Button</code>需要读取这个值，那么直接使用<code>lambda</code>函数：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 此为示例代码</span></span><br><span class="line"><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk</span><br><span class="line"></span><br><span class="line">e = tk.Entry(window).pack()</span><br><span class="line">b = tk.Button(window, text=<span class="string">&quot;xx&quot;</span>, command=<span class="keyword">lambda</span>: e.get()).pack()</span><br></pre></td></tr></table></figure>
-<h2 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h2><p>假如在程序中，你需要在<code>Button</code>中操作一个循环变量，那么不能向上边一样直接<code>lambda</code>，需要小小操作一番：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 此为示例代码</span></span><br><span class="line"><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk</span><br><span class="line"><span class="keyword">import</span> webbrowser</span><br><span class="line"></span><br><span class="line">links = [url1, url2, url3]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建三个按钮，分别调用浏览器打开url1，url2，url3</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">    b = tk.Button(window, text=<span class="string">&quot;xx&quot;</span>, command=<span class="keyword">lambda</span> i=i: webbrowser.<span class="built_in">open</span>(links[i])).pack()</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>参考：<a href="https://www.zhihu.com/question/399386753">https://www.zhihu.com/question/399386753</a></p>
+    <title>ChatGPT首次会晤</title>
+    <url>/2023/02/16/chatGPT%E9%A6%96%E6%AC%A1%E4%BC%9A%E6%99%A4/</url>
+    <content><![CDATA[<blockquote>
+<p>为节省时间，本文部分内容由ChatGPT生成。</p>
 </blockquote>
+<span id="more"></span>
+<h1 id="什么是ChatGPT？"><a href="#什么是ChatGPT？" class="headerlink" title="什么是ChatGPT？"></a>什么是ChatGPT？</h1><p>ChatGPT是一种基于自然语言处理技术的聊天机器人，它可以通过对话与用户进行交互。它是由OpenAI开发的，采用了最新的GPT（Generative Pre-training Transformer）模型，可以实现对话的生成和理解。与传统的聊天机器人不同，ChatGPT可以模拟人类对话的风格和方式，从而实现更加自然、流畅的交流。ChatGPT的应用场景包括但不限于自然语言交互、文本生成、智能客服、语音交互等。</p>
+<h1 id="ChatGPT为什么突然火了？"><a href="#ChatGPT为什么突然火了？" class="headerlink" title="ChatGPT为什么突然火了？"></a>ChatGPT为什么突然火了？</h1><p>ChatGPT突然火起来主要是由于其所使用的GPT模型的出色表现和实用性。GPT是一种自然语言处理技术，能够在未知上下文中生成自然语言文本。在最近几年的发展中，GPT已经实现了极大的进步，成为自然语言生成的最先进技术之一。而ChatGPT则将这种技术应用到聊天机器人中，实现了更加自然、流畅的对话体验，从而得到了广泛的关注和使用。</p>
+<p>另外，随着社交媒体和在线社区的兴起，人们的社交活动也越来越多地发生在网络中。在这种情况下，ChatGPT的普及也得益于其方便快捷的聊天体验，用户可以在不受时间和空间限制的情况下与ChatGPT进行交互，获取所需的信息和支持。</p>
+<p>总之，ChatGPT的突然火起来是由于其使用的GPT技术的出色表现和实用性，以及社交活动向网络化转移的趋势所推动的。</p>
+<h1 id="如何使用ChatGPT"><a href="#如何使用ChatGPT" class="headerlink" title="如何使用ChatGPT"></a>如何使用ChatGPT</h1><p>要使用ChatGPT进行对话，可以按照以下步骤进行：</p>
+<ol>
+<li><p>找到可以访问ChatGPT的平台。例如，OpenAI官方网站上提供了一个在线的ChatGPT接口，用户可以直接在网页上与ChatGPT进行交互。</p>
+</li>
+<li><p>进入ChatGPT界面后，输入您想要与ChatGPT进行对话的内容。ChatGPT会根据您的输入内容，生成相应的回复，并返回给您。</p>
+</li>
+<li><p>根据ChatGPT的回复内容，继续与ChatGPT进行对话。您可以通过不断地输入内容和观察ChatGPT的回复，逐渐深入对话，获取您想要的信息或体验愉快的聊天时光。</p>
+</li>
+</ol>
+<p>除了在OpenAI官方网站上，还有其他许多平台和应用程序支持ChatGPT，例如智能音箱、聊天应用程序等。使用这些应用程序时，用户可以通过语音输入或者文本输入与ChatGPT进行交互，享受更为便捷和自然的聊天体验。</p>
+<p>需要注意的是，尽管ChatGPT能够产生人类类似的对话，但它并不能完全代替人类交互。ChatGPT目前仍有其局限性和缺陷，需要持续的技术发展和改进。因此，在使用ChatGPT时，需要保持谨慎和理性，同时遵守相应的法律法规和使用规范。</p>
+<h1 id="中国用户如何注册openai账号？"><a href="#中国用户如何注册openai账号？" class="headerlink" title="中国用户如何注册openai账号？"></a>中国用户如何注册openai账号？</h1><p>由于目前OpenAI官方网站仅支持英文界面，因此对于中国用户来说，注册OpenAI账号可能会有一些难度。以下是一个简要的注册流程：</p>
+<ol>
+<li><p>打开OpenAI官方网站<a href="https://openai.com/">https://openai.com/</a>，进入网站首页。</p>
+</li>
+<li><p>点击右上角的“Sign Up”按钮，进入注册页面。</p>
+</li>
+<li><p>在注册页面上，需要填写邮箱地址、密码、用户名等信息，以完成账号注册。请注意，OpenAI官方网站要求密码必须包含字母和数字，并且长度不得少于8位。</p>
+</li>
+<li><p>注册成功后，您可以登录OpenAI官方网站，进入ChatGPT接口页面，开始与ChatGPT进行交互。</p>
+</li>
+</ol>
+<p>需要注意的是，由于OpenAI接口目前需要访问国外服务器，可能会受到网络访问的影响。同时，OpenAI的访问权限和服务范围也受到一些限制，用户需要注意遵守相关规定，并在使用过程中保持谨慎和理性。</p>
 ]]></content>
       <categories>
-        <category>Python</category>
+        <category>AI</category>
       </categories>
       <tags>
-        <tag>Python</tag>
-        <tag>GUI</tag>
-        <tag>tkinter</tag>
+        <tag>AI</tag>
+        <tag>ChatGPT</tag>
       </tags>
   </entry>
   <entry>
@@ -3071,11 +3007,20 @@
       </tags>
   </entry>
   <entry>
-    <title>云服务器 + 开源OJ搭建小型刷题平台</title>
-    <url>/2023/07/27/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8-%E5%BC%80%E6%BA%90OJ%E6%90%AD%E5%BB%BA%E5%B0%8F%E5%9E%8B%E5%88%B7%E9%A2%98%E5%B9%B3%E5%8F%B0/</url>
-    <content><![CDATA[<h1 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h1><p>小型机构自有 OJ 可以增加说服力。</p>
-<h1 id="开源项目选择"><a href="#开源项目选择" class="headerlink" title="开源项目选择"></a>开源项目选择</h1><p>Hydro QDUOJ HOJ HUSTOJ</p>
-<h1 id="搭建过程"><a href="#搭建过程" class="headerlink" title="搭建过程"></a>搭建过程</h1>]]></content>
+    <title>macOS安装VEX Tournament Manager端口占用问题</title>
+    <url>/2023/02/02/macOS%E5%AE%89%E8%A3%85VEX-Tournament-Manager%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>Hi!</p>
+<span id="more"></span>
+<h1 id="安装VEX-Tournament-Manager"><a href="#安装VEX-Tournament-Manager" class="headerlink" title="安装VEX Tournament Manager"></a>安装VEX Tournament Manager</h1><p>准备学习VEX机器人了，在安装VEX Tournament Manager时遇到了打不开的情形，并收获<strong>3连弹</strong>，如下图所示：<br><img src="/2023/02/02/macOS%E5%AE%89%E8%A3%85VEX-Tournament-Manager%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E9%97%AE%E9%A2%98/error1.png" alt="error1"><br><img src="/2023/02/02/macOS%E5%AE%89%E8%A3%85VEX-Tournament-Manager%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E9%97%AE%E9%A2%98/error2.png" alt="error2"><br><img src="/2023/02/02/macOS%E5%AE%89%E8%A3%85VEX-Tournament-Manager%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E9%97%AE%E9%A2%98/error3.png" alt="error3"></p>
+<h1 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h1><p>打开系统设置 - 通用 - 隔空投送与接力<br>关闭 <code>隔空播放接收器</code><br><img src="/2023/02/02/macOS%E5%AE%89%E8%A3%85VEX-Tournament-Manager%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E9%97%AE%E9%A2%98/solve1.png" alt="solve1"><br><img src="/2023/02/02/macOS%E5%AE%89%E8%A3%85VEX-Tournament-Manager%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E9%97%AE%E9%A2%98/solve2.png" alt="solve2"></p>
+]]></content>
+      <categories>
+        <category>机器人编程</category>
+      </categories>
+      <tags>
+        <tag>bug</tag>
+        <tag>VEX</tag>
+      </tags>
   </entry>
   <entry>
     <title>使用turtle实现动画效果</title>
@@ -3322,6 +3267,32 @@
       </tags>
   </entry>
   <entry>
+    <title>tkinter中如何给控件的command传递参数</title>
+    <url>/2022/09/30/tkinter%E4%B8%AD%E5%A6%82%E4%BD%95%E7%BB%99%E6%8E%A7%E4%BB%B6%E7%9A%84command%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/</url>
+    <content><![CDATA[<p>踩坑了，务必记录一下。</p>
+<span id="more"></span>
+
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>在tkinter程序中，<code>Button</code>绑定的函数是不能带返回值的，编写代码时<code>command=</code>后边的函数名不能带有括号（不能直接执行）。</p>
+<p>那如果想要传入<strong>带参数的函数</strong>该怎么办呢？（必须带括号的函数）</p>
+<h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><h2 id="非循环"><a href="#非循环" class="headerlink" title="非循环"></a>非循环</h2><p>假如在程序中，你会改变<code>Entry</code>中的值，然后<code>Button</code>需要读取这个值，那么直接使用<code>lambda</code>函数：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 此为示例代码</span></span><br><span class="line"><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk</span><br><span class="line"></span><br><span class="line">e = tk.Entry(window).pack()</span><br><span class="line">b = tk.Button(window, text=<span class="string">&quot;xx&quot;</span>, command=<span class="keyword">lambda</span>: e.get()).pack()</span><br></pre></td></tr></table></figure>
+<h2 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h2><p>假如在程序中，你需要在<code>Button</code>中操作一个循环变量，那么不能向上边一样直接<code>lambda</code>，需要小小操作一番：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 此为示例代码</span></span><br><span class="line"><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk</span><br><span class="line"><span class="keyword">import</span> webbrowser</span><br><span class="line"></span><br><span class="line">links = [url1, url2, url3]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建三个按钮，分别调用浏览器打开url1，url2，url3</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">    b = tk.Button(window, text=<span class="string">&quot;xx&quot;</span>, command=<span class="keyword">lambda</span> i=i: webbrowser.<span class="built_in">open</span>(links[i])).pack()</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>参考：<a href="https://www.zhihu.com/question/399386753">https://www.zhihu.com/question/399386753</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>GUI</tag>
+        <tag>tkinter</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>大数据集群搭建</title>
     <url>/2019/04/04/%E5%A4%A7%E6%95%B0%E6%8D%AE%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/</url>
     <content><![CDATA[<p>使用虚拟机搭建集群时的必要工作。</p>
@@ -3364,33 +3335,6 @@
 <p>参考：<a href="https://www.csdn.net/tags/MtTaEg4sOTQ4ODE5LWJsb2cO0O0O.html">https://www.csdn.net/tags/MtTaEg4sOTQ4ODE5LWJsb2cO0O0O.html</a></p>
 </blockquote>
 ]]></content>
-  </entry>
-  <entry>
-    <title>安装python库时遇到ValueError: check_hostname requires server_hostname问题及解决</title>
-    <url>/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/</url>
-    <content><![CDATA[<p>正当我熟练地使用 <code>pip</code> 安装 <code>requests</code> 模块时，令人意想不到的一幕发生了……</p>
-<span id="more"></span>
-
-<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>今天准备爬虫，为了排查问题，我搬出了尘封已久的Windows笔记本，上一次打开这个电脑还是上一次。</p>
-<p>这个电脑上的python很干净，我需要安装 <code>requests</code> 来完成爬虫的相关功能。</p>
-<p>正当我熟练地使用 <code>pip</code> 安装这个模块时，令人意想不到的一幕发生了：</p>
-<img src="/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/1.png" class>
-
-<p>一堆红色字体！</p>
-<p>定睛一看，报错信息为：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ValueError: check_hostname requires server_hostname</span><br></pre></td></tr></table></figure>
-
-<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>原来这个尘封已久的电脑，竟然还开机自启动微屁恩~</p>
-<p>当我把微屁恩关掉，再次安装，就可以了。顺便更新了一下 <code>pip</code> 。</p>
-<p>正确运行结果如上图所示。</p>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>bug</tag>
-        <tag>python</tag>
-      </tags>
   </entry>
   <entry>
     <title>实用SQL</title>
@@ -3674,6 +3618,13 @@
       <tags>
         <tag>Python</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>云服务器 + 开源OJ搭建小型刷题平台</title>
+    <url>/2023/07/27/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8-%E5%BC%80%E6%BA%90OJ%E6%90%AD%E5%BB%BA%E5%B0%8F%E5%9E%8B%E5%88%B7%E9%A2%98%E5%B9%B3%E5%8F%B0/</url>
+    <content><![CDATA[<h1 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h1><p>小型机构自有 OJ 可以增加说服力。</p>
+<h1 id="开源项目选择"><a href="#开源项目选择" class="headerlink" title="开源项目选择"></a>开源项目选择</h1><p>Hydro QDUOJ HOJ HUSTOJ</p>
+<h1 id="搭建过程"><a href="#搭建过程" class="headerlink" title="搭建过程"></a>搭建过程</h1>]]></content>
   </entry>
   <entry>
     <title>嵩天老师Python(7)文件和数据格式化</title>
@@ -4843,18 +4794,6 @@
       </tags>
   </entry>
   <entry>
-    <title>拥抱一下变化</title>
-    <url>/2023/10/28/%E6%8B%A5%E6%8A%B1%E4%B8%80%E4%B8%8B%E5%8F%98%E5%8C%96/</url>
-    <content><![CDATA[<p><img src="/2023/10/28/%E6%8B%A5%E6%8A%B1%E4%B8%80%E4%B8%8B%E5%8F%98%E5%8C%96/py311.png" alt="拥抱一下变化"></p>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>无监督学习的聚类算法及应用</title>
     <url>/2019/04/18/%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%8F%8A%E5%BA%94%E7%94%A8/</url>
     <content><![CDATA[<h2 id="K-means算法原理"><a href="#K-means算法原理" class="headerlink" title="K-means算法原理"></a>K-means算法原理</h2><p>K-means聚类算法以k为参数，把n个对象分为k个簇，使簇内具有较高的相似度，而簇间的相似度较低。</p>
@@ -4922,6 +4861,33 @@
       <tags>
         <tag>Python</tag>
         <tag>机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>安装python库时遇到ValueError: check_hostname requires server_hostname问题及解决</title>
+    <url>/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/</url>
+    <content><![CDATA[<p>正当我熟练地使用 <code>pip</code> 安装 <code>requests</code> 模块时，令人意想不到的一幕发生了……</p>
+<span id="more"></span>
+
+<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>今天准备爬虫，为了排查问题，我搬出了尘封已久的Windows笔记本，上一次打开这个电脑还是上一次。</p>
+<p>这个电脑上的python很干净，我需要安装 <code>requests</code> 来完成爬虫的相关功能。</p>
+<p>正当我熟练地使用 <code>pip</code> 安装这个模块时，令人意想不到的一幕发生了：</p>
+<img src="/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/1.png" class>
+
+<p>一堆红色字体！</p>
+<p>定睛一看，报错信息为：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ValueError: check_hostname requires server_hostname</span><br></pre></td></tr></table></figure>
+
+<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>原来这个尘封已久的电脑，竟然还开机自启动微屁恩~</p>
+<p>当我把微屁恩关掉，再次安装，就可以了。顺便更新了一下 <code>pip</code> 。</p>
+<p>正确运行结果如上图所示。</p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>bug</tag>
+        <tag>python</tag>
       </tags>
   </entry>
   <entry>
@@ -5004,26 +4970,44 @@
 <script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
   </entry>
   <entry>
-    <title>编译和解释的区别</title>
-    <url>/2021/12/08/%E7%BC%96%E8%AF%91%E5%92%8C%E8%A7%A3%E9%87%8A%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[<p>有些编程语言是编译运行，有些则是解释运行，那它们的区别是什么呢？</p>
-<span id="more"></span>
-<h1 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h1><p>编译过程可以比作<strong>“笔译”</strong></p>
-<p>编译程序对整个源程序经过编译处理，产生一个与源程序等价的目标程序，再通过连接程序将所有需要的程序组合成一个完整的可执行程序，最后运行。</p>
-<p><img src="/2021/12/08/%E7%BC%96%E8%AF%91%E5%92%8C%E8%A7%A3%E9%87%8A%E7%9A%84%E5%8C%BA%E5%88%AB/%E7%BC%96%E8%AF%91.png" alt="编译"></p>
-<h1 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h1><p>解释过程可以比作<strong>“同声翻译”</strong></p>
-<p>解释程序对源程序逐句分析，将语句翻译成机器指令，然后立即执行指令。不会产生目标程序。</p>
-<p><img src="/2021/12/08/%E7%BC%96%E8%AF%91%E5%92%8C%E8%A7%A3%E9%87%8A%E7%9A%84%E5%8C%BA%E5%88%AB/%E8%A7%A3%E9%87%8A.png" alt="解释"></p>
-<blockquote>
-<p>大学计算机（第7版) 龚沛曾 杨志强</p>
-</blockquote>
-]]></content>
-  </entry>
-  <entry>
     <title>许久没更新了…</title>
     <url>/2021/05/19/%E8%AE%B8%E4%B9%85%E6%B2%A1%E6%9B%B4%E6%96%B0%E4%BA%86%E2%80%A6/</url>
     <content><![CDATA[<p>许久没更新了，就是冒个泡</p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>拥抱一下变化</title>
+    <url>/2023/10/28/%E6%8B%A5%E6%8A%B1%E4%B8%80%E4%B8%8B%E5%8F%98%E5%8C%96/</url>
+    <content><![CDATA[<p><img src="/2023/10/28/%E6%8B%A5%E6%8A%B1%E4%B8%80%E4%B8%8B%E5%8F%98%E5%8C%96/py311.png" alt="拥抱一下变化"></p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python三个数比较</title>
+    <url>/2021/07/21/python%E4%B8%89%E4%B8%AA%E6%95%B0%E6%AF%94%E8%BE%83/</url>
+    <content><![CDATA[<p>如何进行三个数的大小比较？</p>
+<span id="more"></span>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 方法1</span></span><br><span class="line">a, b, c = <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span></span><br><span class="line"><span class="keyword">if</span> a != b <span class="keyword">and</span> b != c <span class="keyword">and</span> a != c:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;三个数都不相等&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法2</span></span><br><span class="line">a, b, c = <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span></span><br><span class="line"><span class="keyword">if</span> a != b != c:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;三个数都不相等&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>运行上面的程序，得出结果如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">三个数都不相等</span><br><span class="line">三个数都不相等</span><br></pre></td></tr></table></figure>
+
+<p>而对于方法2，我们赋值时<code>a</code>和<code>c</code>是相等的，程序并没有判断<code>a</code>和<code>c</code>的关系。</p>
+<p>因此结论是：当比较三个数是否大小相等时，要严格按照<strong>两两比较</strong>的形式，即<strong>方法1是正确的</strong>。</p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>运算符</tag>
+      </tags>
   </entry>
   <entry>
     <title>趣味二维码生成</title>
@@ -5066,6 +5050,22 @@
       <tags>
         <tag>C++</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>编译和解释的区别</title>
+    <url>/2021/12/08/%E7%BC%96%E8%AF%91%E5%92%8C%E8%A7%A3%E9%87%8A%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<p>有些编程语言是编译运行，有些则是解释运行，那它们的区别是什么呢？</p>
+<span id="more"></span>
+<h1 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h1><p>编译过程可以比作<strong>“笔译”</strong></p>
+<p>编译程序对整个源程序经过编译处理，产生一个与源程序等价的目标程序，再通过连接程序将所有需要的程序组合成一个完整的可执行程序，最后运行。</p>
+<p><img src="/2021/12/08/%E7%BC%96%E8%AF%91%E5%92%8C%E8%A7%A3%E9%87%8A%E7%9A%84%E5%8C%BA%E5%88%AB/%E7%BC%96%E8%AF%91.png" alt="编译"></p>
+<h1 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h1><p>解释过程可以比作<strong>“同声翻译”</strong></p>
+<p>解释程序对源程序逐句分析，将语句翻译成机器指令，然后立即执行指令。不会产生目标程序。</p>
+<p><img src="/2021/12/08/%E7%BC%96%E8%AF%91%E5%92%8C%E8%A7%A3%E9%87%8A%E7%9A%84%E5%8C%BA%E5%88%AB/%E8%A7%A3%E9%87%8A.png" alt="解释"></p>
+<blockquote>
+<p>大学计算机（第7版) 龚沛曾 杨志强</p>
+</blockquote>
+]]></content>
   </entry>
   <entry>
     <title>嵩天老师Python(6)组合数据类型</title>
