@@ -209,7 +209,8 @@
 <h1 id="引力波"><a href="#引力波" class="headerlink" title="引力波"></a>引力波</h1><p>物理学中，引力波是因为时空弯曲对外以辐射形式传播的能量。<br>爱因斯坦基于广义相对论语言了引力波的存在。<br>2016年6月16日，LIGO合作组宣布2015年12月26日 03:38:53（UTC），两台不同位置的引力波探测器同时探测到了一个引力波信号。</p>
 <h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Created on Sun Feb 24 10:17:31 2019</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@author: Administrator</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#引力波</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> scipy.io <span class="keyword">import</span> wavfile</span><br><span class="line"></span><br><span class="line"><span class="comment">#产生时间序列</span></span><br><span class="line">rate_h, hstrain = wavfile.read(<span class="string">r&quot;H1_Strain.wav&quot;</span>,<span class="string">&quot;rb&quot;</span>)</span><br><span class="line">rate_l, lstrain = wavfile.read(<span class="string">r&quot;L1_Strain.wav&quot;</span>,<span class="string">&quot;rb&quot;</span>)</span><br><span class="line">reftime, ref_H1 = np.genfromtxt(<span class="string">&#x27;wf_template.txt&#x27;</span>).transpose()</span><br><span class="line"></span><br><span class="line"><span class="comment">#读取应变数据</span></span><br><span class="line">htime_interval = <span class="number">1</span> / rate_h</span><br><span class="line">ltime_interval = <span class="number">1</span> / rate_l</span><br><span class="line"></span><br><span class="line">htime_len = hstrain.shape[<span class="number">0</span>] / rate_h</span><br><span class="line">htime = np.arange(-htime_len / <span class="number">2</span>, htime_len / <span class="number">2</span>, htime_interval)</span><br><span class="line">ltime_len = lstrain.shape[<span class="number">0</span>] / rate_l</span><br><span class="line">ltime = np.arange(-ltime_len / <span class="number">2</span>, ltime_len / <span class="number">2</span>, ltime_interval)</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用来自“H1”探测器的数据作图</span></span><br><span class="line">fig = plt.figure(figsize = (<span class="number">12</span>, <span class="number">6</span>))  <span class="comment">#创建一个12*6的绘图空间</span></span><br><span class="line"></span><br><span class="line">plth = fig.add_subplot(<span class="number">221</span>)</span><br><span class="line">plth.plot(htime, hstrain, <span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">plth.set_xlabel(<span class="string">&#x27;Time(seconds)&#x27;</span>)</span><br><span class="line">plth.set_ylabel(<span class="string">&#x27;H1 Strain&#x27;</span>)</span><br><span class="line">plth.set_title(<span class="string">&#x27;H1 Strain&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#绘制L1 Strain 和 Template</span></span><br><span class="line">pltl = fig.add_subplot(<span class="number">222</span>)</span><br><span class="line">pltl.plot(ltime, lstrain, <span class="string">&#x27;g&#x27;</span>)</span><br><span class="line">pltl.set_xlabel(<span class="string">&#x27;Time(seconds)&#x27;</span>)</span><br><span class="line">pltl.set_ylabel(<span class="string">&#x27;L1 Strain&#x27;</span>)</span><br><span class="line">pltl.set_title(<span class="string">&#x27;L1 Strain&#x27;</span>)</span><br><span class="line"></span><br><span class="line">pltref = fig.add_subplot(<span class="number">212</span>)</span><br><span class="line">pltref.plot(reftime, ref_H1, <span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">pltref.set_xlabel(<span class="string">&#x27;Time(seconds)&#x27;</span>)</span><br><span class="line">pltref.set_ylabel(<span class="string">&#x27;Template Strain&#x27;</span>)</span><br><span class="line">pltref.set_title(<span class="string">&#x27;Template&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#自动调整图像外部边缘</span></span><br><span class="line">fig.tight_layout()</span><br><span class="line"></span><br><span class="line">plt.savefig(<span class="string">&quot;Gravitational_Waves_Original.png&quot;</span>)</span><br><span class="line">plt.show()</span><br><span class="line">plt.close(fig)</span><br></pre></td></tr></table></figure>
 
-<h1 id="图像展示"><a href="#图像展示" class="headerlink" title="图像展示"></a>图像展示</h1><p><img src="/2019/04/04/Matplotlib%E7%BB%98%E5%88%B6%E5%BC%95%E5%8A%9B%E6%B3%A2/Gravitational_Waves_Original.png" alt="Gravitational_Waves_Original.png"></p>
+<h1 id="图像展示"><a href="#图像展示" class="headerlink" title="图像展示"></a>图像展示</h1><img src="/2019/04/04/Matplotlib%E7%BB%98%E5%88%B6%E5%BC%95%E5%8A%9B%E6%B3%A2/Gravitational_Waves_Original.png" class>
+
 <h1 id="数据源"><a href="#数据源" class="headerlink" title="数据源"></a>数据源</h1><p><a href="http://python123.io/dv/grawave.html">http://python123.io/dv/grawave.html</a></p>
 <p><a href="http://python123.io/dv/H1_Strain.wav">http://python123.io/dv/H1_Strain.wav</a><br><a href="http://python123.io/dv/L1_Strain.wav">http://python123.io/dv/L1_Strain.wav</a><br><a href="http://python123.io/dv/wf_template.txt">http://python123.io/dv/wf_template.txt</a></p>
 ]]></content>
@@ -270,6 +271,33 @@
       </tags>
   </entry>
   <entry>
+    <title>Pygame Zero之贪吃蛇（三）</title>
+    <url>/2021/01/07/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89/</url>
+    <content><![CDATA[<p>本文继续来研究如何移动小蛇，这一次是让小蛇左转和右转。上一篇讲到小蛇只能前进，今天就让小蛇学会转弯。</p>
+<span id="more"></span>
+
+<p>如果小蛇本来是向右移动的，那么右转以后，小蛇就会向下移动，只需要把新蛇头的位置设置在旧蛇头<code>Snake[0]</code>的下方</p>
+<img src="/2021/01/07/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89/%E5%90%91%E4%B8%8B%E7%A7%BB%E5%8A%A8.png" class>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 前置代码见9-2.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="comment"># 设定新蛇头的坐标，小蛇向下移动，新蛇头在旧蛇头下方</span></span><br><span class="line">    newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">    newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)  <span class="comment"># 把新蛇头加入列表的最前面</span></span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]  <span class="comment"># 删除旧蛇尾</span></span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure>
+
+<p>类似的，我们就可以完成小蛇的所有方向移动了。定义一个变量来表示小蛇的移动方向。在<code>update</code>函数中，判断这个变量的值，就可以控制小蛇向不同的方向移动。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 前置代码见9-2.py</span></span><br><span class="line"></span><br><span class="line">direction = <span class="string">&#x27;right&#x27;</span>  <span class="comment"># 控制小蛇运动方向，默认向右</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="comment"># 判断变量direction的值，执行相应操作</span></span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;up&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y - TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;down&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;left&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x - TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;right&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]</span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure>
+
+<p>现在小蛇已经可以向四个方向移动了，我们需要加上一个控制的功能。通过按下方向键来修改<code>direction</code>的值就可以了。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">direction = <span class="string">&#x27;right&#x27;</span>  <span class="comment"># 控制小蛇运动方向，默认向右</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="keyword">global</span> direction  <span class="comment"># 将direction设为全局变量</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.left:</span><br><span class="line">        direction = <span class="string">&#x27;left&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.right:</span><br><span class="line">        direction = <span class="string">&#x27;right&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.up:</span><br><span class="line">        direction = <span class="string">&#x27;up&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.down:</span><br><span class="line">        direction = <span class="string">&#x27;down&#x27;</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;up&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y - TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;down&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;left&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x - TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;right&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]</span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure>
+
+<p>看一看效果图吧：</p>
+<img src="/2021/01/07/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89/%E4%B8%8A%E4%B8%8B%E5%B7%A6%E5%8F%B3.gif" class>]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>游戏</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Pygame Zero之贪吃蛇（一）</title>
     <url>/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/</url>
     <content><![CDATA[<p>搞了这么久Python，玩个🐍吧！</p>
@@ -306,33 +334,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Pygame Zero之贪吃蛇（三）</title>
-    <url>/2021/01/07/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89/</url>
-    <content><![CDATA[<p>本文继续来研究如何移动小蛇，这一次是让小蛇左转和右转。上一篇讲到小蛇只能前进，今天就让小蛇学会转弯。</p>
-<span id="more"></span>
-
-<p>如果小蛇本来是向右移动的，那么右转以后，小蛇就会向下移动，只需要把新蛇头的位置设置在旧蛇头<code>Snake[0]</code>的下方</p>
-<img src="/2021/01/07/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89/%E5%90%91%E4%B8%8B%E7%A7%BB%E5%8A%A8.png" class>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 前置代码见9-2.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="comment"># 设定新蛇头的坐标，小蛇向下移动，新蛇头在旧蛇头下方</span></span><br><span class="line">    newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">    newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)  <span class="comment"># 把新蛇头加入列表的最前面</span></span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]  <span class="comment"># 删除旧蛇尾</span></span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure>
-
-<p>类似的，我们就可以完成小蛇的所有方向移动了。定义一个变量来表示小蛇的移动方向。在<code>update</code>函数中，判断这个变量的值，就可以控制小蛇向不同的方向移动。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 前置代码见9-2.py</span></span><br><span class="line"></span><br><span class="line">direction = <span class="string">&#x27;right&#x27;</span>  <span class="comment"># 控制小蛇运动方向，默认向右</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="comment"># 判断变量direction的值，执行相应操作</span></span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;up&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y - TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;down&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;left&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x - TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;right&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]</span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure>
-
-<p>现在小蛇已经可以向四个方向移动了，我们需要加上一个控制的功能。通过按下方向键来修改<code>direction</code>的值就可以了。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">direction = <span class="string">&#x27;right&#x27;</span>  <span class="comment"># 控制小蛇运动方向，默认向右</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="keyword">global</span> direction  <span class="comment"># 将direction设为全局变量</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.left:</span><br><span class="line">        direction = <span class="string">&#x27;left&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.right:</span><br><span class="line">        direction = <span class="string">&#x27;right&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.up:</span><br><span class="line">        direction = <span class="string">&#x27;up&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.down:</span><br><span class="line">        direction = <span class="string">&#x27;down&#x27;</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;up&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y - TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;down&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;left&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x - TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;right&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]</span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure>
-
-<p>看一看效果图吧：</p>
-<img src="/2021/01/07/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89/%E4%B8%8A%E4%B8%8B%E5%B7%A6%E5%8F%B3.gif" class>]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>游戏</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Pygame Zero之贪吃蛇（二）</title>
     <url>/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
     <content><![CDATA[<p>本文来研究如何移动小蛇，而且仅限于向右移动，严格的说其实是「前进」。这里需要思考的问题是：为什么不是上下左右移动呢？</p>
@@ -359,6 +360,62 @@
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="comment"># 前置代码见9-1.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  </span><br><span class="line">    newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE  </span><br><span class="line">    newSnakeHead.y = Snake[<span class="number">0</span>].y  </span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)  </span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]  </span><br><span class="line">    time.sleep(<span class="number">0.2</span>)  <span class="comment"># 暂停0.2秒</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure>
 
 <p>运行程序，有一种古老游戏的感觉了，小蛇看起来是在一格一格的前进！</p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>游戏</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Pygame Zero之贪吃蛇（四）</title>
+    <url>/2021/01/15/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E5%9B%9B%EF%BC%89/</url>
+    <content><![CDATA[<p>本篇来给贪吃蛇增加游戏规则判定并加入食物和分数，制作一个完整的贪吃蛇游戏。</p>
+<span id="more"></span>
+
+<h1 id="游戏规则判定"><a href="#游戏规则判定" class="headerlink" title="游戏规则判定"></a>游戏规则判定</h1><p>在游戏中，出现两种情况则视为游戏失败：</p>
+<ul>
+<li>小蛇撞墙，即蛇头碰到屏幕边界</li>
+<li>小蛇吃自己，即蛇头碰到身体</li>
+</ul>
+<p>首先定义一个布尔类型的变量，用来记录游戏是否失败。稍后通过条件判断来修改变量的值。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">isLose = <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="小蛇撞墙"><a href="#小蛇撞墙" class="headerlink" title="小蛇撞墙"></a>小蛇撞墙</h2><p>首先判断第一种情况，当小蛇撞墙时，游戏失败。</p>
+<p>由于小蛇一直是蛇头走在最前面，所以在update中只需要判断蛇头的坐标是否超过窗口边界坐标。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> newSnakeHead.y &lt; <span class="number">0</span> <span class="keyword">or</span> newSnakeHead.y &gt; HEIGHT <span class="keyword">or</span> newSnakeHead.x &lt; <span class="number">0</span> <span class="keyword">or</span> newSnakeHead.x &gt; WIDTH:</span><br><span class="line">    isLose = <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+
+<p>在<code>draw()</code>函数中，添加游戏失败的显示信息：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    screen.clear()</span><br><span class="line">    <span class="keyword">for</span> snakebody <span class="keyword">in</span> Snake:</span><br><span class="line">        snakebody.draw()</span><br><span class="line">    <span class="comment"># 显示游戏失败信息</span></span><br><span class="line">    <span class="keyword">if</span> isLose:</span><br><span class="line">        screen.draw.text(<span class="string">&quot;Game over!&quot;</span>, (<span class="number">180</span>, HEIGHT / <span class="number">2</span> - <span class="number">100</span>), fontsize=<span class="number">100</span>, color=<span class="string">&#x27;skyblue&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="小蛇吃自己"><a href="#小蛇吃自己" class="headerlink" title="小蛇吃自己"></a>小蛇吃自己</h2><p>当小蛇吃到自己时，同样游戏结束。遍历每一个身体方块，当蛇头和任一身体坐标重合时，那就是吃到蛇肉啦。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> snakebody <span class="keyword">in</span> Snake:</span><br><span class="line">  <span class="keyword">if</span> newSnakeHead.x == snakebody.x <span class="keyword">and</span> newSnakeHead.y == snakebody.y:</span><br><span class="line">    isLose = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+<img src="/2021/01/15/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E5%9B%9B%EF%BC%89/lose.png" class>
+
+<h1 id="食物的随机出现"><a href="#食物的随机出现" class="headerlink" title="食物的随机出现"></a>食物的随机出现</h1><h2 id="食物初始状态"><a href="#食物初始状态" class="headerlink" title="食物初始状态"></a>食物初始状态</h2><p>首先需要将食物的图片放在<code>images</code>文件夹中。</p>
+<img src="/2021/01/15/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E5%9B%9B%EF%BC%89/cookie.jpg" class>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始位置随机</span></span><br><span class="line">cookie = Actor(<span class="string">&#x27;cookie&#x27;</span>)</span><br><span class="line">cookie.x = random.randint(<span class="number">10</span>,<span class="number">30</span>)*TILE_SIZE</span><br><span class="line">cookie.y = random.randint(<span class="number">10</span>,<span class="number">30</span>)*TILE_SIZE</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    cookie.draw()</span><br></pre></td></tr></table></figure>
+
+<h2 id="吃到食物增加长度"><a href="#吃到食物增加长度" class="headerlink" title="吃到食物增加长度"></a>吃到食物增加长度</h2><p>如果在一次移动中，小蛇没有吃到食物，那么就需要删除旧的蛇尾。如果小蛇吃到了食物，那么就不需要删除旧蛇尾了，直接在食物的位置添加一个新的蛇头即可。</p>
+<p>怎样算吃到食物？<code>newSnakeHead.x == cookie.x and newSnakeHead.y == cookie.y</code></p>
+<p>在之前的<code>update()</code>函数中修改：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="comment"># 小蛇吃到食物后无需删除蛇尾，将食物位置重新随机</span></span><br><span class="line">    <span class="keyword">if</span> newSnakeHead.x == cookie.x <span class="keyword">and</span> newSnakeHead.y == cookie.y:</span><br><span class="line">        cookie.x = random.randint(<span class="number">5</span>, <span class="number">35</span>) * TILE_SIZE</span><br><span class="line">        cookie.y = random.randint(<span class="number">5</span>, <span class="number">25</span>) * TILE_SIZE</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br></pre></td></tr></table></figure>
+
+<p>到目前为止，整体游戏效果已经比较完整！</p>
+<h1 id="显示得分"><a href="#显示得分" class="headerlink" title="显示得分"></a>显示得分</h1><p>接下来的功能是一个优化，就是分数的显示。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">score = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在窗口左上角显示分数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    screen.draw.text(<span class="string">&quot;Score:&quot;</span> + <span class="built_in">str</span>(score), (<span class="number">20</span>, <span class="number">20</span>), fontsize=<span class="number">25</span>, color=<span class="string">&#x27;white&#x27;</span>)</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="comment"># 吃到食物加1分</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="keyword">global</span> score</span><br><span class="line">    <span class="keyword">if</span> newSnakeHead.x == cookie.x <span class="keyword">and</span> newSnakeHead.y == cookie.y:</span><br><span class="line">        score += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p>看看最后的整体效果吧！</p>
+<img src="/2021/01/15/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E5%9B%9B%EF%BC%89/game.png" class>
+
+<hr>
+<p>附项目完整代码：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pgzrun</span><br><span class="line"></span><br><span class="line">TILE_SIZE = <span class="number">20</span></span><br><span class="line">WIDTH = <span class="number">40</span> * TILE_SIZE</span><br><span class="line">HEIGHT = <span class="number">30</span> * TILE_SIZE</span><br><span class="line">isLose = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">snakehead = Actor(<span class="string">&#x27;snake1&#x27;</span>)</span><br><span class="line">snakehead.x = WIDTH / <span class="number">2</span></span><br><span class="line">snakehead.y = HEIGHT / <span class="number">2</span></span><br><span class="line"></span><br><span class="line">cookie = Actor(<span class="string">&#x27;cookie&#x27;</span>)</span><br><span class="line">cookie.x = random.randint(<span class="number">10</span>, <span class="number">30</span>) * TILE_SIZE</span><br><span class="line">cookie.y = random.randint(<span class="number">10</span>, <span class="number">30</span>) * TILE_SIZE</span><br><span class="line"></span><br><span class="line">Snake = [snakehead]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    snakebody = Actor(<span class="string">&#x27;snake1&#x27;</span>)</span><br><span class="line">    snakebody.x = Snake[i].x - TILE_SIZE</span><br><span class="line">    snakebody.y = Snake[i].y</span><br><span class="line">    Snake.append(snakebody)</span><br><span class="line"></span><br><span class="line">direction = <span class="string">&#x27;right&#x27;</span></span><br><span class="line">score = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    screen.clear()</span><br><span class="line">    cookie.draw()</span><br><span class="line">    <span class="keyword">for</span> snakebody <span class="keyword">in</span> Snake:</span><br><span class="line">        snakebody.draw()</span><br><span class="line">    <span class="keyword">if</span> isLose:</span><br><span class="line">        screen.draw.text(<span class="string">&quot;Game over!&quot;</span>, (<span class="number">180</span>, HEIGHT / <span class="number">2</span> - <span class="number">100</span>), fontsize=<span class="number">100</span>,</span><br><span class="line">                         color=<span class="string">&#x27;skyblue&#x27;</span>)</span><br><span class="line">    screen.draw.text(<span class="string">&quot;Score: &quot;</span> + <span class="built_in">str</span>(score), (<span class="number">20</span>, <span class="number">20</span>), fontsize=<span class="number">25</span>,</span><br><span class="line">                     color=<span class="string">&#x27;white&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="keyword">global</span> direction, isLose, score</span><br><span class="line">    <span class="keyword">if</span> keyboard.left:</span><br><span class="line">        direction = <span class="string">&#x27;left&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.right:</span><br><span class="line">        direction = <span class="string">&#x27;right&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.up:</span><br><span class="line">        direction = <span class="string">&#x27;up&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.down:</span><br><span class="line">        direction = <span class="string">&#x27;down&#x27;</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;up&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y - TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;down&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;left&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x - TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;right&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> newSnakeHead.y &lt; <span class="number">0</span> <span class="keyword">or</span> newSnakeHead.y &gt; HEIGHT <span class="keyword">or</span> newSnakeHead.x &lt; <span class="number">0</span> <span class="keyword">or</span> newSnakeHead.x &gt; WIDTH:</span><br><span class="line">        isLose = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">for</span> body <span class="keyword">in</span> Snake:</span><br><span class="line">        <span class="keyword">if</span> newSnakeHead.x == body.x <span class="keyword">and</span> newSnakeHead.y == body.y:</span><br><span class="line">            isLose = <span class="literal">True</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> newSnakeHead.x == cookie.x <span class="keyword">and</span> newSnakeHead.y == cookie.y:</span><br><span class="line">        score += <span class="number">1</span></span><br><span class="line">        cookie.x = random.randint(<span class="number">5</span>, <span class="number">35</span>) * TILE_SIZE</span><br><span class="line">        cookie.y = random.randint(<span class="number">5</span>, <span class="number">25</span>) * TILE_SIZE</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pgzrun.go()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>Python</category>
@@ -450,62 +507,6 @@
 <p>尝试下，你会发现外星人alien在1s后恢复正常形态。尝试快速单击外星人，验证外星人只有在最后单击的1s之后才会恢复。</p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>我们已经学习如何绘制精灵，播放声音，处理输入时间，以及使用内置的时钟类。</p>
 <p>也许你继续完善游戏，可以记录游戏的得分，或者让外星人alien移动的更加诡异。</p>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>游戏</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Pygame Zero之贪吃蛇（四）</title>
-    <url>/2021/01/15/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E5%9B%9B%EF%BC%89/</url>
-    <content><![CDATA[<p>本篇来给贪吃蛇增加游戏规则判定并加入食物和分数，制作一个完整的贪吃蛇游戏。</p>
-<span id="more"></span>
-
-<h1 id="游戏规则判定"><a href="#游戏规则判定" class="headerlink" title="游戏规则判定"></a>游戏规则判定</h1><p>在游戏中，出现两种情况则视为游戏失败：</p>
-<ul>
-<li>小蛇撞墙，即蛇头碰到屏幕边界</li>
-<li>小蛇吃自己，即蛇头碰到身体</li>
-</ul>
-<p>首先定义一个布尔类型的变量，用来记录游戏是否失败。稍后通过条件判断来修改变量的值。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">isLose = <span class="literal">False</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="小蛇撞墙"><a href="#小蛇撞墙" class="headerlink" title="小蛇撞墙"></a>小蛇撞墙</h2><p>首先判断第一种情况，当小蛇撞墙时，游戏失败。</p>
-<p>由于小蛇一直是蛇头走在最前面，所以在update中只需要判断蛇头的坐标是否超过窗口边界坐标。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> newSnakeHead.y &lt; <span class="number">0</span> <span class="keyword">or</span> newSnakeHead.y &gt; HEIGHT <span class="keyword">or</span> newSnakeHead.x &lt; <span class="number">0</span> <span class="keyword">or</span> newSnakeHead.x &gt; WIDTH:</span><br><span class="line">    isLose = <span class="literal">True</span></span><br></pre></td></tr></table></figure>
-
-<p>在<code>draw()</code>函数中，添加游戏失败的显示信息：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    screen.clear()</span><br><span class="line">    <span class="keyword">for</span> snakebody <span class="keyword">in</span> Snake:</span><br><span class="line">        snakebody.draw()</span><br><span class="line">    <span class="comment"># 显示游戏失败信息</span></span><br><span class="line">    <span class="keyword">if</span> isLose:</span><br><span class="line">        screen.draw.text(<span class="string">&quot;Game over!&quot;</span>, (<span class="number">180</span>, HEIGHT / <span class="number">2</span> - <span class="number">100</span>), fontsize=<span class="number">100</span>, color=<span class="string">&#x27;skyblue&#x27;</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="小蛇吃自己"><a href="#小蛇吃自己" class="headerlink" title="小蛇吃自己"></a>小蛇吃自己</h2><p>当小蛇吃到自己时，同样游戏结束。遍历每一个身体方块，当蛇头和任一身体坐标重合时，那就是吃到蛇肉啦。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> snakebody <span class="keyword">in</span> Snake:</span><br><span class="line">  <span class="keyword">if</span> newSnakeHead.x == snakebody.x <span class="keyword">and</span> newSnakeHead.y == snakebody.y:</span><br><span class="line">    isLose = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
-
-<img src="/2021/01/15/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E5%9B%9B%EF%BC%89/lose.png" class>
-
-<h1 id="食物的随机出现"><a href="#食物的随机出现" class="headerlink" title="食物的随机出现"></a>食物的随机出现</h1><h2 id="食物初始状态"><a href="#食物初始状态" class="headerlink" title="食物初始状态"></a>食物初始状态</h2><p>首先需要将食物的图片放在<code>images</code>文件夹中。</p>
-<img src="/2021/01/15/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E5%9B%9B%EF%BC%89/cookie.jpg" class>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始位置随机</span></span><br><span class="line">cookie = Actor(<span class="string">&#x27;cookie&#x27;</span>)</span><br><span class="line">cookie.x = random.randint(<span class="number">10</span>,<span class="number">30</span>)*TILE_SIZE</span><br><span class="line">cookie.y = random.randint(<span class="number">10</span>,<span class="number">30</span>)*TILE_SIZE</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    cookie.draw()</span><br></pre></td></tr></table></figure>
-
-<h2 id="吃到食物增加长度"><a href="#吃到食物增加长度" class="headerlink" title="吃到食物增加长度"></a>吃到食物增加长度</h2><p>如果在一次移动中，小蛇没有吃到食物，那么就需要删除旧的蛇尾。如果小蛇吃到了食物，那么就不需要删除旧蛇尾了，直接在食物的位置添加一个新的蛇头即可。</p>
-<p>怎样算吃到食物？<code>newSnakeHead.x == cookie.x and newSnakeHead.y == cookie.y</code></p>
-<p>在之前的<code>update()</code>函数中修改：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="comment"># 小蛇吃到食物后无需删除蛇尾，将食物位置重新随机</span></span><br><span class="line">    <span class="keyword">if</span> newSnakeHead.x == cookie.x <span class="keyword">and</span> newSnakeHead.y == cookie.y:</span><br><span class="line">        cookie.x = random.randint(<span class="number">5</span>, <span class="number">35</span>) * TILE_SIZE</span><br><span class="line">        cookie.y = random.randint(<span class="number">5</span>, <span class="number">25</span>) * TILE_SIZE</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br></pre></td></tr></table></figure>
-
-<p>到目前为止，整体游戏效果已经比较完整！</p>
-<h1 id="显示得分"><a href="#显示得分" class="headerlink" title="显示得分"></a>显示得分</h1><p>接下来的功能是一个优化，就是分数的显示。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">score = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在窗口左上角显示分数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    screen.draw.text(<span class="string">&quot;Score:&quot;</span> + <span class="built_in">str</span>(score), (<span class="number">20</span>, <span class="number">20</span>), fontsize=<span class="number">25</span>, color=<span class="string">&#x27;white&#x27;</span>)</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="comment"># 吃到食物加1分</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="keyword">global</span> score</span><br><span class="line">    <span class="keyword">if</span> newSnakeHead.x == cookie.x <span class="keyword">and</span> newSnakeHead.y == cookie.y:</span><br><span class="line">        score += <span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<p>看看最后的整体效果吧！</p>
-<img src="/2021/01/15/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E5%9B%9B%EF%BC%89/game.png" class>
-
-<hr>
-<p>附项目完整代码：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pgzrun</span><br><span class="line"></span><br><span class="line">TILE_SIZE = <span class="number">20</span></span><br><span class="line">WIDTH = <span class="number">40</span> * TILE_SIZE</span><br><span class="line">HEIGHT = <span class="number">30</span> * TILE_SIZE</span><br><span class="line">isLose = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">snakehead = Actor(<span class="string">&#x27;snake1&#x27;</span>)</span><br><span class="line">snakehead.x = WIDTH / <span class="number">2</span></span><br><span class="line">snakehead.y = HEIGHT / <span class="number">2</span></span><br><span class="line"></span><br><span class="line">cookie = Actor(<span class="string">&#x27;cookie&#x27;</span>)</span><br><span class="line">cookie.x = random.randint(<span class="number">10</span>, <span class="number">30</span>) * TILE_SIZE</span><br><span class="line">cookie.y = random.randint(<span class="number">10</span>, <span class="number">30</span>) * TILE_SIZE</span><br><span class="line"></span><br><span class="line">Snake = [snakehead]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    snakebody = Actor(<span class="string">&#x27;snake1&#x27;</span>)</span><br><span class="line">    snakebody.x = Snake[i].x - TILE_SIZE</span><br><span class="line">    snakebody.y = Snake[i].y</span><br><span class="line">    Snake.append(snakebody)</span><br><span class="line"></span><br><span class="line">direction = <span class="string">&#x27;right&#x27;</span></span><br><span class="line">score = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    screen.clear()</span><br><span class="line">    cookie.draw()</span><br><span class="line">    <span class="keyword">for</span> snakebody <span class="keyword">in</span> Snake:</span><br><span class="line">        snakebody.draw()</span><br><span class="line">    <span class="keyword">if</span> isLose:</span><br><span class="line">        screen.draw.text(<span class="string">&quot;Game over!&quot;</span>, (<span class="number">180</span>, HEIGHT / <span class="number">2</span> - <span class="number">100</span>), fontsize=<span class="number">100</span>,</span><br><span class="line">                         color=<span class="string">&#x27;skyblue&#x27;</span>)</span><br><span class="line">    screen.draw.text(<span class="string">&quot;Score: &quot;</span> + <span class="built_in">str</span>(score), (<span class="number">20</span>, <span class="number">20</span>), fontsize=<span class="number">25</span>,</span><br><span class="line">                     color=<span class="string">&#x27;white&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="keyword">global</span> direction, isLose, score</span><br><span class="line">    <span class="keyword">if</span> keyboard.left:</span><br><span class="line">        direction = <span class="string">&#x27;left&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.right:</span><br><span class="line">        direction = <span class="string">&#x27;right&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.up:</span><br><span class="line">        direction = <span class="string">&#x27;up&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.down:</span><br><span class="line">        direction = <span class="string">&#x27;down&#x27;</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;up&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y - TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;down&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;left&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x - TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;right&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> newSnakeHead.y &lt; <span class="number">0</span> <span class="keyword">or</span> newSnakeHead.y &gt; HEIGHT <span class="keyword">or</span> newSnakeHead.x &lt; <span class="number">0</span> <span class="keyword">or</span> newSnakeHead.x &gt; WIDTH:</span><br><span class="line">        isLose = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">for</span> body <span class="keyword">in</span> Snake:</span><br><span class="line">        <span class="keyword">if</span> newSnakeHead.x == body.x <span class="keyword">and</span> newSnakeHead.y == body.y:</span><br><span class="line">            isLose = <span class="literal">True</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> newSnakeHead.x == cookie.x <span class="keyword">and</span> newSnakeHead.y == cookie.y:</span><br><span class="line">        score += <span class="number">1</span></span><br><span class="line">        cookie.x = random.randint(<span class="number">5</span>, <span class="number">35</span>) * TILE_SIZE</span><br><span class="line">        cookie.y = random.randint(<span class="number">5</span>, <span class="number">25</span>) * TILE_SIZE</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pgzrun.go()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 ]]></content>
       <categories>
         <category>Python</category>
@@ -909,6 +910,68 @@
       </tags>
   </entry>
   <entry>
+    <title>Python输出百分比和有效数字</title>
+    <url>/2020/05/13/Python%E8%BE%93%E5%87%BA%E7%99%BE%E5%88%86%E6%AF%94%E5%92%8C%E6%9C%89%E6%95%88%E6%95%B0%E5%AD%97/</url>
+    <content><![CDATA[<p>目录：</p>
+<ul>
+<li><p>输出百分数</p>
+</li>
+<li><p>输出有效数字</p>
+</li>
+</ul>
+<span id="more"></span>
+<h1 id="输出百分数"><a href="#输出百分数" class="headerlink" title="输出百分数"></a>输出百分数</h1><h2 id="方式1：直接使用参数格式化：-2"><a href="#方式1：直接使用参数格式化：-2" class="headerlink" title="方式1：直接使用参数格式化：{:.2%}"></a>方式1：直接使用参数格式化：<code>&#123;:.2%&#125;</code></h2><p><code>&#123;:.2%&#125;</code>： 显示小数点后2位</p>
+<ul>
+<li>显示小数点后2位：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.2%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.00</span>%</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>不显示小数位：<code>&#123;:.0%&#125;</code>，即，将2改为0：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.0%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84</span>%</span><br></pre></td></tr></table></figure>
+
+<h2 id="方式2：格式化为float，然后处理成-格式：-2f"><a href="#方式2：格式化为float，然后处理成-格式：-2f" class="headerlink" title="方式2：格式化为float，然后处理成%格式： {:.2f}%"></a>方式2：格式化为float，然后处理成%格式： <code>&#123;:.2f&#125;%</code></h2><p>与方式1的区别是：</p>
+<ol>
+<li>需要对42/50乘以 100 。</li>
+<li>方式2的%在{ }外边，方式1的%在{ }里边。</li>
+</ol>
+<ul>
+<li>显示小数点后2位：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.2f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.00</span>%</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>显示小数点后1位：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.1f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.0</span>%</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>只显示整数位：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.0f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84</span>%</span><br></pre></td></tr></table></figure>
+
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p><code>&#123; &#125; </code>的意思是对应<code>format()</code>的一个参数，按默认顺序对应，参数序号从0开始，<code>&#123;0&#125;</code>对应<code>format()</code>的第一个参数，<code>&#123;1&#125;</code>对应第二个参数。例如：</p>
+<ul>
+<li>默认顺序：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent1: &#123;:.2%&#125;, percent2: &#123;:.1%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>, <span class="number">42</span> / <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent1: <span class="number">84.00</span>%, percent2: <span class="number">42.0</span>%</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>指定顺序：<br><code>&#123;1:.1%&#125;</code>对应第2个参数； <code>&#123;0:.1%&#125;</code>对应第1个参数。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent2: &#123;1:.1%&#125;, percent1: &#123;0:.1%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>, <span class="number">42</span> / <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent2: <span class="number">42.0</span>%, percent1: <span class="number">84.0</span>%</span><br></pre></td></tr></table></figure>
+
+<h1 id="输出有效数字"><a href="#输出有效数字" class="headerlink" title="输出有效数字"></a>输出有效数字</h1><p>用自带的decimal模块</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> decimal <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">getcontext().prec = <span class="number">6</span></span><br><span class="line">Decimal(<span class="number">1</span>)/Decimal(<span class="number">7</span>)</span><br><span class="line"><span class="comment"># 结果为Decimal(&#x27;0.142857&#x27;)，六个有效数字</span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>数据分析之Numpy库入门</title>
     <url>/2019/04/04/Python%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E4%B9%8BNumpy%E5%BA%93%E5%85%A5%E9%97%A8/</url>
     <content><![CDATA[<h1 id="数据的维度"><a href="#数据的维度" class="headerlink" title="数据的维度"></a>数据的维度</h1><p>一个数据表达一个含义<br>一组数据表达一个或多个含义</p>
@@ -1285,60 +1348,24 @@
       </tags>
   </entry>
   <entry>
-    <title>Python输出百分比和有效数字</title>
-    <url>/2020/05/13/Python%E8%BE%93%E5%87%BA%E7%99%BE%E5%88%86%E6%AF%94%E5%92%8C%E6%9C%89%E6%95%88%E6%95%B0%E5%AD%97/</url>
-    <content><![CDATA[<p>目录：</p>
-<ul>
-<li><p>输出百分数</p>
-</li>
-<li><p>输出有效数字</p>
-</li>
-</ul>
+    <title>Python题目 - 回文质数</title>
+    <url>/2020/01/09/Python%E9%A2%98%E7%9B%AE%20-%20%E5%9B%9E%E6%96%87%E8%B4%A8%E6%95%B0/</url>
+    <content><![CDATA[<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>因为 151 既是一个质数又是一个回文数（从左到右和从右到左是看一样的），所以 151 是回文质数。</p>
+<p>写一个程序来找出范围 [a,b] (5 \le a &lt; b \le 100,000,000)<a href="5%E2%89%A4*a*%3C*b*%E2%89%A4100,000,000"><em>a</em>,<em>b</em></a>( 一亿)间的所有回文质数。</p>
+<h1 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h1><p>第 1 行: 二个整数 a 和 b .</p>
+<h1 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h1><p>输出一个回文质数的列表，一行一个。</p>
 <span id="more"></span>
-<h1 id="输出百分数"><a href="#输出百分数" class="headerlink" title="输出百分数"></a>输出百分数</h1><h2 id="方式1：直接使用参数格式化：-2"><a href="#方式1：直接使用参数格式化：-2" class="headerlink" title="方式1：直接使用参数格式化：{:.2%}"></a>方式1：直接使用参数格式化：<code>&#123;:.2%&#125;</code></h2><p><code>&#123;:.2%&#125;</code>： 显示小数点后2位</p>
-<ul>
-<li>显示小数点后2位：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.2%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.00</span>%</span><br></pre></td></tr></table></figure>
 
-<ul>
-<li>不显示小数位：<code>&#123;:.0%&#125;</code>，即，将2改为0：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.0%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84</span>%</span><br></pre></td></tr></table></figure>
+<h1 id="输入输出样例"><a href="#输入输出样例" class="headerlink" title="输入输出样例"></a>输入输出样例</h1><h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">5</span> <span class="number">500</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="方式2：格式化为float，然后处理成-格式：-2f"><a href="#方式2：格式化为float，然后处理成-格式：-2f" class="headerlink" title="方式2：格式化为float，然后处理成%格式： {:.2f}%"></a>方式2：格式化为float，然后处理成%格式： <code>&#123;:.2f&#125;%</code></h2><p>与方式1的区别是：</p>
-<ol>
-<li>需要对42/50乘以 100 。</li>
-<li>方式2的%在{ }外边，方式1的%在{ }里边。</li>
-</ol>
-<ul>
-<li>显示小数点后2位：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.2f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.00</span>%</span><br></pre></td></tr></table></figure>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">7</span></span><br><span class="line"><span class="number">11</span></span><br><span class="line"><span class="number">101</span></span><br><span class="line"><span class="number">131</span></span><br><span class="line"><span class="number">151</span></span><br><span class="line"><span class="number">181</span></span><br><span class="line"><span class="number">191</span></span><br><span class="line"><span class="number">313</span></span><br><span class="line"><span class="number">353</span></span><br><span class="line"><span class="number">373</span></span><br><span class="line"><span class="number">383</span></span><br></pre></td></tr></table></figure>
 
-<ul>
-<li>显示小数点后1位：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.1f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.0</span>%</span><br></pre></td></tr></table></figure>
+<h1 id="超时实现"><a href="#超时实现" class="headerlink" title="超时实现"></a>超时实现</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 获得输入</span></span><br><span class="line">ab = <span class="built_in">input</span>().split()</span><br><span class="line">a = <span class="built_in">int</span>(ab[<span class="number">0</span>])</span><br><span class="line">b = <span class="built_in">int</span>(ab[<span class="number">1</span>])</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(a, b + <span class="number">1</span>):</span><br><span class="line">    <span class="keyword">if</span> i % <span class="number">2</span> == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">str</span>(i)[::-<span class="number">1</span>] == <span class="built_in">str</span>(i): <span class="comment"># 判断是否回文数</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, <span class="built_in">int</span>(i ** <span class="number">0.5</span>) + <span class="number">1</span>): <span class="comment"># 判断是否质数</span></span><br><span class="line">                <span class="keyword">if</span> i % j == <span class="number">0</span>:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="built_in">print</span>(i) <span class="comment"># 是则打印</span></span><br></pre></td></tr></table></figure>
 
-<ul>
-<li>只显示整数位：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.0f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84</span>%</span><br></pre></td></tr></table></figure>
+<h1 id="大佬方法"><a href="#大佬方法" class="headerlink" title="大佬方法"></a>大佬方法</h1><p>埃氏筛</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">prime_numbers</span>(<span class="params">n</span>):</span></span><br><span class="line">    number = [<span class="number">1</span>]*(n+<span class="number">1</span>)  <span class="comment"># 初始化，1表示全部为质数</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, <span class="built_in">int</span>((n**<span class="number">0.5</span>))+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> number[i]:  <span class="comment"># 如果下标i对应的数字i是素数</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i*i, n+<span class="number">1</span>, i):  <span class="comment"># 素数i的各个倍数</span></span><br><span class="line">                number[j] = <span class="number">0</span></span><br><span class="line">                j += <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, n+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> number[x]:</span><br><span class="line">            <span class="built_in">print</span>(x)</span><br></pre></td></tr></table></figure>
 
-<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p><code>&#123; &#125; </code>的意思是对应<code>format()</code>的一个参数，按默认顺序对应，参数序号从0开始，<code>&#123;0&#125;</code>对应<code>format()</code>的第一个参数，<code>&#123;1&#125;</code>对应第二个参数。例如：</p>
-<ul>
-<li>默认顺序：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent1: &#123;:.2%&#125;, percent2: &#123;:.1%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>, <span class="number">42</span> / <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent1: <span class="number">84.00</span>%, percent2: <span class="number">42.0</span>%</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>指定顺序：<br><code>&#123;1:.1%&#125;</code>对应第2个参数； <code>&#123;0:.1%&#125;</code>对应第1个参数。</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent2: &#123;1:.1%&#125;, percent1: &#123;0:.1%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>, <span class="number">42</span> / <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent2: <span class="number">42.0</span>%, percent1: <span class="number">84.0</span>%</span><br></pre></td></tr></table></figure>
-
-<h1 id="输出有效数字"><a href="#输出有效数字" class="headerlink" title="输出有效数字"></a>输出有效数字</h1><p>用自带的decimal模块</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> decimal <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">getcontext().prec = <span class="number">6</span></span><br><span class="line">Decimal(<span class="number">1</span>)/Decimal(<span class="number">7</span>)</span><br><span class="line"><span class="comment"># 结果为Decimal(&#x27;0.142857&#x27;)，六个有效数字</span></span><br></pre></td></tr></table></figure>]]></content>
+]]></content>
       <categories>
         <category>Python</category>
       </categories>
@@ -1431,32 +1458,6 @@
 <blockquote>
 <p>转自嵩天老师的课程《Python语言程序设计》-  <a href="https://www.icourse163.org/course/BIT-268001">https://www.icourse163.org/course/BIT-268001</a></p>
 </blockquote>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python题目 - 回文质数</title>
-    <url>/2020/01/09/Python%E9%A2%98%E7%9B%AE%20-%20%E5%9B%9E%E6%96%87%E8%B4%A8%E6%95%B0/</url>
-    <content><![CDATA[<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>因为 151 既是一个质数又是一个回文数（从左到右和从右到左是看一样的），所以 151 是回文质数。</p>
-<p>写一个程序来找出范围 [a,b] (5 \le a &lt; b \le 100,000,000)<a href="5%E2%89%A4*a*%3C*b*%E2%89%A4100,000,000"><em>a</em>,<em>b</em></a>( 一亿)间的所有回文质数。</p>
-<h1 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h1><p>第 1 行: 二个整数 a 和 b .</p>
-<h1 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h1><p>输出一个回文质数的列表，一行一个。</p>
-<span id="more"></span>
-
-<h1 id="输入输出样例"><a href="#输入输出样例" class="headerlink" title="输入输出样例"></a>输入输出样例</h1><h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">5</span> <span class="number">500</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">7</span></span><br><span class="line"><span class="number">11</span></span><br><span class="line"><span class="number">101</span></span><br><span class="line"><span class="number">131</span></span><br><span class="line"><span class="number">151</span></span><br><span class="line"><span class="number">181</span></span><br><span class="line"><span class="number">191</span></span><br><span class="line"><span class="number">313</span></span><br><span class="line"><span class="number">353</span></span><br><span class="line"><span class="number">373</span></span><br><span class="line"><span class="number">383</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="超时实现"><a href="#超时实现" class="headerlink" title="超时实现"></a>超时实现</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 获得输入</span></span><br><span class="line">ab = <span class="built_in">input</span>().split()</span><br><span class="line">a = <span class="built_in">int</span>(ab[<span class="number">0</span>])</span><br><span class="line">b = <span class="built_in">int</span>(ab[<span class="number">1</span>])</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(a, b + <span class="number">1</span>):</span><br><span class="line">    <span class="keyword">if</span> i % <span class="number">2</span> == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">str</span>(i)[::-<span class="number">1</span>] == <span class="built_in">str</span>(i): <span class="comment"># 判断是否回文数</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, <span class="built_in">int</span>(i ** <span class="number">0.5</span>) + <span class="number">1</span>): <span class="comment"># 判断是否质数</span></span><br><span class="line">                <span class="keyword">if</span> i % j == <span class="number">0</span>:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="built_in">print</span>(i) <span class="comment"># 是则打印</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="大佬方法"><a href="#大佬方法" class="headerlink" title="大佬方法"></a>大佬方法</h1><p>埃氏筛</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">prime_numbers</span>(<span class="params">n</span>):</span></span><br><span class="line">    number = [<span class="number">1</span>]*(n+<span class="number">1</span>)  <span class="comment"># 初始化，1表示全部为质数</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, <span class="built_in">int</span>((n**<span class="number">0.5</span>))+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> number[i]:  <span class="comment"># 如果下标i对应的数字i是素数</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i*i, n+<span class="number">1</span>, i):  <span class="comment"># 素数i的各个倍数</span></span><br><span class="line">                number[j] = <span class="number">0</span></span><br><span class="line">                j += <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, n+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> number[x]:</span><br><span class="line">            <span class="built_in">print</span>(x)</span><br></pre></td></tr></table></figure>
-
 ]]></content>
       <categories>
         <category>Python</category>
@@ -2474,6 +2475,64 @@
       </tags>
   </entry>
   <entry>
+    <title>Scratch还能做出这么酷炫的3D效果？</title>
+    <url>/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/</url>
+    <content><![CDATA[<p>哇！</p>
+<iframe src="//player.bilibili.com/player.html?aid=758188286&bvid=BV1y64y1d7yt&cid=343226566&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+<span id="more"></span>
+
+<p>酷炫的3D星空效果，想知道怎么实现的吗？</p>
+<h1 id="绘制角色"><a href="#绘制角色" class="headerlink" title="绘制角色"></a>绘制角色</h1><p>Scratch版本3.22.0</p>
+<p>首先把小猫干掉，我们选择自己绘制角色。</p>
+<p>按住shift再绘制圆形，可以画出正圆！但是画之前，先选好填充颜色。这样填充会给人一种3D立体的感觉。</p>
+<img src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/1.png" class>
+
+<p>下面开始画圆，大小在<code>40*40</code>左右即可。</p>
+<img src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/2.png" class>
+
+<h1 id="选择背景"><a href="#选择背景" class="headerlink" title="选择背景"></a>选择背景</h1><p>由于是星空，所以我们需要选择深色背景（如Galaxy、Stars、Nebula），也可以像我一样直接拿一个黑色长方形~</p>
+<img src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/3.png" class>
+
+<h1 id="编程"><a href="#编程" class="headerlink" title="编程"></a>编程</h1><h2 id="本体"><a href="#本体" class="headerlink" title="本体"></a>本体</h2><p>这个程序中，本体要做的只有一个，那就是不停克隆自己：</p>
+<img src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/4.png" class>
+
+<h2 id="距离"><a href="#距离" class="headerlink" title="距离"></a>距离</h2><p>我们平时看东西，会有一个「近大远小」的现象，距离我们比较近的都会特别大，距离我们很远的都会很小。</p>
+<p>对于我们的星星也可以这样来设计，首先创建一个变量距离，因为每个星星到我们的距离都不同，因此这个变量<strong>仅适用于当前角色</strong>。假设星星到我们的距离时1到10之间，那么可以使用随机来创建不同距离的星星。</p>
+<img src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/5.png" class>
+
+<h2 id="大小"><a href="#大小" class="headerlink" title="大小"></a>大小</h2><p>当距离越小，角色就应该越大；距离越大，角色就应该越小。<strong>角色的大小和距离成反比。</strong>那么可以使用除法来设置角色大小：</p>
+<img src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/6.png" class>
+
+<h2 id="开始移动"><a href="#开始移动" class="headerlink" title="开始移动"></a>开始移动</h2><p>下面只需要让这些星星从右向左移动就行了，先移到最右边，再减少x坐标，直到移出舞台。</p>
+<img src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/7.png" class>
+
+<p>看看效果：</p>
+<iframe src="//player.bilibili.com/player.html?aid=630739988&bvid=BV18b4y1o7Rc&cid=343226890&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" height="450" width="100%"> </iframe>
+
+<p>噢，我的上帝，看起来速度<strong>相同</strong>还很快，一点也不3D啊~</p>
+<h2 id="速度"><a href="#速度" class="headerlink" title="速度"></a>速度</h2><p>除了近大远小，还有「近快远慢」。当你坐在车上，看眼前的大树，它们嗖嗖嗖的从眼前闪过。而如果看看远处的山，却感觉它好像几乎没有移动。</p>
+<p>所以把近处（距离小）的星星速度变快，远处的变慢吧。又是反比，继续使用除法！</p>
+<img src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/9.png" class>
+
+<iframe src="//player.bilibili.com/player.html?aid=333170393&bvid=BV19A411G7n4&cid=343227151&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" height="450" width="100%"> </iframe>
+
+<h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><p>至此程序已经基本完成了，不过还有一个不合常理之处，那就是小的克隆体会出现在大的克隆体之上。这里涉及到一个「层」的概念，我们根据距离，将角色后移相应层数即可。</p>
+<img src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/11.png" class>
+
+<h1 id="全部程序和运行效果"><a href="#全部程序和运行效果" class="headerlink" title="全部程序和运行效果"></a>全部程序和运行效果</h1><img src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/12.png" class>
+
+<iframe src="//player.bilibili.com/player.html?aid=758188286&bvid=BV1y64y1d7yt&cid=343226566&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" height="450" width="100%"> </iframe>
+
+]]></content>
+      <categories>
+        <category>Scratch</category>
+      </categories>
+      <tags>
+        <tag>Scratch</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SQL必知必会(5)高级过滤数据</title>
     <url>/2020/12/06/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-5-%E9%AB%98%E7%BA%A7%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE/</url>
     <content><![CDATA[<p><strong>操作符（operator）</strong>：用来连接或改变WHERE子句中的子句的关键字，也称为逻辑操作符（logical operator）。</p>
@@ -2682,64 +2741,6 @@
       </categories>
       <tags>
         <tag>SQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Scratch还能做出这么酷炫的3D效果？</title>
-    <url>/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/</url>
-    <content><![CDATA[<p>哇！</p>
-<iframe src="//player.bilibili.com/player.html?aid=758188286&bvid=BV1y64y1d7yt&cid=343226566&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-
-<span id="more"></span>
-
-<p>酷炫的3D星空效果，想知道怎么实现的吗？</p>
-<h1 id="绘制角色"><a href="#绘制角色" class="headerlink" title="绘制角色"></a>绘制角色</h1><p>Scratch版本3.22.0</p>
-<p>首先把小猫干掉，我们选择自己绘制角色。</p>
-<p>按住shift再绘制圆形，可以画出正圆！但是画之前，先选好填充颜色。这样填充会给人一种3D立体的感觉。</p>
-<img src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/1.png" class>
-
-<p>下面开始画圆，大小在<code>40*40</code>左右即可。</p>
-<img src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/2.png" class>
-
-<h1 id="选择背景"><a href="#选择背景" class="headerlink" title="选择背景"></a>选择背景</h1><p>由于是星空，所以我们需要选择深色背景（如Galaxy、Stars、Nebula），也可以像我一样直接拿一个黑色长方形~</p>
-<img src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/3.png" class>
-
-<h1 id="编程"><a href="#编程" class="headerlink" title="编程"></a>编程</h1><h2 id="本体"><a href="#本体" class="headerlink" title="本体"></a>本体</h2><p>这个程序中，本体要做的只有一个，那就是不停克隆自己：</p>
-<img src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/4.png" class>
-
-<h2 id="距离"><a href="#距离" class="headerlink" title="距离"></a>距离</h2><p>我们平时看东西，会有一个「近大远小」的现象，距离我们比较近的都会特别大，距离我们很远的都会很小。</p>
-<p>对于我们的星星也可以这样来设计，首先创建一个变量距离，因为每个星星到我们的距离都不同，因此这个变量<strong>仅适用于当前角色</strong>。假设星星到我们的距离时1到10之间，那么可以使用随机来创建不同距离的星星。</p>
-<img src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/5.png" class>
-
-<h2 id="大小"><a href="#大小" class="headerlink" title="大小"></a>大小</h2><p>当距离越小，角色就应该越大；距离越大，角色就应该越小。<strong>角色的大小和距离成反比。</strong>那么可以使用除法来设置角色大小：</p>
-<img src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/6.png" class>
-
-<h2 id="开始移动"><a href="#开始移动" class="headerlink" title="开始移动"></a>开始移动</h2><p>下面只需要让这些星星从右向左移动就行了，先移到最右边，再减少x坐标，直到移出舞台。</p>
-<img src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/7.png" class>
-
-<p>看看效果：</p>
-<iframe src="//player.bilibili.com/player.html?aid=630739988&bvid=BV18b4y1o7Rc&cid=343226890&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" height="450" width="100%"> </iframe>
-
-<p>噢，我的上帝，看起来速度<strong>相同</strong>还很快，一点也不3D啊~</p>
-<h2 id="速度"><a href="#速度" class="headerlink" title="速度"></a>速度</h2><p>除了近大远小，还有「近快远慢」。当你坐在车上，看眼前的大树，它们嗖嗖嗖的从眼前闪过。而如果看看远处的山，却感觉它好像几乎没有移动。</p>
-<p>所以把近处（距离小）的星星速度变快，远处的变慢吧。又是反比，继续使用除法！</p>
-<img src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/9.png" class>
-
-<iframe src="//player.bilibili.com/player.html?aid=333170393&bvid=BV19A411G7n4&cid=343227151&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" height="450" width="100%"> </iframe>
-
-<h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><p>至此程序已经基本完成了，不过还有一个不合常理之处，那就是小的克隆体会出现在大的克隆体之上。这里涉及到一个「层」的概念，我们根据距离，将角色后移相应层数即可。</p>
-<img src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/11.png" class>
-
-<h1 id="全部程序和运行效果"><a href="#全部程序和运行效果" class="headerlink" title="全部程序和运行效果"></a>全部程序和运行效果</h1><img src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/12.png" class>
-
-<iframe src="//player.bilibili.com/player.html?aid=758188286&bvid=BV1y64y1d7yt&cid=343226566&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" height="450" width="100%"> </iframe>
-
-]]></content>
-      <categories>
-        <category>Scratch</category>
-      </categories>
-      <tags>
-        <tag>Scratch</tag>
       </tags>
   </entry>
   <entry>
@@ -3669,6 +3670,241 @@
       </tags>
   </entry>
   <entry>
+    <title>嵩天老师Python(8)程序设计方法学</title>
+    <url>/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(8)%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E5%AD%A6/</url>
+    <content><![CDATA[<h1 id="实例：体育竞技分析"><a href="#实例：体育竞技分析" class="headerlink" title="实例：体育竞技分析"></a>实例：体育竞技分析</h1><blockquote>
+<p>高手过招，胜负只在毫厘之间</p>
+</blockquote>
+<h2 id="“体育竞技分析”问题分析"><a href="#“体育竞技分析”问题分析" class="headerlink" title="“体育竞技分析”问题分析"></a>“体育竞技分析”问题分析</h2><h3 id="体育竞技分析"><a href="#体育竞技分析" class="headerlink" title="体育竞技分析"></a>体育竞技分析</h3><ul>
+<li><p>需求：毫厘是多少？如何科学分析体育竞技比赛？</p>
+</li>
+<li><p>输入：球员的水平</p>
+</li>
+<li><p>输出：可预测的比赛成绩</p>
+<span id="more"></span></li>
+</ul>
+<h3 id="体育竞技分析：模拟N场比赛"><a href="#体育竞技分析：模拟N场比赛" class="headerlink" title="体育竞技分析：模拟N场比赛"></a>体育竞技分析：模拟N场比赛</h3><ul>
+<li>计算思维：抽象 + 自动化</li>
+<li>模拟：抽象比赛过程 + 自动化执行N场比赛</li>
+<li>当N越大时，比赛结果分析会越科学</li>
+</ul>
+<h3 id="比赛规则"><a href="#比赛规则" class="headerlink" title="比赛规则"></a>比赛规则</h3><ul>
+<li>双人击球比赛：A &amp; B，回合制，5局3胜</li>
+<li>开始时一方先发球，直至判分，接下来胜者发球</li>
+<li>球员只能在发球局得分，15分胜一局</li>
+</ul>
+<h2 id="自顶向下和自底向上"><a href="#自顶向下和自底向上" class="headerlink" title="自顶向下和自底向上"></a>自顶向下和自底向上</h2><h3 id="自顶向下（设计）——解决复杂问题的有效方法"><a href="#自顶向下（设计）——解决复杂问题的有效方法" class="headerlink" title="自顶向下（设计）——解决复杂问题的有效方法"></a>自顶向下（设计）——解决复杂问题的有效方法</h3><ul>
+<li>将一个总问题表达为若干个小问题组成的形式</li>
+<li>使用同样方法进一步分解小问题</li>
+<li>直至，小问题可以用计算机简单明了的解决</li>
+</ul>
+<h3 id="自底向上（执行）——逐步组建复杂系统的有效测试方法"><a href="#自底向上（执行）——逐步组建复杂系统的有效测试方法" class="headerlink" title="自底向上（执行）——逐步组建复杂系统的有效测试方法"></a>自底向上（执行）——逐步组建复杂系统的有效测试方法</h3><h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h3 id="程序总体框架及步骤"><a href="#程序总体框架及步骤" class="headerlink" title="程序总体框架及步骤"></a>程序总体框架及步骤</h3><ul>
+<li>步骤1：打印程序的介绍性信息               - printInfo()</li>
+<li>步骤2：获得程序运行参数：proA, proB, n    - getInputs()</li>
+<li>步骤3：利用球员A和B的能力值，模拟n局比赛  - simNGames()</li>
+<li>步骤4：输出球员A和B获胜比赛的场次及概率   - printSummary()</li>
+</ul>
+<h3 id="全代码"><a href="#全代码" class="headerlink" title="全代码"></a>全代码</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printIntro</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;这个程序模拟两个选手A和B的某种竞技比赛&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;程序运行需要A和B的能力值（以0到1之间的小数表示）&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getInputs</span>():</span></span><br><span class="line">    a = <span class="built_in">eval</span>(<span class="built_in">input</span>(<span class="string">&quot;请输入选手A的能力值（0-1）：&quot;</span>))</span><br><span class="line">    b = <span class="built_in">eval</span>(<span class="built_in">input</span>(<span class="string">&quot;请输入选手B的能力值（0-1）：&quot;</span>))</span><br><span class="line">    n = <span class="built_in">eval</span>(<span class="built_in">input</span>(<span class="string">&quot;模拟比赛的场次：&quot;</span>))</span><br><span class="line">    <span class="keyword">return</span> a, b, n</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printSummary</span>(<span class="params">winsA, winsB</span>):</span></span><br><span class="line">    n = winsA + winsB</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;竞技分析开始，共模拟&#123;&#125;场比赛&quot;</span>.<span class="built_in">format</span>(n))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;选手A获胜&#123;&#125;场比赛，占比&#123;:0.1%&#125;&quot;</span>.<span class="built_in">format</span>(winsA, winsA/n))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;选手B获胜&#123;&#125;场比赛，占比&#123;:0.1%&#125;&quot;</span>.<span class="built_in">format</span>(winsB, winsB/n))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gameOver</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    <span class="keyword">return</span> a==<span class="number">15</span> <span class="keyword">or</span> b==<span class="number">15</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simOneGame</span>(<span class="params">probA, probB</span>):</span></span><br><span class="line">    scoreA, scoreB = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    serving =<span class="string">&quot;A&quot;</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> gameOver(scoreA,scoreB):</span><br><span class="line">        <span class="keyword">if</span> serving == <span class="string">&quot;A&quot;</span>:</span><br><span class="line">            <span class="keyword">if</span> random() &lt; probA:</span><br><span class="line">                scoreA += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                serving = <span class="string">&quot;B&quot;</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> random() &lt; probB:</span><br><span class="line">                scoreB += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                serving = <span class="string">&quot;A&quot;</span></span><br><span class="line">    <span class="keyword">return</span> scoreA, scoreB</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simNGames</span>(<span class="params">n, probA, probB</span>):</span></span><br><span class="line">    winsA, winsB = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        scoreA, scoreB = simOneGame(probA, probB)</span><br><span class="line">        <span class="keyword">if</span> scoreA &gt; scoreB:</span><br><span class="line">            winsA += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            winsB += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> winsA, winsB</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    printIntro()</span><br><span class="line">    probA, probB, n = getInputs()</span><br><span class="line">    winsA, winsB = simNGames(n, probA, probB)</span><br><span class="line">    printSummary(winsA, winsB)</span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+
+<h3 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h3><img src="/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(8)%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E5%AD%A6/result.png" class>
+
+<h2 id="举一反三"><a href="#举一反三" class="headerlink" title="举一反三"></a>举一反三</h2><ol>
+<li>理解自顶向下和自底向上</li>
+</ol>
+<ul>
+<li>理解自顶向下的设计思维：分而治之</li>
+<li>理解自底向上的执行思维：模块化集成</li>
+<li>自顶向下是“系统”思维的简化</li>
+</ul>
+<ol start="2">
+<li>应用问题的扩展</li>
+</ol>
+<ul>
+<li>扩展比赛参数，增加对更多能力对比情况的判断</li>
+<li>扩展比赛设计，增加对真实比赛结果的预测</li>
+<li>扩展分析逻辑，反向推理，用胜率推算能力？</li>
+</ul>
+<h1 id="Python程序设计思维"><a href="#Python程序设计思维" class="headerlink" title="Python程序设计思维"></a>Python程序设计思维</h1><h2 id="计算思维"><a href="#计算思维" class="headerlink" title="计算思维"></a>计算思维</h2><p>第3种人类思维特征</p>
+<ul>
+<li>逻辑思维：推理和演绎，数学为代表，A-&gt;B B-&gt;C A-&gt;C</li>
+<li>实证思维：实验和验证，物理为代表，引力波&lt;-实验</li>
+<li>计算思维：设计和构造，计算机为代表，汉诺塔递归</li>
+</ul>
+<p>计算思维（Computational Thinking）：<strong>抽象</strong>问题的计算过程，利用计算机<strong>自动化</strong>求解，是基于计算机的思维方式。计算思维基于计算机强大的算力及海量数据，抽象计算过程，关注设计和构造，而非因果。</p>
+<h2 id="计算生态与Python语言"><a href="#计算生态与Python语言" class="headerlink" title="计算生态与Python语言"></a>计算生态与Python语言</h2><ul>
+<li>以开源项目为代表的大量第三方库</li>
+<li>库的建设经过野蛮生长和自然选择</li>
+<li>库之间相互关联使用，依存发展</li>
+<li>社区庞大，新技术更迭迅速</li>
+</ul>
+<p>计算生态的价值</p>
+<ul>
+<li>加速科技类应用创新的重要支撑</li>
+<li>发展科技产品商业价值的重要模式</li>
+<li>国家科技体系安全和稳固的基础</li>
+</ul>
+<h2 id="基本的程序设计模式"><a href="#基本的程序设计模式" class="headerlink" title="基本的程序设计模式"></a>基本的程序设计模式</h2><p>IPO<br>模块化设计<br>配置化设计</p>
+<h1 id="Python第三方库安装"><a href="#Python第三方库安装" class="headerlink" title="Python第三方库安装"></a>Python第三方库安装</h1><p>Python社区：<a href="https://pypi.org/">https://pypi.org</a></p>
+<p>安装第三方库：</p>
+<ol>
+<li>主要方法：使用pip命令</li>
+<li>集成安装方法</li>
+<li>文件安装方法</li>
+</ol>
+<p>Anaconda： <a href="https://www.continuum.io/">https://www.continuum.io</a></p>
+<ul>
+<li>支持近800个第三方库</li>
+<li>包含多个主流工具</li>
+<li>适合数据计算领域开发</li>
+</ul>
+<p>UCI页面： <a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/">http://www.lfd.uci.edu/~gohlke/pythonlibs/</a></p>
+<ul>
+<li>在UCI页面上搜索&lt;库名称&gt;</li>
+<li>下载对应版本的文件</li>
+<li>使用pip install &lt;文件名&gt;安装</li>
+</ul>
+<h1 id="os库的使用"><a href="#os库的使用" class="headerlink" title="os库的使用"></a>os库的使用</h1><h2 id="os库基本介绍"><a href="#os库基本介绍" class="headerlink" title="os库基本介绍"></a>os库基本介绍</h2><p>os库提供通用的、基本的操作系统交互功能</p>
+<ul>
+<li>os库是Python标准库，包含几百个函数</li>
+<li>常用路径操作、进程管理、环境参数等几类<ul>
+<li>路径操作：os.path子库，处理文件路径及信息</li>
+<li>进程管理：启动系统中其他程序</li>
+<li>环境参数：获得系统软硬件信息等环境参数</li>
+</ul>
+</li>
+</ul>
+<h2 id="os库的路径操作"><a href="#os库的路径操作" class="headerlink" title="os库的路径操作"></a>os库的路径操作</h2><p>os.path子库以path为入口，用于操作和处理文件路径<br>| 函数                        | 描述                                  |<br>| ————————— | ——————————— |<br>| <code>os.path.abspath(path)</code>  | 返回path在当前系统中的绝对路径             |<br>| <code>os.path.normpath(path)</code>  | 归一化path的表示形式，统一用\\分隔路径      |<br>| <code>os.path.relpath(path)</code> | 返回当前程序与文件之间的相对路径（relative path）|<br>| <code>os.path.dirname(path)</code>   | 返回path中的目录名称                        |<br>| <code>os.path.basename(path)</code> | 返回path中最后的文件名称                  |<br>| <code>os.path.join(path,*paths)</code> | 组合path与paths，返回一个路径字符串         |<br>| <code>os.path.exists(path)</code> | 判断path对应文件或目录是否存在，返回True或False   |<br>| <code>os.path.isfile(path)</code>  | 判断path所对应是否为已存在的文件，返回True或False|<br>| <code>os.path.isdir(path)</code>  | 判断path所对应是否为已存在的目录，返回True或False |<br>| <code>os.path.getatime(path)</code>  | 返回path对应文件或目录上一次的访问时间        |<br>| <code>os.path.getmtime(path)</code>    | 返回path对应文件或目录最近一次的修改时间     |<br>| <code>os.path.getctime(path)</code>    | 返回path对应文件或目录创建时间             |<br>| <code>os.path.getsize(path)</code>     | 返回path对应文件的大小，以字节为单位        |</p>
+<h2 id="os库的进程管理"><a href="#os库的进程管理" class="headerlink" title="os库的进程管理"></a>os库的进程管理</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">os.system(command)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>执行程序或命令command</li>
+<li>在Windows操作系统中，返回值为cmd调用的返回信息</li>
+</ul>
+<h2 id="os库的环境参数"><a href="#os库的环境参数" class="headerlink" title="os库的环境参数"></a>os库的环境参数</h2><p>获取或改变系统环境信息<br>| 函数             | 描述                                            |<br>| —————- | ———————————————– |<br>| <code>os.chdir(path)</code> | 修改当前程序的操作路径                          |<br>| <code>os.getcwd()</code>    | 返回程序的当前路径                              |<br>| <code>os.getlogin()</code>  | 获得当前系统登录用户名称                        |<br>| <code>os.cpu_count()</code> | 获得当前系统CPU数量                             |<br>| <code>os.urandom(n)</code>  | 获得n个字节长度的随机字符串，通常用于加解密运算 |</p>
+<h1 id="实例：第三方库安装脚本"><a href="#实例：第三方库安装脚本" class="headerlink" title="实例：第三方库安装脚本"></a>实例：第三方库安装脚本</h1><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><ul>
+<li>需求：批量安装第三方库需要人工干预，能否自动安装？</li>
+<li>自动执行pip逐一根据需求安装</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>库名</th>
+<th>用途</th>
+<th>pip安装指令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NumPy</td>
+<td>N维数据表示和运算</td>
+<td>pip install numpy</td>
+</tr>
+<tr>
+<td>Matplotlib</td>
+<td>二维数据可视化</td>
+<td>pip install matplotlib</td>
+</tr>
+<tr>
+<td>PIL</td>
+<td>图像处理</td>
+<td>pip install pillow</td>
+</tr>
+<tr>
+<td>Scikit-Learn</td>
+<td>机器学习和数据挖掘</td>
+<td>pip install sklearn</td>
+</tr>
+<tr>
+<td>Requests</td>
+<td>HTTP协议访问及网络爬虫</td>
+<td>pip install requests</td>
+</tr>
+<tr>
+<td>Jieba</td>
+<td>中文分词</td>
+<td>pip install jieba</td>
+</tr>
+<tr>
+<td>Beautiful Soup</td>
+<td>HTML和XML解析器</td>
+<td>pip install beautifulsoup4</td>
+</tr>
+<tr>
+<td>Wheel Python</td>
+<td>第三方库文件打包工具</td>
+<td>pip install wheel</td>
+</tr>
+<tr>
+<td>PyInstaller</td>
+<td>打包Python源文件为可执行文件</td>
+<td>pip install pyinstall</td>
+</tr>
+<tr>
+<td>Flask</td>
+<td>轻量级Web开发框架</td>
+<td>pip install flask</td>
+</tr>
+<tr>
+<td>WeRoBot</td>
+<td>微信机器人开发框架</td>
+<td>pip install werobot</td>
+</tr>
+<tr>
+<td>SymPy</td>
+<td>数学符号计算工具</td>
+<td>pip install sympy</td>
+</tr>
+<tr>
+<td>Pandas</td>
+<td>高效数据分析和计算</td>
+<td>pip install pandas</td>
+</tr>
+<tr>
+<td>Networkx</td>
+<td>复杂网络和图结构的建模和分析</td>
+<td>pip install networkx</td>
+</tr>
+<tr>
+<td>PyQt5</td>
+<td>基于Qt的专业级GUI开发框架</td>
+<td>pip install pyqt5</td>
+</tr>
+<tr>
+<td>PyOpenGL</td>
+<td>多平台OpenGL开发接口</td>
+<td>pip install pyopengl</td>
+</tr>
+<tr>
+<td>PyPDF2</td>
+<td>PDF文件内容提取及处理</td>
+<td>pip install pypdf2</td>
+</tr>
+<tr>
+<td>docopt</td>
+<td>Python命令行解析</td>
+<td>pip install docopt</td>
+</tr>
+<tr>
+<td>PyGame</td>
+<td>简单小游戏开发框架</td>
+<td>pip install pygame</td>
+</tr>
+</tbody></table>
+<h2 id="实例解析"><a href="#实例解析" class="headerlink" title="实例解析"></a>实例解析</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#BatchInstall.py</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">libs = &#123;<span class="string">&quot;numpy&quot;</span>,<span class="string">&quot;matplotlib&quot;</span>,<span class="string">&quot;pillow&quot;</span>,<span class="string">&quot;sklearn&quot;</span>,<span class="string">&quot;requests&quot;</span>,\</span><br><span class="line">        <span class="string">&quot;jieba&quot;</span>,<span class="string">&quot;beautifulsoup4&quot;</span>,<span class="string">&quot;wheel&quot;</span>,<span class="string">&quot;networkx&quot;</span>,<span class="string">&quot;sympy&quot;</span>,\</span><br><span class="line">        <span class="string">&quot;pyinstaller&quot;</span>,<span class="string">&quot;django&quot;</span>,<span class="string">&quot;flask&quot;</span>,<span class="string">&quot;werobot&quot;</span>,<span class="string">&quot;pyqt5&quot;</span>,\</span><br><span class="line">        <span class="string">&quot;pandas&quot;</span>,<span class="string">&quot;pyopengl&quot;</span>,<span class="string">&quot;pypdf2&quot;</span>,<span class="string">&quot;docopt&quot;</span>,<span class="string">&quot;pygame&quot;</span>&#125;</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">for</span> lib <span class="keyword">in</span> libs:</span><br><span class="line">        os.system(<span class="string">&quot;pip install&quot;</span> + lib)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Successful&quot;</span>)</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Failed Somehow&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="举一反三-1"><a href="#举一反三-1" class="headerlink" title="举一反三"></a>举一反三</h2><p>自动化脚本+</p>
+<ul>
+<li>编写各类自动化运行程序的脚本，调用已有程序</li>
+<li>扩展应用：安装更多第三方库，增加配置文件</li>
+<li>扩展异常检测：捕获更多异常类型，程序更稳定友好</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>嵩天老师Python(7)文件和数据格式化</title>
     <url>/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/</url>
     <content><![CDATA[<h1 id="文件的使用"><a href="#文件的使用" class="headerlink" title="文件的使用"></a>文件的使用</h1><h2 id="文件的类型"><a href="#文件的类型" class="headerlink" title="文件的类型"></a>文件的类型</h2><h3 id="文件的理解"><a href="#文件的理解" class="headerlink" title="文件的理解"></a>文件的理解</h3><p>文件是数据的抽象和集合</p>
@@ -4028,241 +4264,6 @@
 <blockquote>
 <p>练习素材下载：<br><a href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/%E6%96%B0%E6%97%B6%E4%BB%A3%E4%B8%AD%E5%9B%BD%E7%89%B9%E8%89%B2%E7%A4%BE%E4%BC%9A%E4%B8%BB%E4%B9%89.txt">新时代中国特色社会主义.txt</a><br><a href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/%E5%85%B3%E4%BA%8E%E5%AE%9E%E6%96%BD%E4%B9%A1%E6%9D%91%E6%8C%AF%E5%85%B4%E6%88%98%E7%95%A5%E7%9A%84%E6%84%8F%E8%A7%81.txt">关于实施乡村振兴战略的意见.txt</a><br><a href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/chinamap.jpg">chinamap.jpg</a><br><a href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/fivestars.png">fivestars.png</a></p>
 </blockquote>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>嵩天老师Python(8)程序设计方法学</title>
-    <url>/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(8)%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E5%AD%A6/</url>
-    <content><![CDATA[<h1 id="实例：体育竞技分析"><a href="#实例：体育竞技分析" class="headerlink" title="实例：体育竞技分析"></a>实例：体育竞技分析</h1><blockquote>
-<p>高手过招，胜负只在毫厘之间</p>
-</blockquote>
-<h2 id="“体育竞技分析”问题分析"><a href="#“体育竞技分析”问题分析" class="headerlink" title="“体育竞技分析”问题分析"></a>“体育竞技分析”问题分析</h2><h3 id="体育竞技分析"><a href="#体育竞技分析" class="headerlink" title="体育竞技分析"></a>体育竞技分析</h3><ul>
-<li><p>需求：毫厘是多少？如何科学分析体育竞技比赛？</p>
-</li>
-<li><p>输入：球员的水平</p>
-</li>
-<li><p>输出：可预测的比赛成绩</p>
-<span id="more"></span></li>
-</ul>
-<h3 id="体育竞技分析：模拟N场比赛"><a href="#体育竞技分析：模拟N场比赛" class="headerlink" title="体育竞技分析：模拟N场比赛"></a>体育竞技分析：模拟N场比赛</h3><ul>
-<li>计算思维：抽象 + 自动化</li>
-<li>模拟：抽象比赛过程 + 自动化执行N场比赛</li>
-<li>当N越大时，比赛结果分析会越科学</li>
-</ul>
-<h3 id="比赛规则"><a href="#比赛规则" class="headerlink" title="比赛规则"></a>比赛规则</h3><ul>
-<li>双人击球比赛：A &amp; B，回合制，5局3胜</li>
-<li>开始时一方先发球，直至判分，接下来胜者发球</li>
-<li>球员只能在发球局得分，15分胜一局</li>
-</ul>
-<h2 id="自顶向下和自底向上"><a href="#自顶向下和自底向上" class="headerlink" title="自顶向下和自底向上"></a>自顶向下和自底向上</h2><h3 id="自顶向下（设计）——解决复杂问题的有效方法"><a href="#自顶向下（设计）——解决复杂问题的有效方法" class="headerlink" title="自顶向下（设计）——解决复杂问题的有效方法"></a>自顶向下（设计）——解决复杂问题的有效方法</h3><ul>
-<li>将一个总问题表达为若干个小问题组成的形式</li>
-<li>使用同样方法进一步分解小问题</li>
-<li>直至，小问题可以用计算机简单明了的解决</li>
-</ul>
-<h3 id="自底向上（执行）——逐步组建复杂系统的有效测试方法"><a href="#自底向上（执行）——逐步组建复杂系统的有效测试方法" class="headerlink" title="自底向上（执行）——逐步组建复杂系统的有效测试方法"></a>自底向上（执行）——逐步组建复杂系统的有效测试方法</h3><h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h3 id="程序总体框架及步骤"><a href="#程序总体框架及步骤" class="headerlink" title="程序总体框架及步骤"></a>程序总体框架及步骤</h3><ul>
-<li>步骤1：打印程序的介绍性信息               - printInfo()</li>
-<li>步骤2：获得程序运行参数：proA, proB, n    - getInputs()</li>
-<li>步骤3：利用球员A和B的能力值，模拟n局比赛  - simNGames()</li>
-<li>步骤4：输出球员A和B获胜比赛的场次及概率   - printSummary()</li>
-</ul>
-<h3 id="全代码"><a href="#全代码" class="headerlink" title="全代码"></a>全代码</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printIntro</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;这个程序模拟两个选手A和B的某种竞技比赛&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;程序运行需要A和B的能力值（以0到1之间的小数表示）&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getInputs</span>():</span></span><br><span class="line">    a = <span class="built_in">eval</span>(<span class="built_in">input</span>(<span class="string">&quot;请输入选手A的能力值（0-1）：&quot;</span>))</span><br><span class="line">    b = <span class="built_in">eval</span>(<span class="built_in">input</span>(<span class="string">&quot;请输入选手B的能力值（0-1）：&quot;</span>))</span><br><span class="line">    n = <span class="built_in">eval</span>(<span class="built_in">input</span>(<span class="string">&quot;模拟比赛的场次：&quot;</span>))</span><br><span class="line">    <span class="keyword">return</span> a, b, n</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printSummary</span>(<span class="params">winsA, winsB</span>):</span></span><br><span class="line">    n = winsA + winsB</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;竞技分析开始，共模拟&#123;&#125;场比赛&quot;</span>.<span class="built_in">format</span>(n))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;选手A获胜&#123;&#125;场比赛，占比&#123;:0.1%&#125;&quot;</span>.<span class="built_in">format</span>(winsA, winsA/n))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;选手B获胜&#123;&#125;场比赛，占比&#123;:0.1%&#125;&quot;</span>.<span class="built_in">format</span>(winsB, winsB/n))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gameOver</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    <span class="keyword">return</span> a==<span class="number">15</span> <span class="keyword">or</span> b==<span class="number">15</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simOneGame</span>(<span class="params">probA, probB</span>):</span></span><br><span class="line">    scoreA, scoreB = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    serving =<span class="string">&quot;A&quot;</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> gameOver(scoreA,scoreB):</span><br><span class="line">        <span class="keyword">if</span> serving == <span class="string">&quot;A&quot;</span>:</span><br><span class="line">            <span class="keyword">if</span> random() &lt; probA:</span><br><span class="line">                scoreA += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                serving = <span class="string">&quot;B&quot;</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> random() &lt; probB:</span><br><span class="line">                scoreB += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                serving = <span class="string">&quot;A&quot;</span></span><br><span class="line">    <span class="keyword">return</span> scoreA, scoreB</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simNGames</span>(<span class="params">n, probA, probB</span>):</span></span><br><span class="line">    winsA, winsB = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        scoreA, scoreB = simOneGame(probA, probB)</span><br><span class="line">        <span class="keyword">if</span> scoreA &gt; scoreB:</span><br><span class="line">            winsA += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            winsB += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> winsA, winsB</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    printIntro()</span><br><span class="line">    probA, probB, n = getInputs()</span><br><span class="line">    winsA, winsB = simNGames(n, probA, probB)</span><br><span class="line">    printSummary(winsA, winsB)</span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
-
-<h3 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h3><img src="/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(8)%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E5%AD%A6/result.png" class>
-
-<h2 id="举一反三"><a href="#举一反三" class="headerlink" title="举一反三"></a>举一反三</h2><ol>
-<li>理解自顶向下和自底向上</li>
-</ol>
-<ul>
-<li>理解自顶向下的设计思维：分而治之</li>
-<li>理解自底向上的执行思维：模块化集成</li>
-<li>自顶向下是“系统”思维的简化</li>
-</ul>
-<ol start="2">
-<li>应用问题的扩展</li>
-</ol>
-<ul>
-<li>扩展比赛参数，增加对更多能力对比情况的判断</li>
-<li>扩展比赛设计，增加对真实比赛结果的预测</li>
-<li>扩展分析逻辑，反向推理，用胜率推算能力？</li>
-</ul>
-<h1 id="Python程序设计思维"><a href="#Python程序设计思维" class="headerlink" title="Python程序设计思维"></a>Python程序设计思维</h1><h2 id="计算思维"><a href="#计算思维" class="headerlink" title="计算思维"></a>计算思维</h2><p>第3种人类思维特征</p>
-<ul>
-<li>逻辑思维：推理和演绎，数学为代表，A-&gt;B B-&gt;C A-&gt;C</li>
-<li>实证思维：实验和验证，物理为代表，引力波&lt;-实验</li>
-<li>计算思维：设计和构造，计算机为代表，汉诺塔递归</li>
-</ul>
-<p>计算思维（Computational Thinking）：<strong>抽象</strong>问题的计算过程，利用计算机<strong>自动化</strong>求解，是基于计算机的思维方式。计算思维基于计算机强大的算力及海量数据，抽象计算过程，关注设计和构造，而非因果。</p>
-<h2 id="计算生态与Python语言"><a href="#计算生态与Python语言" class="headerlink" title="计算生态与Python语言"></a>计算生态与Python语言</h2><ul>
-<li>以开源项目为代表的大量第三方库</li>
-<li>库的建设经过野蛮生长和自然选择</li>
-<li>库之间相互关联使用，依存发展</li>
-<li>社区庞大，新技术更迭迅速</li>
-</ul>
-<p>计算生态的价值</p>
-<ul>
-<li>加速科技类应用创新的重要支撑</li>
-<li>发展科技产品商业价值的重要模式</li>
-<li>国家科技体系安全和稳固的基础</li>
-</ul>
-<h2 id="基本的程序设计模式"><a href="#基本的程序设计模式" class="headerlink" title="基本的程序设计模式"></a>基本的程序设计模式</h2><p>IPO<br>模块化设计<br>配置化设计</p>
-<h1 id="Python第三方库安装"><a href="#Python第三方库安装" class="headerlink" title="Python第三方库安装"></a>Python第三方库安装</h1><p>Python社区：<a href="https://pypi.org/">https://pypi.org</a></p>
-<p>安装第三方库：</p>
-<ol>
-<li>主要方法：使用pip命令</li>
-<li>集成安装方法</li>
-<li>文件安装方法</li>
-</ol>
-<p>Anaconda： <a href="https://www.continuum.io/">https://www.continuum.io</a></p>
-<ul>
-<li>支持近800个第三方库</li>
-<li>包含多个主流工具</li>
-<li>适合数据计算领域开发</li>
-</ul>
-<p>UCI页面： <a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/">http://www.lfd.uci.edu/~gohlke/pythonlibs/</a></p>
-<ul>
-<li>在UCI页面上搜索&lt;库名称&gt;</li>
-<li>下载对应版本的文件</li>
-<li>使用pip install &lt;文件名&gt;安装</li>
-</ul>
-<h1 id="os库的使用"><a href="#os库的使用" class="headerlink" title="os库的使用"></a>os库的使用</h1><h2 id="os库基本介绍"><a href="#os库基本介绍" class="headerlink" title="os库基本介绍"></a>os库基本介绍</h2><p>os库提供通用的、基本的操作系统交互功能</p>
-<ul>
-<li>os库是Python标准库，包含几百个函数</li>
-<li>常用路径操作、进程管理、环境参数等几类<ul>
-<li>路径操作：os.path子库，处理文件路径及信息</li>
-<li>进程管理：启动系统中其他程序</li>
-<li>环境参数：获得系统软硬件信息等环境参数</li>
-</ul>
-</li>
-</ul>
-<h2 id="os库的路径操作"><a href="#os库的路径操作" class="headerlink" title="os库的路径操作"></a>os库的路径操作</h2><p>os.path子库以path为入口，用于操作和处理文件路径<br>| 函数                        | 描述                                  |<br>| ————————— | ——————————— |<br>| <code>os.path.abspath(path)</code>  | 返回path在当前系统中的绝对路径             |<br>| <code>os.path.normpath(path)</code>  | 归一化path的表示形式，统一用\\分隔路径      |<br>| <code>os.path.relpath(path)</code> | 返回当前程序与文件之间的相对路径（relative path）|<br>| <code>os.path.dirname(path)</code>   | 返回path中的目录名称                        |<br>| <code>os.path.basename(path)</code> | 返回path中最后的文件名称                  |<br>| <code>os.path.join(path,*paths)</code> | 组合path与paths，返回一个路径字符串         |<br>| <code>os.path.exists(path)</code> | 判断path对应文件或目录是否存在，返回True或False   |<br>| <code>os.path.isfile(path)</code>  | 判断path所对应是否为已存在的文件，返回True或False|<br>| <code>os.path.isdir(path)</code>  | 判断path所对应是否为已存在的目录，返回True或False |<br>| <code>os.path.getatime(path)</code>  | 返回path对应文件或目录上一次的访问时间        |<br>| <code>os.path.getmtime(path)</code>    | 返回path对应文件或目录最近一次的修改时间     |<br>| <code>os.path.getctime(path)</code>    | 返回path对应文件或目录创建时间             |<br>| <code>os.path.getsize(path)</code>     | 返回path对应文件的大小，以字节为单位        |</p>
-<h2 id="os库的进程管理"><a href="#os库的进程管理" class="headerlink" title="os库的进程管理"></a>os库的进程管理</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">os.system(command)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>执行程序或命令command</li>
-<li>在Windows操作系统中，返回值为cmd调用的返回信息</li>
-</ul>
-<h2 id="os库的环境参数"><a href="#os库的环境参数" class="headerlink" title="os库的环境参数"></a>os库的环境参数</h2><p>获取或改变系统环境信息<br>| 函数             | 描述                                            |<br>| —————- | ———————————————– |<br>| <code>os.chdir(path)</code> | 修改当前程序的操作路径                          |<br>| <code>os.getcwd()</code>    | 返回程序的当前路径                              |<br>| <code>os.getlogin()</code>  | 获得当前系统登录用户名称                        |<br>| <code>os.cpu_count()</code> | 获得当前系统CPU数量                             |<br>| <code>os.urandom(n)</code>  | 获得n个字节长度的随机字符串，通常用于加解密运算 |</p>
-<h1 id="实例：第三方库安装脚本"><a href="#实例：第三方库安装脚本" class="headerlink" title="实例：第三方库安装脚本"></a>实例：第三方库安装脚本</h1><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><ul>
-<li>需求：批量安装第三方库需要人工干预，能否自动安装？</li>
-<li>自动执行pip逐一根据需求安装</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>库名</th>
-<th>用途</th>
-<th>pip安装指令</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>NumPy</td>
-<td>N维数据表示和运算</td>
-<td>pip install numpy</td>
-</tr>
-<tr>
-<td>Matplotlib</td>
-<td>二维数据可视化</td>
-<td>pip install matplotlib</td>
-</tr>
-<tr>
-<td>PIL</td>
-<td>图像处理</td>
-<td>pip install pillow</td>
-</tr>
-<tr>
-<td>Scikit-Learn</td>
-<td>机器学习和数据挖掘</td>
-<td>pip install sklearn</td>
-</tr>
-<tr>
-<td>Requests</td>
-<td>HTTP协议访问及网络爬虫</td>
-<td>pip install requests</td>
-</tr>
-<tr>
-<td>Jieba</td>
-<td>中文分词</td>
-<td>pip install jieba</td>
-</tr>
-<tr>
-<td>Beautiful Soup</td>
-<td>HTML和XML解析器</td>
-<td>pip install beautifulsoup4</td>
-</tr>
-<tr>
-<td>Wheel Python</td>
-<td>第三方库文件打包工具</td>
-<td>pip install wheel</td>
-</tr>
-<tr>
-<td>PyInstaller</td>
-<td>打包Python源文件为可执行文件</td>
-<td>pip install pyinstall</td>
-</tr>
-<tr>
-<td>Flask</td>
-<td>轻量级Web开发框架</td>
-<td>pip install flask</td>
-</tr>
-<tr>
-<td>WeRoBot</td>
-<td>微信机器人开发框架</td>
-<td>pip install werobot</td>
-</tr>
-<tr>
-<td>SymPy</td>
-<td>数学符号计算工具</td>
-<td>pip install sympy</td>
-</tr>
-<tr>
-<td>Pandas</td>
-<td>高效数据分析和计算</td>
-<td>pip install pandas</td>
-</tr>
-<tr>
-<td>Networkx</td>
-<td>复杂网络和图结构的建模和分析</td>
-<td>pip install networkx</td>
-</tr>
-<tr>
-<td>PyQt5</td>
-<td>基于Qt的专业级GUI开发框架</td>
-<td>pip install pyqt5</td>
-</tr>
-<tr>
-<td>PyOpenGL</td>
-<td>多平台OpenGL开发接口</td>
-<td>pip install pyopengl</td>
-</tr>
-<tr>
-<td>PyPDF2</td>
-<td>PDF文件内容提取及处理</td>
-<td>pip install pypdf2</td>
-</tr>
-<tr>
-<td>docopt</td>
-<td>Python命令行解析</td>
-<td>pip install docopt</td>
-</tr>
-<tr>
-<td>PyGame</td>
-<td>简单小游戏开发框架</td>
-<td>pip install pygame</td>
-</tr>
-</tbody></table>
-<h2 id="实例解析"><a href="#实例解析" class="headerlink" title="实例解析"></a>实例解析</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#BatchInstall.py</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">libs = &#123;<span class="string">&quot;numpy&quot;</span>,<span class="string">&quot;matplotlib&quot;</span>,<span class="string">&quot;pillow&quot;</span>,<span class="string">&quot;sklearn&quot;</span>,<span class="string">&quot;requests&quot;</span>,\</span><br><span class="line">        <span class="string">&quot;jieba&quot;</span>,<span class="string">&quot;beautifulsoup4&quot;</span>,<span class="string">&quot;wheel&quot;</span>,<span class="string">&quot;networkx&quot;</span>,<span class="string">&quot;sympy&quot;</span>,\</span><br><span class="line">        <span class="string">&quot;pyinstaller&quot;</span>,<span class="string">&quot;django&quot;</span>,<span class="string">&quot;flask&quot;</span>,<span class="string">&quot;werobot&quot;</span>,<span class="string">&quot;pyqt5&quot;</span>,\</span><br><span class="line">        <span class="string">&quot;pandas&quot;</span>,<span class="string">&quot;pyopengl&quot;</span>,<span class="string">&quot;pypdf2&quot;</span>,<span class="string">&quot;docopt&quot;</span>,<span class="string">&quot;pygame&quot;</span>&#125;</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">for</span> lib <span class="keyword">in</span> libs:</span><br><span class="line">        os.system(<span class="string">&quot;pip install&quot;</span> + lib)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Successful&quot;</span>)</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Failed Somehow&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="举一反三-1"><a href="#举一反三-1" class="headerlink" title="举一反三"></a>举一反三</h2><p>自动化脚本+</p>
-<ul>
-<li>编写各类自动化运行程序的脚本，调用已有程序</li>
-<li>扩展应用：安装更多第三方库，增加配置文件</li>
-<li>扩展异常检测：捕获更多异常类型，程序更稳定友好</li>
-</ul>
 ]]></content>
       <categories>
         <category>Python</category>
@@ -5027,12 +5028,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>许久没更新了…</title>
-    <url>/2021/05/19/%E8%AE%B8%E4%B9%85%E6%B2%A1%E6%9B%B4%E6%96%B0%E4%BA%86%E2%80%A6/</url>
-    <content><![CDATA[<p>许久没更新了，就是冒个泡</p>
-]]></content>
-  </entry>
-  <entry>
     <title>趣味二维码生成</title>
     <url>/2021/07/15/%E8%B6%A3%E5%91%B3%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%94%9F%E6%88%90/</url>
     <content><![CDATA[<p><img src="/2021/07/15/%E8%B6%A3%E5%91%B3%E4%BA%8C%E7%BB%B4%E7%A0%81%E7%94%9F%E6%88%90/qrcode.png" alt="qrcode"></p>
@@ -5073,6 +5068,12 @@
       <tags>
         <tag>C++</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>许久没更新了…</title>
+    <url>/2021/05/19/%E8%AE%B8%E4%B9%85%E6%B2%A1%E6%9B%B4%E6%96%B0%E4%BA%86%E2%80%A6/</url>
+    <content><![CDATA[<p>许久没更新了，就是冒个泡</p>
+]]></content>
   </entry>
   <entry>
     <title>嵩天老师Python(6)组合数据类型</title>
