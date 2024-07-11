@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Flume+Kafka实时数据采集</title>
+    <url>/2019/04/04/Flume-Kafka%E5%AE%9E%E6%97%B6%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/</url>
+    <content><![CDATA[<p>Flume的配置</p>
+<span id="more"></span>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># avro-memory-kafka.conf</span></span><br><span class="line">avro-memory-kafka.sources = avro-source</span><br><span class="line">avro-memory-kafka.sinks = kafka-sink</span><br><span class="line">avro-memory-kafka.channels = memory-channel</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.type = avro</span><br><span class="line">avro-memory-kafka.sources.avro-source.bind = bigdata-01</span><br><span class="line">avro-memory-kafka.sources.avro-source.port = 44444</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.type = org.apache.flume.sink.kafka.KafkaSink</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.brokerList = bigdata-01:9092</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.topic = hello_topic</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.batchSize = 5</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.requiredAcks = 1</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.channels.memory-channel.type = memory</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.channels = memory-channel</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.channel = memory-channel</span><br></pre></td></tr></table></figure>
+<p>启动Flume</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">flume-ng agent \</span><br><span class="line">--name avro-memory-kafka \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/avro-memory-kafka.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br><span class="line"></span><br><span class="line">flume-ng agent \</span><br><span class="line">--name exec-memory-avro \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/exec-memory-avro.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure>
+
+<p>启动消费者进行监控</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">kafka-console-consumer.sh --zookeeper bigdata-01:2181 -topic hello_topic</span><br></pre></td></tr></table></figure>
+
+<p>向日志文件中追加内容</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@bigdata-01 ~]<span class="comment"># cd data/</span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># ll</span></span><br><span class="line">total 4</span><br><span class="line">-rw-r--r--. 1 root root 112 Feb  6 05:37 data.log</span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark2 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark3 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark4 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark5 &gt;&gt; data.log</span></span><br></pre></td></tr></table></figure>
+<p>这时，消费者就可以消费到日志文件中的新内容了。</p>
+<blockquote>
+<p>Flume的版本不同，配置文件（*.conf）需要配置的内容也不完全相同。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>大数据开发</category>
+      </categories>
+      <tags>
+        <tag>大数据开发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>HDFS基本配置属性</title>
     <url>/2019/04/04/HDFS%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7/</url>
     <content><![CDATA[<h1 id="块大小"><a href="#块大小" class="headerlink" title="块大小"></a>块大小</h1><p>HDFS中存储的文件块的块大小，默认128M</p>
@@ -41,33 +68,6 @@
 <li>直接用<code>start-dfs.sh</code></li>
 <li>在新机器上手动启动一个DataNode进程：<code>hadoop-daemon.sh start datanode</code></li>
 </ol>
-]]></content>
-      <categories>
-        <category>大数据开发</category>
-      </categories>
-      <tags>
-        <tag>大数据开发</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Flume+Kafka实时数据采集</title>
-    <url>/2019/04/04/Flume-Kafka%E5%AE%9E%E6%97%B6%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/</url>
-    <content><![CDATA[<p>Flume的配置</p>
-<span id="more"></span>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># avro-memory-kafka.conf</span></span><br><span class="line">avro-memory-kafka.sources = avro-source</span><br><span class="line">avro-memory-kafka.sinks = kafka-sink</span><br><span class="line">avro-memory-kafka.channels = memory-channel</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.type = avro</span><br><span class="line">avro-memory-kafka.sources.avro-source.bind = bigdata-01</span><br><span class="line">avro-memory-kafka.sources.avro-source.port = 44444</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.type = org.apache.flume.sink.kafka.KafkaSink</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.brokerList = bigdata-01:9092</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.topic = hello_topic</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.batchSize = 5</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.requiredAcks = 1</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.channels.memory-channel.type = memory</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.channels = memory-channel</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.channel = memory-channel</span><br></pre></td></tr></table></figure>
-<p>启动Flume</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">flume-ng agent \</span><br><span class="line">--name avro-memory-kafka \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/avro-memory-kafka.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br><span class="line"></span><br><span class="line">flume-ng agent \</span><br><span class="line">--name exec-memory-avro \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/exec-memory-avro.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure>
-
-<p>启动消费者进行监控</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">kafka-console-consumer.sh --zookeeper bigdata-01:2181 -topic hello_topic</span><br></pre></td></tr></table></figure>
-
-<p>向日志文件中追加内容</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[root@bigdata-01 ~]<span class="comment"># cd data/</span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># ll</span></span><br><span class="line">total 4</span><br><span class="line">-rw-r--r--. 1 root root 112 Feb  6 05:37 data.log</span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark2 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark3 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark4 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark5 &gt;&gt; data.log</span></span><br></pre></td></tr></table></figure>
-<p>这时，消费者就可以消费到日志文件中的新内容了。</p>
-<blockquote>
-<p>Flume的版本不同，配置文件（*.conf）需要配置的内容也不完全相同。</p>
-</blockquote>
 ]]></content>
       <categories>
         <category>大数据开发</category>
@@ -202,6 +202,22 @@
       </tags>
   </entry>
   <entry>
+    <title>PyCharm控制台自动换行</title>
+    <url>/2019/12/23/PyCharm%E6%8E%A7%E5%88%B6%E5%8F%B0%E8%87%AA%E5%8A%A8%E6%8D%A2%E8%A1%8C/</url>
+    <content><![CDATA[<p>点击File -&gt; Settings -&gt; Editor -&gt; General -&gt; Console,勾选下图项即可。</p>
+<span id="more"></span>
+
+<p><img src="https://img2018.cnblogs.com/blog/1473452/201911/1473452-20191113105919785-2031005404.png"><br><img src="https://img2018.cnblogs.com/blog/1473452/201911/1473452-20191113110043184-87443107.png"></p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>bug</tag>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Matplotlib绘制引力波</title>
     <url>/2019/04/04/Matplotlib%E7%BB%98%E5%88%B6%E5%BC%95%E5%8A%9B%E6%B3%A2/</url>
     <content><![CDATA[<p>2016年6月16日，LIGO合作组宣布2015年12月26日 03:38:53（UTC），两台不同位置的引力波探测器同时探测到了一个引力波信号。</p>
@@ -220,22 +236,6 @@
       <tags>
         <tag>Python</tag>
         <tag>数据分析</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>PyCharm控制台自动换行</title>
-    <url>/2019/12/23/PyCharm%E6%8E%A7%E5%88%B6%E5%8F%B0%E8%87%AA%E5%8A%A8%E6%8D%A2%E8%A1%8C/</url>
-    <content><![CDATA[<p>点击File -&gt; Settings -&gt; Editor -&gt; General -&gt; Console,勾选下图项即可。</p>
-<span id="more"></span>
-
-<p><img src="https://img2018.cnblogs.com/blog/1473452/201911/1473452-20191113105919785-2031005404.png"><br><img src="https://img2018.cnblogs.com/blog/1473452/201911/1473452-20191113110043184-87443107.png"></p>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>bug</tag>
-        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -517,137 +517,6 @@
       </tags>
   </entry>
   <entry>
-    <title>PygameZero中文文档 - 3</title>
-    <url>/2019/08/28/PygameZero%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3%20-%203/</url>
-    <content><![CDATA[<p>Pygame Zero会自动识别并调用您定义的事件钩，这种方法可以使您不必自己实现事件循环机制。</p>
-<span id="more"></span>
-
-<h2 id="游戏循环挂钩"><a href="#游戏循环挂钩" class="headerlink" title="游戏循环挂钩"></a>游戏循环挂钩</h2><p>一个典型的循环钩看起来有点像这样：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> game_has_not_ended():</span><br><span class="line">    process_input()</span><br><span class="line">    update()</span><br><span class="line">    draw()</span><br></pre></td></tr></table></figure>
-
-<p>输入处理要更加复杂一些，但Pygame Zero可以让您在自己的游戏模块中轻松地定义<code>update()</code>和<code>draw()</code>函数。</p>
-<h2 id="draw"><a href="#draw" class="headerlink" title=" draw()"></a><code> draw()</code></h2><p>​        当需要重绘游戏窗口时，Pygame Zero就会调用这个函数。</p>
-<p>​        <code>draw()</code> 函数必须是一个无参函数。</p>
-<p>​        Pygame Zero会在游戏窗口需要重绘时进行计算，以避免屏幕没有任何改变时重绘。它将在游戏循环的每一        步的以下的情况中绘制屏幕：</p>
-<ul>
-<li><p>如果已经定义了一个<code>update()</code>功能（见下文）。</p>
-</li>
-<li><p>如果有时钟事件。</p>
-</li>
-<li><p>如果一个输入事件被触发。</p>
-<p>如果您尝试修改<code>draw()</code>函数中的某些内容或使其具有动画效果，这种做法会让你很难受。例如，这段代码就是错误的：外星人并不一定会在屏幕上继续移动：</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    alien.left += <span class="number">1</span></span><br><span class="line">    alien.draw()</span><br></pre></td></tr></table></figure>
-
-<p>​        正确的做法是使用<code>update()</code>函数来修改或让元素动起来，<code>draw()</code>函数仅仅是在屏幕上绘制画面。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    alien.draw()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    alien.left += <span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="update-或-update-dt"><a href="#update-或-update-dt" class="headerlink" title="update()或 update(dt)"></a><code>update()</code>或 <code>update(dt)</code></h2><p>​        Pygame Zero会调用这个函数来实现您的游戏逻辑。<code>update()</code>会被重复调用，每秒钟60次。</p>
-<p>​        编写<code>update()</code>函数有两种不同的方法。</p>
-<p>​        在简单的游戏中，您可以假设每次调用<code>update()</code>函数都经过了一小段时间（几分之一秒）。也许你甚至并不关心时间的步长多大：您可以只按每帧固定的像素数移动对象（或者通过一个常量来让它们加速等等）。</p>
-<p>​        一种更高级的方法，是根据两次调用之间实际花费的时间，来进行移动和物理计算。这样可以提供更流畅的动画，但涉及的计算可能更难，并且当时间步长变大时，你要更小心的处理来避免意外发生。</p>
-<p>​        要使用基于时间的方法，您可以修改<code>update()</code>函数让它只接收一个参数。这样做以后，Pygame Zero会以<strong>秒</strong>为单位传递经过的时间。您可以使用它来衡量有段移动的计算。</p>
-<h1 id="事件处理挂钩"><a href="#事件处理挂钩" class="headerlink" title="事件处理挂钩"></a>事件处理挂钩</h1><p>与游戏循环挂钩类似，你的Pygame Zero程序可以通过定义具有特定名称的函数来响应输入事件。</p>
-<p>有点像<code>update()</code>函数这种情况，Pygame Zero会通过检查事件处理函数来决定如何调用。所以你不需要让事件处理函数传参。例如，Pygame Zero会调用 <code>on_mouse_down</code>函数的任何变体：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_mouse_down</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Mouse button clicked&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_mouse_down</span>(<span class="params">pos</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Mouse button clicked at&quot;</span>, pos)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_mouse_down</span>(<span class="params">button</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Mouse button&quot;</span>, button, <span class="string">&quot;clicked&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_mouse_down</span>(<span class="params">pos, button</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Mouse button&quot;</span>, button, <span class="string">&quot;clicked at&quot;</span>, pos)</span><br></pre></td></tr></table></figure>
-
-<p>它通过查看参数的名称来完成此操作，所以参数必须完全拼写正确，就像上边代码列出的一样。每个事件挂钩都有一组可以使用的不同参数，如下所述。</p>
-<p><code>on_mouse_down([pos][, button])</code></p>
-<p>​        按下鼠标按键时调用。</p>
-<p>参数：</p>
-<ul>
-<li><strong>pos</strong> – 一个元组(x, y) 表示按键按下时鼠标指针的位置。</li>
-<li><strong>button</strong> – 一个 <code>mouse</code> 枚举值，表示按下的鼠标按键。</li>
-</ul>
-<p><code>on_mouse_up([pos][, button])</code></p>
-<p>​        释放鼠标按键时调用。</p>
-<p>参数：</p>
-<ul>
-<li><strong>pos</strong> – 一个元组(x, y) 表示按键释放时鼠标指针的位置。</li>
-<li><strong>button</strong> – 一个 <code>mouse</code> 枚举值，表示释放的鼠标按键。</li>
-</ul>
-<p><code>on_mouse_move([pos][, rel][, buttons])</code></p>
-<p>​        移动鼠标时调用。</p>
-<p>参数：</p>
-<ul>
-<li><p><strong>pos</strong> – 一个元组(x, y) 表示鼠标指针移动到的位置。</p>
-</li>
-<li><p><strong>rel</strong> – 一个元组(delta_x, delta_y)表示鼠标指针位置的变化。</p>
-</li>
-<li><p><strong>buttons</strong> – 一组 <code>mouse</code>枚举值，表示在移动过程中按下的按键。</p>
-</li>
-</ul>
-<p>要处理鼠标拖动，请使用下面这样的代码：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_mouse_move</span>(<span class="params">rel, buttons</span>):</span></span><br><span class="line">    <span class="keyword">if</span> mouse.LEFT <span class="keyword">in</span> buttons:</span><br><span class="line">        <span class="comment"># the mouse was dragged, do something with `rel`</span></span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
-
-<p><code>on_key_down([key][, mod][, unicode])</code></p>
-<p>​        按下按键时调用。</p>
-<p>参数：</p>
-<ul>
-<li><strong>key</strong> – 一个整数，表示按下的键。</li>
-<li><strong>unicode</strong> – 相关时键入的字符编码。 并非所有按键都会产生可打印的字符 - 许多可能是控制字符。如果按键与Unicode字符编码不对应，则为空字符串。</li>
-<li><strong>mod</strong> –  按下的修饰键的位掩码。</li>
-</ul>
-<p><code>on_key_up([key][, mod])</code></p>
-<p>​        释放按键时调用。</p>
-<p>参数:</p>
-<ul>
-<li><strong>key</strong> – 一个整数，表示释放的按键。</li>
-<li><strong>mod</strong> – 按下的修饰键的位掩码。</li>
-</ul>
-<p><code>on_music_end()</code></p>
-<p>​        音乐曲目结束时调用。</p>
-<p>​        请注意，如果将音轨配置为循环，则不会调用此方法。</p>
-<h1 id="鼠标和键盘按键"><a href="#鼠标和键盘按键" class="headerlink" title="鼠标和键盘按键"></a>鼠标和键盘按键</h1><p>内置对象<code>mouse</code>，<code>keys</code>可用于确定在上述事件中按下了哪些按钮或按键。</p>
-<p>请注意，鼠标滚轮事件显示为按下按钮 <code>WHEEL_UP</code>/ <code>WHEEL_DOWN</code>按钮常量。</p>
-<ul>
-<li><p><code>mouse</code>类</p>
-<p>可以由<code>on_mouse_*</code>处理程序接收的内置枚举按钮 。</p>
-<p><code>LEFT</code> <code>MIDDLE</code> <code>RIGHT</code> <code>WHEEL_UP</code> <code>WHEEL_DOWN</code></p>
-</li>
-<li><p><code>keys</code>类</p>
-<p>可由<code>on_key_*</code> 处理程序接收的内置枚举按钮。</p>
-<p><code>BACKSPACE</code> <code>TAB</code> <code>CLEAR</code> <code>RETURN</code> <code>PAUSE</code> <code>ESCAPE</code> <code>SPACE</code> <code>EXCLAIM</code> <code>QUOTEDBL</code> <code>HASH</code> <code>DOLLAR</code> <code>AMPERSAND</code> <code>QUOTE</code> <code>LEFTPAREN</code> <code>RIGHTPAREN</code> <code>ASTERISK</code> <code>PLUS</code> <code>COMMA</code> <code>MINUS</code> <code>PERIOD</code> <code>SLASH</code> <code>K_0</code> <code>K_1</code> <code>K_2</code> <code>K_3</code> <code>K_4</code> <code>K_5</code> <code>K_6</code> <code>K_7</code> <code>K_8</code> <code>K_9</code> <code>COLON</code> <code>SEMICOLON</code> <code>LESS</code> <code>EQUALS</code> <code>GREATER</code> <code>QUESTION</code> <code>AT</code> <code>LEFTBRACKET</code> <code>BACKSLASH</code> <code>RIGHTBRACKET</code> <code>CARET</code> <code>UNDERSCORE</code> <code>BACKQUOTE</code> <code>A</code> <code>B</code> <code>C</code> <code>D</code> <code>E</code> <code>F</code> <code>G</code> <code>H</code> <code>I</code> <code>J</code> <code>K</code> <code>L</code> <code>M</code> <code>N</code> <code>O</code> <code>P</code> <code>Q</code> <code>R</code> <code>S</code> <code>T</code> <code>U</code> <code>V</code> <code>W</code> <code>X</code> <code>Y</code> <code>Z</code> <code>DELETE</code> <code>KP0</code> <code>KP1</code> <code>KP2</code> <code>KP3</code> <code>KP4</code> <code>KP5</code> <code>KP6</code> <code>KP7</code> <code>KP8</code> <code>KP9</code> <code>KP_PERIOD</code> <code>KP_DIVIDE</code> <code>KP_MULTIPLY</code> <code>KP_MINUS</code> <code>KP_PLUS</code> <code>KP_ENTER</code> <code>KP_EQUALS</code> <code>UP</code> <code>DOWN</code> <code>RIGHT</code> <code>LEFT</code> <code>INSERT</code> <code>HOME</code> <code>END</code> <code>PAGEUP</code> <code>PAGEDOWN</code> <code>F1</code> <code>F2</code> <code>F3</code> <code>F4</code> <code>F5</code> <code>F6</code> <code>F7</code> <code>F8</code> <code>F9</code> <code>F10</code> <code>F11</code> <code>F12</code> <code>F13</code> <code>F14</code> <code>F15</code> <code>NUMLOCK</code> <code>CAPSLOCK</code> <code>SCROLLOCK</code> <code>RSHIFT</code> <code>LSHIFT</code> <code>RCTRL</code> <code>LCTRL</code> <code>RALT</code> <code>LALT</code> <code>RMETA</code> <code>LMETA</code> <code>LSUPER</code> <code>RSUPER</code> <code>MODE</code> <code>HELP</code> <code>PRINT</code> <code>SYSREQ</code> <code>BREAK</code> <code>MENU</code> <code>POWER</code> <code>EURO</code> <code>LAST</code></p>
-</li>
-</ul>
-<p>此外，您可以访问一组表示<strong>修饰键</strong>的常量：</p>
-<ul>
-<li><p><code>keymods</code>类</p>
-<p>表示在<code>on_key_up</code>/ <code>on_key_down</code>事件期间可能已被压下的修饰键的常量。</p>
-<p><code>LSHIFT</code> <code>RSHIFT</code> <code>SHIFT</code> <code>LCTRL</code> <code>RCTRL</code> <code>CTRL</code> <code>LALT</code> <code>RALT</code> <code>ALT</code> <code>LMETA</code> <code>RMETA</code> <code>META</code> <code>NUM</code> <code>CAPS</code> <code>MODE</code></p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>游戏</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>PygameZero制作Pacman</title>
-    <url>/2020/11/28/PygameZero%E5%88%B6%E4%BD%9CPacman/</url>
-    <content><![CDATA[<p>本篇来介绍Pacman的PygameZero实现。</p>
-<img src="/2020/11/28/PygameZero%E5%88%B6%E4%BD%9CPacman/pacman.png" class>
-
-<span id="more"></span>
-
-<p>先上代码，后边补上讲解</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pgzrun</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">WIDTH = <span class="number">500</span></span><br><span class="line">HEIGHT = <span class="number">500</span></span><br><span class="line">pacman = Actor(<span class="string">&#x27;向右的吃豆人&#x27;</span>)</span><br><span class="line">pacman.pos = [<span class="number">250</span>, <span class="number">250</span>]</span><br><span class="line">bean1 = Actor(<span class="string">&#x27;豆子&#x27;</span>)</span><br><span class="line">bean1.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean1.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean2 = Actor(<span class="string">&#x27;豆子&#x27;</span>)</span><br><span class="line">bean2.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean2.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean3 = Actor(<span class="string">&#x27;豆子&#x27;</span>)</span><br><span class="line">bean3.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean3.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">beans = [bean1, bean2, bean3]</span><br><span class="line">score = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    screen.blit(<span class="string">&#x27;游戏背景&#x27;</span>, [<span class="number">0</span>, <span class="number">0</span>])</span><br><span class="line">    pacman.draw()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> beans:</span><br><span class="line">        i.draw()</span><br><span class="line">    screen.draw.text(<span class="built_in">str</span>(score), [<span class="number">15</span>, <span class="number">15</span>], color=<span class="string">&#x27;orange&#x27;</span>, fontsize=<span class="number">30</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_key_down</span>(<span class="params">key</span>):</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.LEFT:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向左的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.RIGHT:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向右的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.UP:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向上的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.DOWN:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向下的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.SPACE:</span><br><span class="line">        <span class="built_in">print</span>(score)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="keyword">global</span> score</span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向左的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.x -= <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向右的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.x += <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向上的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.y -= <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向下的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.y += <span class="number">5</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> beans:</span><br><span class="line">        <span class="keyword">if</span> pacman.colliderect(i):</span><br><span class="line">            i.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">            i.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">            score += <span class="number">1</span></span><br><span class="line">            <span class="built_in">print</span>(score)</span><br><span class="line">    <span class="keyword">if</span> pacman.x &lt; <span class="number">0</span> <span class="keyword">or</span> pacman.x &gt; <span class="number">500</span> <span class="keyword">or</span> pacman.y &lt; <span class="number">0</span> <span class="keyword">or</span> pacman.y &gt; <span class="number">500</span>:</span><br><span class="line">        score -= <span class="number">3</span></span><br><span class="line">        <span class="built_in">print</span>(score)</span><br><span class="line">        pacman.pos = [<span class="number">250</span>, <span class="number">250</span>]</span><br><span class="line">    <span class="keyword">if</span> score &lt; <span class="number">0</span>:</span><br><span class="line">        exit()</span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>游戏</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>PygameZero中文文档 - 2</title>
     <url>/2019/08/28/PygameZero%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3%20-%202/</url>
     <content><![CDATA[<p>本篇介绍了FlappyBird的PygameZero实现，为了方便与Scratch比较，所以没有加入计分功能。</p>
@@ -784,6 +653,137 @@
 <blockquote>
 <p>小提示：导入<code>pgzrun</code>后，调用<code>pgzrun.go()</code>可以直接运行程序，而不需要在命令行中使用命令<code>pgzrun flappybird.py</code>。</p>
 </blockquote>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>游戏</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PygameZero中文文档 - 3</title>
+    <url>/2019/08/28/PygameZero%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3%20-%203/</url>
+    <content><![CDATA[<p>Pygame Zero会自动识别并调用您定义的事件钩，这种方法可以使您不必自己实现事件循环机制。</p>
+<span id="more"></span>
+
+<h2 id="游戏循环挂钩"><a href="#游戏循环挂钩" class="headerlink" title="游戏循环挂钩"></a>游戏循环挂钩</h2><p>一个典型的循环钩看起来有点像这样：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> game_has_not_ended():</span><br><span class="line">    process_input()</span><br><span class="line">    update()</span><br><span class="line">    draw()</span><br></pre></td></tr></table></figure>
+
+<p>输入处理要更加复杂一些，但Pygame Zero可以让您在自己的游戏模块中轻松地定义<code>update()</code>和<code>draw()</code>函数。</p>
+<h2 id="draw"><a href="#draw" class="headerlink" title=" draw()"></a><code> draw()</code></h2><p>​        当需要重绘游戏窗口时，Pygame Zero就会调用这个函数。</p>
+<p>​        <code>draw()</code> 函数必须是一个无参函数。</p>
+<p>​        Pygame Zero会在游戏窗口需要重绘时进行计算，以避免屏幕没有任何改变时重绘。它将在游戏循环的每一        步的以下的情况中绘制屏幕：</p>
+<ul>
+<li><p>如果已经定义了一个<code>update()</code>功能（见下文）。</p>
+</li>
+<li><p>如果有时钟事件。</p>
+</li>
+<li><p>如果一个输入事件被触发。</p>
+<p>如果您尝试修改<code>draw()</code>函数中的某些内容或使其具有动画效果，这种做法会让你很难受。例如，这段代码就是错误的：外星人并不一定会在屏幕上继续移动：</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    alien.left += <span class="number">1</span></span><br><span class="line">    alien.draw()</span><br></pre></td></tr></table></figure>
+
+<p>​        正确的做法是使用<code>update()</code>函数来修改或让元素动起来，<code>draw()</code>函数仅仅是在屏幕上绘制画面。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    alien.draw()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    alien.left += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="update-或-update-dt"><a href="#update-或-update-dt" class="headerlink" title="update()或 update(dt)"></a><code>update()</code>或 <code>update(dt)</code></h2><p>​        Pygame Zero会调用这个函数来实现您的游戏逻辑。<code>update()</code>会被重复调用，每秒钟60次。</p>
+<p>​        编写<code>update()</code>函数有两种不同的方法。</p>
+<p>​        在简单的游戏中，您可以假设每次调用<code>update()</code>函数都经过了一小段时间（几分之一秒）。也许你甚至并不关心时间的步长多大：您可以只按每帧固定的像素数移动对象（或者通过一个常量来让它们加速等等）。</p>
+<p>​        一种更高级的方法，是根据两次调用之间实际花费的时间，来进行移动和物理计算。这样可以提供更流畅的动画，但涉及的计算可能更难，并且当时间步长变大时，你要更小心的处理来避免意外发生。</p>
+<p>​        要使用基于时间的方法，您可以修改<code>update()</code>函数让它只接收一个参数。这样做以后，Pygame Zero会以<strong>秒</strong>为单位传递经过的时间。您可以使用它来衡量有段移动的计算。</p>
+<h1 id="事件处理挂钩"><a href="#事件处理挂钩" class="headerlink" title="事件处理挂钩"></a>事件处理挂钩</h1><p>与游戏循环挂钩类似，你的Pygame Zero程序可以通过定义具有特定名称的函数来响应输入事件。</p>
+<p>有点像<code>update()</code>函数这种情况，Pygame Zero会通过检查事件处理函数来决定如何调用。所以你不需要让事件处理函数传参。例如，Pygame Zero会调用 <code>on_mouse_down</code>函数的任何变体：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_mouse_down</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Mouse button clicked&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_mouse_down</span>(<span class="params">pos</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Mouse button clicked at&quot;</span>, pos)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_mouse_down</span>(<span class="params">button</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Mouse button&quot;</span>, button, <span class="string">&quot;clicked&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_mouse_down</span>(<span class="params">pos, button</span>):</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Mouse button&quot;</span>, button, <span class="string">&quot;clicked at&quot;</span>, pos)</span><br></pre></td></tr></table></figure>
+
+<p>它通过查看参数的名称来完成此操作，所以参数必须完全拼写正确，就像上边代码列出的一样。每个事件挂钩都有一组可以使用的不同参数，如下所述。</p>
+<p><code>on_mouse_down([pos][, button])</code></p>
+<p>​        按下鼠标按键时调用。</p>
+<p>参数：</p>
+<ul>
+<li><strong>pos</strong> – 一个元组(x, y) 表示按键按下时鼠标指针的位置。</li>
+<li><strong>button</strong> – 一个 <code>mouse</code> 枚举值，表示按下的鼠标按键。</li>
+</ul>
+<p><code>on_mouse_up([pos][, button])</code></p>
+<p>​        释放鼠标按键时调用。</p>
+<p>参数：</p>
+<ul>
+<li><strong>pos</strong> – 一个元组(x, y) 表示按键释放时鼠标指针的位置。</li>
+<li><strong>button</strong> – 一个 <code>mouse</code> 枚举值，表示释放的鼠标按键。</li>
+</ul>
+<p><code>on_mouse_move([pos][, rel][, buttons])</code></p>
+<p>​        移动鼠标时调用。</p>
+<p>参数：</p>
+<ul>
+<li><p><strong>pos</strong> – 一个元组(x, y) 表示鼠标指针移动到的位置。</p>
+</li>
+<li><p><strong>rel</strong> – 一个元组(delta_x, delta_y)表示鼠标指针位置的变化。</p>
+</li>
+<li><p><strong>buttons</strong> – 一组 <code>mouse</code>枚举值，表示在移动过程中按下的按键。</p>
+</li>
+</ul>
+<p>要处理鼠标拖动，请使用下面这样的代码：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_mouse_move</span>(<span class="params">rel, buttons</span>):</span></span><br><span class="line">    <span class="keyword">if</span> mouse.LEFT <span class="keyword">in</span> buttons:</span><br><span class="line">        <span class="comment"># the mouse was dragged, do something with `rel`</span></span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
+
+<p><code>on_key_down([key][, mod][, unicode])</code></p>
+<p>​        按下按键时调用。</p>
+<p>参数：</p>
+<ul>
+<li><strong>key</strong> – 一个整数，表示按下的键。</li>
+<li><strong>unicode</strong> – 相关时键入的字符编码。 并非所有按键都会产生可打印的字符 - 许多可能是控制字符。如果按键与Unicode字符编码不对应，则为空字符串。</li>
+<li><strong>mod</strong> –  按下的修饰键的位掩码。</li>
+</ul>
+<p><code>on_key_up([key][, mod])</code></p>
+<p>​        释放按键时调用。</p>
+<p>参数:</p>
+<ul>
+<li><strong>key</strong> – 一个整数，表示释放的按键。</li>
+<li><strong>mod</strong> – 按下的修饰键的位掩码。</li>
+</ul>
+<p><code>on_music_end()</code></p>
+<p>​        音乐曲目结束时调用。</p>
+<p>​        请注意，如果将音轨配置为循环，则不会调用此方法。</p>
+<h1 id="鼠标和键盘按键"><a href="#鼠标和键盘按键" class="headerlink" title="鼠标和键盘按键"></a>鼠标和键盘按键</h1><p>内置对象<code>mouse</code>，<code>keys</code>可用于确定在上述事件中按下了哪些按钮或按键。</p>
+<p>请注意，鼠标滚轮事件显示为按下按钮 <code>WHEEL_UP</code>/ <code>WHEEL_DOWN</code>按钮常量。</p>
+<ul>
+<li><p><code>mouse</code>类</p>
+<p>可以由<code>on_mouse_*</code>处理程序接收的内置枚举按钮 。</p>
+<p><code>LEFT</code> <code>MIDDLE</code> <code>RIGHT</code> <code>WHEEL_UP</code> <code>WHEEL_DOWN</code></p>
+</li>
+<li><p><code>keys</code>类</p>
+<p>可由<code>on_key_*</code> 处理程序接收的内置枚举按钮。</p>
+<p><code>BACKSPACE</code> <code>TAB</code> <code>CLEAR</code> <code>RETURN</code> <code>PAUSE</code> <code>ESCAPE</code> <code>SPACE</code> <code>EXCLAIM</code> <code>QUOTEDBL</code> <code>HASH</code> <code>DOLLAR</code> <code>AMPERSAND</code> <code>QUOTE</code> <code>LEFTPAREN</code> <code>RIGHTPAREN</code> <code>ASTERISK</code> <code>PLUS</code> <code>COMMA</code> <code>MINUS</code> <code>PERIOD</code> <code>SLASH</code> <code>K_0</code> <code>K_1</code> <code>K_2</code> <code>K_3</code> <code>K_4</code> <code>K_5</code> <code>K_6</code> <code>K_7</code> <code>K_8</code> <code>K_9</code> <code>COLON</code> <code>SEMICOLON</code> <code>LESS</code> <code>EQUALS</code> <code>GREATER</code> <code>QUESTION</code> <code>AT</code> <code>LEFTBRACKET</code> <code>BACKSLASH</code> <code>RIGHTBRACKET</code> <code>CARET</code> <code>UNDERSCORE</code> <code>BACKQUOTE</code> <code>A</code> <code>B</code> <code>C</code> <code>D</code> <code>E</code> <code>F</code> <code>G</code> <code>H</code> <code>I</code> <code>J</code> <code>K</code> <code>L</code> <code>M</code> <code>N</code> <code>O</code> <code>P</code> <code>Q</code> <code>R</code> <code>S</code> <code>T</code> <code>U</code> <code>V</code> <code>W</code> <code>X</code> <code>Y</code> <code>Z</code> <code>DELETE</code> <code>KP0</code> <code>KP1</code> <code>KP2</code> <code>KP3</code> <code>KP4</code> <code>KP5</code> <code>KP6</code> <code>KP7</code> <code>KP8</code> <code>KP9</code> <code>KP_PERIOD</code> <code>KP_DIVIDE</code> <code>KP_MULTIPLY</code> <code>KP_MINUS</code> <code>KP_PLUS</code> <code>KP_ENTER</code> <code>KP_EQUALS</code> <code>UP</code> <code>DOWN</code> <code>RIGHT</code> <code>LEFT</code> <code>INSERT</code> <code>HOME</code> <code>END</code> <code>PAGEUP</code> <code>PAGEDOWN</code> <code>F1</code> <code>F2</code> <code>F3</code> <code>F4</code> <code>F5</code> <code>F6</code> <code>F7</code> <code>F8</code> <code>F9</code> <code>F10</code> <code>F11</code> <code>F12</code> <code>F13</code> <code>F14</code> <code>F15</code> <code>NUMLOCK</code> <code>CAPSLOCK</code> <code>SCROLLOCK</code> <code>RSHIFT</code> <code>LSHIFT</code> <code>RCTRL</code> <code>LCTRL</code> <code>RALT</code> <code>LALT</code> <code>RMETA</code> <code>LMETA</code> <code>LSUPER</code> <code>RSUPER</code> <code>MODE</code> <code>HELP</code> <code>PRINT</code> <code>SYSREQ</code> <code>BREAK</code> <code>MENU</code> <code>POWER</code> <code>EURO</code> <code>LAST</code></p>
+</li>
+</ul>
+<p>此外，您可以访问一组表示<strong>修饰键</strong>的常量：</p>
+<ul>
+<li><p><code>keymods</code>类</p>
+<p>表示在<code>on_key_up</code>/ <code>on_key_down</code>事件期间可能已被压下的修饰键的常量。</p>
+<p><code>LSHIFT</code> <code>RSHIFT</code> <code>SHIFT</code> <code>LCTRL</code> <code>RCTRL</code> <code>CTRL</code> <code>LALT</code> <code>RALT</code> <code>ALT</code> <code>LMETA</code> <code>RMETA</code> <code>META</code> <code>NUM</code> <code>CAPS</code> <code>MODE</code></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>游戏</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PygameZero制作Pacman</title>
+    <url>/2020/11/28/PygameZero%E5%88%B6%E4%BD%9CPacman/</url>
+    <content><![CDATA[<p>本篇来介绍Pacman的PygameZero实现。</p>
+<img src="/2020/11/28/PygameZero%E5%88%B6%E4%BD%9CPacman/pacman.png" class>
+
+<span id="more"></span>
+
+<p>先上代码，后边补上讲解</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pgzrun</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">WIDTH = <span class="number">500</span></span><br><span class="line">HEIGHT = <span class="number">500</span></span><br><span class="line">pacman = Actor(<span class="string">&#x27;向右的吃豆人&#x27;</span>)</span><br><span class="line">pacman.pos = [<span class="number">250</span>, <span class="number">250</span>]</span><br><span class="line">bean1 = Actor(<span class="string">&#x27;豆子&#x27;</span>)</span><br><span class="line">bean1.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean1.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean2 = Actor(<span class="string">&#x27;豆子&#x27;</span>)</span><br><span class="line">bean2.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean2.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean3 = Actor(<span class="string">&#x27;豆子&#x27;</span>)</span><br><span class="line">bean3.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean3.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">beans = [bean1, bean2, bean3]</span><br><span class="line">score = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    screen.blit(<span class="string">&#x27;游戏背景&#x27;</span>, [<span class="number">0</span>, <span class="number">0</span>])</span><br><span class="line">    pacman.draw()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> beans:</span><br><span class="line">        i.draw()</span><br><span class="line">    screen.draw.text(<span class="built_in">str</span>(score), [<span class="number">15</span>, <span class="number">15</span>], color=<span class="string">&#x27;orange&#x27;</span>, fontsize=<span class="number">30</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_key_down</span>(<span class="params">key</span>):</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.LEFT:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向左的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.RIGHT:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向右的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.UP:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向上的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.DOWN:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向下的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.SPACE:</span><br><span class="line">        <span class="built_in">print</span>(score)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="keyword">global</span> score</span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向左的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.x -= <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向右的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.x += <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向上的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.y -= <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向下的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.y += <span class="number">5</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> beans:</span><br><span class="line">        <span class="keyword">if</span> pacman.colliderect(i):</span><br><span class="line">            i.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">            i.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">            score += <span class="number">1</span></span><br><span class="line">            <span class="built_in">print</span>(score)</span><br><span class="line">    <span class="keyword">if</span> pacman.x &lt; <span class="number">0</span> <span class="keyword">or</span> pacman.x &gt; <span class="number">500</span> <span class="keyword">or</span> pacman.y &lt; <span class="number">0</span> <span class="keyword">or</span> pacman.y &gt; <span class="number">500</span>:</span><br><span class="line">        score -= <span class="number">3</span></span><br><span class="line">        <span class="built_in">print</span>(score)</span><br><span class="line">        pacman.pos = [<span class="number">250</span>, <span class="number">250</span>]</span><br><span class="line">    <span class="keyword">if</span> score &lt; <span class="number">0</span>:</span><br><span class="line">        exit()</span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure>
+
 ]]></content>
       <categories>
         <category>Python</category>
@@ -1467,76 +1467,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Redis操作</title>
-    <url>/2019/04/04/Redis%E6%93%8D%E4%BD%9C/</url>
-    <content><![CDATA[<h1 id="环境准备：centOS6-5"><a href="#环境准备：centOS6-5" class="headerlink" title="环境准备：centOS6.5"></a>环境准备：centOS6.5</h1><p>Redis是c语言开发的。<br>安装redis需要c语言的编译环境。如果没有gcc需要在线安装。</p>
-<span id="more"></span>
-
-<h1 id="安装编译环境"><a href="#安装编译环境" class="headerlink" title="安装编译环境"></a>安装编译环境</h1><p><code>yum install gcc-c++</code></p>
-<h1 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h1><ul>
-<li><p>第一步：redis的源码(安装)包上传到linux系统。</p>
-</li>
-<li><p>第二步：进入到压缩包所在的路径，解压缩redis。</p>
-</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar -zxvf redis-3.0.0.tar.gz</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>第三步：编译。进入redis源码目录（redis3.0.0）。</li>
-</ul>
-<p>执行：<code>make </code></p>
-<ul>
-<li>第四步：进入/usr/redis-3.0.0/src/安装。</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">make install PREFIX=/usr/java/redis</span><br></pre></td></tr></table></figure>
-
-<p>如果报错</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">zmalloc.h:50:31: error: jemalloc/jemalloc.h: No such file or directory</span><br><span class="line">zmalloc.h:55:2: error: <span class="comment">#error &quot;Newer version of jemalloc required&quot;</span></span><br><span class="line">make[1]: *** [adlist.o] Error 1</span><br><span class="line">make[1]: Leaving directory </span><br><span class="line">`/data0/src/redis-2.6.2/src<span class="string">&#x27;</span></span><br><span class="line"><span class="string">make: *** [all] Error 2</span></span><br></pre></td></tr></table></figure>
-<p>解决办法是：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">make MALLOC=libc</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>PREFIX参数指定redis的安装目录。一般软件安装到/usr目录下</p>
-</blockquote>
-<p>连接redis</p>
-<h1 id="redis的启动"><a href="#redis的启动" class="headerlink" title="redis的启动"></a>redis的启动</h1><h2 id="前端启动"><a href="#前端启动" class="headerlink" title="前端启动"></a>前端启动</h2><p>在redis的安装目录的bin目录下直接启动redis-server</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./redis-server </span><br></pre></td></tr></table></figure>
-
-<h2 id="后台启动"><a href="#后台启动" class="headerlink" title="后台启动"></a>后台启动</h2><p>把/root/redis-3.0.0/redis.conf复制到/usr/java/r<br>edis/bin目录下</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cp redis.conf /usr/java/redis/bin/</span><br></pre></td></tr></table></figure>
-
-<p>修改配置文件：</p>
-<p>启动服务器：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./redis-server redis.conf</span><br></pre></td></tr></table></figure>
-
-<p>查看redis进程：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ps aux|grep redis</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">root      5190  0.1  0.3  33936  1712 ?        Ssl  18:23   0:00 ./redis-server *:6379    </span><br><span class="line">root      5196  0.0  0.1   4356   728 pts/0    S+   18:24   0:00 grep redis</span><br></pre></td></tr></table></figure>
-<h2 id="关闭服务"><a href="#关闭服务" class="headerlink" title="关闭服务"></a>关闭服务</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./redis-cli shutdown</span><br></pre></td></tr></table></figure>
-
-<p>或者通过kill -9 PID关闭</p>
-<p>Redis-cli</p>
-<p><code>[root@localhost bin]# ./redis-cli </code></p>
-<p>默认连接localhost运行在6379端口的redis服务。</p>
-<p><code>[root@localhost bin]# ./redis-cli -h </code></p>
-<p><code>192.168.75.128 -p 6379</code></p>
-<blockquote>
-<p>-h：连接的服务器的地址</p>
-</blockquote>
-<blockquote>
-<p>-p：服务的端口号</p>
-</blockquote>
-<p>关闭redis：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./redis-cli shutdown</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>大数据开发</category>
-      </categories>
-      <tags>
-        <tag>大数据开发</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SQL基础语句复习</title>
     <url>/2019/04/04/SQL%E5%9F%BA%E7%A1%80%E8%AF%AD%E5%8F%A5%E5%A4%8D%E4%B9%A0/</url>
     <content><![CDATA[<h1 id="一些最重要的-SQL-命令"><a href="#一些最重要的-SQL-命令" class="headerlink" title="一些最重要的 SQL 命令"></a>一些最重要的 SQL 命令</h1><p>不能忘</p>
@@ -1648,6 +1578,76 @@
       </categories>
       <tags>
         <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis操作</title>
+    <url>/2019/04/04/Redis%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<h1 id="环境准备：centOS6-5"><a href="#环境准备：centOS6-5" class="headerlink" title="环境准备：centOS6.5"></a>环境准备：centOS6.5</h1><p>Redis是c语言开发的。<br>安装redis需要c语言的编译环境。如果没有gcc需要在线安装。</p>
+<span id="more"></span>
+
+<h1 id="安装编译环境"><a href="#安装编译环境" class="headerlink" title="安装编译环境"></a>安装编译环境</h1><p><code>yum install gcc-c++</code></p>
+<h1 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h1><ul>
+<li><p>第一步：redis的源码(安装)包上传到linux系统。</p>
+</li>
+<li><p>第二步：进入到压缩包所在的路径，解压缩redis。</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tar -zxvf redis-3.0.0.tar.gz</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>第三步：编译。进入redis源码目录（redis3.0.0）。</li>
+</ul>
+<p>执行：<code>make </code></p>
+<ul>
+<li>第四步：进入/usr/redis-3.0.0/src/安装。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">make install PREFIX=/usr/java/redis</span><br></pre></td></tr></table></figure>
+
+<p>如果报错</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">zmalloc.h:50:31: error: jemalloc/jemalloc.h: No such file or directory</span><br><span class="line">zmalloc.h:55:2: error: <span class="comment">#error &quot;Newer version of jemalloc required&quot;</span></span><br><span class="line">make[1]: *** [adlist.o] Error 1</span><br><span class="line">make[1]: Leaving directory </span><br><span class="line">`/data0/src/redis-2.6.2/src<span class="string">&#x27;</span></span><br><span class="line"><span class="string">make: *** [all] Error 2</span></span><br></pre></td></tr></table></figure>
+<p>解决办法是：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">make MALLOC=libc</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>PREFIX参数指定redis的安装目录。一般软件安装到/usr目录下</p>
+</blockquote>
+<p>连接redis</p>
+<h1 id="redis的启动"><a href="#redis的启动" class="headerlink" title="redis的启动"></a>redis的启动</h1><h2 id="前端启动"><a href="#前端启动" class="headerlink" title="前端启动"></a>前端启动</h2><p>在redis的安装目录的bin目录下直接启动redis-server</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./redis-server </span><br></pre></td></tr></table></figure>
+
+<h2 id="后台启动"><a href="#后台启动" class="headerlink" title="后台启动"></a>后台启动</h2><p>把/root/redis-3.0.0/redis.conf复制到/usr/java/r<br>edis/bin目录下</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cp redis.conf /usr/java/redis/bin/</span><br></pre></td></tr></table></figure>
+
+<p>修改配置文件：</p>
+<p>启动服务器：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./redis-server redis.conf</span><br></pre></td></tr></table></figure>
+
+<p>查看redis进程：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ps aux|grep redis</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">root      5190  0.1  0.3  33936  1712 ?        Ssl  18:23   0:00 ./redis-server *:6379    </span><br><span class="line">root      5196  0.0  0.1   4356   728 pts/0    S+   18:24   0:00 grep redis</span><br></pre></td></tr></table></figure>
+<h2 id="关闭服务"><a href="#关闭服务" class="headerlink" title="关闭服务"></a>关闭服务</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./redis-cli shutdown</span><br></pre></td></tr></table></figure>
+
+<p>或者通过kill -9 PID关闭</p>
+<p>Redis-cli</p>
+<p><code>[root@localhost bin]# ./redis-cli </code></p>
+<p>默认连接localhost运行在6379端口的redis服务。</p>
+<p><code>[root@localhost bin]# ./redis-cli -h </code></p>
+<p><code>192.168.75.128 -p 6379</code></p>
+<blockquote>
+<p>-h：连接的服务器的地址</p>
+</blockquote>
+<blockquote>
+<p>-p：服务的端口号</p>
+</blockquote>
+<p>关闭redis：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./redis-cli shutdown</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>大数据开发</category>
+      </categories>
+      <tags>
+        <tag>大数据开发</tag>
       </tags>
   </entry>
   <entry>
@@ -3338,28 +3338,6 @@
       </tags>
   </entry>
   <entry>
-    <title>如何将Chrome插件导出crx文件</title>
-    <url>/2022/04/22/%E5%A6%82%E4%BD%95%E5%B0%86Chrome%E6%8F%92%E4%BB%B6%E5%AF%BC%E5%87%BAcrx%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<p>如何将Chrome插件导出crx文件呢？Chrome相信大家都很熟悉，但是Chrome插件给怎么导出呢，下面就让小编带大家一起了解吧。导出Chrome插件，其实就是把Chrome插件导出，大家可能会很惊讶Chrome插件怎么需要导出呢？但事实就是这样，小编也感到非常惊讶。这就是关于Chrome插件导出的事情了，大家有什么想法呢，欢迎在评论区告诉小编一起讨论哦！</p>
-<span id="more"></span>
-<p>有些时候，我们需要为浏览器安装扩展程序（插件），以便更好地使用浏览器。然而由于一些原因，直接安装插件不太方便。因此可以使用安装包的形式，直接将安装包拖入浏览器中安装。</p>
-<p>那么想要获得安装包，就必须从一个已经安装了这个插件的浏览器中将其导出，这样就可以传递使用。</p>
-<p>今天要讨论的就是，这个安装包怎么来的？</p>
-<h1 id="查看已安装的插件"><a href="#查看已安装的插件" class="headerlink" title="查看已安装的插件"></a>查看已安装的插件</h1><p>首先进入浏览器，查看已经安装的扩展程序，注意打开<strong>开发者模式</strong>。<br><img src="/2022/04/22/%E5%A6%82%E4%BD%95%E5%B0%86Chrome%E6%8F%92%E4%BB%B6%E5%AF%BC%E5%87%BAcrx%E6%96%87%E4%BB%B6/1.png"></p>
-<h1 id="选择要导出的插件"><a href="#选择要导出的插件" class="headerlink" title="选择要导出的插件"></a>选择要导出的插件</h1><p>在插件面板中，可以看到每个插件的ID，以及一个叫做<strong>打包安装程序</strong>的按钮。<br><img src="/2022/04/22/%E5%A6%82%E4%BD%95%E5%B0%86Chrome%E6%8F%92%E4%BB%B6%E5%AF%BC%E5%87%BAcrx%E6%96%87%E4%BB%B6/2.png"></p>
-<h1 id="查找插件所在目录"><a href="#查找插件所在目录" class="headerlink" title="查找插件所在目录"></a>查找插件所在目录</h1><p>进入如下目录：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">~/Library/Application Support/Google/Chrome/Default/Extensions/</span><br></pre></td></tr></table></figure>
-<p>在这个目录中，就是所有已经安装的扩展程序的目录了，目录下级的各文件夹，就是刚才看到的插件ID。</p>
-<p>以红圈中的插件为例，我们需要复制版本号的这个文件夹的绝对路径。<br><img src="/2022/04/22/%E5%A6%82%E4%BD%95%E5%B0%86Chrome%E6%8F%92%E4%BB%B6%E5%AF%BC%E5%87%BAcrx%E6%96%87%E4%BB%B6/3.png"></p>
-<h1 id="导出插件"><a href="#导出插件" class="headerlink" title="导出插件"></a>导出插件</h1><p>回到浏览器，点击<strong>打包扩展程序</strong>，并将复制的绝对路径粘贴进来，然后点击蓝色的<strong>打包扩展程序</strong>。<br><img src="/2022/04/22/%E5%A6%82%E4%BD%95%E5%B0%86Chrome%E6%8F%92%E4%BB%B6%E5%AF%BC%E5%87%BAcrx%E6%96%87%E4%BB%B6/4.png"></p>
-<h1 id="获取安装包"><a href="#获取安装包" class="headerlink" title="获取安装包"></a>获取安装包</h1><p>回到刚刚的文件夹，发现一个<code>.crx</code>后缀的文件出现了，这就是我们打包好的插件。<br><img src="/2022/04/22/%E5%A6%82%E4%BD%95%E5%B0%86Chrome%E6%8F%92%E4%BB%B6%E5%AF%BC%E5%87%BAcrx%E6%96%87%E4%BB%B6/5.png"></p>
-<p>这样就可以拖拽使用了。</p>
-<blockquote>
-<p>参考：<a href="https://www.csdn.net/tags/MtTaEg4sOTQ4ODE5LWJsb2cO0O0O.html">https://www.csdn.net/tags/MtTaEg4sOTQ4ODE5LWJsb2cO0O0O.html</a></p>
-</blockquote>
-]]></content>
-  </entry>
-  <entry>
     <title>安装python库时遇到ValueError: check_hostname requires server_hostname问题及解决</title>
     <url>/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/</url>
     <content><![CDATA[<p>正当我熟练地使用 <code>pip</code> 安装 <code>requests</code> 模块时，令人意想不到的一幕发生了……</p>
@@ -3385,6 +3363,28 @@
         <tag>bug</tag>
         <tag>python</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>如何将Chrome插件导出crx文件</title>
+    <url>/2022/04/22/%E5%A6%82%E4%BD%95%E5%B0%86Chrome%E6%8F%92%E4%BB%B6%E5%AF%BC%E5%87%BAcrx%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<p>如何将Chrome插件导出crx文件呢？Chrome相信大家都很熟悉，但是Chrome插件给怎么导出呢，下面就让小编带大家一起了解吧。导出Chrome插件，其实就是把Chrome插件导出，大家可能会很惊讶Chrome插件怎么需要导出呢？但事实就是这样，小编也感到非常惊讶。这就是关于Chrome插件导出的事情了，大家有什么想法呢，欢迎在评论区告诉小编一起讨论哦！</p>
+<span id="more"></span>
+<p>有些时候，我们需要为浏览器安装扩展程序（插件），以便更好地使用浏览器。然而由于一些原因，直接安装插件不太方便。因此可以使用安装包的形式，直接将安装包拖入浏览器中安装。</p>
+<p>那么想要获得安装包，就必须从一个已经安装了这个插件的浏览器中将其导出，这样就可以传递使用。</p>
+<p>今天要讨论的就是，这个安装包怎么来的？</p>
+<h1 id="查看已安装的插件"><a href="#查看已安装的插件" class="headerlink" title="查看已安装的插件"></a>查看已安装的插件</h1><p>首先进入浏览器，查看已经安装的扩展程序，注意打开<strong>开发者模式</strong>。<br><img src="/2022/04/22/%E5%A6%82%E4%BD%95%E5%B0%86Chrome%E6%8F%92%E4%BB%B6%E5%AF%BC%E5%87%BAcrx%E6%96%87%E4%BB%B6/1.png"></p>
+<h1 id="选择要导出的插件"><a href="#选择要导出的插件" class="headerlink" title="选择要导出的插件"></a>选择要导出的插件</h1><p>在插件面板中，可以看到每个插件的ID，以及一个叫做<strong>打包安装程序</strong>的按钮。<br><img src="/2022/04/22/%E5%A6%82%E4%BD%95%E5%B0%86Chrome%E6%8F%92%E4%BB%B6%E5%AF%BC%E5%87%BAcrx%E6%96%87%E4%BB%B6/2.png"></p>
+<h1 id="查找插件所在目录"><a href="#查找插件所在目录" class="headerlink" title="查找插件所在目录"></a>查找插件所在目录</h1><p>进入如下目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">~/Library/Application Support/Google/Chrome/Default/Extensions/</span><br></pre></td></tr></table></figure>
+<p>在这个目录中，就是所有已经安装的扩展程序的目录了，目录下级的各文件夹，就是刚才看到的插件ID。</p>
+<p>以红圈中的插件为例，我们需要复制版本号的这个文件夹的绝对路径。<br><img src="/2022/04/22/%E5%A6%82%E4%BD%95%E5%B0%86Chrome%E6%8F%92%E4%BB%B6%E5%AF%BC%E5%87%BAcrx%E6%96%87%E4%BB%B6/3.png"></p>
+<h1 id="导出插件"><a href="#导出插件" class="headerlink" title="导出插件"></a>导出插件</h1><p>回到浏览器，点击<strong>打包扩展程序</strong>，并将复制的绝对路径粘贴进来，然后点击蓝色的<strong>打包扩展程序</strong>。<br><img src="/2022/04/22/%E5%A6%82%E4%BD%95%E5%B0%86Chrome%E6%8F%92%E4%BB%B6%E5%AF%BC%E5%87%BAcrx%E6%96%87%E4%BB%B6/4.png"></p>
+<h1 id="获取安装包"><a href="#获取安装包" class="headerlink" title="获取安装包"></a>获取安装包</h1><p>回到刚刚的文件夹，发现一个<code>.crx</code>后缀的文件出现了，这就是我们打包好的插件。<br><img src="/2022/04/22/%E5%A6%82%E4%BD%95%E5%B0%86Chrome%E6%8F%92%E4%BB%B6%E5%AF%BC%E5%87%BAcrx%E6%96%87%E4%BB%B6/5.png"></p>
+<p>这样就可以拖拽使用了。</p>
+<blockquote>
+<p>参考：<a href="https://www.csdn.net/tags/MtTaEg4sOTQ4ODE5LWJsb2cO0O0O.html">https://www.csdn.net/tags/MtTaEg4sOTQ4ODE5LWJsb2cO0O0O.html</a></p>
+</blockquote>
+]]></content>
   </entry>
   <entry>
     <title>实用SQL</title>
@@ -3660,6 +3660,241 @@
 <ul>
 <li><code>range(N)</code><br>产生 0 到 N-1的整数序列，共N个</li>
 <li><code>range(M,N)</code><br>产生 M 到 N-1的整数序列，共N-M个</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>嵩天老师Python(8)程序设计方法学</title>
+    <url>/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(8)%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E5%AD%A6/</url>
+    <content><![CDATA[<h1 id="实例：体育竞技分析"><a href="#实例：体育竞技分析" class="headerlink" title="实例：体育竞技分析"></a>实例：体育竞技分析</h1><blockquote>
+<p>高手过招，胜负只在毫厘之间</p>
+</blockquote>
+<h2 id="“体育竞技分析”问题分析"><a href="#“体育竞技分析”问题分析" class="headerlink" title="“体育竞技分析”问题分析"></a>“体育竞技分析”问题分析</h2><h3 id="体育竞技分析"><a href="#体育竞技分析" class="headerlink" title="体育竞技分析"></a>体育竞技分析</h3><ul>
+<li><p>需求：毫厘是多少？如何科学分析体育竞技比赛？</p>
+</li>
+<li><p>输入：球员的水平</p>
+</li>
+<li><p>输出：可预测的比赛成绩</p>
+<span id="more"></span></li>
+</ul>
+<h3 id="体育竞技分析：模拟N场比赛"><a href="#体育竞技分析：模拟N场比赛" class="headerlink" title="体育竞技分析：模拟N场比赛"></a>体育竞技分析：模拟N场比赛</h3><ul>
+<li>计算思维：抽象 + 自动化</li>
+<li>模拟：抽象比赛过程 + 自动化执行N场比赛</li>
+<li>当N越大时，比赛结果分析会越科学</li>
+</ul>
+<h3 id="比赛规则"><a href="#比赛规则" class="headerlink" title="比赛规则"></a>比赛规则</h3><ul>
+<li>双人击球比赛：A &amp; B，回合制，5局3胜</li>
+<li>开始时一方先发球，直至判分，接下来胜者发球</li>
+<li>球员只能在发球局得分，15分胜一局</li>
+</ul>
+<h2 id="自顶向下和自底向上"><a href="#自顶向下和自底向上" class="headerlink" title="自顶向下和自底向上"></a>自顶向下和自底向上</h2><h3 id="自顶向下（设计）——解决复杂问题的有效方法"><a href="#自顶向下（设计）——解决复杂问题的有效方法" class="headerlink" title="自顶向下（设计）——解决复杂问题的有效方法"></a>自顶向下（设计）——解决复杂问题的有效方法</h3><ul>
+<li>将一个总问题表达为若干个小问题组成的形式</li>
+<li>使用同样方法进一步分解小问题</li>
+<li>直至，小问题可以用计算机简单明了的解决</li>
+</ul>
+<h3 id="自底向上（执行）——逐步组建复杂系统的有效测试方法"><a href="#自底向上（执行）——逐步组建复杂系统的有效测试方法" class="headerlink" title="自底向上（执行）——逐步组建复杂系统的有效测试方法"></a>自底向上（执行）——逐步组建复杂系统的有效测试方法</h3><h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h3 id="程序总体框架及步骤"><a href="#程序总体框架及步骤" class="headerlink" title="程序总体框架及步骤"></a>程序总体框架及步骤</h3><ul>
+<li>步骤1：打印程序的介绍性信息               - printInfo()</li>
+<li>步骤2：获得程序运行参数：proA, proB, n    - getInputs()</li>
+<li>步骤3：利用球员A和B的能力值，模拟n局比赛  - simNGames()</li>
+<li>步骤4：输出球员A和B获胜比赛的场次及概率   - printSummary()</li>
+</ul>
+<h3 id="全代码"><a href="#全代码" class="headerlink" title="全代码"></a>全代码</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printIntro</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;这个程序模拟两个选手A和B的某种竞技比赛&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;程序运行需要A和B的能力值（以0到1之间的小数表示）&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getInputs</span>():</span></span><br><span class="line">    a = <span class="built_in">eval</span>(<span class="built_in">input</span>(<span class="string">&quot;请输入选手A的能力值（0-1）：&quot;</span>))</span><br><span class="line">    b = <span class="built_in">eval</span>(<span class="built_in">input</span>(<span class="string">&quot;请输入选手B的能力值（0-1）：&quot;</span>))</span><br><span class="line">    n = <span class="built_in">eval</span>(<span class="built_in">input</span>(<span class="string">&quot;模拟比赛的场次：&quot;</span>))</span><br><span class="line">    <span class="keyword">return</span> a, b, n</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printSummary</span>(<span class="params">winsA, winsB</span>):</span></span><br><span class="line">    n = winsA + winsB</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;竞技分析开始，共模拟&#123;&#125;场比赛&quot;</span>.<span class="built_in">format</span>(n))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;选手A获胜&#123;&#125;场比赛，占比&#123;:0.1%&#125;&quot;</span>.<span class="built_in">format</span>(winsA, winsA/n))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;选手B获胜&#123;&#125;场比赛，占比&#123;:0.1%&#125;&quot;</span>.<span class="built_in">format</span>(winsB, winsB/n))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gameOver</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    <span class="keyword">return</span> a==<span class="number">15</span> <span class="keyword">or</span> b==<span class="number">15</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simOneGame</span>(<span class="params">probA, probB</span>):</span></span><br><span class="line">    scoreA, scoreB = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    serving =<span class="string">&quot;A&quot;</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> gameOver(scoreA,scoreB):</span><br><span class="line">        <span class="keyword">if</span> serving == <span class="string">&quot;A&quot;</span>:</span><br><span class="line">            <span class="keyword">if</span> random() &lt; probA:</span><br><span class="line">                scoreA += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                serving = <span class="string">&quot;B&quot;</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> random() &lt; probB:</span><br><span class="line">                scoreB += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                serving = <span class="string">&quot;A&quot;</span></span><br><span class="line">    <span class="keyword">return</span> scoreA, scoreB</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simNGames</span>(<span class="params">n, probA, probB</span>):</span></span><br><span class="line">    winsA, winsB = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        scoreA, scoreB = simOneGame(probA, probB)</span><br><span class="line">        <span class="keyword">if</span> scoreA &gt; scoreB:</span><br><span class="line">            winsA += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            winsB += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> winsA, winsB</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    printIntro()</span><br><span class="line">    probA, probB, n = getInputs()</span><br><span class="line">    winsA, winsB = simNGames(n, probA, probB)</span><br><span class="line">    printSummary(winsA, winsB)</span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+
+<h3 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h3><img src="/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(8)%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E5%AD%A6/result.png" class>
+
+<h2 id="举一反三"><a href="#举一反三" class="headerlink" title="举一反三"></a>举一反三</h2><ol>
+<li>理解自顶向下和自底向上</li>
+</ol>
+<ul>
+<li>理解自顶向下的设计思维：分而治之</li>
+<li>理解自底向上的执行思维：模块化集成</li>
+<li>自顶向下是“系统”思维的简化</li>
+</ul>
+<ol start="2">
+<li>应用问题的扩展</li>
+</ol>
+<ul>
+<li>扩展比赛参数，增加对更多能力对比情况的判断</li>
+<li>扩展比赛设计，增加对真实比赛结果的预测</li>
+<li>扩展分析逻辑，反向推理，用胜率推算能力？</li>
+</ul>
+<h1 id="Python程序设计思维"><a href="#Python程序设计思维" class="headerlink" title="Python程序设计思维"></a>Python程序设计思维</h1><h2 id="计算思维"><a href="#计算思维" class="headerlink" title="计算思维"></a>计算思维</h2><p>第3种人类思维特征</p>
+<ul>
+<li>逻辑思维：推理和演绎，数学为代表，A-&gt;B B-&gt;C A-&gt;C</li>
+<li>实证思维：实验和验证，物理为代表，引力波&lt;-实验</li>
+<li>计算思维：设计和构造，计算机为代表，汉诺塔递归</li>
+</ul>
+<p>计算思维（Computational Thinking）：<strong>抽象</strong>问题的计算过程，利用计算机<strong>自动化</strong>求解，是基于计算机的思维方式。计算思维基于计算机强大的算力及海量数据，抽象计算过程，关注设计和构造，而非因果。</p>
+<h2 id="计算生态与Python语言"><a href="#计算生态与Python语言" class="headerlink" title="计算生态与Python语言"></a>计算生态与Python语言</h2><ul>
+<li>以开源项目为代表的大量第三方库</li>
+<li>库的建设经过野蛮生长和自然选择</li>
+<li>库之间相互关联使用，依存发展</li>
+<li>社区庞大，新技术更迭迅速</li>
+</ul>
+<p>计算生态的价值</p>
+<ul>
+<li>加速科技类应用创新的重要支撑</li>
+<li>发展科技产品商业价值的重要模式</li>
+<li>国家科技体系安全和稳固的基础</li>
+</ul>
+<h2 id="基本的程序设计模式"><a href="#基本的程序设计模式" class="headerlink" title="基本的程序设计模式"></a>基本的程序设计模式</h2><p>IPO<br>模块化设计<br>配置化设计</p>
+<h1 id="Python第三方库安装"><a href="#Python第三方库安装" class="headerlink" title="Python第三方库安装"></a>Python第三方库安装</h1><p>Python社区：<a href="https://pypi.org/">https://pypi.org</a></p>
+<p>安装第三方库：</p>
+<ol>
+<li>主要方法：使用pip命令</li>
+<li>集成安装方法</li>
+<li>文件安装方法</li>
+</ol>
+<p>Anaconda： <a href="https://www.continuum.io/">https://www.continuum.io</a></p>
+<ul>
+<li>支持近800个第三方库</li>
+<li>包含多个主流工具</li>
+<li>适合数据计算领域开发</li>
+</ul>
+<p>UCI页面： <a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/">http://www.lfd.uci.edu/~gohlke/pythonlibs/</a></p>
+<ul>
+<li>在UCI页面上搜索&lt;库名称&gt;</li>
+<li>下载对应版本的文件</li>
+<li>使用pip install &lt;文件名&gt;安装</li>
+</ul>
+<h1 id="os库的使用"><a href="#os库的使用" class="headerlink" title="os库的使用"></a>os库的使用</h1><h2 id="os库基本介绍"><a href="#os库基本介绍" class="headerlink" title="os库基本介绍"></a>os库基本介绍</h2><p>os库提供通用的、基本的操作系统交互功能</p>
+<ul>
+<li>os库是Python标准库，包含几百个函数</li>
+<li>常用路径操作、进程管理、环境参数等几类<ul>
+<li>路径操作：os.path子库，处理文件路径及信息</li>
+<li>进程管理：启动系统中其他程序</li>
+<li>环境参数：获得系统软硬件信息等环境参数</li>
+</ul>
+</li>
+</ul>
+<h2 id="os库的路径操作"><a href="#os库的路径操作" class="headerlink" title="os库的路径操作"></a>os库的路径操作</h2><p>os.path子库以path为入口，用于操作和处理文件路径<br>| 函数                        | 描述                                  |<br>| ————————— | ——————————— |<br>| <code>os.path.abspath(path)</code>  | 返回path在当前系统中的绝对路径             |<br>| <code>os.path.normpath(path)</code>  | 归一化path的表示形式，统一用\\分隔路径      |<br>| <code>os.path.relpath(path)</code> | 返回当前程序与文件之间的相对路径（relative path）|<br>| <code>os.path.dirname(path)</code>   | 返回path中的目录名称                        |<br>| <code>os.path.basename(path)</code> | 返回path中最后的文件名称                  |<br>| <code>os.path.join(path,*paths)</code> | 组合path与paths，返回一个路径字符串         |<br>| <code>os.path.exists(path)</code> | 判断path对应文件或目录是否存在，返回True或False   |<br>| <code>os.path.isfile(path)</code>  | 判断path所对应是否为已存在的文件，返回True或False|<br>| <code>os.path.isdir(path)</code>  | 判断path所对应是否为已存在的目录，返回True或False |<br>| <code>os.path.getatime(path)</code>  | 返回path对应文件或目录上一次的访问时间        |<br>| <code>os.path.getmtime(path)</code>    | 返回path对应文件或目录最近一次的修改时间     |<br>| <code>os.path.getctime(path)</code>    | 返回path对应文件或目录创建时间             |<br>| <code>os.path.getsize(path)</code>     | 返回path对应文件的大小，以字节为单位        |</p>
+<h2 id="os库的进程管理"><a href="#os库的进程管理" class="headerlink" title="os库的进程管理"></a>os库的进程管理</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">os.system(command)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>执行程序或命令command</li>
+<li>在Windows操作系统中，返回值为cmd调用的返回信息</li>
+</ul>
+<h2 id="os库的环境参数"><a href="#os库的环境参数" class="headerlink" title="os库的环境参数"></a>os库的环境参数</h2><p>获取或改变系统环境信息<br>| 函数             | 描述                                            |<br>| —————- | ———————————————– |<br>| <code>os.chdir(path)</code> | 修改当前程序的操作路径                          |<br>| <code>os.getcwd()</code>    | 返回程序的当前路径                              |<br>| <code>os.getlogin()</code>  | 获得当前系统登录用户名称                        |<br>| <code>os.cpu_count()</code> | 获得当前系统CPU数量                             |<br>| <code>os.urandom(n)</code>  | 获得n个字节长度的随机字符串，通常用于加解密运算 |</p>
+<h1 id="实例：第三方库安装脚本"><a href="#实例：第三方库安装脚本" class="headerlink" title="实例：第三方库安装脚本"></a>实例：第三方库安装脚本</h1><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><ul>
+<li>需求：批量安装第三方库需要人工干预，能否自动安装？</li>
+<li>自动执行pip逐一根据需求安装</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>库名</th>
+<th>用途</th>
+<th>pip安装指令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NumPy</td>
+<td>N维数据表示和运算</td>
+<td>pip install numpy</td>
+</tr>
+<tr>
+<td>Matplotlib</td>
+<td>二维数据可视化</td>
+<td>pip install matplotlib</td>
+</tr>
+<tr>
+<td>PIL</td>
+<td>图像处理</td>
+<td>pip install pillow</td>
+</tr>
+<tr>
+<td>Scikit-Learn</td>
+<td>机器学习和数据挖掘</td>
+<td>pip install sklearn</td>
+</tr>
+<tr>
+<td>Requests</td>
+<td>HTTP协议访问及网络爬虫</td>
+<td>pip install requests</td>
+</tr>
+<tr>
+<td>Jieba</td>
+<td>中文分词</td>
+<td>pip install jieba</td>
+</tr>
+<tr>
+<td>Beautiful Soup</td>
+<td>HTML和XML解析器</td>
+<td>pip install beautifulsoup4</td>
+</tr>
+<tr>
+<td>Wheel Python</td>
+<td>第三方库文件打包工具</td>
+<td>pip install wheel</td>
+</tr>
+<tr>
+<td>PyInstaller</td>
+<td>打包Python源文件为可执行文件</td>
+<td>pip install pyinstall</td>
+</tr>
+<tr>
+<td>Flask</td>
+<td>轻量级Web开发框架</td>
+<td>pip install flask</td>
+</tr>
+<tr>
+<td>WeRoBot</td>
+<td>微信机器人开发框架</td>
+<td>pip install werobot</td>
+</tr>
+<tr>
+<td>SymPy</td>
+<td>数学符号计算工具</td>
+<td>pip install sympy</td>
+</tr>
+<tr>
+<td>Pandas</td>
+<td>高效数据分析和计算</td>
+<td>pip install pandas</td>
+</tr>
+<tr>
+<td>Networkx</td>
+<td>复杂网络和图结构的建模和分析</td>
+<td>pip install networkx</td>
+</tr>
+<tr>
+<td>PyQt5</td>
+<td>基于Qt的专业级GUI开发框架</td>
+<td>pip install pyqt5</td>
+</tr>
+<tr>
+<td>PyOpenGL</td>
+<td>多平台OpenGL开发接口</td>
+<td>pip install pyopengl</td>
+</tr>
+<tr>
+<td>PyPDF2</td>
+<td>PDF文件内容提取及处理</td>
+<td>pip install pypdf2</td>
+</tr>
+<tr>
+<td>docopt</td>
+<td>Python命令行解析</td>
+<td>pip install docopt</td>
+</tr>
+<tr>
+<td>PyGame</td>
+<td>简单小游戏开发框架</td>
+<td>pip install pygame</td>
+</tr>
+</tbody></table>
+<h2 id="实例解析"><a href="#实例解析" class="headerlink" title="实例解析"></a>实例解析</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#BatchInstall.py</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">libs = &#123;<span class="string">&quot;numpy&quot;</span>,<span class="string">&quot;matplotlib&quot;</span>,<span class="string">&quot;pillow&quot;</span>,<span class="string">&quot;sklearn&quot;</span>,<span class="string">&quot;requests&quot;</span>,\</span><br><span class="line">        <span class="string">&quot;jieba&quot;</span>,<span class="string">&quot;beautifulsoup4&quot;</span>,<span class="string">&quot;wheel&quot;</span>,<span class="string">&quot;networkx&quot;</span>,<span class="string">&quot;sympy&quot;</span>,\</span><br><span class="line">        <span class="string">&quot;pyinstaller&quot;</span>,<span class="string">&quot;django&quot;</span>,<span class="string">&quot;flask&quot;</span>,<span class="string">&quot;werobot&quot;</span>,<span class="string">&quot;pyqt5&quot;</span>,\</span><br><span class="line">        <span class="string">&quot;pandas&quot;</span>,<span class="string">&quot;pyopengl&quot;</span>,<span class="string">&quot;pypdf2&quot;</span>,<span class="string">&quot;docopt&quot;</span>,<span class="string">&quot;pygame&quot;</span>&#125;</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">for</span> lib <span class="keyword">in</span> libs:</span><br><span class="line">        os.system(<span class="string">&quot;pip install&quot;</span> + lib)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Successful&quot;</span>)</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Failed Somehow&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="举一反三-1"><a href="#举一反三-1" class="headerlink" title="举一反三"></a>举一反三</h2><p>自动化脚本+</p>
+<ul>
+<li>编写各类自动化运行程序的脚本，调用已有程序</li>
+<li>扩展应用：安装更多第三方库，增加配置文件</li>
+<li>扩展异常检测：捕获更多异常类型，程序更稳定友好</li>
 </ul>
 ]]></content>
       <categories>
@@ -4029,241 +4264,6 @@
 <blockquote>
 <p>练习素材下载：<br><a href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/%E6%96%B0%E6%97%B6%E4%BB%A3%E4%B8%AD%E5%9B%BD%E7%89%B9%E8%89%B2%E7%A4%BE%E4%BC%9A%E4%B8%BB%E4%B9%89.txt">新时代中国特色社会主义.txt</a><br><a href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/%E5%85%B3%E4%BA%8E%E5%AE%9E%E6%96%BD%E4%B9%A1%E6%9D%91%E6%8C%AF%E5%85%B4%E6%88%98%E7%95%A5%E7%9A%84%E6%84%8F%E8%A7%81.txt">关于实施乡村振兴战略的意见.txt</a><br><a href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/chinamap.jpg">chinamap.jpg</a><br><a href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/fivestars.png">fivestars.png</a></p>
 </blockquote>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>嵩天老师Python(8)程序设计方法学</title>
-    <url>/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(8)%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E5%AD%A6/</url>
-    <content><![CDATA[<h1 id="实例：体育竞技分析"><a href="#实例：体育竞技分析" class="headerlink" title="实例：体育竞技分析"></a>实例：体育竞技分析</h1><blockquote>
-<p>高手过招，胜负只在毫厘之间</p>
-</blockquote>
-<h2 id="“体育竞技分析”问题分析"><a href="#“体育竞技分析”问题分析" class="headerlink" title="“体育竞技分析”问题分析"></a>“体育竞技分析”问题分析</h2><h3 id="体育竞技分析"><a href="#体育竞技分析" class="headerlink" title="体育竞技分析"></a>体育竞技分析</h3><ul>
-<li><p>需求：毫厘是多少？如何科学分析体育竞技比赛？</p>
-</li>
-<li><p>输入：球员的水平</p>
-</li>
-<li><p>输出：可预测的比赛成绩</p>
-<span id="more"></span></li>
-</ul>
-<h3 id="体育竞技分析：模拟N场比赛"><a href="#体育竞技分析：模拟N场比赛" class="headerlink" title="体育竞技分析：模拟N场比赛"></a>体育竞技分析：模拟N场比赛</h3><ul>
-<li>计算思维：抽象 + 自动化</li>
-<li>模拟：抽象比赛过程 + 自动化执行N场比赛</li>
-<li>当N越大时，比赛结果分析会越科学</li>
-</ul>
-<h3 id="比赛规则"><a href="#比赛规则" class="headerlink" title="比赛规则"></a>比赛规则</h3><ul>
-<li>双人击球比赛：A &amp; B，回合制，5局3胜</li>
-<li>开始时一方先发球，直至判分，接下来胜者发球</li>
-<li>球员只能在发球局得分，15分胜一局</li>
-</ul>
-<h2 id="自顶向下和自底向上"><a href="#自顶向下和自底向上" class="headerlink" title="自顶向下和自底向上"></a>自顶向下和自底向上</h2><h3 id="自顶向下（设计）——解决复杂问题的有效方法"><a href="#自顶向下（设计）——解决复杂问题的有效方法" class="headerlink" title="自顶向下（设计）——解决复杂问题的有效方法"></a>自顶向下（设计）——解决复杂问题的有效方法</h3><ul>
-<li>将一个总问题表达为若干个小问题组成的形式</li>
-<li>使用同样方法进一步分解小问题</li>
-<li>直至，小问题可以用计算机简单明了的解决</li>
-</ul>
-<h3 id="自底向上（执行）——逐步组建复杂系统的有效测试方法"><a href="#自底向上（执行）——逐步组建复杂系统的有效测试方法" class="headerlink" title="自底向上（执行）——逐步组建复杂系统的有效测试方法"></a>自底向上（执行）——逐步组建复杂系统的有效测试方法</h3><h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h3 id="程序总体框架及步骤"><a href="#程序总体框架及步骤" class="headerlink" title="程序总体框架及步骤"></a>程序总体框架及步骤</h3><ul>
-<li>步骤1：打印程序的介绍性信息               - printInfo()</li>
-<li>步骤2：获得程序运行参数：proA, proB, n    - getInputs()</li>
-<li>步骤3：利用球员A和B的能力值，模拟n局比赛  - simNGames()</li>
-<li>步骤4：输出球员A和B获胜比赛的场次及概率   - printSummary()</li>
-</ul>
-<h3 id="全代码"><a href="#全代码" class="headerlink" title="全代码"></a>全代码</h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printIntro</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;这个程序模拟两个选手A和B的某种竞技比赛&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;程序运行需要A和B的能力值（以0到1之间的小数表示）&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getInputs</span>():</span></span><br><span class="line">    a = <span class="built_in">eval</span>(<span class="built_in">input</span>(<span class="string">&quot;请输入选手A的能力值（0-1）：&quot;</span>))</span><br><span class="line">    b = <span class="built_in">eval</span>(<span class="built_in">input</span>(<span class="string">&quot;请输入选手B的能力值（0-1）：&quot;</span>))</span><br><span class="line">    n = <span class="built_in">eval</span>(<span class="built_in">input</span>(<span class="string">&quot;模拟比赛的场次：&quot;</span>))</span><br><span class="line">    <span class="keyword">return</span> a, b, n</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printSummary</span>(<span class="params">winsA, winsB</span>):</span></span><br><span class="line">    n = winsA + winsB</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;竞技分析开始，共模拟&#123;&#125;场比赛&quot;</span>.<span class="built_in">format</span>(n))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;选手A获胜&#123;&#125;场比赛，占比&#123;:0.1%&#125;&quot;</span>.<span class="built_in">format</span>(winsA, winsA/n))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;选手B获胜&#123;&#125;场比赛，占比&#123;:0.1%&#125;&quot;</span>.<span class="built_in">format</span>(winsB, winsB/n))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gameOver</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    <span class="keyword">return</span> a==<span class="number">15</span> <span class="keyword">or</span> b==<span class="number">15</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simOneGame</span>(<span class="params">probA, probB</span>):</span></span><br><span class="line">    scoreA, scoreB = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    serving =<span class="string">&quot;A&quot;</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> gameOver(scoreA,scoreB):</span><br><span class="line">        <span class="keyword">if</span> serving == <span class="string">&quot;A&quot;</span>:</span><br><span class="line">            <span class="keyword">if</span> random() &lt; probA:</span><br><span class="line">                scoreA += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                serving = <span class="string">&quot;B&quot;</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> random() &lt; probB:</span><br><span class="line">                scoreB += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                serving = <span class="string">&quot;A&quot;</span></span><br><span class="line">    <span class="keyword">return</span> scoreA, scoreB</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simNGames</span>(<span class="params">n, probA, probB</span>):</span></span><br><span class="line">    winsA, winsB = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        scoreA, scoreB = simOneGame(probA, probB)</span><br><span class="line">        <span class="keyword">if</span> scoreA &gt; scoreB:</span><br><span class="line">            winsA += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            winsB += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> winsA, winsB</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    printIntro()</span><br><span class="line">    probA, probB, n = getInputs()</span><br><span class="line">    winsA, winsB = simNGames(n, probA, probB)</span><br><span class="line">    printSummary(winsA, winsB)</span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
-
-<h3 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h3><img src="/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(8)%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E5%AD%A6/result.png" class>
-
-<h2 id="举一反三"><a href="#举一反三" class="headerlink" title="举一反三"></a>举一反三</h2><ol>
-<li>理解自顶向下和自底向上</li>
-</ol>
-<ul>
-<li>理解自顶向下的设计思维：分而治之</li>
-<li>理解自底向上的执行思维：模块化集成</li>
-<li>自顶向下是“系统”思维的简化</li>
-</ul>
-<ol start="2">
-<li>应用问题的扩展</li>
-</ol>
-<ul>
-<li>扩展比赛参数，增加对更多能力对比情况的判断</li>
-<li>扩展比赛设计，增加对真实比赛结果的预测</li>
-<li>扩展分析逻辑，反向推理，用胜率推算能力？</li>
-</ul>
-<h1 id="Python程序设计思维"><a href="#Python程序设计思维" class="headerlink" title="Python程序设计思维"></a>Python程序设计思维</h1><h2 id="计算思维"><a href="#计算思维" class="headerlink" title="计算思维"></a>计算思维</h2><p>第3种人类思维特征</p>
-<ul>
-<li>逻辑思维：推理和演绎，数学为代表，A-&gt;B B-&gt;C A-&gt;C</li>
-<li>实证思维：实验和验证，物理为代表，引力波&lt;-实验</li>
-<li>计算思维：设计和构造，计算机为代表，汉诺塔递归</li>
-</ul>
-<p>计算思维（Computational Thinking）：<strong>抽象</strong>问题的计算过程，利用计算机<strong>自动化</strong>求解，是基于计算机的思维方式。计算思维基于计算机强大的算力及海量数据，抽象计算过程，关注设计和构造，而非因果。</p>
-<h2 id="计算生态与Python语言"><a href="#计算生态与Python语言" class="headerlink" title="计算生态与Python语言"></a>计算生态与Python语言</h2><ul>
-<li>以开源项目为代表的大量第三方库</li>
-<li>库的建设经过野蛮生长和自然选择</li>
-<li>库之间相互关联使用，依存发展</li>
-<li>社区庞大，新技术更迭迅速</li>
-</ul>
-<p>计算生态的价值</p>
-<ul>
-<li>加速科技类应用创新的重要支撑</li>
-<li>发展科技产品商业价值的重要模式</li>
-<li>国家科技体系安全和稳固的基础</li>
-</ul>
-<h2 id="基本的程序设计模式"><a href="#基本的程序设计模式" class="headerlink" title="基本的程序设计模式"></a>基本的程序设计模式</h2><p>IPO<br>模块化设计<br>配置化设计</p>
-<h1 id="Python第三方库安装"><a href="#Python第三方库安装" class="headerlink" title="Python第三方库安装"></a>Python第三方库安装</h1><p>Python社区：<a href="https://pypi.org/">https://pypi.org</a></p>
-<p>安装第三方库：</p>
-<ol>
-<li>主要方法：使用pip命令</li>
-<li>集成安装方法</li>
-<li>文件安装方法</li>
-</ol>
-<p>Anaconda： <a href="https://www.continuum.io/">https://www.continuum.io</a></p>
-<ul>
-<li>支持近800个第三方库</li>
-<li>包含多个主流工具</li>
-<li>适合数据计算领域开发</li>
-</ul>
-<p>UCI页面： <a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/">http://www.lfd.uci.edu/~gohlke/pythonlibs/</a></p>
-<ul>
-<li>在UCI页面上搜索&lt;库名称&gt;</li>
-<li>下载对应版本的文件</li>
-<li>使用pip install &lt;文件名&gt;安装</li>
-</ul>
-<h1 id="os库的使用"><a href="#os库的使用" class="headerlink" title="os库的使用"></a>os库的使用</h1><h2 id="os库基本介绍"><a href="#os库基本介绍" class="headerlink" title="os库基本介绍"></a>os库基本介绍</h2><p>os库提供通用的、基本的操作系统交互功能</p>
-<ul>
-<li>os库是Python标准库，包含几百个函数</li>
-<li>常用路径操作、进程管理、环境参数等几类<ul>
-<li>路径操作：os.path子库，处理文件路径及信息</li>
-<li>进程管理：启动系统中其他程序</li>
-<li>环境参数：获得系统软硬件信息等环境参数</li>
-</ul>
-</li>
-</ul>
-<h2 id="os库的路径操作"><a href="#os库的路径操作" class="headerlink" title="os库的路径操作"></a>os库的路径操作</h2><p>os.path子库以path为入口，用于操作和处理文件路径<br>| 函数                        | 描述                                  |<br>| ————————— | ——————————— |<br>| <code>os.path.abspath(path)</code>  | 返回path在当前系统中的绝对路径             |<br>| <code>os.path.normpath(path)</code>  | 归一化path的表示形式，统一用\\分隔路径      |<br>| <code>os.path.relpath(path)</code> | 返回当前程序与文件之间的相对路径（relative path）|<br>| <code>os.path.dirname(path)</code>   | 返回path中的目录名称                        |<br>| <code>os.path.basename(path)</code> | 返回path中最后的文件名称                  |<br>| <code>os.path.join(path,*paths)</code> | 组合path与paths，返回一个路径字符串         |<br>| <code>os.path.exists(path)</code> | 判断path对应文件或目录是否存在，返回True或False   |<br>| <code>os.path.isfile(path)</code>  | 判断path所对应是否为已存在的文件，返回True或False|<br>| <code>os.path.isdir(path)</code>  | 判断path所对应是否为已存在的目录，返回True或False |<br>| <code>os.path.getatime(path)</code>  | 返回path对应文件或目录上一次的访问时间        |<br>| <code>os.path.getmtime(path)</code>    | 返回path对应文件或目录最近一次的修改时间     |<br>| <code>os.path.getctime(path)</code>    | 返回path对应文件或目录创建时间             |<br>| <code>os.path.getsize(path)</code>     | 返回path对应文件的大小，以字节为单位        |</p>
-<h2 id="os库的进程管理"><a href="#os库的进程管理" class="headerlink" title="os库的进程管理"></a>os库的进程管理</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">os.system(command)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>执行程序或命令command</li>
-<li>在Windows操作系统中，返回值为cmd调用的返回信息</li>
-</ul>
-<h2 id="os库的环境参数"><a href="#os库的环境参数" class="headerlink" title="os库的环境参数"></a>os库的环境参数</h2><p>获取或改变系统环境信息<br>| 函数             | 描述                                            |<br>| —————- | ———————————————– |<br>| <code>os.chdir(path)</code> | 修改当前程序的操作路径                          |<br>| <code>os.getcwd()</code>    | 返回程序的当前路径                              |<br>| <code>os.getlogin()</code>  | 获得当前系统登录用户名称                        |<br>| <code>os.cpu_count()</code> | 获得当前系统CPU数量                             |<br>| <code>os.urandom(n)</code>  | 获得n个字节长度的随机字符串，通常用于加解密运算 |</p>
-<h1 id="实例：第三方库安装脚本"><a href="#实例：第三方库安装脚本" class="headerlink" title="实例：第三方库安装脚本"></a>实例：第三方库安装脚本</h1><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><ul>
-<li>需求：批量安装第三方库需要人工干预，能否自动安装？</li>
-<li>自动执行pip逐一根据需求安装</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>库名</th>
-<th>用途</th>
-<th>pip安装指令</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>NumPy</td>
-<td>N维数据表示和运算</td>
-<td>pip install numpy</td>
-</tr>
-<tr>
-<td>Matplotlib</td>
-<td>二维数据可视化</td>
-<td>pip install matplotlib</td>
-</tr>
-<tr>
-<td>PIL</td>
-<td>图像处理</td>
-<td>pip install pillow</td>
-</tr>
-<tr>
-<td>Scikit-Learn</td>
-<td>机器学习和数据挖掘</td>
-<td>pip install sklearn</td>
-</tr>
-<tr>
-<td>Requests</td>
-<td>HTTP协议访问及网络爬虫</td>
-<td>pip install requests</td>
-</tr>
-<tr>
-<td>Jieba</td>
-<td>中文分词</td>
-<td>pip install jieba</td>
-</tr>
-<tr>
-<td>Beautiful Soup</td>
-<td>HTML和XML解析器</td>
-<td>pip install beautifulsoup4</td>
-</tr>
-<tr>
-<td>Wheel Python</td>
-<td>第三方库文件打包工具</td>
-<td>pip install wheel</td>
-</tr>
-<tr>
-<td>PyInstaller</td>
-<td>打包Python源文件为可执行文件</td>
-<td>pip install pyinstall</td>
-</tr>
-<tr>
-<td>Flask</td>
-<td>轻量级Web开发框架</td>
-<td>pip install flask</td>
-</tr>
-<tr>
-<td>WeRoBot</td>
-<td>微信机器人开发框架</td>
-<td>pip install werobot</td>
-</tr>
-<tr>
-<td>SymPy</td>
-<td>数学符号计算工具</td>
-<td>pip install sympy</td>
-</tr>
-<tr>
-<td>Pandas</td>
-<td>高效数据分析和计算</td>
-<td>pip install pandas</td>
-</tr>
-<tr>
-<td>Networkx</td>
-<td>复杂网络和图结构的建模和分析</td>
-<td>pip install networkx</td>
-</tr>
-<tr>
-<td>PyQt5</td>
-<td>基于Qt的专业级GUI开发框架</td>
-<td>pip install pyqt5</td>
-</tr>
-<tr>
-<td>PyOpenGL</td>
-<td>多平台OpenGL开发接口</td>
-<td>pip install pyopengl</td>
-</tr>
-<tr>
-<td>PyPDF2</td>
-<td>PDF文件内容提取及处理</td>
-<td>pip install pypdf2</td>
-</tr>
-<tr>
-<td>docopt</td>
-<td>Python命令行解析</td>
-<td>pip install docopt</td>
-</tr>
-<tr>
-<td>PyGame</td>
-<td>简单小游戏开发框架</td>
-<td>pip install pygame</td>
-</tr>
-</tbody></table>
-<h2 id="实例解析"><a href="#实例解析" class="headerlink" title="实例解析"></a>实例解析</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#BatchInstall.py</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">libs = &#123;<span class="string">&quot;numpy&quot;</span>,<span class="string">&quot;matplotlib&quot;</span>,<span class="string">&quot;pillow&quot;</span>,<span class="string">&quot;sklearn&quot;</span>,<span class="string">&quot;requests&quot;</span>,\</span><br><span class="line">        <span class="string">&quot;jieba&quot;</span>,<span class="string">&quot;beautifulsoup4&quot;</span>,<span class="string">&quot;wheel&quot;</span>,<span class="string">&quot;networkx&quot;</span>,<span class="string">&quot;sympy&quot;</span>,\</span><br><span class="line">        <span class="string">&quot;pyinstaller&quot;</span>,<span class="string">&quot;django&quot;</span>,<span class="string">&quot;flask&quot;</span>,<span class="string">&quot;werobot&quot;</span>,<span class="string">&quot;pyqt5&quot;</span>,\</span><br><span class="line">        <span class="string">&quot;pandas&quot;</span>,<span class="string">&quot;pyopengl&quot;</span>,<span class="string">&quot;pypdf2&quot;</span>,<span class="string">&quot;docopt&quot;</span>,<span class="string">&quot;pygame&quot;</span>&#125;</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">for</span> lib <span class="keyword">in</span> libs:</span><br><span class="line">        os.system(<span class="string">&quot;pip install&quot;</span> + lib)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Successful&quot;</span>)</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Failed Somehow&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="举一反三-1"><a href="#举一反三-1" class="headerlink" title="举一反三"></a>举一反三</h2><p>自动化脚本+</p>
-<ul>
-<li>编写各类自动化运行程序的脚本，调用已有程序</li>
-<li>扩展应用：安装更多第三方库，增加配置文件</li>
-<li>扩展异常检测：捕获更多异常类型，程序更稳定友好</li>
-</ul>
 ]]></content>
       <categories>
         <category>Python</category>
