@@ -269,42 +269,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Pygame Zero之贪吃蛇（二）</title>
-    <url>/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
-    <content><![CDATA[<p>本文来研究如何移动小蛇，而且仅限于向右移动，严格的说其实是「前进」。这里需要思考的问题是：为什么不是上下左右移动呢？</p>
-<p>因为在游戏中，上下左右是相对于游戏窗口的，小蛇的移动方向只有<strong>前进</strong>，也就是朝着蛇头的方向（小蛇是不能倒退的哦）。如果想要往其他方向移动，只能改变蛇头的方向，这时蛇的形状就会发生改变，我们下次再来研究。</p>
-<img lazyload src="/images/loading.svg" data-src="/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/move.gif" class>
-
-<span id="more"></span>
-
-<p>在小蛇向右移动一格的时，大概经历了下边的过程。</p>
-<img lazyload src="/images/loading.svg" data-src="/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/%E5%90%91%E5%8F%B3%E7%A7%BB%E5%8A%A8.png" class>
-
-<p>移动一格分为两步完成：</p>
-<ol>
-<li>在旧蛇头右侧添加一个新蛇头，旧蛇头编程蛇身的一部分</li>
-<li>删除旧蛇尾，原来挨着旧蛇尾的蛇身变成了新蛇尾</li>
-</ol>
-<p>这样，我们可以在<code>update()</code>函数中编写这部分代码：</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 前置代码见9-1.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE  <span class="comment"># 初始化新蛇头横坐标，为旧蛇头加一个格子宽</span></span><br><span class="line">    newSnakeHead.y = Snake[<span class="number">0</span>].y  <span class="comment"># 初始化新蛇头纵坐标，和旧蛇一样</span></span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)  <span class="comment"># 列表中插入新蛇头</span></span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]  <span class="comment"># 列表中删除旧蛇尾</span></span><br><span class="line">   </span><br><span class="line">  </span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure></div>
-
-<p>结果如下：</p>
-<img lazyload src="/images/loading.svg" data-src="/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/move.gif" class>
-
-<p>可以看到小蛇移动速度非常快，因此我们可以导入<code>time</code>库来减速。比如每次<code>update()</code>以后，暂停<code>0.2</code>秒：</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="comment"># 前置代码见9-1.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  </span><br><span class="line">    newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE  </span><br><span class="line">    newSnakeHead.y = Snake[<span class="number">0</span>].y  </span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)  </span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]  </span><br><span class="line">    time.sleep(<span class="number">0.2</span>)  <span class="comment"># 暂停0.2秒</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure></div>
-
-<p>运行程序，有一种古老游戏的感觉了，小蛇看起来是在一格一格的前进！</p>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>游戏</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Pygame Zero之贪吃蛇（四）</title>
     <url>/2021/01/15/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E5%9B%9B%EF%BC%89/</url>
     <content><![CDATA[<p>本篇来给贪吃蛇增加游戏规则判定并加入食物和分数，制作一个完整的贪吃蛇游戏。</p>
@@ -351,6 +315,42 @@
 <p>附项目完整代码：</p>
 <div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pgzrun</span><br><span class="line"></span><br><span class="line">TILE_SIZE = <span class="number">20</span></span><br><span class="line">WIDTH = <span class="number">40</span> * TILE_SIZE</span><br><span class="line">HEIGHT = <span class="number">30</span> * TILE_SIZE</span><br><span class="line">isLose = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">snakehead = Actor(<span class="string">&#x27;snake1&#x27;</span>)</span><br><span class="line">snakehead.x = WIDTH / <span class="number">2</span></span><br><span class="line">snakehead.y = HEIGHT / <span class="number">2</span></span><br><span class="line"></span><br><span class="line">cookie = Actor(<span class="string">&#x27;cookie&#x27;</span>)</span><br><span class="line">cookie.x = random.randint(<span class="number">10</span>, <span class="number">30</span>) * TILE_SIZE</span><br><span class="line">cookie.y = random.randint(<span class="number">10</span>, <span class="number">30</span>) * TILE_SIZE</span><br><span class="line"></span><br><span class="line">Snake = [snakehead]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    snakebody = Actor(<span class="string">&#x27;snake1&#x27;</span>)</span><br><span class="line">    snakebody.x = Snake[i].x - TILE_SIZE</span><br><span class="line">    snakebody.y = Snake[i].y</span><br><span class="line">    Snake.append(snakebody)</span><br><span class="line"></span><br><span class="line">direction = <span class="string">&#x27;right&#x27;</span></span><br><span class="line">score = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    screen.clear()</span><br><span class="line">    cookie.draw()</span><br><span class="line">    <span class="keyword">for</span> snakebody <span class="keyword">in</span> Snake:</span><br><span class="line">        snakebody.draw()</span><br><span class="line">    <span class="keyword">if</span> isLose:</span><br><span class="line">        screen.draw.text(<span class="string">&quot;Game over!&quot;</span>, (<span class="number">180</span>, HEIGHT / <span class="number">2</span> - <span class="number">100</span>), fontsize=<span class="number">100</span>,</span><br><span class="line">                         color=<span class="string">&#x27;skyblue&#x27;</span>)</span><br><span class="line">    screen.draw.text(<span class="string">&quot;Score: &quot;</span> + <span class="built_in">str</span>(score), (<span class="number">20</span>, <span class="number">20</span>), fontsize=<span class="number">25</span>,</span><br><span class="line">                     color=<span class="string">&#x27;white&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="keyword">global</span> direction, isLose, score</span><br><span class="line">    <span class="keyword">if</span> keyboard.left:</span><br><span class="line">        direction = <span class="string">&#x27;left&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.right:</span><br><span class="line">        direction = <span class="string">&#x27;right&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.up:</span><br><span class="line">        direction = <span class="string">&#x27;up&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.down:</span><br><span class="line">        direction = <span class="string">&#x27;down&#x27;</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;up&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y - TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;down&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;left&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x - TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;right&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> newSnakeHead.y &lt; <span class="number">0</span> <span class="keyword">or</span> newSnakeHead.y &gt; HEIGHT <span class="keyword">or</span> newSnakeHead.x &lt; <span class="number">0</span> <span class="keyword">or</span> newSnakeHead.x &gt; WIDTH:</span><br><span class="line">        isLose = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">for</span> body <span class="keyword">in</span> Snake:</span><br><span class="line">        <span class="keyword">if</span> newSnakeHead.x == body.x <span class="keyword">and</span> newSnakeHead.y == body.y:</span><br><span class="line">            isLose = <span class="literal">True</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> newSnakeHead.x == cookie.x <span class="keyword">and</span> newSnakeHead.y == cookie.y:</span><br><span class="line">        score += <span class="number">1</span></span><br><span class="line">        cookie.x = random.randint(<span class="number">5</span>, <span class="number">35</span>) * TILE_SIZE</span><br><span class="line">        cookie.y = random.randint(<span class="number">5</span>, <span class="number">25</span>) * TILE_SIZE</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pgzrun.go()</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
 
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>游戏</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Pygame Zero之贪吃蛇（二）</title>
+    <url>/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    <content><![CDATA[<p>本文来研究如何移动小蛇，而且仅限于向右移动，严格的说其实是「前进」。这里需要思考的问题是：为什么不是上下左右移动呢？</p>
+<p>因为在游戏中，上下左右是相对于游戏窗口的，小蛇的移动方向只有<strong>前进</strong>，也就是朝着蛇头的方向（小蛇是不能倒退的哦）。如果想要往其他方向移动，只能改变蛇头的方向，这时蛇的形状就会发生改变，我们下次再来研究。</p>
+<img lazyload src="/images/loading.svg" data-src="/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/move.gif" class>
+
+<span id="more"></span>
+
+<p>在小蛇向右移动一格的时，大概经历了下边的过程。</p>
+<img lazyload src="/images/loading.svg" data-src="/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/%E5%90%91%E5%8F%B3%E7%A7%BB%E5%8A%A8.png" class>
+
+<p>移动一格分为两步完成：</p>
+<ol>
+<li>在旧蛇头右侧添加一个新蛇头，旧蛇头编程蛇身的一部分</li>
+<li>删除旧蛇尾，原来挨着旧蛇尾的蛇身变成了新蛇尾</li>
+</ol>
+<p>这样，我们可以在<code>update()</code>函数中编写这部分代码：</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 前置代码见9-1.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE  <span class="comment"># 初始化新蛇头横坐标，为旧蛇头加一个格子宽</span></span><br><span class="line">    newSnakeHead.y = Snake[<span class="number">0</span>].y  <span class="comment"># 初始化新蛇头纵坐标，和旧蛇一样</span></span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)  <span class="comment"># 列表中插入新蛇头</span></span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]  <span class="comment"># 列表中删除旧蛇尾</span></span><br><span class="line">   </span><br><span class="line">  </span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure></div>
+
+<p>结果如下：</p>
+<img lazyload src="/images/loading.svg" data-src="/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/move.gif" class>
+
+<p>可以看到小蛇移动速度非常快，因此我们可以导入<code>time</code>库来减速。比如每次<code>update()</code>以后，暂停<code>0.2</code>秒：</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="comment"># 前置代码见9-1.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  </span><br><span class="line">    newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE  </span><br><span class="line">    newSnakeHead.y = Snake[<span class="number">0</span>].y  </span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)  </span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]  </span><br><span class="line">    time.sleep(<span class="number">0.2</span>)  <span class="comment"># 暂停0.2秒</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure></div>
+
+<p>运行程序，有一种古老游戏的感觉了，小蛇看起来是在一格一格的前进！</p>
 ]]></content>
       <categories>
         <category>Python</category>
@@ -709,23 +709,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Python中if后直接加变量</title>
-    <url>/2019/12/23/Python%E4%B8%ADif%E5%90%8E%E7%9B%B4%E6%8E%A5%E5%8A%A0%E5%8F%98%E9%87%8F/</url>
-    <content><![CDATA[<p>python中有时候会使用if语句，后边直接加一个变量，而不是一个布尔表达式，这是在判断神马呢？</p>
-<span id="more"></span>
-
-<p>其实意思是判断这个变量是否有值，这个值需要是<strong>非零非空</strong>的值，这行代码返回<code>True</code>或<code>False</code>。<br>Python中除了’’、””、0、()、[]、{}、None为False之外，其他的都是True。<br>举例</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">ls = [[], <span class="number">0</span>, <span class="string">&#x27;&#x27;</span>, <span class="string">&quot;&quot;</span>, &#123;&#125;, (), [<span class="number">1</span>], <span class="number">2</span>, <span class="string">&#x27;3&#x27;</span>, <span class="string">&quot;4&quot;</span>, &#123;<span class="number">5</span>&#125;, (<span class="number">6</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> ls:</span><br><span class="line">    <span class="keyword">if</span> i:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;i =&#x27;</span>, i, <span class="string">&#x27;有值&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;i =&#x27;</span>, i, <span class="string">&#x27;没值&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
-<p>结果</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">i = [] 没值</span><br><span class="line">i = <span class="number">0</span> 没值</span><br><span class="line">i =  没值</span><br><span class="line">i =  没值</span><br><span class="line">i = &#123;&#125; 没值</span><br><span class="line">i = () 没值</span><br><span class="line">i = [<span class="number">1</span>] 有值</span><br><span class="line">i = <span class="number">2</span> 有值</span><br><span class="line">i = <span class="number">3</span> 有值</span><br><span class="line">i = <span class="number">4</span> 有值</span><br><span class="line">i = &#123;<span class="number">5</span>&#125; 有值</span><br><span class="line">i = <span class="number">6</span> 有值</span><br></pre></td></tr></table></figure></div>]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>PygameZero制作Pacman</title>
     <url>/2020/11/28/PygameZero%E5%88%B6%E4%BD%9CPacman/</url>
     <content><![CDATA[<p>本篇来介绍Pacman的PygameZero实现。</p>
@@ -743,6 +726,23 @@
       <tags>
         <tag>Python</tag>
         <tag>游戏</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python中if后直接加变量</title>
+    <url>/2019/12/23/Python%E4%B8%ADif%E5%90%8E%E7%9B%B4%E6%8E%A5%E5%8A%A0%E5%8F%98%E9%87%8F/</url>
+    <content><![CDATA[<p>python中有时候会使用if语句，后边直接加一个变量，而不是一个布尔表达式，这是在判断神马呢？</p>
+<span id="more"></span>
+
+<p>其实意思是判断这个变量是否有值，这个值需要是<strong>非零非空</strong>的值，这行代码返回<code>True</code>或<code>False</code>。<br>Python中除了’’、””、0、()、[]、{}、None为False之外，其他的都是True。<br>举例</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">ls = [[], <span class="number">0</span>, <span class="string">&#x27;&#x27;</span>, <span class="string">&quot;&quot;</span>, &#123;&#125;, (), [<span class="number">1</span>], <span class="number">2</span>, <span class="string">&#x27;3&#x27;</span>, <span class="string">&quot;4&quot;</span>, &#123;<span class="number">5</span>&#125;, (<span class="number">6</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> ls:</span><br><span class="line">    <span class="keyword">if</span> i:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;i =&#x27;</span>, i, <span class="string">&#x27;有值&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;i =&#x27;</span>, i, <span class="string">&#x27;没值&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+<p>结果</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">i = [] 没值</span><br><span class="line">i = <span class="number">0</span> 没值</span><br><span class="line">i =  没值</span><br><span class="line">i =  没值</span><br><span class="line">i = &#123;&#125; 没值</span><br><span class="line">i = () 没值</span><br><span class="line">i = [<span class="number">1</span>] 有值</span><br><span class="line">i = <span class="number">2</span> 有值</span><br><span class="line">i = <span class="number">3</span> 有值</span><br><span class="line">i = <span class="number">4</span> 有值</span><br><span class="line">i = &#123;<span class="number">5</span>&#125; 有值</span><br><span class="line">i = <span class="number">6</span> 有值</span><br></pre></td></tr></table></figure></div>]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -1402,6 +1402,38 @@
       </tags>
   </entry>
   <entry>
+    <title>Pycharm Out of memory 解决办法</title>
+    <url>/2021/05/26/Pycharm-Out-of-memory-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
+    <content><![CDATA[<p>最近使用Pycharm敲代码突然卡住，并且蹦出一个错误：<code>Out of memory</code>。</p>
+<p>但是该错误与代码无关，只是因为系统分配给Pycharm的最大内存不够用了而已。</p>
+<p>这个最大内存是我们可以修改的，将它修改的大一些就可以解决这个问题。</p>
+<p>下面看看如何修改~</p>
+<span id="more"></span>
+
+<ol>
+<li>进入如下目录：</li>
+</ol>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">访达 -&gt; 应用程序 -&gt; 右键Pycharm -&gt; 显示包内容 -&gt; Contents -&gt; bin</span><br></pre></td></tr></table></figure></div>
+
+<ol start="2">
+<li>找到文件<code>pycharm.vmoptions</code>，使用一个文本编辑器打开，修改前两行的数值：</li>
+</ol>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">-Xms1024m      修改前是512</span><br><span class="line">-Xmx2048m      修改前是750（奇怪的数字）</span><br><span class="line">-XX:ReservedCodeCacheSize=512m</span><br><span class="line">-XX:+UseConcMarkSweepGC</span><br></pre></td></tr></table></figure></div>
+
+<ol start="3">
+<li>修改后保存关闭，重新启动Pycharm。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>bug</tag>
+        <tag>Python</tag>
+        <tag>IDE</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Redis操作</title>
     <url>/2019/04/04/Redis%E6%93%8D%E4%BD%9C/</url>
     <content><![CDATA[<h1 id="环境准备：centOS6-5"><a href="#环境准备：centOS6-5" class="headerlink" title="环境准备：centOS6.5"></a>环境准备：centOS6.5</h1><p>Redis是c语言开发的。<br>安装redis需要c语言的编译环境。如果没有gcc需要在线安装。</p>
@@ -1469,6 +1501,78 @@
       </categories>
       <tags>
         <tag>大数据开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MacOS下使用VS Code搭建C语言开发环境</title>
+    <url>/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
+    <content><![CDATA[<p>本篇介绍如何在Mac上使用VS Code写C语言代码。VS Code是一个轻量级的IDE，相比CLion、Xcode等等体积小很多，并且在插件市场拥有丰富的插件，可以方便的安装使用。</p>
+<span id="more"></span>
+
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><h2 id="下载VS-Code"><a href="#下载VS-Code" class="headerlink" title="下载VS Code"></a>下载VS Code</h2><p>下载地址：<a class="link" href="https://code.visualstudio.com/">https://code.visualstudio.com/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="1.png" alt="1"></p>
+</blockquote>
+<h2 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h2><p>打开VS Code，点击左侧的 Extensions（图标为“田”字右上角的格子起飞），在搜索框中输入 <code>C/C++</code>，选择紫色图标，作者为Microsoft，点击 Install 即可安装。</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="3.png" alt="3"></p>
+</blockquote>
+<h2 id="创建文件夹"><a href="#创建文件夹" class="headerlink" title="创建文件夹"></a>创建文件夹</h2><p>在电脑中你希望保存代码的地方新建一个文件夹，我的是 <code>桌面-个人-学习-C/C++</code> ，创建好以后重启 VS Code。重启后，在欢迎页面点击 Open，并打开你刚创建的文件夹。</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="4.png" alt="4"></p>
+</blockquote>
+<h2 id="另存为一个工作区"><a href="#另存为一个工作区" class="headerlink" title="另存为一个工作区"></a>另存为一个工作区</h2><p>点击 File &gt; Save Workspace As …，并命名。</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="5.png" alt="5"></p>
+</blockquote>
+<h2 id="新建一个C文件，命名并保存"><a href="#新建一个C文件，命名并保存" class="headerlink" title="新建一个C文件，命名并保存"></a>新建一个C文件，命名并保存</h2><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;hello VSCode!\n&quot;</span>);</span><br><span class="line">     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h2 id="配置-c-cpp-properties-json"><a href="#配置-c-cpp-properties-json" class="headerlink" title="配置 c_cpp_properties.json"></a>配置 <code>c_cpp_properties.json</code></h2><p>使用快捷键 <code>command</code> + <code>shift</code> + <code>P</code>打开命令行面板（Command Palette）</p>
+<p>输入 edit configurations，在弹出的列表中选择带 JSON 的 C/C++: Edit Configurations(JSON)</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="6.png" alt="6"></p>
+</blockquote>
+<p>配置字段 includePath：</p>
+<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;includePath&quot;</span>: </span><br><span class="line">[</span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include/c++/v1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/usr/local/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include&quot;</span></span><br><span class="line">],</span><br></pre></td></tr></table></figure></div>
+
+<p>你可能需要注意<br> <code>&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;,</code>中的版本号，可以进入Finder，按快捷键<code>command</code> + <code>shift</code> + <code>G</code> 输入：</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">/Library/Developer/CommandLineTools/usr/lib/clang/</span><br></pre></td></tr></table></figure></div>
+
+<p>在文件夹中查看clang版本</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="8.png" alt="8"></p>
+</blockquote>
+<p>完成后保存。</p>
+<h2 id="配置-tasks-json"><a href="#配置-tasks-json" class="headerlink" title="配置 tasks.json"></a>配置 <code>tasks.json</code></h2><p>在打开.c文件的情况下（比如我这里的hello.c）打开命令行面板 <code>command</code> + <code>shift</code> + <code>P</code>，输入tasks:configure task，选择Tasks: Configure Task</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="9.png" alt="9"></p>
+</blockquote>
+<p>点击C/C++:clang 生成活动文件</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="10.png" alt="10"></p>
+</blockquote>
+<p>这里我们需要配置 args 字段</p>
+<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;args&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;-g&quot;</span>,<span class="comment">//编译命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.c&quot;</span>,<span class="comment">//当前workspace下的hello.c文件</span></span><br><span class="line">    <span class="string">&quot;-o&quot;</span>,<span class="comment">//输出文件命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span><span class="comment">//生成的可执行文件的路径及名称</span></span><br><span class="line">    ],</span><br></pre></td></tr></table></figure></div>
+
+<p>你需要配置第二个参数和第四个参数，第二个是编制的文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.c</code>，第四个是生成的可执行文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.o</code> ，完成后保存。</p>
+<h2 id="配置launch-json"><a href="#配置launch-json" class="headerlink" title="配置launch.json"></a>配置<code>launch.json</code></h2><p>在 hello.c 中按<code>Fn</code> + <code>F5</code> ，软件会报错并自动打开一个 <code>launch.json</code> 文件，这里需要配置 <code>program</code> 字段：</p>
+<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;program&quot;</span>: <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span>,</span><br></pre></td></tr></table></figure></div>
+
+<p>再次运行：</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="11.png" alt="11"></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>部分内容转自 <a class="link" href="https://www.jianshu.com/u/69abdc363757">Robinone<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> 的 <a class="link" href="https://www.jianshu.com/p/83879b4aa3fe">https://www.jianshu.com/p/83879b4aa3fe<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>C/C++</category>
+      </categories>
+      <tags>
+        <tag>IDE</tag>
+        <tag>C</tag>
       </tags>
   </entry>
   <entry>
@@ -2189,78 +2293,6 @@
       </tags>
   </entry>
   <entry>
-    <title>MacOS下使用VS Code搭建C语言开发环境</title>
-    <url>/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
-    <content><![CDATA[<p>本篇介绍如何在Mac上使用VS Code写C语言代码。VS Code是一个轻量级的IDE，相比CLion、Xcode等等体积小很多，并且在插件市场拥有丰富的插件，可以方便的安装使用。</p>
-<span id="more"></span>
-
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><h2 id="下载VS-Code"><a href="#下载VS-Code" class="headerlink" title="下载VS Code"></a>下载VS Code</h2><p>下载地址：<a class="link" href="https://code.visualstudio.com/">https://code.visualstudio.com/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="1.png" alt="1"></p>
-</blockquote>
-<h2 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h2><p>打开VS Code，点击左侧的 Extensions（图标为“田”字右上角的格子起飞），在搜索框中输入 <code>C/C++</code>，选择紫色图标，作者为Microsoft，点击 Install 即可安装。</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="3.png" alt="3"></p>
-</blockquote>
-<h2 id="创建文件夹"><a href="#创建文件夹" class="headerlink" title="创建文件夹"></a>创建文件夹</h2><p>在电脑中你希望保存代码的地方新建一个文件夹，我的是 <code>桌面-个人-学习-C/C++</code> ，创建好以后重启 VS Code。重启后，在欢迎页面点击 Open，并打开你刚创建的文件夹。</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="4.png" alt="4"></p>
-</blockquote>
-<h2 id="另存为一个工作区"><a href="#另存为一个工作区" class="headerlink" title="另存为一个工作区"></a>另存为一个工作区</h2><p>点击 File &gt; Save Workspace As …，并命名。</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="5.png" alt="5"></p>
-</blockquote>
-<h2 id="新建一个C文件，命名并保存"><a href="#新建一个C文件，命名并保存" class="headerlink" title="新建一个C文件，命名并保存"></a>新建一个C文件，命名并保存</h2><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;hello VSCode!\n&quot;</span>);</span><br><span class="line">     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></div>
-
-<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h2 id="配置-c-cpp-properties-json"><a href="#配置-c-cpp-properties-json" class="headerlink" title="配置 c_cpp_properties.json"></a>配置 <code>c_cpp_properties.json</code></h2><p>使用快捷键 <code>command</code> + <code>shift</code> + <code>P</code>打开命令行面板（Command Palette）</p>
-<p>输入 edit configurations，在弹出的列表中选择带 JSON 的 C/C++: Edit Configurations(JSON)</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="6.png" alt="6"></p>
-</blockquote>
-<p>配置字段 includePath：</p>
-<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;includePath&quot;</span>: </span><br><span class="line">[</span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include/c++/v1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/usr/local/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include&quot;</span></span><br><span class="line">],</span><br></pre></td></tr></table></figure></div>
-
-<p>你可能需要注意<br> <code>&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;,</code>中的版本号，可以进入Finder，按快捷键<code>command</code> + <code>shift</code> + <code>G</code> 输入：</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">/Library/Developer/CommandLineTools/usr/lib/clang/</span><br></pre></td></tr></table></figure></div>
-
-<p>在文件夹中查看clang版本</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="8.png" alt="8"></p>
-</blockquote>
-<p>完成后保存。</p>
-<h2 id="配置-tasks-json"><a href="#配置-tasks-json" class="headerlink" title="配置 tasks.json"></a>配置 <code>tasks.json</code></h2><p>在打开.c文件的情况下（比如我这里的hello.c）打开命令行面板 <code>command</code> + <code>shift</code> + <code>P</code>，输入tasks:configure task，选择Tasks: Configure Task</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="9.png" alt="9"></p>
-</blockquote>
-<p>点击C/C++:clang 生成活动文件</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="10.png" alt="10"></p>
-</blockquote>
-<p>这里我们需要配置 args 字段</p>
-<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;args&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;-g&quot;</span>,<span class="comment">//编译命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.c&quot;</span>,<span class="comment">//当前workspace下的hello.c文件</span></span><br><span class="line">    <span class="string">&quot;-o&quot;</span>,<span class="comment">//输出文件命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span><span class="comment">//生成的可执行文件的路径及名称</span></span><br><span class="line">    ],</span><br></pre></td></tr></table></figure></div>
-
-<p>你需要配置第二个参数和第四个参数，第二个是编制的文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.c</code>，第四个是生成的可执行文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.o</code> ，完成后保存。</p>
-<h2 id="配置launch-json"><a href="#配置launch-json" class="headerlink" title="配置launch.json"></a>配置<code>launch.json</code></h2><p>在 hello.c 中按<code>Fn</code> + <code>F5</code> ，软件会报错并自动打开一个 <code>launch.json</code> 文件，这里需要配置 <code>program</code> 字段：</p>
-<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;program&quot;</span>: <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span>,</span><br></pre></td></tr></table></figure></div>
-
-<p>再次运行：</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="11.png" alt="11"></p>
-</blockquote>
-<hr>
-<blockquote>
-<p>部分内容转自 <a class="link" href="https://www.jianshu.com/u/69abdc363757">Robinone<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> 的 <a class="link" href="https://www.jianshu.com/p/83879b4aa3fe">https://www.jianshu.com/p/83879b4aa3fe<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>C/C++</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-        <tag>IDE</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SQL必知必会(4)过滤数据</title>
     <url>/2020/12/06/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-4-%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE/</url>
     <content><![CDATA[<p>在SELECT语句中，数据根据WHERE子句中指定的搜索条件进行过滤。</p>
@@ -2748,38 +2780,6 @@
       </categories>
       <tags>
         <tag>Scratch</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Pycharm Out of memory 解决办法</title>
-    <url>/2021/05/26/Pycharm-Out-of-memory-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
-    <content><![CDATA[<p>最近使用Pycharm敲代码突然卡住，并且蹦出一个错误：<code>Out of memory</code>。</p>
-<p>但是该错误与代码无关，只是因为系统分配给Pycharm的最大内存不够用了而已。</p>
-<p>这个最大内存是我们可以修改的，将它修改的大一些就可以解决这个问题。</p>
-<p>下面看看如何修改~</p>
-<span id="more"></span>
-
-<ol>
-<li>进入如下目录：</li>
-</ol>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">访达 -&gt; 应用程序 -&gt; 右键Pycharm -&gt; 显示包内容 -&gt; Contents -&gt; bin</span><br></pre></td></tr></table></figure></div>
-
-<ol start="2">
-<li>找到文件<code>pycharm.vmoptions</code>，使用一个文本编辑器打开，修改前两行的数值：</li>
-</ol>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">-Xms1024m      修改前是512</span><br><span class="line">-Xmx2048m      修改前是750（奇怪的数字）</span><br><span class="line">-XX:ReservedCodeCacheSize=512m</span><br><span class="line">-XX:+UseConcMarkSweepGC</span><br></pre></td></tr></table></figure></div>
-
-<ol start="3">
-<li>修改后保存关闭，重新启动Pycharm。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>bug</tag>
-        <tag>Python</tag>
-        <tag>IDE</tag>
       </tags>
   </entry>
   <entry>
@@ -5182,6 +5182,11 @@
       </tags>
   </entry>
   <entry>
+    <title>年更博主：小恐龙OJ的装修心得</title>
+    <url>/2024/08/21/%E5%B9%B4%E6%9B%B4%E5%8D%9A%E4%B8%BB%EF%BC%9A%E5%B0%8F%E6%81%90%E9%BE%99OJ%E7%9A%84%E8%A3%85%E4%BF%AE%E5%BF%83%E5%BE%97/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>带你学C带你飞(3)</title>
     <url>/2022/03/25/%E5%B8%A6%E4%BD%A0%E5%AD%A6C%E5%B8%A6%E4%BD%A0%E9%A3%9E-3/</url>
     <content><![CDATA[<p>小甲鱼C语言系列课程笔记，共61个视频，每6个视频总结一次笔记，预计10篇。</p>
@@ -5277,11 +5282,6 @@
       <tags>
         <tag>C</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>年更博主：小恐龙OJ的装修心得</title>
-    <url>/2024/08/21/%E5%B9%B4%E6%9B%B4%E5%8D%9A%E4%B8%BB%EF%BC%9A%E5%B0%8F%E6%81%90%E9%BE%99OJ%E7%9A%84%E8%A3%85%E4%BF%AE%E5%BF%83%E5%BE%97/</url>
-    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>庆祝中国共产党成立100周年</title>
@@ -5484,31 +5484,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>许久没更新了…</title>
-    <url>/2021/05/19/%E8%AE%B8%E4%B9%85%E6%B2%A1%E6%9B%B4%E6%96%B0%E4%BA%86%E2%80%A6/</url>
-    <content><![CDATA[<p>许久没更新了，就是冒个泡</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>题解：1066_满足条件的数累加</title>
-    <url>/2023/08/16/%E9%A2%98%E8%A7%A3%EF%BC%9A1066-%E6%BB%A1%E8%B6%B3%E6%9D%A1%E4%BB%B6%E7%9A%84%E6%95%B0%E7%B4%AF%E5%8A%A0/</url>
-    <content><![CDATA[<p>一篇超简单的题的题解示例</p>
-<span id="more"></span>
-<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>将正整数m和n之间(包括m和n)能被17整除的数累加，其中，<code>0&lt;m&lt;n&lt;1000</code>。</p>
-<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>一行，包含两个整数m和n，其间，以一个空格间隔。</p>
-<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>输出一行，包行一个整数，表示累加的结果。</p>
-<h2 id="输入样例"><a href="#输入样例" class="headerlink" title="输入样例"></a>输入样例</h2><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">50 85</span><br></pre></td></tr></table></figure></div>
-<h2 id="输出样例"><a href="#输出样例" class="headerlink" title="输出样例"></a>输出样例</h2><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">204</span><br></pre></td></tr></table></figure></div>
-
-<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><p>用枚举法。</p>
-<p>用for循环把从m到n的所有数列举出来，然后判断是否能被17整除，如果符合条件，就把这个数累加到变量ans中。</p>
-<h1 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码"></a>AC代码</h1><div class="code-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="comment">// 1066：满足条件的数累加</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> m, n, ans = <span class="number">0</span>;</span><br><span class="line">    cin &gt;&gt; m &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = m; i &lt;= n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (i % <span class="number">17</span> == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            ans += i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; ans &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-]]></content>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>安装python库时遇到ValueError: check_hostname requires server_hostname问题及解决</title>
     <url>/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/</url>
     <content><![CDATA[<p>正当我熟练地使用 <code>pip</code> 安装 <code>requests</code> 模块时，令人意想不到的一幕发生了……</p>
@@ -5533,6 +5508,31 @@
       <tags>
         <tag>bug</tag>
         <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>许久没更新了…</title>
+    <url>/2021/05/19/%E8%AE%B8%E4%B9%85%E6%B2%A1%E6%9B%B4%E6%96%B0%E4%BA%86%E2%80%A6/</url>
+    <content><![CDATA[<p>许久没更新了，就是冒个泡</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>题解：1066_满足条件的数累加</title>
+    <url>/2023/08/16/%E9%A2%98%E8%A7%A3%EF%BC%9A1066-%E6%BB%A1%E8%B6%B3%E6%9D%A1%E4%BB%B6%E7%9A%84%E6%95%B0%E7%B4%AF%E5%8A%A0/</url>
+    <content><![CDATA[<p>一篇超简单的题的题解示例</p>
+<span id="more"></span>
+<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>将正整数m和n之间(包括m和n)能被17整除的数累加，其中，<code>0&lt;m&lt;n&lt;1000</code>。</p>
+<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>一行，包含两个整数m和n，其间，以一个空格间隔。</p>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>输出一行，包行一个整数，表示累加的结果。</p>
+<h2 id="输入样例"><a href="#输入样例" class="headerlink" title="输入样例"></a>输入样例</h2><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">50 85</span><br></pre></td></tr></table></figure></div>
+<h2 id="输出样例"><a href="#输出样例" class="headerlink" title="输出样例"></a>输出样例</h2><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">204</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><p>用枚举法。</p>
+<p>用for循环把从m到n的所有数列举出来，然后判断是否能被17整除，如果符合条件，就把这个数累加到变量ans中。</p>
+<h1 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码"></a>AC代码</h1><div class="code-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="comment">// 1066：满足条件的数累加</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> m, n, ans = <span class="number">0</span>;</span><br><span class="line">    cin &gt;&gt; m &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = m; i &lt;= n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (i % <span class="number">17</span> == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            ans += i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; ans &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+]]></content>
+      <tags>
+        <tag>C++</tag>
       </tags>
   </entry>
   <entry>
