@@ -135,6 +135,176 @@
       </tags>
   </entry>
   <entry>
+    <title>Mac提示「软件已损坏，请移到废纸篓」解决</title>
+    <url>/2022/02/18/Mac%E6%8F%90%E7%A4%BA%E3%80%8C%E8%BD%AF%E4%BB%B6%E5%B7%B2%E6%8D%9F%E5%9D%8F%EF%BC%8C%E8%AF%B7%E7%A7%BB%E5%88%B0%E5%BA%9F%E7%BA%B8%E7%AF%93%E3%80%8D%E8%A7%A3%E5%86%B3/</url>
+    <content><![CDATA[<blockquote>
+<p>在使用macOS安装<strong>某些</strong>软件时，系统可能会提示「xxx已损坏，请移到废纸篓」</p>
+</blockquote>
+<p>结论：打开终端，输入一下命令</p>
+<div class="code-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line">xattr -r -d com.apple.quarantine /Applications/APP名</span><br></pre></td></tr></table></figure></div>
+
+<span id="more"></span>
+
+<h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p><strong>请确保软件的安全性。</strong></p>
+<p><strong>请确保软件的安全性。</strong></p>
+<p><strong>请确保软件的安全性。</strong></p>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><ol>
+<li>打开终端</li>
+<li>输入以下命令</li>
+</ol>
+<div class="code-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line">xattr -r -d com.apple.quarantine /Applications/APP名</span><br></pre></td></tr></table></figure></div>
+
+<ol start="3">
+<li>重新运行该程序</li>
+</ol>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>以上命令能够移除这个应用的安全隔离属性。</p>
+<hr>
+<blockquote>
+<p>注意：app名如果包含空格，使用 <code>\</code> 转义</p>
+<p>出处：<a class="link" href="https://www.jianshu.com/p/6f02003b767f">https://www.jianshu.com/p/6f02003b767f<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>bug</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Matplotlib绘制引力波</title>
+    <url>/2019/04/04/Matplotlib%E7%BB%98%E5%88%B6%E5%BC%95%E5%8A%9B%E6%B3%A2/</url>
+    <content><![CDATA[<p>2016年6月16日，LIGO合作组宣布2015年12月26日 03:38:53（UTC），两台不同位置的引力波探测器同时探测到了一个引力波信号。</p>
+<span id="more"></span>
+<h1 id="引力波"><a href="#引力波" class="headerlink" title="引力波"></a>引力波</h1><p>物理学中，引力波是因为时空弯曲对外以辐射形式传播的能量。<br>爱因斯坦基于广义相对论语言了引力波的存在。<br>2016年6月16日，LIGO合作组宣布2015年12月26日 03:38:53（UTC），两台不同位置的引力波探测器同时探测到了一个引力波信号。</p>
+<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Created on Sun Feb 24 10:17:31 2019</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@author: Administrator</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#引力波</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> scipy.io <span class="keyword">import</span> wavfile</span><br><span class="line"></span><br><span class="line"><span class="comment">#产生时间序列</span></span><br><span class="line">rate_h, hstrain = wavfile.read(<span class="string">r&quot;H1_Strain.wav&quot;</span>,<span class="string">&quot;rb&quot;</span>)</span><br><span class="line">rate_l, lstrain = wavfile.read(<span class="string">r&quot;L1_Strain.wav&quot;</span>,<span class="string">&quot;rb&quot;</span>)</span><br><span class="line">reftime, ref_H1 = np.genfromtxt(<span class="string">&#x27;wf_template.txt&#x27;</span>).transpose()</span><br><span class="line"></span><br><span class="line"><span class="comment">#读取应变数据</span></span><br><span class="line">htime_interval = <span class="number">1</span> / rate_h</span><br><span class="line">ltime_interval = <span class="number">1</span> / rate_l</span><br><span class="line"></span><br><span class="line">htime_len = hstrain.shape[<span class="number">0</span>] / rate_h</span><br><span class="line">htime = np.arange(-htime_len / <span class="number">2</span>, htime_len / <span class="number">2</span>, htime_interval)</span><br><span class="line">ltime_len = lstrain.shape[<span class="number">0</span>] / rate_l</span><br><span class="line">ltime = np.arange(-ltime_len / <span class="number">2</span>, ltime_len / <span class="number">2</span>, ltime_interval)</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用来自“H1”探测器的数据作图</span></span><br><span class="line">fig = plt.figure(figsize = (<span class="number">12</span>, <span class="number">6</span>))  <span class="comment">#创建一个12*6的绘图空间</span></span><br><span class="line"></span><br><span class="line">plth = fig.add_subplot(<span class="number">221</span>)</span><br><span class="line">plth.plot(htime, hstrain, <span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">plth.set_xlabel(<span class="string">&#x27;Time(seconds)&#x27;</span>)</span><br><span class="line">plth.set_ylabel(<span class="string">&#x27;H1 Strain&#x27;</span>)</span><br><span class="line">plth.set_title(<span class="string">&#x27;H1 Strain&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#绘制L1 Strain 和 Template</span></span><br><span class="line">pltl = fig.add_subplot(<span class="number">222</span>)</span><br><span class="line">pltl.plot(ltime, lstrain, <span class="string">&#x27;g&#x27;</span>)</span><br><span class="line">pltl.set_xlabel(<span class="string">&#x27;Time(seconds)&#x27;</span>)</span><br><span class="line">pltl.set_ylabel(<span class="string">&#x27;L1 Strain&#x27;</span>)</span><br><span class="line">pltl.set_title(<span class="string">&#x27;L1 Strain&#x27;</span>)</span><br><span class="line"></span><br><span class="line">pltref = fig.add_subplot(<span class="number">212</span>)</span><br><span class="line">pltref.plot(reftime, ref_H1, <span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">pltref.set_xlabel(<span class="string">&#x27;Time(seconds)&#x27;</span>)</span><br><span class="line">pltref.set_ylabel(<span class="string">&#x27;Template Strain&#x27;</span>)</span><br><span class="line">pltref.set_title(<span class="string">&#x27;Template&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#自动调整图像外部边缘</span></span><br><span class="line">fig.tight_layout()</span><br><span class="line"></span><br><span class="line">plt.savefig(<span class="string">&quot;Gravitational_Waves_Original.png&quot;</span>)</span><br><span class="line">plt.show()</span><br><span class="line">plt.close(fig)</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="图像展示"><a href="#图像展示" class="headerlink" title="图像展示"></a>图像展示</h1><img lazyload src="/images/loading.svg" data-src="/2019/04/04/Matplotlib%E7%BB%98%E5%88%B6%E5%BC%95%E5%8A%9B%E6%B3%A2/Gravitational_Waves_Original.png" class>
+
+<h1 id="数据源"><a href="#数据源" class="headerlink" title="数据源"></a>数据源</h1><p><a class="link" href="http://python123.io/dv/grawave.html">http://python123.io/dv/grawave.html<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p><a class="link" href="http://python123.io/dv/H1_Strain.wav">http://python123.io/dv/H1_Strain.wav<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br><a class="link" href="http://python123.io/dv/L1_Strain.wav">http://python123.io/dv/L1_Strain.wav<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br><a class="link" href="http://python123.io/dv/wf_template.txt">http://python123.io/dv/wf_template.txt<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>数据分析</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PyCharm控制台自动换行</title>
+    <url>/2019/12/23/PyCharm%E6%8E%A7%E5%88%B6%E5%8F%B0%E8%87%AA%E5%8A%A8%E6%8D%A2%E8%A1%8C/</url>
+    <content><![CDATA[<p>点击File -&gt; Settings -&gt; Editor -&gt; General -&gt; Console,勾选下图项即可。</p>
+<span id="more"></span>
+
+<p><img lazyload src="/images/loading.svg" data-src="https://img2018.cnblogs.com/blog/1473452/201911/1473452-20191113105919785-2031005404.png"><br><img lazyload src="/images/loading.svg" data-src="https://img2018.cnblogs.com/blog/1473452/201911/1473452-20191113110043184-87443107.png"></p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>bug</tag>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Pygame Zero之贪吃蛇（一）</title>
+    <url>/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<p>搞了这么久Python，玩个🐍吧！</p>
+<span id="more"></span>
+
+<p>贪吃蛇是个经典游戏，它的规则也是十分简单：控制小蛇上下左右移动，吃到食物以后，长度增加1；蛇头碰到屏幕边缘或者自己的身体，游戏失败。</p>
+<p>今天这个阶段，我们来把小蛇创建出来。</p>
+<p>下面有4个小方块，我们可以用他们来创建4个不同颜色的小蛇。</p>
+<img lazyload src="/images/loading.svg" data-src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/%E5%9B%BE%E7%89%87%E6%96%87%E4%BB%B6.png" class>
+
+<p>小蛇的构造，就是用这些小方块拼在一起。我们可以设置它的初始长度为5个小方块。</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pgzrun</span><br><span class="line"></span><br><span class="line">TILE_SIZE = <span class="number">20</span></span><br><span class="line">WIDTH = <span class="number">40</span> * TILE_SIZE</span><br><span class="line">HEIGHT = <span class="number">30</span> * TILE_SIZE</span><br><span class="line"></span><br><span class="line">snakehead = Actor(<span class="string">&#x27;snake1&#x27;</span>)</span><br><span class="line">snakehead.x = WIDTH / <span class="number">2</span></span><br><span class="line">snakehead.y = HEIGHT / <span class="number">2</span></span><br><span class="line"></span><br><span class="line">Snake = []</span><br><span class="line">Snake.append(snakehead)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    snakebody = Actor(<span class="string">&#x27;snake1&#x27;</span>)</span><br><span class="line">    snakebody.x = Snake[i].x - TILE_SIZE</span><br><span class="line">    snakebody.y = Snake[i].y</span><br><span class="line">    Snake.append(snakebody)</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    screen.clear()</span><br><span class="line">    <span class="keyword">for</span> snakebody <span class="keyword">in</span> Snake:</span><br><span class="line">        snakebody.draw()</span><br><span class="line"></span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure></div>
+
+<p>运行效果如下：</p>
+<img lazyload src="/images/loading.svg" data-src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/%E6%95%88%E6%9E%9C.png" class>
+
+<hr>
+<blockquote>
+<p>同学们可以右键保存下边的图片到你的<code>images</code>文件夹</p>
+</blockquote>
+<img lazyload src="/images/loading.svg" data-src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/snake1.jpg" class>
+
+<img lazyload src="/images/loading.svg" data-src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/snake2.jpg" class>
+
+<img lazyload src="/images/loading.svg" data-src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/snake3.jpg" class>
+
+<img lazyload src="/images/loading.svg" data-src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/snake4.jpg" class>]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>游戏</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Pygame Zero之贪吃蛇（三）</title>
+    <url>/2021/01/07/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89/</url>
+    <content><![CDATA[<p>本文继续来研究如何移动小蛇，这一次是让小蛇左转和右转。上一篇讲到小蛇只能前进，今天就让小蛇学会转弯。</p>
+<span id="more"></span>
+
+<p>如果小蛇本来是向右移动的，那么右转以后，小蛇就会向下移动，只需要把新蛇头的位置设置在旧蛇头<code>Snake[0]</code>的下方</p>
+<img lazyload src="/images/loading.svg" data-src="/2021/01/07/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89/%E5%90%91%E4%B8%8B%E7%A7%BB%E5%8A%A8.png" class>
+
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 前置代码见9-2.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="comment"># 设定新蛇头的坐标，小蛇向下移动，新蛇头在旧蛇头下方</span></span><br><span class="line">    newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">    newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)  <span class="comment"># 把新蛇头加入列表的最前面</span></span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]  <span class="comment"># 删除旧蛇尾</span></span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>类似的，我们就可以完成小蛇的所有方向移动了。定义一个变量来表示小蛇的移动方向。在<code>update</code>函数中，判断这个变量的值，就可以控制小蛇向不同的方向移动。</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 前置代码见9-2.py</span></span><br><span class="line"></span><br><span class="line">direction = <span class="string">&#x27;right&#x27;</span>  <span class="comment"># 控制小蛇运动方向，默认向右</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="comment"># 判断变量direction的值，执行相应操作</span></span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;up&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y - TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;down&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;left&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x - TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;right&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]</span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>现在小蛇已经可以向四个方向移动了，我们需要加上一个控制的功能。通过按下方向键来修改<code>direction</code>的值就可以了。</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">direction = <span class="string">&#x27;right&#x27;</span>  <span class="comment"># 控制小蛇运动方向，默认向右</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="keyword">global</span> direction  <span class="comment"># 将direction设为全局变量</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.left:</span><br><span class="line">        direction = <span class="string">&#x27;left&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.right:</span><br><span class="line">        direction = <span class="string">&#x27;right&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.up:</span><br><span class="line">        direction = <span class="string">&#x27;up&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.down:</span><br><span class="line">        direction = <span class="string">&#x27;down&#x27;</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;up&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y - TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;down&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;left&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x - TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;right&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]</span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>看一看效果图吧：</p>
+<img lazyload src="/images/loading.svg" data-src="/2021/01/07/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89/%E4%B8%8A%E4%B8%8B%E5%B7%A6%E5%8F%B3.gif" class>]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>游戏</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Pygame Zero之贪吃蛇（二）</title>
+    <url>/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    <content><![CDATA[<p>本文来研究如何移动小蛇，而且仅限于向右移动，严格的说其实是「前进」。这里需要思考的问题是：为什么不是上下左右移动呢？</p>
+<p>因为在游戏中，上下左右是相对于游戏窗口的，小蛇的移动方向只有<strong>前进</strong>，也就是朝着蛇头的方向（小蛇是不能倒退的哦）。如果想要往其他方向移动，只能改变蛇头的方向，这时蛇的形状就会发生改变，我们下次再来研究。</p>
+<img lazyload src="/images/loading.svg" data-src="/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/move.gif" class>
+
+<span id="more"></span>
+
+<p>在小蛇向右移动一格的时，大概经历了下边的过程。</p>
+<img lazyload src="/images/loading.svg" data-src="/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/%E5%90%91%E5%8F%B3%E7%A7%BB%E5%8A%A8.png" class>
+
+<p>移动一格分为两步完成：</p>
+<ol>
+<li>在旧蛇头右侧添加一个新蛇头，旧蛇头编程蛇身的一部分</li>
+<li>删除旧蛇尾，原来挨着旧蛇尾的蛇身变成了新蛇尾</li>
+</ol>
+<p>这样，我们可以在<code>update()</code>函数中编写这部分代码：</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 前置代码见9-1.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE  <span class="comment"># 初始化新蛇头横坐标，为旧蛇头加一个格子宽</span></span><br><span class="line">    newSnakeHead.y = Snake[<span class="number">0</span>].y  <span class="comment"># 初始化新蛇头纵坐标，和旧蛇一样</span></span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)  <span class="comment"># 列表中插入新蛇头</span></span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]  <span class="comment"># 列表中删除旧蛇尾</span></span><br><span class="line">   </span><br><span class="line">  </span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure></div>
+
+<p>结果如下：</p>
+<img lazyload src="/images/loading.svg" data-src="/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/move.gif" class>
+
+<p>可以看到小蛇移动速度非常快，因此我们可以导入<code>time</code>库来减速。比如每次<code>update()</code>以后，暂停<code>0.2</code>秒：</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="comment"># 前置代码见9-1.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  </span><br><span class="line">    newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE  </span><br><span class="line">    newSnakeHead.y = Snake[<span class="number">0</span>].y  </span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)  </span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]  </span><br><span class="line">    time.sleep(<span class="number">0.2</span>)  <span class="comment"># 暂停0.2秒</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure></div>
+
+<p>运行程序，有一种古老游戏的感觉了，小蛇看起来是在一格一格的前进！</p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>游戏</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MacOS下使用VS Code搭建C语言开发环境</title>
     <url>/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
     <content><![CDATA[<p>本篇介绍如何在Mac上使用VS Code写C语言代码。VS Code是一个轻量级的IDE，相比CLion、Xcode等等体积小很多，并且在插件市场拥有丰富的插件，可以方便的安装使用。</p>
@@ -207,172 +377,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Mac提示「软件已损坏，请移到废纸篓」解决</title>
-    <url>/2022/02/18/Mac%E6%8F%90%E7%A4%BA%E3%80%8C%E8%BD%AF%E4%BB%B6%E5%B7%B2%E6%8D%9F%E5%9D%8F%EF%BC%8C%E8%AF%B7%E7%A7%BB%E5%88%B0%E5%BA%9F%E7%BA%B8%E7%AF%93%E3%80%8D%E8%A7%A3%E5%86%B3/</url>
-    <content><![CDATA[<blockquote>
-<p>在使用macOS安装<strong>某些</strong>软件时，系统可能会提示「xxx已损坏，请移到废纸篓」</p>
-</blockquote>
-<p>结论：打开终端，输入一下命令</p>
-<div class="code-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line">xattr -r -d com.apple.quarantine /Applications/APP名</span><br></pre></td></tr></table></figure></div>
-
-<span id="more"></span>
-
-<h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p><strong>请确保软件的安全性。</strong></p>
-<p><strong>请确保软件的安全性。</strong></p>
-<p><strong>请确保软件的安全性。</strong></p>
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><ol>
-<li>打开终端</li>
-<li>输入以下命令</li>
-</ol>
-<div class="code-container" data-rel="Sh"><figure class="iseeu highlight sh"><table><tr><td class="code"><pre><span class="line">xattr -r -d com.apple.quarantine /Applications/APP名</span><br></pre></td></tr></table></figure></div>
-
-<ol start="3">
-<li>重新运行该程序</li>
-</ol>
-<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p>以上命令能够移除这个应用的安全隔离属性。</p>
-<hr>
-<blockquote>
-<p>注意：app名如果包含空格，使用 <code>\</code> 转义</p>
-<p>出处：<a class="link" href="https://www.jianshu.com/p/6f02003b767f">https://www.jianshu.com/p/6f02003b767f<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>bug</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Matplotlib绘制引力波</title>
-    <url>/2019/04/04/Matplotlib%E7%BB%98%E5%88%B6%E5%BC%95%E5%8A%9B%E6%B3%A2/</url>
-    <content><![CDATA[<p>2016年6月16日，LIGO合作组宣布2015年12月26日 03:38:53（UTC），两台不同位置的引力波探测器同时探测到了一个引力波信号。</p>
-<span id="more"></span>
-<h1 id="引力波"><a href="#引力波" class="headerlink" title="引力波"></a>引力波</h1><p>物理学中，引力波是因为时空弯曲对外以辐射形式传播的能量。<br>爱因斯坦基于广义相对论语言了引力波的存在。<br>2016年6月16日，LIGO合作组宣布2015年12月26日 03:38:53（UTC），两台不同位置的引力波探测器同时探测到了一个引力波信号。</p>
-<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Created on Sun Feb 24 10:17:31 2019</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">@author: Administrator</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#引力波</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> scipy.io <span class="keyword">import</span> wavfile</span><br><span class="line"></span><br><span class="line"><span class="comment">#产生时间序列</span></span><br><span class="line">rate_h, hstrain = wavfile.read(<span class="string">r&quot;H1_Strain.wav&quot;</span>,<span class="string">&quot;rb&quot;</span>)</span><br><span class="line">rate_l, lstrain = wavfile.read(<span class="string">r&quot;L1_Strain.wav&quot;</span>,<span class="string">&quot;rb&quot;</span>)</span><br><span class="line">reftime, ref_H1 = np.genfromtxt(<span class="string">&#x27;wf_template.txt&#x27;</span>).transpose()</span><br><span class="line"></span><br><span class="line"><span class="comment">#读取应变数据</span></span><br><span class="line">htime_interval = <span class="number">1</span> / rate_h</span><br><span class="line">ltime_interval = <span class="number">1</span> / rate_l</span><br><span class="line"></span><br><span class="line">htime_len = hstrain.shape[<span class="number">0</span>] / rate_h</span><br><span class="line">htime = np.arange(-htime_len / <span class="number">2</span>, htime_len / <span class="number">2</span>, htime_interval)</span><br><span class="line">ltime_len = lstrain.shape[<span class="number">0</span>] / rate_l</span><br><span class="line">ltime = np.arange(-ltime_len / <span class="number">2</span>, ltime_len / <span class="number">2</span>, ltime_interval)</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用来自“H1”探测器的数据作图</span></span><br><span class="line">fig = plt.figure(figsize = (<span class="number">12</span>, <span class="number">6</span>))  <span class="comment">#创建一个12*6的绘图空间</span></span><br><span class="line"></span><br><span class="line">plth = fig.add_subplot(<span class="number">221</span>)</span><br><span class="line">plth.plot(htime, hstrain, <span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">plth.set_xlabel(<span class="string">&#x27;Time(seconds)&#x27;</span>)</span><br><span class="line">plth.set_ylabel(<span class="string">&#x27;H1 Strain&#x27;</span>)</span><br><span class="line">plth.set_title(<span class="string">&#x27;H1 Strain&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#绘制L1 Strain 和 Template</span></span><br><span class="line">pltl = fig.add_subplot(<span class="number">222</span>)</span><br><span class="line">pltl.plot(ltime, lstrain, <span class="string">&#x27;g&#x27;</span>)</span><br><span class="line">pltl.set_xlabel(<span class="string">&#x27;Time(seconds)&#x27;</span>)</span><br><span class="line">pltl.set_ylabel(<span class="string">&#x27;L1 Strain&#x27;</span>)</span><br><span class="line">pltl.set_title(<span class="string">&#x27;L1 Strain&#x27;</span>)</span><br><span class="line"></span><br><span class="line">pltref = fig.add_subplot(<span class="number">212</span>)</span><br><span class="line">pltref.plot(reftime, ref_H1, <span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">pltref.set_xlabel(<span class="string">&#x27;Time(seconds)&#x27;</span>)</span><br><span class="line">pltref.set_ylabel(<span class="string">&#x27;Template Strain&#x27;</span>)</span><br><span class="line">pltref.set_title(<span class="string">&#x27;Template&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#自动调整图像外部边缘</span></span><br><span class="line">fig.tight_layout()</span><br><span class="line"></span><br><span class="line">plt.savefig(<span class="string">&quot;Gravitational_Waves_Original.png&quot;</span>)</span><br><span class="line">plt.show()</span><br><span class="line">plt.close(fig)</span><br></pre></td></tr></table></figure></div>
-
-<h1 id="图像展示"><a href="#图像展示" class="headerlink" title="图像展示"></a>图像展示</h1><img lazyload src="/images/loading.svg" data-src="/2019/04/04/Matplotlib%E7%BB%98%E5%88%B6%E5%BC%95%E5%8A%9B%E6%B3%A2/Gravitational_Waves_Original.png" class>
-
-<h1 id="数据源"><a href="#数据源" class="headerlink" title="数据源"></a>数据源</h1><p><a class="link" href="http://python123.io/dv/grawave.html">http://python123.io/dv/grawave.html<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-<p><a class="link" href="http://python123.io/dv/H1_Strain.wav">http://python123.io/dv/H1_Strain.wav<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br><a class="link" href="http://python123.io/dv/L1_Strain.wav">http://python123.io/dv/L1_Strain.wav<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br><a class="link" href="http://python123.io/dv/wf_template.txt">http://python123.io/dv/wf_template.txt<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>数据分析</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>PyCharm控制台自动换行</title>
-    <url>/2019/12/23/PyCharm%E6%8E%A7%E5%88%B6%E5%8F%B0%E8%87%AA%E5%8A%A8%E6%8D%A2%E8%A1%8C/</url>
-    <content><![CDATA[<p>点击File -&gt; Settings -&gt; Editor -&gt; General -&gt; Console,勾选下图项即可。</p>
-<span id="more"></span>
-
-<p><img lazyload src="/images/loading.svg" data-src="https://img2018.cnblogs.com/blog/1473452/201911/1473452-20191113105919785-2031005404.png"><br><img lazyload src="/images/loading.svg" data-src="https://img2018.cnblogs.com/blog/1473452/201911/1473452-20191113110043184-87443107.png"></p>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>bug</tag>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Pycharm Out of memory 解决办法</title>
-    <url>/2021/05/26/Pycharm-Out-of-memory-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
-    <content><![CDATA[<p>最近使用Pycharm敲代码突然卡住，并且蹦出一个错误：<code>Out of memory</code>。</p>
-<p>但是该错误与代码无关，只是因为系统分配给Pycharm的最大内存不够用了而已。</p>
-<p>这个最大内存是我们可以修改的，将它修改的大一些就可以解决这个问题。</p>
-<p>下面看看如何修改~</p>
-<span id="more"></span>
-
-<ol>
-<li>进入如下目录：</li>
-</ol>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">访达 -&gt; 应用程序 -&gt; 右键Pycharm -&gt; 显示包内容 -&gt; Contents -&gt; bin</span><br></pre></td></tr></table></figure></div>
-
-<ol start="2">
-<li>找到文件<code>pycharm.vmoptions</code>，使用一个文本编辑器打开，修改前两行的数值：</li>
-</ol>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">-Xms1024m      修改前是512</span><br><span class="line">-Xmx2048m      修改前是750（奇怪的数字）</span><br><span class="line">-XX:ReservedCodeCacheSize=512m</span><br><span class="line">-XX:+UseConcMarkSweepGC</span><br></pre></td></tr></table></figure></div>
-
-<ol start="3">
-<li>修改后保存关闭，重新启动Pycharm。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>IDE</tag>
-        <tag>bug</tag>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Pygame Zero之贪吃蛇（一）</title>
-    <url>/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<p>搞了这么久Python，玩个🐍吧！</p>
-<span id="more"></span>
-
-<p>贪吃蛇是个经典游戏，它的规则也是十分简单：控制小蛇上下左右移动，吃到食物以后，长度增加1；蛇头碰到屏幕边缘或者自己的身体，游戏失败。</p>
-<p>今天这个阶段，我们来把小蛇创建出来。</p>
-<p>下面有4个小方块，我们可以用他们来创建4个不同颜色的小蛇。</p>
-<img lazyload src="/images/loading.svg" data-src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/%E5%9B%BE%E7%89%87%E6%96%87%E4%BB%B6.png" class>
-
-<p>小蛇的构造，就是用这些小方块拼在一起。我们可以设置它的初始长度为5个小方块。</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pgzrun</span><br><span class="line"></span><br><span class="line">TILE_SIZE = <span class="number">20</span></span><br><span class="line">WIDTH = <span class="number">40</span> * TILE_SIZE</span><br><span class="line">HEIGHT = <span class="number">30</span> * TILE_SIZE</span><br><span class="line"></span><br><span class="line">snakehead = Actor(<span class="string">&#x27;snake1&#x27;</span>)</span><br><span class="line">snakehead.x = WIDTH / <span class="number">2</span></span><br><span class="line">snakehead.y = HEIGHT / <span class="number">2</span></span><br><span class="line"></span><br><span class="line">Snake = []</span><br><span class="line">Snake.append(snakehead)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    snakebody = Actor(<span class="string">&#x27;snake1&#x27;</span>)</span><br><span class="line">    snakebody.x = Snake[i].x - TILE_SIZE</span><br><span class="line">    snakebody.y = Snake[i].y</span><br><span class="line">    Snake.append(snakebody)</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    screen.clear()</span><br><span class="line">    <span class="keyword">for</span> snakebody <span class="keyword">in</span> Snake:</span><br><span class="line">        snakebody.draw()</span><br><span class="line"></span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure></div>
-
-<p>运行效果如下：</p>
-<img lazyload src="/images/loading.svg" data-src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/%E6%95%88%E6%9E%9C.png" class>
-
-<hr>
-<blockquote>
-<p>同学们可以右键保存下边的图片到你的<code>images</code>文件夹</p>
-</blockquote>
-<img lazyload src="/images/loading.svg" data-src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/snake1.jpg" class>
-
-<img lazyload src="/images/loading.svg" data-src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/snake2.jpg" class>
-
-<img lazyload src="/images/loading.svg" data-src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/snake3.jpg" class>
-
-<img lazyload src="/images/loading.svg" data-src="/2020/12/27/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%80%EF%BC%89/snake4.jpg" class>]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>游戏</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Pygame Zero之贪吃蛇（三）</title>
-    <url>/2021/01/07/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89/</url>
-    <content><![CDATA[<p>本文继续来研究如何移动小蛇，这一次是让小蛇左转和右转。上一篇讲到小蛇只能前进，今天就让小蛇学会转弯。</p>
-<span id="more"></span>
-
-<p>如果小蛇本来是向右移动的，那么右转以后，小蛇就会向下移动，只需要把新蛇头的位置设置在旧蛇头<code>Snake[0]</code>的下方</p>
-<img lazyload src="/images/loading.svg" data-src="/2021/01/07/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89/%E5%90%91%E4%B8%8B%E7%A7%BB%E5%8A%A8.png" class>
-
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 前置代码见9-2.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="comment"># 设定新蛇头的坐标，小蛇向下移动，新蛇头在旧蛇头下方</span></span><br><span class="line">    newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">    newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)  <span class="comment"># 把新蛇头加入列表的最前面</span></span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]  <span class="comment"># 删除旧蛇尾</span></span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>类似的，我们就可以完成小蛇的所有方向移动了。定义一个变量来表示小蛇的移动方向。在<code>update</code>函数中，判断这个变量的值，就可以控制小蛇向不同的方向移动。</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 前置代码见9-2.py</span></span><br><span class="line"></span><br><span class="line">direction = <span class="string">&#x27;right&#x27;</span>  <span class="comment"># 控制小蛇运动方向，默认向右</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="comment"># 判断变量direction的值，执行相应操作</span></span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;up&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y - TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;down&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;left&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x - TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;right&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]</span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>现在小蛇已经可以向四个方向移动了，我们需要加上一个控制的功能。通过按下方向键来修改<code>direction</code>的值就可以了。</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">direction = <span class="string">&#x27;right&#x27;</span>  <span class="comment"># 控制小蛇运动方向，默认向右</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="keyword">global</span> direction  <span class="comment"># 将direction设为全局变量</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.left:</span><br><span class="line">        direction = <span class="string">&#x27;left&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.right:</span><br><span class="line">        direction = <span class="string">&#x27;right&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.up:</span><br><span class="line">        direction = <span class="string">&#x27;up&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.down:</span><br><span class="line">        direction = <span class="string">&#x27;down&#x27;</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;up&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y - TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;down&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;left&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x - TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;right&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]</span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>看一看效果图吧：</p>
-<img lazyload src="/images/loading.svg" data-src="/2021/01/07/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89/%E4%B8%8A%E4%B8%8B%E5%B7%A6%E5%8F%B3.gif" class>]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>游戏</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Pygame Zero之贪吃蛇（四）</title>
     <url>/2021/01/15/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E5%9B%9B%EF%BC%89/</url>
     <content><![CDATA[<p>本篇来给贪吃蛇增加游戏规则判定并加入食物和分数，制作一个完整的贪吃蛇游戏。</p>
@@ -419,42 +423,6 @@
 <p>附项目完整代码：</p>
 <div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pgzrun</span><br><span class="line"></span><br><span class="line">TILE_SIZE = <span class="number">20</span></span><br><span class="line">WIDTH = <span class="number">40</span> * TILE_SIZE</span><br><span class="line">HEIGHT = <span class="number">30</span> * TILE_SIZE</span><br><span class="line">isLose = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">snakehead = Actor(<span class="string">&#x27;snake1&#x27;</span>)</span><br><span class="line">snakehead.x = WIDTH / <span class="number">2</span></span><br><span class="line">snakehead.y = HEIGHT / <span class="number">2</span></span><br><span class="line"></span><br><span class="line">cookie = Actor(<span class="string">&#x27;cookie&#x27;</span>)</span><br><span class="line">cookie.x = random.randint(<span class="number">10</span>, <span class="number">30</span>) * TILE_SIZE</span><br><span class="line">cookie.y = random.randint(<span class="number">10</span>, <span class="number">30</span>) * TILE_SIZE</span><br><span class="line"></span><br><span class="line">Snake = [snakehead]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    snakebody = Actor(<span class="string">&#x27;snake1&#x27;</span>)</span><br><span class="line">    snakebody.x = Snake[i].x - TILE_SIZE</span><br><span class="line">    snakebody.y = Snake[i].y</span><br><span class="line">    Snake.append(snakebody)</span><br><span class="line"></span><br><span class="line">direction = <span class="string">&#x27;right&#x27;</span></span><br><span class="line">score = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    screen.clear()</span><br><span class="line">    cookie.draw()</span><br><span class="line">    <span class="keyword">for</span> snakebody <span class="keyword">in</span> Snake:</span><br><span class="line">        snakebody.draw()</span><br><span class="line">    <span class="keyword">if</span> isLose:</span><br><span class="line">        screen.draw.text(<span class="string">&quot;Game over!&quot;</span>, (<span class="number">180</span>, HEIGHT / <span class="number">2</span> - <span class="number">100</span>), fontsize=<span class="number">100</span>,</span><br><span class="line">                         color=<span class="string">&#x27;skyblue&#x27;</span>)</span><br><span class="line">    screen.draw.text(<span class="string">&quot;Score: &quot;</span> + <span class="built_in">str</span>(score), (<span class="number">20</span>, <span class="number">20</span>), fontsize=<span class="number">25</span>,</span><br><span class="line">                     color=<span class="string">&#x27;white&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="keyword">global</span> direction, isLose, score</span><br><span class="line">    <span class="keyword">if</span> keyboard.left:</span><br><span class="line">        direction = <span class="string">&#x27;left&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.right:</span><br><span class="line">        direction = <span class="string">&#x27;right&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.up:</span><br><span class="line">        direction = <span class="string">&#x27;up&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.down:</span><br><span class="line">        direction = <span class="string">&#x27;down&#x27;</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;up&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y - TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;down&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;left&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x - TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;right&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> newSnakeHead.y &lt; <span class="number">0</span> <span class="keyword">or</span> newSnakeHead.y &gt; HEIGHT <span class="keyword">or</span> newSnakeHead.x &lt; <span class="number">0</span> <span class="keyword">or</span> newSnakeHead.x &gt; WIDTH:</span><br><span class="line">        isLose = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">for</span> body <span class="keyword">in</span> Snake:</span><br><span class="line">        <span class="keyword">if</span> newSnakeHead.x == body.x <span class="keyword">and</span> newSnakeHead.y == body.y:</span><br><span class="line">            isLose = <span class="literal">True</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> newSnakeHead.x == cookie.x <span class="keyword">and</span> newSnakeHead.y == cookie.y:</span><br><span class="line">        score += <span class="number">1</span></span><br><span class="line">        cookie.x = random.randint(<span class="number">5</span>, <span class="number">35</span>) * TILE_SIZE</span><br><span class="line">        cookie.y = random.randint(<span class="number">5</span>, <span class="number">25</span>) * TILE_SIZE</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pgzrun.go()</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
 
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>游戏</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Pygame Zero之贪吃蛇（二）</title>
-    <url>/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
-    <content><![CDATA[<p>本文来研究如何移动小蛇，而且仅限于向右移动，严格的说其实是「前进」。这里需要思考的问题是：为什么不是上下左右移动呢？</p>
-<p>因为在游戏中，上下左右是相对于游戏窗口的，小蛇的移动方向只有<strong>前进</strong>，也就是朝着蛇头的方向（小蛇是不能倒退的哦）。如果想要往其他方向移动，只能改变蛇头的方向，这时蛇的形状就会发生改变，我们下次再来研究。</p>
-<img lazyload src="/images/loading.svg" data-src="/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/move.gif" class>
-
-<span id="more"></span>
-
-<p>在小蛇向右移动一格的时，大概经历了下边的过程。</p>
-<img lazyload src="/images/loading.svg" data-src="/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/%E5%90%91%E5%8F%B3%E7%A7%BB%E5%8A%A8.png" class>
-
-<p>移动一格分为两步完成：</p>
-<ol>
-<li>在旧蛇头右侧添加一个新蛇头，旧蛇头编程蛇身的一部分</li>
-<li>删除旧蛇尾，原来挨着旧蛇尾的蛇身变成了新蛇尾</li>
-</ol>
-<p>这样，我们可以在<code>update()</code>函数中编写这部分代码：</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 前置代码见9-1.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE  <span class="comment"># 初始化新蛇头横坐标，为旧蛇头加一个格子宽</span></span><br><span class="line">    newSnakeHead.y = Snake[<span class="number">0</span>].y  <span class="comment"># 初始化新蛇头纵坐标，和旧蛇一样</span></span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)  <span class="comment"># 列表中插入新蛇头</span></span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]  <span class="comment"># 列表中删除旧蛇尾</span></span><br><span class="line">   </span><br><span class="line">  </span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure></div>
-
-<p>结果如下：</p>
-<img lazyload src="/images/loading.svg" data-src="/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/move.gif" class>
-
-<p>可以看到小蛇移动速度非常快，因此我们可以导入<code>time</code>库来减速。比如每次<code>update()</code>以后，暂停<code>0.2</code>秒：</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="comment"># 前置代码见9-1.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  </span><br><span class="line">    newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE  </span><br><span class="line">    newSnakeHead.y = Snake[<span class="number">0</span>].y  </span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)  </span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]  </span><br><span class="line">    time.sleep(<span class="number">0.2</span>)  <span class="comment"># 暂停0.2秒</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure></div>
-
-<p>运行程序，有一种古老游戏的感觉了，小蛇看起来是在一格一格的前进！</p>
 ]]></content>
       <categories>
         <category>Python</category>
@@ -847,6 +815,38 @@
       </categories>
       <tags>
         <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Pycharm Out of memory 解决办法</title>
+    <url>/2021/05/26/Pycharm-Out-of-memory-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
+    <content><![CDATA[<p>最近使用Pycharm敲代码突然卡住，并且蹦出一个错误：<code>Out of memory</code>。</p>
+<p>但是该错误与代码无关，只是因为系统分配给Pycharm的最大内存不够用了而已。</p>
+<p>这个最大内存是我们可以修改的，将它修改的大一些就可以解决这个问题。</p>
+<p>下面看看如何修改~</p>
+<span id="more"></span>
+
+<ol>
+<li>进入如下目录：</li>
+</ol>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">访达 -&gt; 应用程序 -&gt; 右键Pycharm -&gt; 显示包内容 -&gt; Contents -&gt; bin</span><br></pre></td></tr></table></figure></div>
+
+<ol start="2">
+<li>找到文件<code>pycharm.vmoptions</code>，使用一个文本编辑器打开，修改前两行的数值：</li>
+</ol>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">-Xms1024m      修改前是512</span><br><span class="line">-Xmx2048m      修改前是750（奇怪的数字）</span><br><span class="line">-XX:ReservedCodeCacheSize=512m</span><br><span class="line">-XX:+UseConcMarkSweepGC</span><br></pre></td></tr></table></figure></div>
+
+<ol start="3">
+<li>修改后保存关闭，重新启动Pycharm。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>bug</tag>
+        <tag>Python</tag>
+        <tag>IDE</tag>
       </tags>
   </entry>
   <entry>
@@ -1387,6 +1387,76 @@
       </tags>
   </entry>
   <entry>
+    <title>Redis操作</title>
+    <url>/2019/04/04/Redis%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<h1 id="环境准备：centOS6-5"><a href="#环境准备：centOS6-5" class="headerlink" title="环境准备：centOS6.5"></a>环境准备：centOS6.5</h1><p>Redis是c语言开发的。<br>安装redis需要c语言的编译环境。如果没有gcc需要在线安装。</p>
+<span id="more"></span>
+
+<h1 id="安装编译环境"><a href="#安装编译环境" class="headerlink" title="安装编译环境"></a>安装编译环境</h1><p><code>yum install gcc-c++</code></p>
+<h1 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h1><ul>
+<li><p>第一步：redis的源码(安装)包上传到linux系统。</p>
+</li>
+<li><p>第二步：进入到压缩包所在的路径，解压缩redis。</p>
+</li>
+</ul>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">tar -zxvf redis-3.0.0.tar.gz</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>第三步：编译。进入redis源码目录（redis3.0.0）。</li>
+</ul>
+<p>执行：<code>make </code></p>
+<ul>
+<li>第四步：进入/usr/redis-3.0.0/src/安装。</li>
+</ul>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">make install PREFIX=/usr/java/redis</span><br></pre></td></tr></table></figure></div>
+
+<p>如果报错</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">zmalloc.h:50:31: error: jemalloc/jemalloc.h: No such file or directory</span><br><span class="line">zmalloc.h:55:2: error: <span class="comment">#error &quot;Newer version of jemalloc required&quot;</span></span><br><span class="line">make[1]: *** [adlist.o] Error 1</span><br><span class="line">make[1]: Leaving directory </span><br><span class="line">`/data0/src/redis-2.6.2/src<span class="string">&#x27;</span></span><br><span class="line"><span class="string">make: *** [all] Error 2</span></span><br></pre></td></tr></table></figure></div>
+<p>解决办法是：</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">make MALLOC=libc</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>PREFIX参数指定redis的安装目录。一般软件安装到/usr目录下</p>
+</blockquote>
+<p>连接redis</p>
+<h1 id="redis的启动"><a href="#redis的启动" class="headerlink" title="redis的启动"></a>redis的启动</h1><h2 id="前端启动"><a href="#前端启动" class="headerlink" title="前端启动"></a>前端启动</h2><p>在redis的安装目录的bin目录下直接启动redis-server</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">./redis-server </span><br></pre></td></tr></table></figure></div>
+
+<h2 id="后台启动"><a href="#后台启动" class="headerlink" title="后台启动"></a>后台启动</h2><p>把/root/redis-3.0.0/redis.conf复制到/usr/java/r<br>edis/bin目录下</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">cp redis.conf /usr/java/redis/bin/</span><br></pre></td></tr></table></figure></div>
+
+<p>修改配置文件：</p>
+<p>启动服务器：</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">./redis-server redis.conf</span><br></pre></td></tr></table></figure></div>
+
+<p>查看redis进程：</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">ps aux|grep redis</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">root      5190  0.1  0.3  33936  1712 ?        Ssl  18:23   0:00 ./redis-server *:6379    </span><br><span class="line">root      5196  0.0  0.1   4356   728 pts/0    S+   18:24   0:00 grep redis</span><br></pre></td></tr></table></figure></div>
+<h2 id="关闭服务"><a href="#关闭服务" class="headerlink" title="关闭服务"></a>关闭服务</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">./redis-cli shutdown</span><br></pre></td></tr></table></figure></div>
+
+<p>或者通过kill -9 PID关闭</p>
+<p>Redis-cli</p>
+<p><code>[root@localhost bin]# ./redis-cli </code></p>
+<p>默认连接localhost运行在6379端口的redis服务。</p>
+<p><code>[root@localhost bin]# ./redis-cli -h </code></p>
+<p><code>192.168.75.128 -p 6379</code></p>
+<blockquote>
+<p>-h：连接的服务器的地址</p>
+</blockquote>
+<blockquote>
+<p>-p：服务的端口号</p>
+</blockquote>
+<p>关闭redis：</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">./redis-cli shutdown</span><br></pre></td></tr></table></figure></div>]]></content>
+      <categories>
+        <category>大数据开发</category>
+      </categories>
+      <tags>
+        <tag>大数据开发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python递归绘制科赫雪花</title>
     <url>/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/</url>
     <content><![CDATA[<img lazyload src="/images/loading.svg" data-src="/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/snowflake.png" class>
@@ -1503,76 +1573,6 @@
       </categories>
       <tags>
         <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Redis操作</title>
-    <url>/2019/04/04/Redis%E6%93%8D%E4%BD%9C/</url>
-    <content><![CDATA[<h1 id="环境准备：centOS6-5"><a href="#环境准备：centOS6-5" class="headerlink" title="环境准备：centOS6.5"></a>环境准备：centOS6.5</h1><p>Redis是c语言开发的。<br>安装redis需要c语言的编译环境。如果没有gcc需要在线安装。</p>
-<span id="more"></span>
-
-<h1 id="安装编译环境"><a href="#安装编译环境" class="headerlink" title="安装编译环境"></a>安装编译环境</h1><p><code>yum install gcc-c++</code></p>
-<h1 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h1><ul>
-<li><p>第一步：redis的源码(安装)包上传到linux系统。</p>
-</li>
-<li><p>第二步：进入到压缩包所在的路径，解压缩redis。</p>
-</li>
-</ul>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">tar -zxvf redis-3.0.0.tar.gz</span><br></pre></td></tr></table></figure></div>
-
-<ul>
-<li>第三步：编译。进入redis源码目录（redis3.0.0）。</li>
-</ul>
-<p>执行：<code>make </code></p>
-<ul>
-<li>第四步：进入/usr/redis-3.0.0/src/安装。</li>
-</ul>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">make install PREFIX=/usr/java/redis</span><br></pre></td></tr></table></figure></div>
-
-<p>如果报错</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">zmalloc.h:50:31: error: jemalloc/jemalloc.h: No such file or directory</span><br><span class="line">zmalloc.h:55:2: error: <span class="comment">#error &quot;Newer version of jemalloc required&quot;</span></span><br><span class="line">make[1]: *** [adlist.o] Error 1</span><br><span class="line">make[1]: Leaving directory </span><br><span class="line">`/data0/src/redis-2.6.2/src<span class="string">&#x27;</span></span><br><span class="line"><span class="string">make: *** [all] Error 2</span></span><br></pre></td></tr></table></figure></div>
-<p>解决办法是：</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">make MALLOC=libc</span><br></pre></td></tr></table></figure></div>
-
-<blockquote>
-<p>PREFIX参数指定redis的安装目录。一般软件安装到/usr目录下</p>
-</blockquote>
-<p>连接redis</p>
-<h1 id="redis的启动"><a href="#redis的启动" class="headerlink" title="redis的启动"></a>redis的启动</h1><h2 id="前端启动"><a href="#前端启动" class="headerlink" title="前端启动"></a>前端启动</h2><p>在redis的安装目录的bin目录下直接启动redis-server</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">./redis-server </span><br></pre></td></tr></table></figure></div>
-
-<h2 id="后台启动"><a href="#后台启动" class="headerlink" title="后台启动"></a>后台启动</h2><p>把/root/redis-3.0.0/redis.conf复制到/usr/java/r<br>edis/bin目录下</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">cp redis.conf /usr/java/redis/bin/</span><br></pre></td></tr></table></figure></div>
-
-<p>修改配置文件：</p>
-<p>启动服务器：</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">./redis-server redis.conf</span><br></pre></td></tr></table></figure></div>
-
-<p>查看redis进程：</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">ps aux|grep redis</span><br></pre></td></tr></table></figure></div>
-
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">root      5190  0.1  0.3  33936  1712 ?        Ssl  18:23   0:00 ./redis-server *:6379    </span><br><span class="line">root      5196  0.0  0.1   4356   728 pts/0    S+   18:24   0:00 grep redis</span><br></pre></td></tr></table></figure></div>
-<h2 id="关闭服务"><a href="#关闭服务" class="headerlink" title="关闭服务"></a>关闭服务</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">./redis-cli shutdown</span><br></pre></td></tr></table></figure></div>
-
-<p>或者通过kill -9 PID关闭</p>
-<p>Redis-cli</p>
-<p><code>[root@localhost bin]# ./redis-cli </code></p>
-<p>默认连接localhost运行在6379端口的redis服务。</p>
-<p><code>[root@localhost bin]# ./redis-cli -h </code></p>
-<p><code>192.168.75.128 -p 6379</code></p>
-<blockquote>
-<p>-h：连接的服务器的地址</p>
-</blockquote>
-<blockquote>
-<p>-p：服务的端口号</p>
-</blockquote>
-<p>关闭redis：</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">./redis-cli shutdown</span><br></pre></td></tr></table></figure></div>]]></content>
-      <categories>
-        <category>大数据开发</category>
-      </categories>
-      <tags>
-        <tag>大数据开发</tag>
       </tags>
   </entry>
   <entry>
@@ -2293,6 +2293,217 @@
       </tags>
   </entry>
   <entry>
+    <title>SQL必知必会(5)高级过滤数据</title>
+    <url>/2020/12/06/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-5-%E9%AB%98%E7%BA%A7%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[<p><strong>操作符（operator）</strong>：用来连接或改变WHERE子句中的子句的关键字，也称为逻辑操作符（logical operator）。</p>
+<p><strong>AND操作符</strong>：要通过不止一个列进行过滤。</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_id, prod_price, prod_name</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="operator">=</span> ‘DLL01’ <span class="keyword">AND</span> prod_price <span class="operator">&lt;=</span> <span class="number">4</span>;</span><br></pre></td></tr></table></figure></div>
+
+<span id="more"></span>
+
+<table>
+<thead>
+<tr>
+<th>prod_id</th>
+<th>prod_price</th>
+<th>prod_name</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BNBG01</td>
+<td>3.49</td>
+<td>Fish bean bag toy</td>
+</tr>
+<tr>
+<td>BNBG02</td>
+<td>3.49</td>
+<td>Bird bean bag toy</td>
+</tr>
+<tr>
+<td>BNBG03</td>
+<td>3.49</td>
+<td>Rabbit bean bag toy</td>
+</tr>
+</tbody></table>
+<p><strong>OR操作符</strong>：多个条件，满足任意一个即可。</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="operator">=</span> ‘DLL01’ <span class="keyword">OR</span> vend_id <span class="operator">=</span> ‘BRS01’;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>prod_name</th>
+<th>prod_price</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>8 inch teddy bear</td>
+<td>5.99</td>
+</tr>
+<tr>
+<td>12 inch teddy bear</td>
+<td>8.99</td>
+</tr>
+<tr>
+<td>18 inch teddy bear</td>
+<td>11.99</td>
+</tr>
+<tr>
+<td>Fish bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Bird bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Rabbit bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Raggedy Ann</td>
+<td>4.99</td>
+</tr>
+</tbody></table>
+<p>求值顺序：<br>目标：想要列出价格为10美元及以上，且由DLL01或BRS01制造的所有产品。</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*------------错误示例------------*/</span></span><br><span class="line"><span class="keyword">SELECT</span> prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="operator">=</span> ‘DLL01’ <span class="keyword">OR</span> vend_id <span class="operator">=</span> ‘BRS01’</span><br><span class="line">        <span class="keyword">AND</span> prod_price <span class="operator">&gt;=</span> <span class="number">10</span>;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>prod_name</th>
+<th>prod_price</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>18 inch teddy bear</td>
+<td>11.99</td>
+</tr>
+<tr>
+<td>Fish bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Bird bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Rabbit bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Raggedy Ann</td>
+<td>4.99</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>SQL在处理OR操作符之前，优先处理AND操作符。</p>
+</blockquote>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*------------正确示例------------*/</span></span><br><span class="line"><span class="keyword">SELECT</span> prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> (vend_id <span class="operator">=</span> ‘DLL01’ <span class="keyword">OR</span> vend_id <span class="operator">=</span> ‘BRS01’)</span><br><span class="line">    <span class="keyword">AND</span> prod_price <span class="operator">&gt;=</span> <span class="number">10</span>;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>prod_name</th>
+<th>prod_price</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>18 inch teddy bear</td>
+<td>11.99</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>圆括号比AND或OR具有更高的优先级，任何时候使用具有AND、OR的WHERE子句，都可以使用圆括号消除歧义。</p>
+</blockquote>
+<p><strong>IN操作符</strong>：用来指定条件范围，范围中的每个条件都可以进行匹配。</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="keyword">IN</span> (‘DLL01’, ‘BRS01’)</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_name;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>prod_name</th>
+<th>prod_price</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>12 inch teddy bear</td>
+<td>8.99</td>
+</tr>
+<tr>
+<td>18 inch teddy bear</td>
+<td>11.99</td>
+</tr>
+<tr>
+<td>8 inch teddy bear</td>
+<td>5.99</td>
+</tr>
+<tr>
+<td>Bird bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Fish bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Rabbit bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Raggedy Ann</td>
+<td>4.99</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>IN操作符与OR具有相同功能。</p>
+</blockquote>
+<blockquote>
+<p>使用IN操作符的优点：</p>
+<ul>
+<li>在有很多合法选项时，IN更加清楚直观；</li>
+<li>在于其他AND、OR组合使用IN时，求值顺序易管理；</li>
+<li>IN比一组OR执行更快；</li>
+<li>IN可以包含其他SELECT语句，能够更动态的建立WHERE子句。</li>
+</ul>
+</blockquote>
+<p><strong>NOT操作符</strong>：WHERE子句中用来否定其后条件的关键字。</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name </span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">NOT</span> vend_id <span class="operator">=</span> ‘DLL01’</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_name;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>prod_name</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>12 inch teddy bear</td>
+</tr>
+<tr>
+<td>18 inch teddy bear</td>
+</tr>
+<tr>
+<td>8 inch teddy bear</td>
+</tr>
+<tr>
+<td>King doll</td>
+</tr>
+<tr>
+<td>Queen doll</td>
+</tr>
+</tbody></table>
+<p>+——————–+</p>
+<blockquote>
+<p>上面的例子，也可以用<code>&lt;&gt;</code>来完成。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SQL必知必会(4)过滤数据</title>
     <url>/2020/12/06/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-4-%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE/</url>
     <content><![CDATA[<p>在SELECT语句中，数据根据WHERE子句中指定的搜索条件进行过滤。</p>
@@ -2514,217 +2725,6 @@
       </tags>
   </entry>
   <entry>
-    <title>SQL必知必会(5)高级过滤数据</title>
-    <url>/2020/12/06/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-5-%E9%AB%98%E7%BA%A7%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[<p><strong>操作符（operator）</strong>：用来连接或改变WHERE子句中的子句的关键字，也称为逻辑操作符（logical operator）。</p>
-<p><strong>AND操作符</strong>：要通过不止一个列进行过滤。</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_id, prod_price, prod_name</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="operator">=</span> ‘DLL01’ <span class="keyword">AND</span> prod_price <span class="operator">&lt;=</span> <span class="number">4</span>;</span><br></pre></td></tr></table></figure></div>
-
-<span id="more"></span>
-
-<table>
-<thead>
-<tr>
-<th>prod_id</th>
-<th>prod_price</th>
-<th>prod_name</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>BNBG01</td>
-<td>3.49</td>
-<td>Fish bean bag toy</td>
-</tr>
-<tr>
-<td>BNBG02</td>
-<td>3.49</td>
-<td>Bird bean bag toy</td>
-</tr>
-<tr>
-<td>BNBG03</td>
-<td>3.49</td>
-<td>Rabbit bean bag toy</td>
-</tr>
-</tbody></table>
-<p><strong>OR操作符</strong>：多个条件，满足任意一个即可。</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="operator">=</span> ‘DLL01’ <span class="keyword">OR</span> vend_id <span class="operator">=</span> ‘BRS01’;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>prod_name</th>
-<th>prod_price</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>8 inch teddy bear</td>
-<td>5.99</td>
-</tr>
-<tr>
-<td>12 inch teddy bear</td>
-<td>8.99</td>
-</tr>
-<tr>
-<td>18 inch teddy bear</td>
-<td>11.99</td>
-</tr>
-<tr>
-<td>Fish bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Bird bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Rabbit bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Raggedy Ann</td>
-<td>4.99</td>
-</tr>
-</tbody></table>
-<p>求值顺序：<br>目标：想要列出价格为10美元及以上，且由DLL01或BRS01制造的所有产品。</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*------------错误示例------------*/</span></span><br><span class="line"><span class="keyword">SELECT</span> prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="operator">=</span> ‘DLL01’ <span class="keyword">OR</span> vend_id <span class="operator">=</span> ‘BRS01’</span><br><span class="line">        <span class="keyword">AND</span> prod_price <span class="operator">&gt;=</span> <span class="number">10</span>;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>prod_name</th>
-<th>prod_price</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>18 inch teddy bear</td>
-<td>11.99</td>
-</tr>
-<tr>
-<td>Fish bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Bird bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Rabbit bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Raggedy Ann</td>
-<td>4.99</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>SQL在处理OR操作符之前，优先处理AND操作符。</p>
-</blockquote>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*------------正确示例------------*/</span></span><br><span class="line"><span class="keyword">SELECT</span> prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> (vend_id <span class="operator">=</span> ‘DLL01’ <span class="keyword">OR</span> vend_id <span class="operator">=</span> ‘BRS01’)</span><br><span class="line">    <span class="keyword">AND</span> prod_price <span class="operator">&gt;=</span> <span class="number">10</span>;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>prod_name</th>
-<th>prod_price</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>18 inch teddy bear</td>
-<td>11.99</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>圆括号比AND或OR具有更高的优先级，任何时候使用具有AND、OR的WHERE子句，都可以使用圆括号消除歧义。</p>
-</blockquote>
-<p><strong>IN操作符</strong>：用来指定条件范围，范围中的每个条件都可以进行匹配。</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="keyword">IN</span> (‘DLL01’, ‘BRS01’)</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_name;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>prod_name</th>
-<th>prod_price</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>12 inch teddy bear</td>
-<td>8.99</td>
-</tr>
-<tr>
-<td>18 inch teddy bear</td>
-<td>11.99</td>
-</tr>
-<tr>
-<td>8 inch teddy bear</td>
-<td>5.99</td>
-</tr>
-<tr>
-<td>Bird bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Fish bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Rabbit bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Raggedy Ann</td>
-<td>4.99</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>IN操作符与OR具有相同功能。</p>
-</blockquote>
-<blockquote>
-<p>使用IN操作符的优点：</p>
-<ul>
-<li>在有很多合法选项时，IN更加清楚直观；</li>
-<li>在于其他AND、OR组合使用IN时，求值顺序易管理；</li>
-<li>IN比一组OR执行更快；</li>
-<li>IN可以包含其他SELECT语句，能够更动态的建立WHERE子句。</li>
-</ul>
-</blockquote>
-<p><strong>NOT操作符</strong>：WHERE子句中用来否定其后条件的关键字。</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name </span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">NOT</span> vend_id <span class="operator">=</span> ‘DLL01’</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_name;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>prod_name</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>12 inch teddy bear</td>
-</tr>
-<tr>
-<td>18 inch teddy bear</td>
-</tr>
-<tr>
-<td>8 inch teddy bear</td>
-</tr>
-<tr>
-<td>King doll</td>
-</tr>
-<tr>
-<td>Queen doll</td>
-</tr>
-</tbody></table>
-<p>+——————–+</p>
-<blockquote>
-<p>上面的例子，也可以用<code>&lt;&gt;</code>来完成。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>SQL</category>
-      </categories>
-      <tags>
-        <tag>SQL</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Scratch还能做出这么酷炫的3D效果？</title>
     <url>/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/</url>
     <content><![CDATA[<p>哇！</p>
@@ -2923,28 +2923,6 @@
       </tags>
   </entry>
   <entry>
-    <title>python三个数比较</title>
-    <url>/2021/07/21/python%E4%B8%89%E4%B8%AA%E6%95%B0%E6%AF%94%E8%BE%83/</url>
-    <content><![CDATA[<p>如何进行三个数的大小比较？</p>
-<span id="more"></span>
-
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 方法1</span></span><br><span class="line">a, b, c = <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span></span><br><span class="line"><span class="keyword">if</span> a != b <span class="keyword">and</span> b != c <span class="keyword">and</span> a != c:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;三个数都不相等&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法2</span></span><br><span class="line">a, b, c = <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span></span><br><span class="line"><span class="keyword">if</span> a != b != c:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;三个数都不相等&quot;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>运行上面的程序，得出结果如下</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">三个数都不相等</span><br><span class="line">三个数都不相等</span><br></pre></td></tr></table></figure></div>
-
-<p>而对于方法2，我们赋值时<code>a</code>和<code>c</code>是相等的，程序并没有判断<code>a</code>和<code>c</code>的关系。</p>
-<p>因此结论是：当比较三个数是否大小相等时，要严格按照<strong>两两比较</strong>的形式，即<strong>方法1是正确的</strong>。</p>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>运算符</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>pyinstaller的傻瓜式用法</title>
     <url>/2023/03/06/pyinstaller%E7%9A%84%E5%82%BB%E7%93%9C%E5%BC%8F%E7%94%A8%E6%B3%95/</url>
     <content><![CDATA[<p><code>PyInstaller</code>是一个能将Python程序打包成可执行文件的优秀第三方库，Python程序打包后，新的程序就可以在没有安装Python的电脑上运行。<code>pyinstaller</code>最新版本已经支持绝大部分操作系统。</p>
@@ -3025,6 +3003,54 @@
         <tag>Python</tag>
         <tag>游戏</tag>
         <tag>pygame</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python三个数比较</title>
+    <url>/2021/07/21/python%E4%B8%89%E4%B8%AA%E6%95%B0%E6%AF%94%E8%BE%83/</url>
+    <content><![CDATA[<p>如何进行三个数的大小比较？</p>
+<span id="more"></span>
+
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 方法1</span></span><br><span class="line">a, b, c = <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span></span><br><span class="line"><span class="keyword">if</span> a != b <span class="keyword">and</span> b != c <span class="keyword">and</span> a != c:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;三个数都不相等&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法2</span></span><br><span class="line">a, b, c = <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span></span><br><span class="line"><span class="keyword">if</span> a != b != c:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;三个数都不相等&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>运行上面的程序，得出结果如下</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">三个数都不相等</span><br><span class="line">三个数都不相等</span><br></pre></td></tr></table></figure></div>
+
+<p>而对于方法2，我们赋值时<code>a</code>和<code>c</code>是相等的，程序并没有判断<code>a</code>和<code>c</code>的关系。</p>
+<p>因此结论是：当比较三个数是否大小相等时，要严格按照<strong>两两比较</strong>的形式，即<strong>方法1是正确的</strong>。</p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>运算符</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>tkinter中如何给控件的command传递参数</title>
+    <url>/2022/09/30/tkinter%E4%B8%AD%E5%A6%82%E4%BD%95%E7%BB%99%E6%8E%A7%E4%BB%B6%E7%9A%84command%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/</url>
+    <content><![CDATA[<p>踩坑了，务必记录一下。</p>
+<span id="more"></span>
+
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>在tkinter程序中，<code>Button</code>绑定的函数是不能带返回值的，编写代码时<code>command=</code>后边的函数名不能带有括号（不能直接执行）。</p>
+<p>那如果想要传入<strong>带参数的函数</strong>该怎么办呢？（必须带括号的函数）</p>
+<h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><h2 id="非循环"><a href="#非循环" class="headerlink" title="非循环"></a>非循环</h2><p>假如在程序中，你会改变<code>Entry</code>中的值，然后<code>Button</code>需要读取这个值，那么直接使用<code>lambda</code>函数：</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 此为示例代码</span></span><br><span class="line"><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk</span><br><span class="line"></span><br><span class="line">e = tk.Entry(window).pack()</span><br><span class="line">b = tk.Button(window, text=<span class="string">&quot;xx&quot;</span>, command=<span class="keyword">lambda</span>: e.get()).pack()</span><br></pre></td></tr></table></figure></div>
+<h2 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h2><p>假如在程序中，你需要在<code>Button</code>中操作一个循环变量，那么不能向上边一样直接<code>lambda</code>，需要小小操作一番：</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 此为示例代码</span></span><br><span class="line"><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk</span><br><span class="line"><span class="keyword">import</span> webbrowser</span><br><span class="line"></span><br><span class="line">links = [url1, url2, url3]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建三个按钮，分别调用浏览器打开url1，url2，url3</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">    b = tk.Button(window, text=<span class="string">&quot;xx&quot;</span>, command=<span class="keyword">lambda</span> i=i: webbrowser.<span class="built_in">open</span>(links[i])).pack()</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>参考：<a class="link" href="https://www.zhihu.com/question/399386753">https://www.zhihu.com/question/399386753<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>GUI</tag>
+        <tag>tkinter</tag>
       </tags>
   </entry>
   <entry>
@@ -3221,32 +3247,6 @@
       </tags>
   </entry>
   <entry>
-    <title>tkinter中如何给控件的command传递参数</title>
-    <url>/2022/09/30/tkinter%E4%B8%AD%E5%A6%82%E4%BD%95%E7%BB%99%E6%8E%A7%E4%BB%B6%E7%9A%84command%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0/</url>
-    <content><![CDATA[<p>踩坑了，务必记录一下。</p>
-<span id="more"></span>
-
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>在tkinter程序中，<code>Button</code>绑定的函数是不能带返回值的，编写代码时<code>command=</code>后边的函数名不能带有括号（不能直接执行）。</p>
-<p>那如果想要传入<strong>带参数的函数</strong>该怎么办呢？（必须带括号的函数）</p>
-<h1 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h1><h2 id="非循环"><a href="#非循环" class="headerlink" title="非循环"></a>非循环</h2><p>假如在程序中，你会改变<code>Entry</code>中的值，然后<code>Button</code>需要读取这个值，那么直接使用<code>lambda</code>函数：</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 此为示例代码</span></span><br><span class="line"><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk</span><br><span class="line"></span><br><span class="line">e = tk.Entry(window).pack()</span><br><span class="line">b = tk.Button(window, text=<span class="string">&quot;xx&quot;</span>, command=<span class="keyword">lambda</span>: e.get()).pack()</span><br></pre></td></tr></table></figure></div>
-<h2 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h2><p>假如在程序中，你需要在<code>Button</code>中操作一个循环变量，那么不能向上边一样直接<code>lambda</code>，需要小小操作一番：</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 此为示例代码</span></span><br><span class="line"><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk</span><br><span class="line"><span class="keyword">import</span> webbrowser</span><br><span class="line"></span><br><span class="line">links = [url1, url2, url3]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建三个按钮，分别调用浏览器打开url1，url2，url3</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">    b = tk.Button(window, text=<span class="string">&quot;xx&quot;</span>, command=<span class="keyword">lambda</span> i=i: webbrowser.<span class="built_in">open</span>(links[i])).pack()</span><br></pre></td></tr></table></figure></div>
-
-<blockquote>
-<p>参考：<a class="link" href="https://www.zhihu.com/question/399386753">https://www.zhihu.com/question/399386753<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>GUI</tag>
-        <tag>tkinter</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>分布式消息发布订阅系统Kafka</title>
     <url>/2019/04/04/%E5%88%86%E5%B8%83%E5%BC%8F%E6%B6%88%E6%81%AF%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E7%B3%BB%E7%BB%9FKafka/</url>
     <content><![CDATA[<h1 id="Kafka概述"><a href="#Kafka概述" class="headerlink" title="Kafka概述"></a>Kafka概述</h1><ul>
@@ -3397,33 +3397,6 @@
 <p>参考：<a class="link" href="https://www.csdn.net/tags/MtTaEg4sOTQ4ODE5LWJsb2cO0O0O.html">https://www.csdn.net/tags/MtTaEg4sOTQ4ODE5LWJsb2cO0O0O.html<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 </blockquote>
 ]]></content>
-  </entry>
-  <entry>
-    <title>安装python库时遇到ValueError: check_hostname requires server_hostname问题及解决</title>
-    <url>/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/</url>
-    <content><![CDATA[<p>正当我熟练地使用 <code>pip</code> 安装 <code>requests</code> 模块时，令人意想不到的一幕发生了……</p>
-<span id="more"></span>
-
-<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>今天准备爬虫，为了排查问题，我搬出了尘封已久的Windows笔记本，上一次打开这个电脑还是上一次。</p>
-<p>这个电脑上的python很干净，我需要安装 <code>requests</code> 来完成爬虫的相关功能。</p>
-<p>正当我熟练地使用 <code>pip</code> 安装这个模块时，令人意想不到的一幕发生了：</p>
-<img lazyload src="/images/loading.svg" data-src="/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/1.png" class>
-
-<p>一堆红色字体！</p>
-<p>定睛一看，报错信息为：</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">ValueError: check_hostname requires server_hostname</span><br></pre></td></tr></table></figure></div>
-
-<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>原来这个尘封已久的电脑，竟然还开机自启动微屁恩~</p>
-<p>当我把微屁恩关掉，再次安装，就可以了。顺便更新了一下 <code>pip</code> 。</p>
-<p>正确运行结果如上图所示。</p>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>bug</tag>
-        <tag>python</tag>
-      </tags>
   </entry>
   <entry>
     <title>实用SQL</title>
@@ -5496,6 +5469,33 @@
 <h1 id="自建OJ的蛋疼点在哪？"><a href="#自建OJ的蛋疼点在哪？" class="headerlink" title="自建OJ的蛋疼点在哪？"></a>自建OJ的蛋疼点在哪？</h1><h1 id="有哪些开源项目可以选择？"><a href="#有哪些开源项目可以选择？" class="headerlink" title="有哪些开源项目可以选择？"></a>有哪些开源项目可以选择？</h1><h1 id="我是怎么搭建EngeekerOJ的？"><a href="#我是怎么搭建EngeekerOJ的？" class="headerlink" title="我是怎么搭建EngeekerOJ的？"></a>我是怎么搭建EngeekerOJ的？</h1><h1 id="我是怎么搭建xxxOJ的？"><a href="#我是怎么搭建xxxOJ的？" class="headerlink" title="我是怎么搭建xxxOJ的？"></a>我是怎么搭建xxxOJ的？</h1>]]></content>
   </entry>
   <entry>
+    <title>安装python库时遇到ValueError: check_hostname requires server_hostname问题及解决</title>
+    <url>/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/</url>
+    <content><![CDATA[<p>正当我熟练地使用 <code>pip</code> 安装 <code>requests</code> 模块时，令人意想不到的一幕发生了……</p>
+<span id="more"></span>
+
+<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>今天准备爬虫，为了排查问题，我搬出了尘封已久的Windows笔记本，上一次打开这个电脑还是上一次。</p>
+<p>这个电脑上的python很干净，我需要安装 <code>requests</code> 来完成爬虫的相关功能。</p>
+<p>正当我熟练地使用 <code>pip</code> 安装这个模块时，令人意想不到的一幕发生了：</p>
+<img lazyload src="/images/loading.svg" data-src="/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/1.png" class>
+
+<p>一堆红色字体！</p>
+<p>定睛一看，报错信息为：</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">ValueError: check_hostname requires server_hostname</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>原来这个尘封已久的电脑，竟然还开机自启动微屁恩~</p>
+<p>当我把微屁恩关掉，再次安装，就可以了。顺便更新了一下 <code>pip</code> 。</p>
+<p>正确运行结果如上图所示。</p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>bug</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>熟悉键盘</title>
     <url>/2023/03/13/%E7%86%9F%E6%82%89%E9%94%AE%E7%9B%98/</url>
     <content><![CDATA[<span id="more"></span>
@@ -5511,6 +5511,31 @@
 ]]></content>
   </entry>
   <entry>
+    <title>许久没更新了…</title>
+    <url>/2021/05/19/%E8%AE%B8%E4%B9%85%E6%B2%A1%E6%9B%B4%E6%96%B0%E4%BA%86%E2%80%A6/</url>
+    <content><![CDATA[<p>许久没更新了，就是冒个泡</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>题解：1066_满足条件的数累加</title>
+    <url>/2023/08/16/%E9%A2%98%E8%A7%A3%EF%BC%9A1066-%E6%BB%A1%E8%B6%B3%E6%9D%A1%E4%BB%B6%E7%9A%84%E6%95%B0%E7%B4%AF%E5%8A%A0/</url>
+    <content><![CDATA[<p>一篇超简单的题的题解示例</p>
+<span id="more"></span>
+<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>将正整数m和n之间(包括m和n)能被17整除的数累加，其中，<code>0&lt;m&lt;n&lt;1000</code>。</p>
+<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>一行，包含两个整数m和n，其间，以一个空格间隔。</p>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>输出一行，包行一个整数，表示累加的结果。</p>
+<h2 id="输入样例"><a href="#输入样例" class="headerlink" title="输入样例"></a>输入样例</h2><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">50 85</span><br></pre></td></tr></table></figure></div>
+<h2 id="输出样例"><a href="#输出样例" class="headerlink" title="输出样例"></a>输出样例</h2><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">204</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><p>用枚举法。</p>
+<p>用for循环把从m到n的所有数列举出来，然后判断是否能被17整除，如果符合条件，就把这个数累加到变量ans中。</p>
+<h1 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码"></a>AC代码</h1><div class="code-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="comment">// 1066：满足条件的数累加</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> m, n, ans = <span class="number">0</span>;</span><br><span class="line">    cin &gt;&gt; m &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = m; i &lt;= n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (i % <span class="number">17</span> == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            ans += i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; ans &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+]]></content>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>编译和解释的区别</title>
     <url>/2021/12/08/%E7%BC%96%E8%AF%91%E5%92%8C%E8%A7%A3%E9%87%8A%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
     <content><![CDATA[<p>有些编程语言是编译运行，有些则是解释运行，那它们的区别是什么呢？</p>
@@ -5524,12 +5549,6 @@
 <blockquote>
 <p>大学计算机（第7版) 龚沛曾 杨志强</p>
 </blockquote>
-]]></content>
-  </entry>
-  <entry>
-    <title>许久没更新了…</title>
-    <url>/2021/05/19/%E8%AE%B8%E4%B9%85%E6%B2%A1%E6%9B%B4%E6%96%B0%E4%BA%86%E2%80%A6/</url>
-    <content><![CDATA[<p>许久没更新了，就是冒个泡</p>
 ]]></content>
   </entry>
   <entry>
@@ -5553,25 +5572,6 @@
 ]]></content>
       <tags>
         <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>题解：1066_满足条件的数累加</title>
-    <url>/2023/08/16/%E9%A2%98%E8%A7%A3%EF%BC%9A1066-%E6%BB%A1%E8%B6%B3%E6%9D%A1%E4%BB%B6%E7%9A%84%E6%95%B0%E7%B4%AF%E5%8A%A0/</url>
-    <content><![CDATA[<p>一篇超简单的题的题解示例</p>
-<span id="more"></span>
-<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>将正整数m和n之间(包括m和n)能被17整除的数累加，其中，<code>0&lt;m&lt;n&lt;1000</code>。</p>
-<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>一行，包含两个整数m和n，其间，以一个空格间隔。</p>
-<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>输出一行，包行一个整数，表示累加的结果。</p>
-<h2 id="输入样例"><a href="#输入样例" class="headerlink" title="输入样例"></a>输入样例</h2><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">50 85</span><br></pre></td></tr></table></figure></div>
-<h2 id="输出样例"><a href="#输出样例" class="headerlink" title="输出样例"></a>输出样例</h2><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">204</span><br></pre></td></tr></table></figure></div>
-
-<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><p>用枚举法。</p>
-<p>用for循环把从m到n的所有数列举出来，然后判断是否能被17整除，如果符合条件，就把这个数累加到变量ans中。</p>
-<h1 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码"></a>AC代码</h1><div class="code-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="comment">// 1066：满足条件的数累加</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> m, n, ans = <span class="number">0</span>;</span><br><span class="line">    cin &gt;&gt; m &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = m; i &lt;= n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (i % <span class="number">17</span> == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            ans += i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; ans &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-]]></content>
-      <tags>
-        <tag>C++</tag>
       </tags>
   </entry>
 </search>
