@@ -1,33 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Flume+Kafka实时数据采集</title>
-    <url>/2019/04/04/Flume-Kafka%E5%AE%9E%E6%97%B6%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/</url>
-    <content><![CDATA[<p>Flume的配置</p>
-<span id="more"></span>
-
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># avro-memory-kafka.conf</span></span><br><span class="line">avro-memory-kafka.sources = avro-source</span><br><span class="line">avro-memory-kafka.sinks = kafka-sink</span><br><span class="line">avro-memory-kafka.channels = memory-channel</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.type = avro</span><br><span class="line">avro-memory-kafka.sources.avro-source.bind = bigdata-01</span><br><span class="line">avro-memory-kafka.sources.avro-source.port = 44444</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.type = org.apache.flume.sink.kafka.KafkaSink</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.brokerList = bigdata-01:9092</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.topic = hello_topic</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.batchSize = 5</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.requiredAcks = 1</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.channels.memory-channel.type = memory</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.channels = memory-channel</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.channel = memory-channel</span><br></pre></td></tr></table></figure></div>
-<p>启动Flume</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flume-ng agent \</span><br><span class="line">--name avro-memory-kafka \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/avro-memory-kafka.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br><span class="line"></span><br><span class="line">flume-ng agent \</span><br><span class="line">--name exec-memory-avro \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/exec-memory-avro.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure></div>
-
-<p>启动消费者进行监控</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">kafka-console-consumer.sh --zookeeper bigdata-01:2181 -topic hello_topic</span><br></pre></td></tr></table></figure></div>
-
-<p>向日志文件中追加内容</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">[root@bigdata-01 ~]<span class="comment"># cd data/</span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># ll</span></span><br><span class="line">total 4</span><br><span class="line">-rw-r--r--. 1 root root 112 Feb  6 05:37 data.log</span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark2 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark3 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark4 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark5 &gt;&gt; data.log</span></span><br></pre></td></tr></table></figure></div>
-<p>这时，消费者就可以消费到日志文件中的新内容了。</p>
-<blockquote>
-<p>Flume的版本不同，配置文件（*.conf）需要配置的内容也不完全相同。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>大数据开发</category>
-      </categories>
-      <tags>
-        <tag>大数据开发</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>HDFS基本配置属性</title>
     <url>/2019/04/04/HDFS%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7/</url>
     <content><![CDATA[<h1 id="块大小"><a href="#块大小" class="headerlink" title="块大小"></a>块大小</h1><p>HDFS中存储的文件块的块大小，默认128M</p>
@@ -68,6 +41,33 @@
 <li>直接用<code>start-dfs.sh</code></li>
 <li>在新机器上手动启动一个DataNode进程：<code>hadoop-daemon.sh start datanode</code></li>
 </ol>
+]]></content>
+      <categories>
+        <category>大数据开发</category>
+      </categories>
+      <tags>
+        <tag>大数据开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Flume+Kafka实时数据采集</title>
+    <url>/2019/04/04/Flume-Kafka%E5%AE%9E%E6%97%B6%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/</url>
+    <content><![CDATA[<p>Flume的配置</p>
+<span id="more"></span>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># avro-memory-kafka.conf</span></span><br><span class="line">avro-memory-kafka.sources = avro-source</span><br><span class="line">avro-memory-kafka.sinks = kafka-sink</span><br><span class="line">avro-memory-kafka.channels = memory-channel</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.type = avro</span><br><span class="line">avro-memory-kafka.sources.avro-source.bind = bigdata-01</span><br><span class="line">avro-memory-kafka.sources.avro-source.port = 44444</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.type = org.apache.flume.sink.kafka.KafkaSink</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.brokerList = bigdata-01:9092</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.topic = hello_topic</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.batchSize = 5</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.requiredAcks = 1</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.channels.memory-channel.type = memory</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.channels = memory-channel</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.channel = memory-channel</span><br></pre></td></tr></table></figure></div>
+<p>启动Flume</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flume-ng agent \</span><br><span class="line">--name avro-memory-kafka \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/avro-memory-kafka.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br><span class="line"></span><br><span class="line">flume-ng agent \</span><br><span class="line">--name exec-memory-avro \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/exec-memory-avro.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure></div>
+
+<p>启动消费者进行监控</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">kafka-console-consumer.sh --zookeeper bigdata-01:2181 -topic hello_topic</span><br></pre></td></tr></table></figure></div>
+
+<p>向日志文件中追加内容</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">[root@bigdata-01 ~]<span class="comment"># cd data/</span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># ll</span></span><br><span class="line">total 4</span><br><span class="line">-rw-r--r--. 1 root root 112 Feb  6 05:37 data.log</span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark2 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark3 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark4 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark5 &gt;&gt; data.log</span></span><br></pre></td></tr></table></figure></div>
+<p>这时，消费者就可以消费到日志文件中的新内容了。</p>
+<blockquote>
+<p>Flume的版本不同，配置文件（*.conf）需要配置的内容也不完全相同。</p>
+</blockquote>
 ]]></content>
       <categories>
         <category>大数据开发</category>
@@ -302,78 +302,6 @@
       <tags>
         <tag>Python</tag>
         <tag>游戏</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MacOS下使用VS Code搭建C语言开发环境</title>
-    <url>/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
-    <content><![CDATA[<p>本篇介绍如何在Mac上使用VS Code写C语言代码。VS Code是一个轻量级的IDE，相比CLion、Xcode等等体积小很多，并且在插件市场拥有丰富的插件，可以方便的安装使用。</p>
-<span id="more"></span>
-
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><h2 id="下载VS-Code"><a href="#下载VS-Code" class="headerlink" title="下载VS Code"></a>下载VS Code</h2><p>下载地址：<a class="link" href="https://code.visualstudio.com/">https://code.visualstudio.com/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="1.png" alt="1"></p>
-</blockquote>
-<h2 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h2><p>打开VS Code，点击左侧的 Extensions（图标为“田”字右上角的格子起飞），在搜索框中输入 <code>C/C++</code>，选择紫色图标，作者为Microsoft，点击 Install 即可安装。</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="3.png" alt="3"></p>
-</blockquote>
-<h2 id="创建文件夹"><a href="#创建文件夹" class="headerlink" title="创建文件夹"></a>创建文件夹</h2><p>在电脑中你希望保存代码的地方新建一个文件夹，我的是 <code>桌面-个人-学习-C/C++</code> ，创建好以后重启 VS Code。重启后，在欢迎页面点击 Open，并打开你刚创建的文件夹。</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="4.png" alt="4"></p>
-</blockquote>
-<h2 id="另存为一个工作区"><a href="#另存为一个工作区" class="headerlink" title="另存为一个工作区"></a>另存为一个工作区</h2><p>点击 File &gt; Save Workspace As …，并命名。</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="5.png" alt="5"></p>
-</blockquote>
-<h2 id="新建一个C文件，命名并保存"><a href="#新建一个C文件，命名并保存" class="headerlink" title="新建一个C文件，命名并保存"></a>新建一个C文件，命名并保存</h2><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;hello VSCode!\n&quot;</span>);</span><br><span class="line">     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></div>
-
-<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h2 id="配置-c-cpp-properties-json"><a href="#配置-c-cpp-properties-json" class="headerlink" title="配置 c_cpp_properties.json"></a>配置 <code>c_cpp_properties.json</code></h2><p>使用快捷键 <code>command</code> + <code>shift</code> + <code>P</code>打开命令行面板（Command Palette）</p>
-<p>输入 edit configurations，在弹出的列表中选择带 JSON 的 C/C++: Edit Configurations(JSON)</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="6.png" alt="6"></p>
-</blockquote>
-<p>配置字段 includePath：</p>
-<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;includePath&quot;</span>: </span><br><span class="line">[</span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include/c++/v1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/usr/local/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include&quot;</span></span><br><span class="line">],</span><br></pre></td></tr></table></figure></div>
-
-<p>你可能需要注意<br> <code>&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;,</code>中的版本号，可以进入Finder，按快捷键<code>command</code> + <code>shift</code> + <code>G</code> 输入：</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">/Library/Developer/CommandLineTools/usr/lib/clang/</span><br></pre></td></tr></table></figure></div>
-
-<p>在文件夹中查看clang版本</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="8.png" alt="8"></p>
-</blockquote>
-<p>完成后保存。</p>
-<h2 id="配置-tasks-json"><a href="#配置-tasks-json" class="headerlink" title="配置 tasks.json"></a>配置 <code>tasks.json</code></h2><p>在打开.c文件的情况下（比如我这里的hello.c）打开命令行面板 <code>command</code> + <code>shift</code> + <code>P</code>，输入tasks:configure task，选择Tasks: Configure Task</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="9.png" alt="9"></p>
-</blockquote>
-<p>点击C/C++:clang 生成活动文件</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="10.png" alt="10"></p>
-</blockquote>
-<p>这里我们需要配置 args 字段</p>
-<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;args&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;-g&quot;</span>,<span class="comment">//编译命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.c&quot;</span>,<span class="comment">//当前workspace下的hello.c文件</span></span><br><span class="line">    <span class="string">&quot;-o&quot;</span>,<span class="comment">//输出文件命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span><span class="comment">//生成的可执行文件的路径及名称</span></span><br><span class="line">    ],</span><br></pre></td></tr></table></figure></div>
-
-<p>你需要配置第二个参数和第四个参数，第二个是编制的文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.c</code>，第四个是生成的可执行文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.o</code> ，完成后保存。</p>
-<h2 id="配置launch-json"><a href="#配置launch-json" class="headerlink" title="配置launch.json"></a>配置<code>launch.json</code></h2><p>在 hello.c 中按<code>Fn</code> + <code>F5</code> ，软件会报错并自动打开一个 <code>launch.json</code> 文件，这里需要配置 <code>program</code> 字段：</p>
-<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;program&quot;</span>: <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span>,</span><br></pre></td></tr></table></figure></div>
-
-<p>再次运行：</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="11.png" alt="11"></p>
-</blockquote>
-<hr>
-<blockquote>
-<p>部分内容转自 <a class="link" href="https://www.jianshu.com/u/69abdc363757">Robinone<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> 的 <a class="link" href="https://www.jianshu.com/p/83879b4aa3fe">https://www.jianshu.com/p/83879b4aa3fe<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>C/C++</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-        <tag>IDE</tag>
       </tags>
   </entry>
   <entry>
@@ -781,26 +709,6 @@
       </tags>
   </entry>
   <entry>
-    <title>PygameZero制作Pacman</title>
-    <url>/2020/11/28/PygameZero%E5%88%B6%E4%BD%9CPacman/</url>
-    <content><![CDATA[<p>本篇来介绍Pacman的PygameZero实现。</p>
-<img lazyload src="/images/loading.svg" data-src="/2020/11/28/PygameZero%E5%88%B6%E4%BD%9CPacman/pacman.png" class>
-
-<span id="more"></span>
-
-<p>先上代码，后边补上讲解</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pgzrun</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">WIDTH = <span class="number">500</span></span><br><span class="line">HEIGHT = <span class="number">500</span></span><br><span class="line">pacman = Actor(<span class="string">&#x27;向右的吃豆人&#x27;</span>)</span><br><span class="line">pacman.pos = [<span class="number">250</span>, <span class="number">250</span>]</span><br><span class="line">bean1 = Actor(<span class="string">&#x27;豆子&#x27;</span>)</span><br><span class="line">bean1.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean1.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean2 = Actor(<span class="string">&#x27;豆子&#x27;</span>)</span><br><span class="line">bean2.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean2.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean3 = Actor(<span class="string">&#x27;豆子&#x27;</span>)</span><br><span class="line">bean3.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean3.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">beans = [bean1, bean2, bean3]</span><br><span class="line">score = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    screen.blit(<span class="string">&#x27;游戏背景&#x27;</span>, [<span class="number">0</span>, <span class="number">0</span>])</span><br><span class="line">    pacman.draw()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> beans:</span><br><span class="line">        i.draw()</span><br><span class="line">    screen.draw.text(<span class="built_in">str</span>(score), [<span class="number">15</span>, <span class="number">15</span>], color=<span class="string">&#x27;orange&#x27;</span>, fontsize=<span class="number">30</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_key_down</span>(<span class="params">key</span>):</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.LEFT:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向左的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.RIGHT:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向右的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.UP:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向上的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.DOWN:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向下的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.SPACE:</span><br><span class="line">        <span class="built_in">print</span>(score)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="keyword">global</span> score</span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向左的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.x -= <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向右的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.x += <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向上的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.y -= <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向下的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.y += <span class="number">5</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> beans:</span><br><span class="line">        <span class="keyword">if</span> pacman.colliderect(i):</span><br><span class="line">            i.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">            i.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">            score += <span class="number">1</span></span><br><span class="line">            <span class="built_in">print</span>(score)</span><br><span class="line">    <span class="keyword">if</span> pacman.x &lt; <span class="number">0</span> <span class="keyword">or</span> pacman.x &gt; <span class="number">500</span> <span class="keyword">or</span> pacman.y &lt; <span class="number">0</span> <span class="keyword">or</span> pacman.y &gt; <span class="number">500</span>:</span><br><span class="line">        score -= <span class="number">3</span></span><br><span class="line">        <span class="built_in">print</span>(score)</span><br><span class="line">        pacman.pos = [<span class="number">250</span>, <span class="number">250</span>]</span><br><span class="line">    <span class="keyword">if</span> score &lt; <span class="number">0</span>:</span><br><span class="line">        exit()</span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure></div>
-
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>游戏</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Python中if后直接加变量</title>
     <url>/2019/12/23/Python%E4%B8%ADif%E5%90%8E%E7%9B%B4%E6%8E%A5%E5%8A%A0%E5%8F%98%E9%87%8F/</url>
     <content><![CDATA[<p>python中有时候会使用if语句，后边直接加一个变量，而不是一个布尔表达式，这是在判断神马呢？</p>
@@ -818,35 +726,23 @@
       </tags>
   </entry>
   <entry>
-    <title>Pycharm Out of memory 解决办法</title>
-    <url>/2021/05/26/Pycharm-Out-of-memory-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
-    <content><![CDATA[<p>最近使用Pycharm敲代码突然卡住，并且蹦出一个错误：<code>Out of memory</code>。</p>
-<p>但是该错误与代码无关，只是因为系统分配给Pycharm的最大内存不够用了而已。</p>
-<p>这个最大内存是我们可以修改的，将它修改的大一些就可以解决这个问题。</p>
-<p>下面看看如何修改~</p>
+    <title>PygameZero制作Pacman</title>
+    <url>/2020/11/28/PygameZero%E5%88%B6%E4%BD%9CPacman/</url>
+    <content><![CDATA[<p>本篇来介绍Pacman的PygameZero实现。</p>
+<img lazyload src="/images/loading.svg" data-src="/2020/11/28/PygameZero%E5%88%B6%E4%BD%9CPacman/pacman.png" class>
+
 <span id="more"></span>
 
-<ol>
-<li>进入如下目录：</li>
-</ol>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">访达 -&gt; 应用程序 -&gt; 右键Pycharm -&gt; 显示包内容 -&gt; Contents -&gt; bin</span><br></pre></td></tr></table></figure></div>
+<p>先上代码，后边补上讲解</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pgzrun</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">WIDTH = <span class="number">500</span></span><br><span class="line">HEIGHT = <span class="number">500</span></span><br><span class="line">pacman = Actor(<span class="string">&#x27;向右的吃豆人&#x27;</span>)</span><br><span class="line">pacman.pos = [<span class="number">250</span>, <span class="number">250</span>]</span><br><span class="line">bean1 = Actor(<span class="string">&#x27;豆子&#x27;</span>)</span><br><span class="line">bean1.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean1.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean2 = Actor(<span class="string">&#x27;豆子&#x27;</span>)</span><br><span class="line">bean2.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean2.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean3 = Actor(<span class="string">&#x27;豆子&#x27;</span>)</span><br><span class="line">bean3.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">bean3.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">beans = [bean1, bean2, bean3]</span><br><span class="line">score = <span class="number">0</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    screen.blit(<span class="string">&#x27;游戏背景&#x27;</span>, [<span class="number">0</span>, <span class="number">0</span>])</span><br><span class="line">    pacman.draw()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> beans:</span><br><span class="line">        i.draw()</span><br><span class="line">    screen.draw.text(<span class="built_in">str</span>(score), [<span class="number">15</span>, <span class="number">15</span>], color=<span class="string">&#x27;orange&#x27;</span>, fontsize=<span class="number">30</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">on_key_down</span>(<span class="params">key</span>):</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.LEFT:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向左的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.RIGHT:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向右的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.UP:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向上的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.DOWN:</span><br><span class="line">        pacman.image = <span class="string">&#x27;向下的吃豆人&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> key == keys.SPACE:</span><br><span class="line">        <span class="built_in">print</span>(score)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="keyword">global</span> score</span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向左的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.x -= <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向右的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.x += <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向上的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.y -= <span class="number">5</span></span><br><span class="line">    <span class="keyword">if</span> pacman.image == <span class="string">&#x27;向下的吃豆人&#x27;</span>:</span><br><span class="line">        pacman.y += <span class="number">5</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> beans:</span><br><span class="line">        <span class="keyword">if</span> pacman.colliderect(i):</span><br><span class="line">            i.x = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">            i.y = random.randint(<span class="number">100</span>, <span class="number">400</span>)</span><br><span class="line">            score += <span class="number">1</span></span><br><span class="line">            <span class="built_in">print</span>(score)</span><br><span class="line">    <span class="keyword">if</span> pacman.x &lt; <span class="number">0</span> <span class="keyword">or</span> pacman.x &gt; <span class="number">500</span> <span class="keyword">or</span> pacman.y &lt; <span class="number">0</span> <span class="keyword">or</span> pacman.y &gt; <span class="number">500</span>:</span><br><span class="line">        score -= <span class="number">3</span></span><br><span class="line">        <span class="built_in">print</span>(score)</span><br><span class="line">        pacman.pos = [<span class="number">250</span>, <span class="number">250</span>]</span><br><span class="line">    <span class="keyword">if</span> score &lt; <span class="number">0</span>:</span><br><span class="line">        exit()</span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure></div>
 
-<ol start="2">
-<li>找到文件<code>pycharm.vmoptions</code>，使用一个文本编辑器打开，修改前两行的数值：</li>
-</ol>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">-Xms1024m      修改前是512</span><br><span class="line">-Xmx2048m      修改前是750（奇怪的数字）</span><br><span class="line">-XX:ReservedCodeCacheSize=512m</span><br><span class="line">-XX:+UseConcMarkSweepGC</span><br></pre></td></tr></table></figure></div>
-
-<ol start="3">
-<li>修改后保存关闭，重新启动Pycharm。</li>
-</ol>
 ]]></content>
       <categories>
         <category>Python</category>
       </categories>
       <tags>
-        <tag>bug</tag>
         <tag>Python</tag>
-        <tag>IDE</tag>
+        <tag>游戏</tag>
       </tags>
   </entry>
   <entry>
@@ -1387,76 +1283,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Redis操作</title>
-    <url>/2019/04/04/Redis%E6%93%8D%E4%BD%9C/</url>
-    <content><![CDATA[<h1 id="环境准备：centOS6-5"><a href="#环境准备：centOS6-5" class="headerlink" title="环境准备：centOS6.5"></a>环境准备：centOS6.5</h1><p>Redis是c语言开发的。<br>安装redis需要c语言的编译环境。如果没有gcc需要在线安装。</p>
-<span id="more"></span>
-
-<h1 id="安装编译环境"><a href="#安装编译环境" class="headerlink" title="安装编译环境"></a>安装编译环境</h1><p><code>yum install gcc-c++</code></p>
-<h1 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h1><ul>
-<li><p>第一步：redis的源码(安装)包上传到linux系统。</p>
-</li>
-<li><p>第二步：进入到压缩包所在的路径，解压缩redis。</p>
-</li>
-</ul>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">tar -zxvf redis-3.0.0.tar.gz</span><br></pre></td></tr></table></figure></div>
-
-<ul>
-<li>第三步：编译。进入redis源码目录（redis3.0.0）。</li>
-</ul>
-<p>执行：<code>make </code></p>
-<ul>
-<li>第四步：进入/usr/redis-3.0.0/src/安装。</li>
-</ul>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">make install PREFIX=/usr/java/redis</span><br></pre></td></tr></table></figure></div>
-
-<p>如果报错</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">zmalloc.h:50:31: error: jemalloc/jemalloc.h: No such file or directory</span><br><span class="line">zmalloc.h:55:2: error: <span class="comment">#error &quot;Newer version of jemalloc required&quot;</span></span><br><span class="line">make[1]: *** [adlist.o] Error 1</span><br><span class="line">make[1]: Leaving directory </span><br><span class="line">`/data0/src/redis-2.6.2/src<span class="string">&#x27;</span></span><br><span class="line"><span class="string">make: *** [all] Error 2</span></span><br></pre></td></tr></table></figure></div>
-<p>解决办法是：</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">make MALLOC=libc</span><br></pre></td></tr></table></figure></div>
-
-<blockquote>
-<p>PREFIX参数指定redis的安装目录。一般软件安装到/usr目录下</p>
-</blockquote>
-<p>连接redis</p>
-<h1 id="redis的启动"><a href="#redis的启动" class="headerlink" title="redis的启动"></a>redis的启动</h1><h2 id="前端启动"><a href="#前端启动" class="headerlink" title="前端启动"></a>前端启动</h2><p>在redis的安装目录的bin目录下直接启动redis-server</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">./redis-server </span><br></pre></td></tr></table></figure></div>
-
-<h2 id="后台启动"><a href="#后台启动" class="headerlink" title="后台启动"></a>后台启动</h2><p>把/root/redis-3.0.0/redis.conf复制到/usr/java/r<br>edis/bin目录下</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">cp redis.conf /usr/java/redis/bin/</span><br></pre></td></tr></table></figure></div>
-
-<p>修改配置文件：</p>
-<p>启动服务器：</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">./redis-server redis.conf</span><br></pre></td></tr></table></figure></div>
-
-<p>查看redis进程：</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">ps aux|grep redis</span><br></pre></td></tr></table></figure></div>
-
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">root      5190  0.1  0.3  33936  1712 ?        Ssl  18:23   0:00 ./redis-server *:6379    </span><br><span class="line">root      5196  0.0  0.1   4356   728 pts/0    S+   18:24   0:00 grep redis</span><br></pre></td></tr></table></figure></div>
-<h2 id="关闭服务"><a href="#关闭服务" class="headerlink" title="关闭服务"></a>关闭服务</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">./redis-cli shutdown</span><br></pre></td></tr></table></figure></div>
-
-<p>或者通过kill -9 PID关闭</p>
-<p>Redis-cli</p>
-<p><code>[root@localhost bin]# ./redis-cli </code></p>
-<p>默认连接localhost运行在6379端口的redis服务。</p>
-<p><code>[root@localhost bin]# ./redis-cli -h </code></p>
-<p><code>192.168.75.128 -p 6379</code></p>
-<blockquote>
-<p>-h：连接的服务器的地址</p>
-</blockquote>
-<blockquote>
-<p>-p：服务的端口号</p>
-</blockquote>
-<p>关闭redis：</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">./redis-cli shutdown</span><br></pre></td></tr></table></figure></div>]]></content>
-      <categories>
-        <category>大数据开发</category>
-      </categories>
-      <tags>
-        <tag>大数据开发</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Python递归绘制科赫雪花</title>
     <url>/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/</url>
     <content><![CDATA[<img lazyload src="/images/loading.svg" data-src="/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/snowflake.png" class>
@@ -1573,6 +1399,76 @@
       </categories>
       <tags>
         <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Redis操作</title>
+    <url>/2019/04/04/Redis%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<h1 id="环境准备：centOS6-5"><a href="#环境准备：centOS6-5" class="headerlink" title="环境准备：centOS6.5"></a>环境准备：centOS6.5</h1><p>Redis是c语言开发的。<br>安装redis需要c语言的编译环境。如果没有gcc需要在线安装。</p>
+<span id="more"></span>
+
+<h1 id="安装编译环境"><a href="#安装编译环境" class="headerlink" title="安装编译环境"></a>安装编译环境</h1><p><code>yum install gcc-c++</code></p>
+<h1 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h1><ul>
+<li><p>第一步：redis的源码(安装)包上传到linux系统。</p>
+</li>
+<li><p>第二步：进入到压缩包所在的路径，解压缩redis。</p>
+</li>
+</ul>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">tar -zxvf redis-3.0.0.tar.gz</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>第三步：编译。进入redis源码目录（redis3.0.0）。</li>
+</ul>
+<p>执行：<code>make </code></p>
+<ul>
+<li>第四步：进入/usr/redis-3.0.0/src/安装。</li>
+</ul>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">make install PREFIX=/usr/java/redis</span><br></pre></td></tr></table></figure></div>
+
+<p>如果报错</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">zmalloc.h:50:31: error: jemalloc/jemalloc.h: No such file or directory</span><br><span class="line">zmalloc.h:55:2: error: <span class="comment">#error &quot;Newer version of jemalloc required&quot;</span></span><br><span class="line">make[1]: *** [adlist.o] Error 1</span><br><span class="line">make[1]: Leaving directory </span><br><span class="line">`/data0/src/redis-2.6.2/src<span class="string">&#x27;</span></span><br><span class="line"><span class="string">make: *** [all] Error 2</span></span><br></pre></td></tr></table></figure></div>
+<p>解决办法是：</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">make MALLOC=libc</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>PREFIX参数指定redis的安装目录。一般软件安装到/usr目录下</p>
+</blockquote>
+<p>连接redis</p>
+<h1 id="redis的启动"><a href="#redis的启动" class="headerlink" title="redis的启动"></a>redis的启动</h1><h2 id="前端启动"><a href="#前端启动" class="headerlink" title="前端启动"></a>前端启动</h2><p>在redis的安装目录的bin目录下直接启动redis-server</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">./redis-server </span><br></pre></td></tr></table></figure></div>
+
+<h2 id="后台启动"><a href="#后台启动" class="headerlink" title="后台启动"></a>后台启动</h2><p>把/root/redis-3.0.0/redis.conf复制到/usr/java/r<br>edis/bin目录下</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">cp redis.conf /usr/java/redis/bin/</span><br></pre></td></tr></table></figure></div>
+
+<p>修改配置文件：</p>
+<p>启动服务器：</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">./redis-server redis.conf</span><br></pre></td></tr></table></figure></div>
+
+<p>查看redis进程：</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">ps aux|grep redis</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">root      5190  0.1  0.3  33936  1712 ?        Ssl  18:23   0:00 ./redis-server *:6379    </span><br><span class="line">root      5196  0.0  0.1   4356   728 pts/0    S+   18:24   0:00 grep redis</span><br></pre></td></tr></table></figure></div>
+<h2 id="关闭服务"><a href="#关闭服务" class="headerlink" title="关闭服务"></a>关闭服务</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">./redis-cli shutdown</span><br></pre></td></tr></table></figure></div>
+
+<p>或者通过kill -9 PID关闭</p>
+<p>Redis-cli</p>
+<p><code>[root@localhost bin]# ./redis-cli </code></p>
+<p>默认连接localhost运行在6379端口的redis服务。</p>
+<p><code>[root@localhost bin]# ./redis-cli -h </code></p>
+<p><code>192.168.75.128 -p 6379</code></p>
+<blockquote>
+<p>-h：连接的服务器的地址</p>
+</blockquote>
+<blockquote>
+<p>-p：服务的端口号</p>
+</blockquote>
+<p>关闭redis：</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">./redis-cli shutdown</span><br></pre></td></tr></table></figure></div>]]></content>
+      <categories>
+        <category>大数据开发</category>
+      </categories>
+      <tags>
+        <tag>大数据开发</tag>
       </tags>
   </entry>
   <entry>
@@ -2293,214 +2189,75 @@
       </tags>
   </entry>
   <entry>
-    <title>SQL必知必会(5)高级过滤数据</title>
-    <url>/2020/12/06/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-5-%E9%AB%98%E7%BA%A7%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[<p><strong>操作符（operator）</strong>：用来连接或改变WHERE子句中的子句的关键字，也称为逻辑操作符（logical operator）。</p>
-<p><strong>AND操作符</strong>：要通过不止一个列进行过滤。</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_id, prod_price, prod_name</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="operator">=</span> ‘DLL01’ <span class="keyword">AND</span> prod_price <span class="operator">&lt;=</span> <span class="number">4</span>;</span><br></pre></td></tr></table></figure></div>
-
+    <title>MacOS下使用VS Code搭建C语言开发环境</title>
+    <url>/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
+    <content><![CDATA[<p>本篇介绍如何在Mac上使用VS Code写C语言代码。VS Code是一个轻量级的IDE，相比CLion、Xcode等等体积小很多，并且在插件市场拥有丰富的插件，可以方便的安装使用。</p>
 <span id="more"></span>
 
-<table>
-<thead>
-<tr>
-<th>prod_id</th>
-<th>prod_price</th>
-<th>prod_name</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>BNBG01</td>
-<td>3.49</td>
-<td>Fish bean bag toy</td>
-</tr>
-<tr>
-<td>BNBG02</td>
-<td>3.49</td>
-<td>Bird bean bag toy</td>
-</tr>
-<tr>
-<td>BNBG03</td>
-<td>3.49</td>
-<td>Rabbit bean bag toy</td>
-</tr>
-</tbody></table>
-<p><strong>OR操作符</strong>：多个条件，满足任意一个即可。</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="operator">=</span> ‘DLL01’ <span class="keyword">OR</span> vend_id <span class="operator">=</span> ‘BRS01’;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>prod_name</th>
-<th>prod_price</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>8 inch teddy bear</td>
-<td>5.99</td>
-</tr>
-<tr>
-<td>12 inch teddy bear</td>
-<td>8.99</td>
-</tr>
-<tr>
-<td>18 inch teddy bear</td>
-<td>11.99</td>
-</tr>
-<tr>
-<td>Fish bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Bird bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Rabbit bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Raggedy Ann</td>
-<td>4.99</td>
-</tr>
-</tbody></table>
-<p>求值顺序：<br>目标：想要列出价格为10美元及以上，且由DLL01或BRS01制造的所有产品。</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*------------错误示例------------*/</span></span><br><span class="line"><span class="keyword">SELECT</span> prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="operator">=</span> ‘DLL01’ <span class="keyword">OR</span> vend_id <span class="operator">=</span> ‘BRS01’</span><br><span class="line">        <span class="keyword">AND</span> prod_price <span class="operator">&gt;=</span> <span class="number">10</span>;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>prod_name</th>
-<th>prod_price</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>18 inch teddy bear</td>
-<td>11.99</td>
-</tr>
-<tr>
-<td>Fish bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Bird bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Rabbit bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Raggedy Ann</td>
-<td>4.99</td>
-</tr>
-</tbody></table>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><h2 id="下载VS-Code"><a href="#下载VS-Code" class="headerlink" title="下载VS Code"></a>下载VS Code</h2><p>下载地址：<a class="link" href="https://code.visualstudio.com/">https://code.visualstudio.com/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 <blockquote>
-<p>SQL在处理OR操作符之前，优先处理AND操作符。</p>
+<p><img lazyload src="/images/loading.svg" data-src="1.png" alt="1"></p>
 </blockquote>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*------------正确示例------------*/</span></span><br><span class="line"><span class="keyword">SELECT</span> prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> (vend_id <span class="operator">=</span> ‘DLL01’ <span class="keyword">OR</span> vend_id <span class="operator">=</span> ‘BRS01’)</span><br><span class="line">    <span class="keyword">AND</span> prod_price <span class="operator">&gt;=</span> <span class="number">10</span>;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>prod_name</th>
-<th>prod_price</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>18 inch teddy bear</td>
-<td>11.99</td>
-</tr>
-</tbody></table>
+<h2 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h2><p>打开VS Code，点击左侧的 Extensions（图标为“田”字右上角的格子起飞），在搜索框中输入 <code>C/C++</code>，选择紫色图标，作者为Microsoft，点击 Install 即可安装。</p>
 <blockquote>
-<p>圆括号比AND或OR具有更高的优先级，任何时候使用具有AND、OR的WHERE子句，都可以使用圆括号消除歧义。</p>
+<p><img lazyload src="/images/loading.svg" data-src="3.png" alt="3"></p>
 </blockquote>
-<p><strong>IN操作符</strong>：用来指定条件范围，范围中的每个条件都可以进行匹配。</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="keyword">IN</span> (‘DLL01’, ‘BRS01’)</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_name;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>prod_name</th>
-<th>prod_price</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>12 inch teddy bear</td>
-<td>8.99</td>
-</tr>
-<tr>
-<td>18 inch teddy bear</td>
-<td>11.99</td>
-</tr>
-<tr>
-<td>8 inch teddy bear</td>
-<td>5.99</td>
-</tr>
-<tr>
-<td>Bird bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Fish bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Rabbit bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Raggedy Ann</td>
-<td>4.99</td>
-</tr>
-</tbody></table>
+<h2 id="创建文件夹"><a href="#创建文件夹" class="headerlink" title="创建文件夹"></a>创建文件夹</h2><p>在电脑中你希望保存代码的地方新建一个文件夹，我的是 <code>桌面-个人-学习-C/C++</code> ，创建好以后重启 VS Code。重启后，在欢迎页面点击 Open，并打开你刚创建的文件夹。</p>
 <blockquote>
-<p>IN操作符与OR具有相同功能。</p>
+<p><img lazyload src="/images/loading.svg" data-src="4.png" alt="4"></p>
 </blockquote>
+<h2 id="另存为一个工作区"><a href="#另存为一个工作区" class="headerlink" title="另存为一个工作区"></a>另存为一个工作区</h2><p>点击 File &gt; Save Workspace As …，并命名。</p>
 <blockquote>
-<p>使用IN操作符的优点：</p>
-<ul>
-<li>在有很多合法选项时，IN更加清楚直观；</li>
-<li>在于其他AND、OR组合使用IN时，求值顺序易管理；</li>
-<li>IN比一组OR执行更快；</li>
-<li>IN可以包含其他SELECT语句，能够更动态的建立WHERE子句。</li>
-</ul>
+<p><img lazyload src="/images/loading.svg" data-src="5.png" alt="5"></p>
 </blockquote>
-<p><strong>NOT操作符</strong>：WHERE子句中用来否定其后条件的关键字。</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name </span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">NOT</span> vend_id <span class="operator">=</span> ‘DLL01’</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_name;</span><br></pre></td></tr></table></figure></div>
+<h2 id="新建一个C文件，命名并保存"><a href="#新建一个C文件，命名并保存" class="headerlink" title="新建一个C文件，命名并保存"></a>新建一个C文件，命名并保存</h2><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;hello VSCode!\n&quot;</span>);</span><br><span class="line">     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></div>
 
-<table>
-<thead>
-<tr>
-<th>prod_name</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>12 inch teddy bear</td>
-</tr>
-<tr>
-<td>18 inch teddy bear</td>
-</tr>
-<tr>
-<td>8 inch teddy bear</td>
-</tr>
-<tr>
-<td>King doll</td>
-</tr>
-<tr>
-<td>Queen doll</td>
-</tr>
-</tbody></table>
-<p>+——————–+</p>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h2 id="配置-c-cpp-properties-json"><a href="#配置-c-cpp-properties-json" class="headerlink" title="配置 c_cpp_properties.json"></a>配置 <code>c_cpp_properties.json</code></h2><p>使用快捷键 <code>command</code> + <code>shift</code> + <code>P</code>打开命令行面板（Command Palette）</p>
+<p>输入 edit configurations，在弹出的列表中选择带 JSON 的 C/C++: Edit Configurations(JSON)</p>
 <blockquote>
-<p>上面的例子，也可以用<code>&lt;&gt;</code>来完成。</p>
+<p><img lazyload src="/images/loading.svg" data-src="6.png" alt="6"></p>
+</blockquote>
+<p>配置字段 includePath：</p>
+<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;includePath&quot;</span>: </span><br><span class="line">[</span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include/c++/v1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/usr/local/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include&quot;</span></span><br><span class="line">],</span><br></pre></td></tr></table></figure></div>
+
+<p>你可能需要注意<br> <code>&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;,</code>中的版本号，可以进入Finder，按快捷键<code>command</code> + <code>shift</code> + <code>G</code> 输入：</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">/Library/Developer/CommandLineTools/usr/lib/clang/</span><br></pre></td></tr></table></figure></div>
+
+<p>在文件夹中查看clang版本</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="8.png" alt="8"></p>
+</blockquote>
+<p>完成后保存。</p>
+<h2 id="配置-tasks-json"><a href="#配置-tasks-json" class="headerlink" title="配置 tasks.json"></a>配置 <code>tasks.json</code></h2><p>在打开.c文件的情况下（比如我这里的hello.c）打开命令行面板 <code>command</code> + <code>shift</code> + <code>P</code>，输入tasks:configure task，选择Tasks: Configure Task</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="9.png" alt="9"></p>
+</blockquote>
+<p>点击C/C++:clang 生成活动文件</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="10.png" alt="10"></p>
+</blockquote>
+<p>这里我们需要配置 args 字段</p>
+<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;args&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;-g&quot;</span>,<span class="comment">//编译命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.c&quot;</span>,<span class="comment">//当前workspace下的hello.c文件</span></span><br><span class="line">    <span class="string">&quot;-o&quot;</span>,<span class="comment">//输出文件命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span><span class="comment">//生成的可执行文件的路径及名称</span></span><br><span class="line">    ],</span><br></pre></td></tr></table></figure></div>
+
+<p>你需要配置第二个参数和第四个参数，第二个是编制的文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.c</code>，第四个是生成的可执行文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.o</code> ，完成后保存。</p>
+<h2 id="配置launch-json"><a href="#配置launch-json" class="headerlink" title="配置launch.json"></a>配置<code>launch.json</code></h2><p>在 hello.c 中按<code>Fn</code> + <code>F5</code> ，软件会报错并自动打开一个 <code>launch.json</code> 文件，这里需要配置 <code>program</code> 字段：</p>
+<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;program&quot;</span>: <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span>,</span><br></pre></td></tr></table></figure></div>
+
+<p>再次运行：</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="11.png" alt="11"></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>部分内容转自 <a class="link" href="https://www.jianshu.com/u/69abdc363757">Robinone<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> 的 <a class="link" href="https://www.jianshu.com/p/83879b4aa3fe">https://www.jianshu.com/p/83879b4aa3fe<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 </blockquote>
 ]]></content>
       <categories>
-        <category>SQL</category>
+        <category>C/C++</category>
       </categories>
       <tags>
-        <tag>SQL</tag>
+        <tag>C</tag>
+        <tag>IDE</tag>
       </tags>
   </entry>
   <entry>
@@ -2725,6 +2482,217 @@
       </tags>
   </entry>
   <entry>
+    <title>SQL必知必会(5)高级过滤数据</title>
+    <url>/2020/12/06/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-5-%E9%AB%98%E7%BA%A7%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[<p><strong>操作符（operator）</strong>：用来连接或改变WHERE子句中的子句的关键字，也称为逻辑操作符（logical operator）。</p>
+<p><strong>AND操作符</strong>：要通过不止一个列进行过滤。</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_id, prod_price, prod_name</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="operator">=</span> ‘DLL01’ <span class="keyword">AND</span> prod_price <span class="operator">&lt;=</span> <span class="number">4</span>;</span><br></pre></td></tr></table></figure></div>
+
+<span id="more"></span>
+
+<table>
+<thead>
+<tr>
+<th>prod_id</th>
+<th>prod_price</th>
+<th>prod_name</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BNBG01</td>
+<td>3.49</td>
+<td>Fish bean bag toy</td>
+</tr>
+<tr>
+<td>BNBG02</td>
+<td>3.49</td>
+<td>Bird bean bag toy</td>
+</tr>
+<tr>
+<td>BNBG03</td>
+<td>3.49</td>
+<td>Rabbit bean bag toy</td>
+</tr>
+</tbody></table>
+<p><strong>OR操作符</strong>：多个条件，满足任意一个即可。</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="operator">=</span> ‘DLL01’ <span class="keyword">OR</span> vend_id <span class="operator">=</span> ‘BRS01’;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>prod_name</th>
+<th>prod_price</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>8 inch teddy bear</td>
+<td>5.99</td>
+</tr>
+<tr>
+<td>12 inch teddy bear</td>
+<td>8.99</td>
+</tr>
+<tr>
+<td>18 inch teddy bear</td>
+<td>11.99</td>
+</tr>
+<tr>
+<td>Fish bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Bird bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Rabbit bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Raggedy Ann</td>
+<td>4.99</td>
+</tr>
+</tbody></table>
+<p>求值顺序：<br>目标：想要列出价格为10美元及以上，且由DLL01或BRS01制造的所有产品。</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*------------错误示例------------*/</span></span><br><span class="line"><span class="keyword">SELECT</span> prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="operator">=</span> ‘DLL01’ <span class="keyword">OR</span> vend_id <span class="operator">=</span> ‘BRS01’</span><br><span class="line">        <span class="keyword">AND</span> prod_price <span class="operator">&gt;=</span> <span class="number">10</span>;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>prod_name</th>
+<th>prod_price</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>18 inch teddy bear</td>
+<td>11.99</td>
+</tr>
+<tr>
+<td>Fish bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Bird bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Rabbit bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Raggedy Ann</td>
+<td>4.99</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>SQL在处理OR操作符之前，优先处理AND操作符。</p>
+</blockquote>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*------------正确示例------------*/</span></span><br><span class="line"><span class="keyword">SELECT</span> prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> (vend_id <span class="operator">=</span> ‘DLL01’ <span class="keyword">OR</span> vend_id <span class="operator">=</span> ‘BRS01’)</span><br><span class="line">    <span class="keyword">AND</span> prod_price <span class="operator">&gt;=</span> <span class="number">10</span>;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>prod_name</th>
+<th>prod_price</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>18 inch teddy bear</td>
+<td>11.99</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>圆括号比AND或OR具有更高的优先级，任何时候使用具有AND、OR的WHERE子句，都可以使用圆括号消除歧义。</p>
+</blockquote>
+<p><strong>IN操作符</strong>：用来指定条件范围，范围中的每个条件都可以进行匹配。</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="keyword">IN</span> (‘DLL01’, ‘BRS01’)</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_name;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>prod_name</th>
+<th>prod_price</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>12 inch teddy bear</td>
+<td>8.99</td>
+</tr>
+<tr>
+<td>18 inch teddy bear</td>
+<td>11.99</td>
+</tr>
+<tr>
+<td>8 inch teddy bear</td>
+<td>5.99</td>
+</tr>
+<tr>
+<td>Bird bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Fish bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Rabbit bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Raggedy Ann</td>
+<td>4.99</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>IN操作符与OR具有相同功能。</p>
+</blockquote>
+<blockquote>
+<p>使用IN操作符的优点：</p>
+<ul>
+<li>在有很多合法选项时，IN更加清楚直观；</li>
+<li>在于其他AND、OR组合使用IN时，求值顺序易管理；</li>
+<li>IN比一组OR执行更快；</li>
+<li>IN可以包含其他SELECT语句，能够更动态的建立WHERE子句。</li>
+</ul>
+</blockquote>
+<p><strong>NOT操作符</strong>：WHERE子句中用来否定其后条件的关键字。</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name </span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">NOT</span> vend_id <span class="operator">=</span> ‘DLL01’</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_name;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>prod_name</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>12 inch teddy bear</td>
+</tr>
+<tr>
+<td>18 inch teddy bear</td>
+</tr>
+<tr>
+<td>8 inch teddy bear</td>
+</tr>
+<tr>
+<td>King doll</td>
+</tr>
+<tr>
+<td>Queen doll</td>
+</tr>
+</tbody></table>
+<p>+——————–+</p>
+<blockquote>
+<p>上面的例子，也可以用<code>&lt;&gt;</code>来完成。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Scratch还能做出这么酷炫的3D效果？</title>
     <url>/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/</url>
     <content><![CDATA[<p>哇！</p>
@@ -2780,6 +2748,38 @@
       </categories>
       <tags>
         <tag>Scratch</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Pycharm Out of memory 解决办法</title>
+    <url>/2021/05/26/Pycharm-Out-of-memory-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
+    <content><![CDATA[<p>最近使用Pycharm敲代码突然卡住，并且蹦出一个错误：<code>Out of memory</code>。</p>
+<p>但是该错误与代码无关，只是因为系统分配给Pycharm的最大内存不够用了而已。</p>
+<p>这个最大内存是我们可以修改的，将它修改的大一些就可以解决这个问题。</p>
+<p>下面看看如何修改~</p>
+<span id="more"></span>
+
+<ol>
+<li>进入如下目录：</li>
+</ol>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">访达 -&gt; 应用程序 -&gt; 右键Pycharm -&gt; 显示包内容 -&gt; Contents -&gt; bin</span><br></pre></td></tr></table></figure></div>
+
+<ol start="2">
+<li>找到文件<code>pycharm.vmoptions</code>，使用一个文本编辑器打开，修改前两行的数值：</li>
+</ol>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">-Xms1024m      修改前是512</span><br><span class="line">-Xmx2048m      修改前是750（奇怪的数字）</span><br><span class="line">-XX:ReservedCodeCacheSize=512m</span><br><span class="line">-XX:+UseConcMarkSweepGC</span><br></pre></td></tr></table></figure></div>
+
+<ol start="3">
+<li>修改后保存关闭，重新启动Pycharm。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>bug</tag>
+        <tag>Python</tag>
+        <tag>IDE</tag>
       </tags>
   </entry>
   <entry>
@@ -2923,6 +2923,23 @@
       </tags>
   </entry>
   <entry>
+    <title>pygame笨拙的旋转</title>
+    <url>/2021/10/09/pygame%E7%AC%A8%E6%8B%99%E7%9A%84%E6%97%8B%E8%BD%AC/</url>
+    <content><![CDATA[<p>标题来自Jonathan S.Harbour的《Python游戏编程入门》。</p>
+<span id="more"></span>
+
+<p>先不写了。有空再说。</p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>游戏</tag>
+        <tag>pygame</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>pyinstaller的傻瓜式用法</title>
     <url>/2023/03/06/pyinstaller%E7%9A%84%E5%82%BB%E7%93%9C%E5%BC%8F%E7%94%A8%E6%B3%95/</url>
     <content><![CDATA[<p><code>PyInstaller</code>是一个能将Python程序打包成可执行文件的优秀第三方库，Python程序打包后，新的程序就可以在没有安装Python的电脑上运行。<code>pyinstaller</code>最新版本已经支持绝大部分操作系统。</p>
@@ -2986,23 +3003,6 @@
       </categories>
       <tags>
         <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>pygame笨拙的旋转</title>
-    <url>/2021/10/09/pygame%E7%AC%A8%E6%8B%99%E7%9A%84%E6%97%8B%E8%BD%AC/</url>
-    <content><![CDATA[<p>标题来自Jonathan S.Harbour的《Python游戏编程入门》。</p>
-<span id="more"></span>
-
-<p>先不写了。有空再说。</p>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>游戏</tag>
-        <tag>pygame</tag>
       </tags>
   </entry>
   <entry>
@@ -5469,33 +5469,6 @@
 <h1 id="自建OJ的蛋疼点在哪？"><a href="#自建OJ的蛋疼点在哪？" class="headerlink" title="自建OJ的蛋疼点在哪？"></a>自建OJ的蛋疼点在哪？</h1><h1 id="有哪些开源项目可以选择？"><a href="#有哪些开源项目可以选择？" class="headerlink" title="有哪些开源项目可以选择？"></a>有哪些开源项目可以选择？</h1><h1 id="我是怎么搭建EngeekerOJ的？"><a href="#我是怎么搭建EngeekerOJ的？" class="headerlink" title="我是怎么搭建EngeekerOJ的？"></a>我是怎么搭建EngeekerOJ的？</h1><h1 id="我是怎么搭建xxxOJ的？"><a href="#我是怎么搭建xxxOJ的？" class="headerlink" title="我是怎么搭建xxxOJ的？"></a>我是怎么搭建xxxOJ的？</h1>]]></content>
   </entry>
   <entry>
-    <title>安装python库时遇到ValueError: check_hostname requires server_hostname问题及解决</title>
-    <url>/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/</url>
-    <content><![CDATA[<p>正当我熟练地使用 <code>pip</code> 安装 <code>requests</code> 模块时，令人意想不到的一幕发生了……</p>
-<span id="more"></span>
-
-<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>今天准备爬虫，为了排查问题，我搬出了尘封已久的Windows笔记本，上一次打开这个电脑还是上一次。</p>
-<p>这个电脑上的python很干净，我需要安装 <code>requests</code> 来完成爬虫的相关功能。</p>
-<p>正当我熟练地使用 <code>pip</code> 安装这个模块时，令人意想不到的一幕发生了：</p>
-<img lazyload src="/images/loading.svg" data-src="/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/1.png" class>
-
-<p>一堆红色字体！</p>
-<p>定睛一看，报错信息为：</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">ValueError: check_hostname requires server_hostname</span><br></pre></td></tr></table></figure></div>
-
-<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>原来这个尘封已久的电脑，竟然还开机自启动微屁恩~</p>
-<p>当我把微屁恩关掉，再次安装，就可以了。顺便更新了一下 <code>pip</code> 。</p>
-<p>正确运行结果如上图所示。</p>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>bug</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>熟悉键盘</title>
     <url>/2023/03/13/%E7%86%9F%E6%82%89%E9%94%AE%E7%9B%98/</url>
     <content><![CDATA[<span id="more"></span>
@@ -5533,6 +5506,33 @@
 ]]></content>
       <tags>
         <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>安装python库时遇到ValueError: check_hostname requires server_hostname问题及解决</title>
+    <url>/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/</url>
+    <content><![CDATA[<p>正当我熟练地使用 <code>pip</code> 安装 <code>requests</code> 模块时，令人意想不到的一幕发生了……</p>
+<span id="more"></span>
+
+<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>今天准备爬虫，为了排查问题，我搬出了尘封已久的Windows笔记本，上一次打开这个电脑还是上一次。</p>
+<p>这个电脑上的python很干净，我需要安装 <code>requests</code> 来完成爬虫的相关功能。</p>
+<p>正当我熟练地使用 <code>pip</code> 安装这个模块时，令人意想不到的一幕发生了：</p>
+<img lazyload src="/images/loading.svg" data-src="/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/1.png" class>
+
+<p>一堆红色字体！</p>
+<p>定睛一看，报错信息为：</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">ValueError: check_hostname requires server_hostname</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>原来这个尘封已久的电脑，竟然还开机自启动微屁恩~</p>
+<p>当我把微屁恩关掉，再次安装，就可以了。顺便更新了一下 <code>pip</code> 。</p>
+<p>正确运行结果如上图所示。</p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>bug</tag>
+        <tag>python</tag>
       </tags>
   </entry>
   <entry>
