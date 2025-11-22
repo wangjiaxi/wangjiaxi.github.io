@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Flume+Kafka实时数据采集</title>
+    <url>/2019/04/04/Flume-Kafka%E5%AE%9E%E6%97%B6%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/</url>
+    <content><![CDATA[<p>Flume的配置</p>
+<span id="more"></span>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># avro-memory-kafka.conf</span></span><br><span class="line">avro-memory-kafka.sources = avro-source</span><br><span class="line">avro-memory-kafka.sinks = kafka-sink</span><br><span class="line">avro-memory-kafka.channels = memory-channel</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.type = avro</span><br><span class="line">avro-memory-kafka.sources.avro-source.bind = bigdata-01</span><br><span class="line">avro-memory-kafka.sources.avro-source.port = 44444</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.type = org.apache.flume.sink.kafka.KafkaSink</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.brokerList = bigdata-01:9092</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.topic = hello_topic</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.batchSize = 5</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.requiredAcks = 1</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.channels.memory-channel.type = memory</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.channels = memory-channel</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.channel = memory-channel</span><br></pre></td></tr></table></figure></div>
+<p>启动Flume</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flume-ng agent \</span><br><span class="line">--name avro-memory-kafka \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/avro-memory-kafka.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br><span class="line"></span><br><span class="line">flume-ng agent \</span><br><span class="line">--name exec-memory-avro \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/exec-memory-avro.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure></div>
+
+<p>启动消费者进行监控</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">kafka-console-consumer.sh --zookeeper bigdata-01:2181 -topic hello_topic</span><br></pre></td></tr></table></figure></div>
+
+<p>向日志文件中追加内容</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">[root@bigdata-01 ~]<span class="comment"># cd data/</span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># ll</span></span><br><span class="line">total 4</span><br><span class="line">-rw-r--r--. 1 root root 112 Feb  6 05:37 data.log</span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark2 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark3 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark4 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark5 &gt;&gt; data.log</span></span><br></pre></td></tr></table></figure></div>
+<p>这时，消费者就可以消费到日志文件中的新内容了。</p>
+<blockquote>
+<p>Flume的版本不同，配置文件（*.conf）需要配置的内容也不完全相同。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>大数据开发</category>
+      </categories>
+      <tags>
+        <tag>大数据开发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>HDFS基本配置属性</title>
     <url>/2019/04/04/HDFS%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7/</url>
     <content><![CDATA[<h1 id="块大小"><a href="#块大小" class="headerlink" title="块大小"></a>块大小</h1><p>HDFS中存储的文件块的块大小，默认128M</p>
@@ -41,33 +68,6 @@
 <li>直接用<code>start-dfs.sh</code></li>
 <li>在新机器上手动启动一个DataNode进程：<code>hadoop-daemon.sh start datanode</code></li>
 </ol>
-]]></content>
-      <categories>
-        <category>大数据开发</category>
-      </categories>
-      <tags>
-        <tag>大数据开发</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Flume+Kafka实时数据采集</title>
-    <url>/2019/04/04/Flume-Kafka%E5%AE%9E%E6%97%B6%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/</url>
-    <content><![CDATA[<p>Flume的配置</p>
-<span id="more"></span>
-
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># avro-memory-kafka.conf</span></span><br><span class="line">avro-memory-kafka.sources = avro-source</span><br><span class="line">avro-memory-kafka.sinks = kafka-sink</span><br><span class="line">avro-memory-kafka.channels = memory-channel</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.type = avro</span><br><span class="line">avro-memory-kafka.sources.avro-source.bind = bigdata-01</span><br><span class="line">avro-memory-kafka.sources.avro-source.port = 44444</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.type = org.apache.flume.sink.kafka.KafkaSink</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.brokerList = bigdata-01:9092</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.topic = hello_topic</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.batchSize = 5</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.requiredAcks = 1</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.channels.memory-channel.type = memory</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.channels = memory-channel</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.channel = memory-channel</span><br></pre></td></tr></table></figure></div>
-<p>启动Flume</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flume-ng agent \</span><br><span class="line">--name avro-memory-kafka \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/avro-memory-kafka.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br><span class="line"></span><br><span class="line">flume-ng agent \</span><br><span class="line">--name exec-memory-avro \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/exec-memory-avro.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure></div>
-
-<p>启动消费者进行监控</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">kafka-console-consumer.sh --zookeeper bigdata-01:2181 -topic hello_topic</span><br></pre></td></tr></table></figure></div>
-
-<p>向日志文件中追加内容</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">[root@bigdata-01 ~]<span class="comment"># cd data/</span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># ll</span></span><br><span class="line">total 4</span><br><span class="line">-rw-r--r--. 1 root root 112 Feb  6 05:37 data.log</span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark2 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark3 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark4 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark5 &gt;&gt; data.log</span></span><br></pre></td></tr></table></figure></div>
-<p>这时，消费者就可以消费到日志文件中的新内容了。</p>
-<blockquote>
-<p>Flume的版本不同，配置文件（*.conf）需要配置的内容也不完全相同。</p>
-</blockquote>
 ]]></content>
       <categories>
         <category>大数据开发</category>
@@ -269,6 +269,42 @@
       </tags>
   </entry>
   <entry>
+    <title>Pygame Zero之贪吃蛇（二）</title>
+    <url>/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+    <content><![CDATA[<p>本文来研究如何移动小蛇，而且仅限于向右移动，严格的说其实是「前进」。这里需要思考的问题是：为什么不是上下左右移动呢？</p>
+<p>因为在游戏中，上下左右是相对于游戏窗口的，小蛇的移动方向只有<strong>前进</strong>，也就是朝着蛇头的方向（小蛇是不能倒退的哦）。如果想要往其他方向移动，只能改变蛇头的方向，这时蛇的形状就会发生改变，我们下次再来研究。</p>
+<img lazyload src="/images/loading.svg" data-src="/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/move.gif" class>
+
+<span id="more"></span>
+
+<p>在小蛇向右移动一格的时，大概经历了下边的过程。</p>
+<img lazyload src="/images/loading.svg" data-src="/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/%E5%90%91%E5%8F%B3%E7%A7%BB%E5%8A%A8.png" class>
+
+<p>移动一格分为两步完成：</p>
+<ol>
+<li>在旧蛇头右侧添加一个新蛇头，旧蛇头编程蛇身的一部分</li>
+<li>删除旧蛇尾，原来挨着旧蛇尾的蛇身变成了新蛇尾</li>
+</ol>
+<p>这样，我们可以在<code>update()</code>函数中编写这部分代码：</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 前置代码见9-1.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE  <span class="comment"># 初始化新蛇头横坐标，为旧蛇头加一个格子宽</span></span><br><span class="line">    newSnakeHead.y = Snake[<span class="number">0</span>].y  <span class="comment"># 初始化新蛇头纵坐标，和旧蛇一样</span></span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)  <span class="comment"># 列表中插入新蛇头</span></span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]  <span class="comment"># 列表中删除旧蛇尾</span></span><br><span class="line">   </span><br><span class="line">  </span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure></div>
+
+<p>结果如下：</p>
+<img lazyload src="/images/loading.svg" data-src="/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/move.gif" class>
+
+<p>可以看到小蛇移动速度非常快，因此我们可以导入<code>time</code>库来减速。比如每次<code>update()</code>以后，暂停<code>0.2</code>秒：</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="comment"># 前置代码见9-1.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  </span><br><span class="line">    newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE  </span><br><span class="line">    newSnakeHead.y = Snake[<span class="number">0</span>].y  </span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)  </span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]  </span><br><span class="line">    time.sleep(<span class="number">0.2</span>)  <span class="comment"># 暂停0.2秒</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure></div>
+
+<p>运行程序，有一种古老游戏的感觉了，小蛇看起来是在一格一格的前进！</p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>游戏</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Pygame Zero之贪吃蛇（四）</title>
     <url>/2021/01/15/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E5%9B%9B%EF%BC%89/</url>
     <content><![CDATA[<p>本篇来给贪吃蛇增加游戏规则判定并加入食物和分数，制作一个完整的贪吃蛇游戏。</p>
@@ -315,42 +351,6 @@
 <p>附项目完整代码：</p>
 <div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pgzrun</span><br><span class="line"></span><br><span class="line">TILE_SIZE = <span class="number">20</span></span><br><span class="line">WIDTH = <span class="number">40</span> * TILE_SIZE</span><br><span class="line">HEIGHT = <span class="number">30</span> * TILE_SIZE</span><br><span class="line">isLose = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">snakehead = Actor(<span class="string">&#x27;snake1&#x27;</span>)</span><br><span class="line">snakehead.x = WIDTH / <span class="number">2</span></span><br><span class="line">snakehead.y = HEIGHT / <span class="number">2</span></span><br><span class="line"></span><br><span class="line">cookie = Actor(<span class="string">&#x27;cookie&#x27;</span>)</span><br><span class="line">cookie.x = random.randint(<span class="number">10</span>, <span class="number">30</span>) * TILE_SIZE</span><br><span class="line">cookie.y = random.randint(<span class="number">10</span>, <span class="number">30</span>) * TILE_SIZE</span><br><span class="line"></span><br><span class="line">Snake = [snakehead]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    snakebody = Actor(<span class="string">&#x27;snake1&#x27;</span>)</span><br><span class="line">    snakebody.x = Snake[i].x - TILE_SIZE</span><br><span class="line">    snakebody.y = Snake[i].y</span><br><span class="line">    Snake.append(snakebody)</span><br><span class="line"></span><br><span class="line">direction = <span class="string">&#x27;right&#x27;</span></span><br><span class="line">score = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">draw</span>():</span></span><br><span class="line">    screen.clear()</span><br><span class="line">    cookie.draw()</span><br><span class="line">    <span class="keyword">for</span> snakebody <span class="keyword">in</span> Snake:</span><br><span class="line">        snakebody.draw()</span><br><span class="line">    <span class="keyword">if</span> isLose:</span><br><span class="line">        screen.draw.text(<span class="string">&quot;Game over!&quot;</span>, (<span class="number">180</span>, HEIGHT / <span class="number">2</span> - <span class="number">100</span>), fontsize=<span class="number">100</span>,</span><br><span class="line">                         color=<span class="string">&#x27;skyblue&#x27;</span>)</span><br><span class="line">    screen.draw.text(<span class="string">&quot;Score: &quot;</span> + <span class="built_in">str</span>(score), (<span class="number">20</span>, <span class="number">20</span>), fontsize=<span class="number">25</span>,</span><br><span class="line">                     color=<span class="string">&#x27;white&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="keyword">global</span> direction, isLose, score</span><br><span class="line">    <span class="keyword">if</span> keyboard.left:</span><br><span class="line">        direction = <span class="string">&#x27;left&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.right:</span><br><span class="line">        direction = <span class="string">&#x27;right&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.up:</span><br><span class="line">        direction = <span class="string">&#x27;up&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.down:</span><br><span class="line">        direction = <span class="string">&#x27;down&#x27;</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;up&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y - TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;down&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;left&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x - TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;right&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> newSnakeHead.y &lt; <span class="number">0</span> <span class="keyword">or</span> newSnakeHead.y &gt; HEIGHT <span class="keyword">or</span> newSnakeHead.x &lt; <span class="number">0</span> <span class="keyword">or</span> newSnakeHead.x &gt; WIDTH:</span><br><span class="line">        isLose = <span class="literal">True</span></span><br><span class="line">    <span class="keyword">for</span> body <span class="keyword">in</span> Snake:</span><br><span class="line">        <span class="keyword">if</span> newSnakeHead.x == body.x <span class="keyword">and</span> newSnakeHead.y == body.y:</span><br><span class="line">            isLose = <span class="literal">True</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> newSnakeHead.x == cookie.x <span class="keyword">and</span> newSnakeHead.y == cookie.y:</span><br><span class="line">        score += <span class="number">1</span></span><br><span class="line">        cookie.x = random.randint(<span class="number">5</span>, <span class="number">35</span>) * TILE_SIZE</span><br><span class="line">        cookie.y = random.randint(<span class="number">5</span>, <span class="number">25</span>) * TILE_SIZE</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pgzrun.go()</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
 
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>游戏</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Pygame Zero之贪吃蛇（二）</title>
-    <url>/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
-    <content><![CDATA[<p>本文来研究如何移动小蛇，而且仅限于向右移动，严格的说其实是「前进」。这里需要思考的问题是：为什么不是上下左右移动呢？</p>
-<p>因为在游戏中，上下左右是相对于游戏窗口的，小蛇的移动方向只有<strong>前进</strong>，也就是朝着蛇头的方向（小蛇是不能倒退的哦）。如果想要往其他方向移动，只能改变蛇头的方向，这时蛇的形状就会发生改变，我们下次再来研究。</p>
-<img lazyload src="/images/loading.svg" data-src="/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/move.gif" class>
-
-<span id="more"></span>
-
-<p>在小蛇向右移动一格的时，大概经历了下边的过程。</p>
-<img lazyload src="/images/loading.svg" data-src="/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/%E5%90%91%E5%8F%B3%E7%A7%BB%E5%8A%A8.png" class>
-
-<p>移动一格分为两步完成：</p>
-<ol>
-<li>在旧蛇头右侧添加一个新蛇头，旧蛇头编程蛇身的一部分</li>
-<li>删除旧蛇尾，原来挨着旧蛇尾的蛇身变成了新蛇尾</li>
-</ol>
-<p>这样，我们可以在<code>update()</code>函数中编写这部分代码：</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 前置代码见9-1.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE  <span class="comment"># 初始化新蛇头横坐标，为旧蛇头加一个格子宽</span></span><br><span class="line">    newSnakeHead.y = Snake[<span class="number">0</span>].y  <span class="comment"># 初始化新蛇头纵坐标，和旧蛇一样</span></span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)  <span class="comment"># 列表中插入新蛇头</span></span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]  <span class="comment"># 列表中删除旧蛇尾</span></span><br><span class="line">   </span><br><span class="line">  </span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure></div>
-
-<p>结果如下：</p>
-<img lazyload src="/images/loading.svg" data-src="/2021/01/01/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%BA%8C%EF%BC%89/move.gif" class>
-
-<p>可以看到小蛇移动速度非常快，因此我们可以导入<code>time</code>库来减速。比如每次<code>update()</code>以后，暂停<code>0.2</code>秒：</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="comment"># 前置代码见9-1.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  </span><br><span class="line">    newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE  </span><br><span class="line">    newSnakeHead.y = Snake[<span class="number">0</span>].y  </span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)  </span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]  </span><br><span class="line">    time.sleep(<span class="number">0.2</span>)  <span class="comment"># 暂停0.2秒</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pgzrun.go()</span><br></pre></td></tr></table></figure></div>
-
-<p>运行程序，有一种古老游戏的感觉了，小蛇看起来是在一格一格的前进！</p>
 ]]></content>
       <categories>
         <category>Python</category>
@@ -1402,38 +1402,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Pycharm Out of memory 解决办法</title>
-    <url>/2021/05/26/Pycharm-Out-of-memory-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
-    <content><![CDATA[<p>最近使用Pycharm敲代码突然卡住，并且蹦出一个错误：<code>Out of memory</code>。</p>
-<p>但是该错误与代码无关，只是因为系统分配给Pycharm的最大内存不够用了而已。</p>
-<p>这个最大内存是我们可以修改的，将它修改的大一些就可以解决这个问题。</p>
-<p>下面看看如何修改~</p>
-<span id="more"></span>
-
-<ol>
-<li>进入如下目录：</li>
-</ol>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">访达 -&gt; 应用程序 -&gt; 右键Pycharm -&gt; 显示包内容 -&gt; Contents -&gt; bin</span><br></pre></td></tr></table></figure></div>
-
-<ol start="2">
-<li>找到文件<code>pycharm.vmoptions</code>，使用一个文本编辑器打开，修改前两行的数值：</li>
-</ol>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">-Xms1024m      修改前是512</span><br><span class="line">-Xmx2048m      修改前是750（奇怪的数字）</span><br><span class="line">-XX:ReservedCodeCacheSize=512m</span><br><span class="line">-XX:+UseConcMarkSweepGC</span><br></pre></td></tr></table></figure></div>
-
-<ol start="3">
-<li>修改后保存关闭，重新启动Pycharm。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>bug</tag>
-        <tag>Python</tag>
-        <tag>IDE</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Redis操作</title>
     <url>/2019/04/04/Redis%E6%93%8D%E4%BD%9C/</url>
     <content><![CDATA[<h1 id="环境准备：centOS6-5"><a href="#环境准备：centOS6-5" class="headerlink" title="环境准备：centOS6.5"></a>环境准备：centOS6.5</h1><p>Redis是c语言开发的。<br>安装redis需要c语言的编译环境。如果没有gcc需要在线安装。</p>
@@ -1504,75 +1472,35 @@
       </tags>
   </entry>
   <entry>
-    <title>MacOS下使用VS Code搭建C语言开发环境</title>
-    <url>/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
-    <content><![CDATA[<p>本篇介绍如何在Mac上使用VS Code写C语言代码。VS Code是一个轻量级的IDE，相比CLion、Xcode等等体积小很多，并且在插件市场拥有丰富的插件，可以方便的安装使用。</p>
+    <title>Pycharm Out of memory 解决办法</title>
+    <url>/2021/05/26/Pycharm-Out-of-memory-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
+    <content><![CDATA[<p>最近使用Pycharm敲代码突然卡住，并且蹦出一个错误：<code>Out of memory</code>。</p>
+<p>但是该错误与代码无关，只是因为系统分配给Pycharm的最大内存不够用了而已。</p>
+<p>这个最大内存是我们可以修改的，将它修改的大一些就可以解决这个问题。</p>
+<p>下面看看如何修改~</p>
 <span id="more"></span>
 
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><h2 id="下载VS-Code"><a href="#下载VS-Code" class="headerlink" title="下载VS Code"></a>下载VS Code</h2><p>下载地址：<a class="link" href="https://code.visualstudio.com/">https://code.visualstudio.com/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="1.png" alt="1"></p>
-</blockquote>
-<h2 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h2><p>打开VS Code，点击左侧的 Extensions（图标为“田”字右上角的格子起飞），在搜索框中输入 <code>C/C++</code>，选择紫色图标，作者为Microsoft，点击 Install 即可安装。</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="3.png" alt="3"></p>
-</blockquote>
-<h2 id="创建文件夹"><a href="#创建文件夹" class="headerlink" title="创建文件夹"></a>创建文件夹</h2><p>在电脑中你希望保存代码的地方新建一个文件夹，我的是 <code>桌面-个人-学习-C/C++</code> ，创建好以后重启 VS Code。重启后，在欢迎页面点击 Open，并打开你刚创建的文件夹。</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="4.png" alt="4"></p>
-</blockquote>
-<h2 id="另存为一个工作区"><a href="#另存为一个工作区" class="headerlink" title="另存为一个工作区"></a>另存为一个工作区</h2><p>点击 File &gt; Save Workspace As …，并命名。</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="5.png" alt="5"></p>
-</blockquote>
-<h2 id="新建一个C文件，命名并保存"><a href="#新建一个C文件，命名并保存" class="headerlink" title="新建一个C文件，命名并保存"></a>新建一个C文件，命名并保存</h2><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;hello VSCode!\n&quot;</span>);</span><br><span class="line">     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></div>
+<ol>
+<li>进入如下目录：</li>
+</ol>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">访达 -&gt; 应用程序 -&gt; 右键Pycharm -&gt; 显示包内容 -&gt; Contents -&gt; bin</span><br></pre></td></tr></table></figure></div>
 
-<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h2 id="配置-c-cpp-properties-json"><a href="#配置-c-cpp-properties-json" class="headerlink" title="配置 c_cpp_properties.json"></a>配置 <code>c_cpp_properties.json</code></h2><p>使用快捷键 <code>command</code> + <code>shift</code> + <code>P</code>打开命令行面板（Command Palette）</p>
-<p>输入 edit configurations，在弹出的列表中选择带 JSON 的 C/C++: Edit Configurations(JSON)</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="6.png" alt="6"></p>
-</blockquote>
-<p>配置字段 includePath：</p>
-<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;includePath&quot;</span>: </span><br><span class="line">[</span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include/c++/v1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/usr/local/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include&quot;</span></span><br><span class="line">],</span><br></pre></td></tr></table></figure></div>
+<ol start="2">
+<li>找到文件<code>pycharm.vmoptions</code>，使用一个文本编辑器打开，修改前两行的数值：</li>
+</ol>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">-Xms1024m      修改前是512</span><br><span class="line">-Xmx2048m      修改前是750（奇怪的数字）</span><br><span class="line">-XX:ReservedCodeCacheSize=512m</span><br><span class="line">-XX:+UseConcMarkSweepGC</span><br></pre></td></tr></table></figure></div>
 
-<p>你可能需要注意<br> <code>&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;,</code>中的版本号，可以进入Finder，按快捷键<code>command</code> + <code>shift</code> + <code>G</code> 输入：</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">/Library/Developer/CommandLineTools/usr/lib/clang/</span><br></pre></td></tr></table></figure></div>
-
-<p>在文件夹中查看clang版本</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="8.png" alt="8"></p>
-</blockquote>
-<p>完成后保存。</p>
-<h2 id="配置-tasks-json"><a href="#配置-tasks-json" class="headerlink" title="配置 tasks.json"></a>配置 <code>tasks.json</code></h2><p>在打开.c文件的情况下（比如我这里的hello.c）打开命令行面板 <code>command</code> + <code>shift</code> + <code>P</code>，输入tasks:configure task，选择Tasks: Configure Task</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="9.png" alt="9"></p>
-</blockquote>
-<p>点击C/C++:clang 生成活动文件</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="10.png" alt="10"></p>
-</blockquote>
-<p>这里我们需要配置 args 字段</p>
-<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;args&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;-g&quot;</span>,<span class="comment">//编译命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.c&quot;</span>,<span class="comment">//当前workspace下的hello.c文件</span></span><br><span class="line">    <span class="string">&quot;-o&quot;</span>,<span class="comment">//输出文件命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span><span class="comment">//生成的可执行文件的路径及名称</span></span><br><span class="line">    ],</span><br></pre></td></tr></table></figure></div>
-
-<p>你需要配置第二个参数和第四个参数，第二个是编制的文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.c</code>，第四个是生成的可执行文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.o</code> ，完成后保存。</p>
-<h2 id="配置launch-json"><a href="#配置launch-json" class="headerlink" title="配置launch.json"></a>配置<code>launch.json</code></h2><p>在 hello.c 中按<code>Fn</code> + <code>F5</code> ，软件会报错并自动打开一个 <code>launch.json</code> 文件，这里需要配置 <code>program</code> 字段：</p>
-<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;program&quot;</span>: <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span>,</span><br></pre></td></tr></table></figure></div>
-
-<p>再次运行：</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="11.png" alt="11"></p>
-</blockquote>
-<hr>
-<blockquote>
-<p>部分内容转自 <a class="link" href="https://www.jianshu.com/u/69abdc363757">Robinone<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> 的 <a class="link" href="https://www.jianshu.com/p/83879b4aa3fe">https://www.jianshu.com/p/83879b4aa3fe<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-</blockquote>
+<ol start="3">
+<li>修改后保存关闭，重新启动Pycharm。</li>
+</ol>
 ]]></content>
       <categories>
-        <category>C/C++</category>
+        <category>Python</category>
       </categories>
       <tags>
+        <tag>bug</tag>
+        <tag>Python</tag>
         <tag>IDE</tag>
-        <tag>C</tag>
       </tags>
   </entry>
   <entry>
@@ -1687,6 +1615,78 @@
       </categories>
       <tags>
         <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MacOS下使用VS Code搭建C语言开发环境</title>
+    <url>/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
+    <content><![CDATA[<p>本篇介绍如何在Mac上使用VS Code写C语言代码。VS Code是一个轻量级的IDE，相比CLion、Xcode等等体积小很多，并且在插件市场拥有丰富的插件，可以方便的安装使用。</p>
+<span id="more"></span>
+
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><h2 id="下载VS-Code"><a href="#下载VS-Code" class="headerlink" title="下载VS Code"></a>下载VS Code</h2><p>下载地址：<a class="link" href="https://code.visualstudio.com/">https://code.visualstudio.com/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="1.png" alt="1"></p>
+</blockquote>
+<h2 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h2><p>打开VS Code，点击左侧的 Extensions（图标为“田”字右上角的格子起飞），在搜索框中输入 <code>C/C++</code>，选择紫色图标，作者为Microsoft，点击 Install 即可安装。</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="3.png" alt="3"></p>
+</blockquote>
+<h2 id="创建文件夹"><a href="#创建文件夹" class="headerlink" title="创建文件夹"></a>创建文件夹</h2><p>在电脑中你希望保存代码的地方新建一个文件夹，我的是 <code>桌面-个人-学习-C/C++</code> ，创建好以后重启 VS Code。重启后，在欢迎页面点击 Open，并打开你刚创建的文件夹。</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="4.png" alt="4"></p>
+</blockquote>
+<h2 id="另存为一个工作区"><a href="#另存为一个工作区" class="headerlink" title="另存为一个工作区"></a>另存为一个工作区</h2><p>点击 File &gt; Save Workspace As …，并命名。</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="5.png" alt="5"></p>
+</blockquote>
+<h2 id="新建一个C文件，命名并保存"><a href="#新建一个C文件，命名并保存" class="headerlink" title="新建一个C文件，命名并保存"></a>新建一个C文件，命名并保存</h2><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;hello VSCode!\n&quot;</span>);</span><br><span class="line">     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h2 id="配置-c-cpp-properties-json"><a href="#配置-c-cpp-properties-json" class="headerlink" title="配置 c_cpp_properties.json"></a>配置 <code>c_cpp_properties.json</code></h2><p>使用快捷键 <code>command</code> + <code>shift</code> + <code>P</code>打开命令行面板（Command Palette）</p>
+<p>输入 edit configurations，在弹出的列表中选择带 JSON 的 C/C++: Edit Configurations(JSON)</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="6.png" alt="6"></p>
+</blockquote>
+<p>配置字段 includePath：</p>
+<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;includePath&quot;</span>: </span><br><span class="line">[</span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include/c++/v1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/usr/local/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include&quot;</span></span><br><span class="line">],</span><br></pre></td></tr></table></figure></div>
+
+<p>你可能需要注意<br> <code>&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;,</code>中的版本号，可以进入Finder，按快捷键<code>command</code> + <code>shift</code> + <code>G</code> 输入：</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">/Library/Developer/CommandLineTools/usr/lib/clang/</span><br></pre></td></tr></table></figure></div>
+
+<p>在文件夹中查看clang版本</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="8.png" alt="8"></p>
+</blockquote>
+<p>完成后保存。</p>
+<h2 id="配置-tasks-json"><a href="#配置-tasks-json" class="headerlink" title="配置 tasks.json"></a>配置 <code>tasks.json</code></h2><p>在打开.c文件的情况下（比如我这里的hello.c）打开命令行面板 <code>command</code> + <code>shift</code> + <code>P</code>，输入tasks:configure task，选择Tasks: Configure Task</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="9.png" alt="9"></p>
+</blockquote>
+<p>点击C/C++:clang 生成活动文件</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="10.png" alt="10"></p>
+</blockquote>
+<p>这里我们需要配置 args 字段</p>
+<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;args&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;-g&quot;</span>,<span class="comment">//编译命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.c&quot;</span>,<span class="comment">//当前workspace下的hello.c文件</span></span><br><span class="line">    <span class="string">&quot;-o&quot;</span>,<span class="comment">//输出文件命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span><span class="comment">//生成的可执行文件的路径及名称</span></span><br><span class="line">    ],</span><br></pre></td></tr></table></figure></div>
+
+<p>你需要配置第二个参数和第四个参数，第二个是编制的文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.c</code>，第四个是生成的可执行文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.o</code> ，完成后保存。</p>
+<h2 id="配置launch-json"><a href="#配置launch-json" class="headerlink" title="配置launch.json"></a>配置<code>launch.json</code></h2><p>在 hello.c 中按<code>Fn</code> + <code>F5</code> ，软件会报错并自动打开一个 <code>launch.json</code> 文件，这里需要配置 <code>program</code> 字段：</p>
+<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;program&quot;</span>: <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span>,</span><br></pre></td></tr></table></figure></div>
+
+<p>再次运行：</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="11.png" alt="11"></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>部分内容转自 <a class="link" href="https://www.jianshu.com/u/69abdc363757">Robinone<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> 的 <a class="link" href="https://www.jianshu.com/p/83879b4aa3fe">https://www.jianshu.com/p/83879b4aa3fe<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>C/C++</category>
+      </categories>
+      <tags>
+        <tag>IDE</tag>
+        <tag>C</tag>
       </tags>
   </entry>
   <entry>
@@ -3302,6 +3302,26 @@
       </tags>
   </entry>
   <entry>
+    <title>升级版Turtle Race</title>
+    <url>/2020/12/17/%E5%8D%87%E7%BA%A7%E7%89%88Turtle-Race/</url>
+    <content><![CDATA[<p>其实这个项目来自一位我的新疆的学生。原本的Turtle Race项目只是画出赛道，创建两支画笔然后进行一个赛跑。但是学生后边学习了Turtle的事件、监听、绑定按键等知识以后，将原有的Turtle Race升级，做成一个人机交互小游戏。</p>
+<img lazyload src="/images/loading.svg" data-src="/2020/12/17/%E5%8D%87%E7%BA%A7%E7%89%88Turtle-Race/tr2.gif" class>
+
+<span id="more"></span>
+
+<p>游戏规则很简单：</p>
+<p>一共有3只海龟，你控制其中的tina（红色），剩下两只海龟会自动前进。但是跑道旁边有一个红绿灯🚥，只有绿灯、黄灯亮起时才允许前进。</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> turtle</span><br><span class="line"></span><br><span class="line">s = turtle.Screen()</span><br><span class="line">s.setup(width=<span class="number">500</span>, height=<span class="number">300</span>)</span><br><span class="line">t = turtle.Turtle()</span><br><span class="line">turtle.bgcolor(<span class="string">&#x27;skyblue&#x27;</span>)</span><br><span class="line">t.speed(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印规则</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;游戏规则：红灯停绿灯行，闯红灯有惩罚&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 赛道</span></span><br><span class="line">t.goto(-<span class="number">150</span>, <span class="number">50</span>)</span><br><span class="line">t.color(<span class="string">&#x27;gray&#x27;</span>)</span><br><span class="line">t.begin_fill()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>):</span><br><span class="line">    t.fd(<span class="number">300</span>)</span><br><span class="line">    t.rt(<span class="number">90</span>)</span><br><span class="line">    t.fd(<span class="number">100</span>)</span><br><span class="line">    t.rt(<span class="number">90</span>)</span><br><span class="line">t.end_fill()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 画出终点线</span></span><br><span class="line">t.goto(<span class="number">150</span>, <span class="number">50</span>)</span><br><span class="line">t.color(<span class="string">&#x27;red&#x27;</span>)</span><br><span class="line">t.begin_fill()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>):</span><br><span class="line">    t.fd(<span class="number">10</span>)</span><br><span class="line">    t.rt(<span class="number">90</span>)</span><br><span class="line">    t.fd(<span class="number">100</span>)</span><br><span class="line">    t.rt(<span class="number">90</span>)</span><br><span class="line">t.end_fill()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 画出分割线</span></span><br><span class="line">t.pu()</span><br><span class="line">t.goto(-<span class="number">150</span>, -<span class="number">16</span>)</span><br><span class="line">t.color(<span class="string">&#x27;white&#x27;</span>)</span><br><span class="line">t.pd()</span><br><span class="line">t.fd(<span class="number">300</span>)</span><br><span class="line">t.pu()</span><br><span class="line">t.goto(-<span class="number">150</span>, <span class="number">17</span>)</span><br><span class="line">t.pd()</span><br><span class="line">t.fd(<span class="number">300</span>)</span><br><span class="line"></span><br><span class="line">t.hideturtle()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建海龟运动员</span></span><br><span class="line">tina = turtle.Turtle()</span><br><span class="line">tina.shape(<span class="string">&#x27;turtle&#x27;</span>)</span><br><span class="line">bob = turtle.Turtle()</span><br><span class="line">bob.shape(<span class="string">&#x27;turtle&#x27;</span>)</span><br><span class="line">frank = turtle.Turtle()</span><br><span class="line">frank.shape(<span class="string">&#x27;turtle&#x27;</span>)</span><br><span class="line">tina.pu()</span><br><span class="line">bob.pu()</span><br><span class="line">frank.pu()</span><br><span class="line">tina.color(<span class="string">&#x27;red&#x27;</span>)</span><br><span class="line">bob.color(<span class="string">&#x27;blue&#x27;</span>)</span><br><span class="line">frank.color(<span class="string">&#x27;orange&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移动到起点</span></span><br><span class="line">tina.goto(-<span class="number">150</span>, <span class="number">40</span>)</span><br><span class="line">bob.goto(-<span class="number">150</span>, -<span class="number">40</span>)</span><br><span class="line">frank.goto(-<span class="number">150</span>, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 写出名字</span></span><br><span class="line">tina.write(<span class="string">&#x27;tina&#x27;</span>, font=(<span class="string">&#x27;楷体&#x27;</span>, <span class="number">15</span>))</span><br><span class="line">bob.write(<span class="string">&#x27;bob&#x27;</span>, font=(<span class="string">&#x27;楷体&#x27;</span>, <span class="number">15</span>))</span><br><span class="line">frank.write(<span class="string">&#x27;frank&#x27;</span>, font=(<span class="string">&#x27;楷体&#x27;</span>, <span class="number">15</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始赛跑并判断胜负</span></span><br><span class="line">a = turtle.Turtle()</span><br><span class="line">a.pu()</span><br><span class="line">a.hideturtle()</span><br><span class="line">a.goto(<span class="number">50</span>, <span class="number">100</span>)</span><br><span class="line">x = <span class="number">0</span></span><br><span class="line">y = <span class="number">0</span></span><br><span class="line">r = <span class="number">0</span></span><br><span class="line">z = <span class="number">4</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">speed</span>():</span></span><br><span class="line">    tina.speed(<span class="number">0</span>)</span><br><span class="line">    tina.fd(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a.color(<span class="string">&#x27;green&#x27;</span>)</span><br><span class="line">a.dot(<span class="number">30</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    x += <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> x &gt; <span class="number">15</span> <span class="keyword">and</span> y &lt; <span class="number">6</span>:</span><br><span class="line">        a.pd()</span><br><span class="line">        a.color(<span class="string">&#x27;yellow&#x27;</span>)</span><br><span class="line">        a.dot(<span class="number">30</span>)</span><br><span class="line">        y += <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> x &gt; <span class="number">15</span> <span class="keyword">and</span> y &gt; <span class="number">5</span>:</span><br><span class="line">        a.color(<span class="string">&#x27;red&#x27;</span>)</span><br><span class="line">        a.dot(<span class="number">30</span>)</span><br><span class="line">        r = <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> tina.xcor() != tina_x:</span><br><span class="line">            tina.bk(<span class="number">30</span>)</span><br><span class="line">        tina_x = tina.xcor()</span><br><span class="line">        z += <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> z &gt; <span class="number">50</span>:</span><br><span class="line">        x = <span class="number">0</span></span><br><span class="line">        y = <span class="number">0</span></span><br><span class="line">        z = <span class="number">0</span></span><br><span class="line">        r = <span class="number">0</span></span><br><span class="line">        a.color(<span class="string">&#x27;green&#x27;</span>)</span><br><span class="line">        a.dot(<span class="number">30</span>)</span><br><span class="line">    s.onkey(speed, <span class="string">&#x27;Right&#x27;</span>)</span><br><span class="line">    s.listen()</span><br><span class="line">    tina_x = tina.xcor()</span><br><span class="line">    <span class="keyword">if</span> tina_x &gt;= <span class="number">150</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;tina win&#x27;</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    n = random.randint(<span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="keyword">if</span> r == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    bob.fd(n - n * <span class="number">2</span>)</span><br><span class="line">    bob.fd(random.randint(n, <span class="number">10</span>))</span><br><span class="line">    bob_x = bob.xcor()</span><br><span class="line">    <span class="keyword">if</span> bob_x &gt;= <span class="number">150</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;bob win&#x27;</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(random.randint(<span class="number">0</span>, <span class="number">6</span>)):</span><br><span class="line">        frank.fd(random.randint(<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line">    frank_x = frank.xcor()</span><br><span class="line">    <span class="keyword">if</span> frank_x &gt;= <span class="number">150</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;frank win&#x27;</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">turtle.mainloop()</span><br></pre></td></tr></table></figure></div>
+
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>利用ChatGPT辅助编写程序——问答系统</title>
     <url>/2023/04/19/%E5%88%A9%E7%94%A8ChatGPT%E8%BE%85%E5%8A%A9%E7%BC%96%E5%86%99%E7%A8%8B%E5%BA%8F%E2%80%94%E2%80%94%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/</url>
     <content><![CDATA[<p>本文将介绍如何使用Python和Tkinter库编写一个带有问题和答案数据的简单问答系统，并利用ChatGPT辅助编写。</p>
@@ -3332,26 +3352,6 @@
         <tag>Python</tag>
         <tag>AI</tag>
         <tag>VEX</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>升级版Turtle Race</title>
-    <url>/2020/12/17/%E5%8D%87%E7%BA%A7%E7%89%88Turtle-Race/</url>
-    <content><![CDATA[<p>其实这个项目来自一位我的新疆的学生。原本的Turtle Race项目只是画出赛道，创建两支画笔然后进行一个赛跑。但是学生后边学习了Turtle的事件、监听、绑定按键等知识以后，将原有的Turtle Race升级，做成一个人机交互小游戏。</p>
-<img lazyload src="/images/loading.svg" data-src="/2020/12/17/%E5%8D%87%E7%BA%A7%E7%89%88Turtle-Race/tr2.gif" class>
-
-<span id="more"></span>
-
-<p>游戏规则很简单：</p>
-<p>一共有3只海龟，你控制其中的tina（红色），剩下两只海龟会自动前进。但是跑道旁边有一个红绿灯🚥，只有绿灯、黄灯亮起时才允许前进。</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> turtle</span><br><span class="line"></span><br><span class="line">s = turtle.Screen()</span><br><span class="line">s.setup(width=<span class="number">500</span>, height=<span class="number">300</span>)</span><br><span class="line">t = turtle.Turtle()</span><br><span class="line">turtle.bgcolor(<span class="string">&#x27;skyblue&#x27;</span>)</span><br><span class="line">t.speed(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印规则</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;游戏规则：红灯停绿灯行，闯红灯有惩罚&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 赛道</span></span><br><span class="line">t.goto(-<span class="number">150</span>, <span class="number">50</span>)</span><br><span class="line">t.color(<span class="string">&#x27;gray&#x27;</span>)</span><br><span class="line">t.begin_fill()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>):</span><br><span class="line">    t.fd(<span class="number">300</span>)</span><br><span class="line">    t.rt(<span class="number">90</span>)</span><br><span class="line">    t.fd(<span class="number">100</span>)</span><br><span class="line">    t.rt(<span class="number">90</span>)</span><br><span class="line">t.end_fill()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 画出终点线</span></span><br><span class="line">t.goto(<span class="number">150</span>, <span class="number">50</span>)</span><br><span class="line">t.color(<span class="string">&#x27;red&#x27;</span>)</span><br><span class="line">t.begin_fill()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>):</span><br><span class="line">    t.fd(<span class="number">10</span>)</span><br><span class="line">    t.rt(<span class="number">90</span>)</span><br><span class="line">    t.fd(<span class="number">100</span>)</span><br><span class="line">    t.rt(<span class="number">90</span>)</span><br><span class="line">t.end_fill()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 画出分割线</span></span><br><span class="line">t.pu()</span><br><span class="line">t.goto(-<span class="number">150</span>, -<span class="number">16</span>)</span><br><span class="line">t.color(<span class="string">&#x27;white&#x27;</span>)</span><br><span class="line">t.pd()</span><br><span class="line">t.fd(<span class="number">300</span>)</span><br><span class="line">t.pu()</span><br><span class="line">t.goto(-<span class="number">150</span>, <span class="number">17</span>)</span><br><span class="line">t.pd()</span><br><span class="line">t.fd(<span class="number">300</span>)</span><br><span class="line"></span><br><span class="line">t.hideturtle()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建海龟运动员</span></span><br><span class="line">tina = turtle.Turtle()</span><br><span class="line">tina.shape(<span class="string">&#x27;turtle&#x27;</span>)</span><br><span class="line">bob = turtle.Turtle()</span><br><span class="line">bob.shape(<span class="string">&#x27;turtle&#x27;</span>)</span><br><span class="line">frank = turtle.Turtle()</span><br><span class="line">frank.shape(<span class="string">&#x27;turtle&#x27;</span>)</span><br><span class="line">tina.pu()</span><br><span class="line">bob.pu()</span><br><span class="line">frank.pu()</span><br><span class="line">tina.color(<span class="string">&#x27;red&#x27;</span>)</span><br><span class="line">bob.color(<span class="string">&#x27;blue&#x27;</span>)</span><br><span class="line">frank.color(<span class="string">&#x27;orange&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移动到起点</span></span><br><span class="line">tina.goto(-<span class="number">150</span>, <span class="number">40</span>)</span><br><span class="line">bob.goto(-<span class="number">150</span>, -<span class="number">40</span>)</span><br><span class="line">frank.goto(-<span class="number">150</span>, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 写出名字</span></span><br><span class="line">tina.write(<span class="string">&#x27;tina&#x27;</span>, font=(<span class="string">&#x27;楷体&#x27;</span>, <span class="number">15</span>))</span><br><span class="line">bob.write(<span class="string">&#x27;bob&#x27;</span>, font=(<span class="string">&#x27;楷体&#x27;</span>, <span class="number">15</span>))</span><br><span class="line">frank.write(<span class="string">&#x27;frank&#x27;</span>, font=(<span class="string">&#x27;楷体&#x27;</span>, <span class="number">15</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始赛跑并判断胜负</span></span><br><span class="line">a = turtle.Turtle()</span><br><span class="line">a.pu()</span><br><span class="line">a.hideturtle()</span><br><span class="line">a.goto(<span class="number">50</span>, <span class="number">100</span>)</span><br><span class="line">x = <span class="number">0</span></span><br><span class="line">y = <span class="number">0</span></span><br><span class="line">r = <span class="number">0</span></span><br><span class="line">z = <span class="number">4</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">speed</span>():</span></span><br><span class="line">    tina.speed(<span class="number">0</span>)</span><br><span class="line">    tina.fd(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a.color(<span class="string">&#x27;green&#x27;</span>)</span><br><span class="line">a.dot(<span class="number">30</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    x += <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> x &gt; <span class="number">15</span> <span class="keyword">and</span> y &lt; <span class="number">6</span>:</span><br><span class="line">        a.pd()</span><br><span class="line">        a.color(<span class="string">&#x27;yellow&#x27;</span>)</span><br><span class="line">        a.dot(<span class="number">30</span>)</span><br><span class="line">        y += <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> x &gt; <span class="number">15</span> <span class="keyword">and</span> y &gt; <span class="number">5</span>:</span><br><span class="line">        a.color(<span class="string">&#x27;red&#x27;</span>)</span><br><span class="line">        a.dot(<span class="number">30</span>)</span><br><span class="line">        r = <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> tina.xcor() != tina_x:</span><br><span class="line">            tina.bk(<span class="number">30</span>)</span><br><span class="line">        tina_x = tina.xcor()</span><br><span class="line">        z += <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> z &gt; <span class="number">50</span>:</span><br><span class="line">        x = <span class="number">0</span></span><br><span class="line">        y = <span class="number">0</span></span><br><span class="line">        z = <span class="number">0</span></span><br><span class="line">        r = <span class="number">0</span></span><br><span class="line">        a.color(<span class="string">&#x27;green&#x27;</span>)</span><br><span class="line">        a.dot(<span class="number">30</span>)</span><br><span class="line">    s.onkey(speed, <span class="string">&#x27;Right&#x27;</span>)</span><br><span class="line">    s.listen()</span><br><span class="line">    tina_x = tina.xcor()</span><br><span class="line">    <span class="keyword">if</span> tina_x &gt;= <span class="number">150</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;tina win&#x27;</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    n = random.randint(<span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="keyword">if</span> r == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    bob.fd(n - n * <span class="number">2</span>)</span><br><span class="line">    bob.fd(random.randint(n, <span class="number">10</span>))</span><br><span class="line">    bob_x = bob.xcor()</span><br><span class="line">    <span class="keyword">if</span> bob_x &gt;= <span class="number">150</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;bob win&#x27;</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(random.randint(<span class="number">0</span>, <span class="number">6</span>)):</span><br><span class="line">        frank.fd(random.randint(<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line">    frank_x = frank.xcor()</span><br><span class="line">    <span class="keyword">if</span> frank_x &gt;= <span class="number">150</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;frank win&#x27;</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">turtle.mainloop()</span><br></pre></td></tr></table></figure></div>
-
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -4142,6 +4142,241 @@
       </tags>
   </entry>
   <entry>
+    <title>嵩天老师Python(8)程序设计方法学</title>
+    <url>/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(8)%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E5%AD%A6/</url>
+    <content><![CDATA[<h1 id="实例：体育竞技分析"><a href="#实例：体育竞技分析" class="headerlink" title="实例：体育竞技分析"></a>实例：体育竞技分析</h1><blockquote>
+<p>高手过招，胜负只在毫厘之间</p>
+</blockquote>
+<h2 id="“体育竞技分析”问题分析"><a href="#“体育竞技分析”问题分析" class="headerlink" title="“体育竞技分析”问题分析"></a>“体育竞技分析”问题分析</h2><h3 id="体育竞技分析"><a href="#体育竞技分析" class="headerlink" title="体育竞技分析"></a>体育竞技分析</h3><ul>
+<li><p>需求：毫厘是多少？如何科学分析体育竞技比赛？</p>
+</li>
+<li><p>输入：球员的水平</p>
+</li>
+<li><p>输出：可预测的比赛成绩</p>
+<span id="more"></span></li>
+</ul>
+<h3 id="体育竞技分析：模拟N场比赛"><a href="#体育竞技分析：模拟N场比赛" class="headerlink" title="体育竞技分析：模拟N场比赛"></a>体育竞技分析：模拟N场比赛</h3><ul>
+<li>计算思维：抽象 + 自动化</li>
+<li>模拟：抽象比赛过程 + 自动化执行N场比赛</li>
+<li>当N越大时，比赛结果分析会越科学</li>
+</ul>
+<h3 id="比赛规则"><a href="#比赛规则" class="headerlink" title="比赛规则"></a>比赛规则</h3><ul>
+<li>双人击球比赛：A &amp; B，回合制，5局3胜</li>
+<li>开始时一方先发球，直至判分，接下来胜者发球</li>
+<li>球员只能在发球局得分，15分胜一局</li>
+</ul>
+<h2 id="自顶向下和自底向上"><a href="#自顶向下和自底向上" class="headerlink" title="自顶向下和自底向上"></a>自顶向下和自底向上</h2><h3 id="自顶向下（设计）——解决复杂问题的有效方法"><a href="#自顶向下（设计）——解决复杂问题的有效方法" class="headerlink" title="自顶向下（设计）——解决复杂问题的有效方法"></a>自顶向下（设计）——解决复杂问题的有效方法</h3><ul>
+<li>将一个总问题表达为若干个小问题组成的形式</li>
+<li>使用同样方法进一步分解小问题</li>
+<li>直至，小问题可以用计算机简单明了的解决</li>
+</ul>
+<h3 id="自底向上（执行）——逐步组建复杂系统的有效测试方法"><a href="#自底向上（执行）——逐步组建复杂系统的有效测试方法" class="headerlink" title="自底向上（执行）——逐步组建复杂系统的有效测试方法"></a>自底向上（执行）——逐步组建复杂系统的有效测试方法</h3><h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h3 id="程序总体框架及步骤"><a href="#程序总体框架及步骤" class="headerlink" title="程序总体框架及步骤"></a>程序总体框架及步骤</h3><ul>
+<li>步骤1：打印程序的介绍性信息               - printInfo()</li>
+<li>步骤2：获得程序运行参数：proA, proB, n    - getInputs()</li>
+<li>步骤3：利用球员A和B的能力值，模拟n局比赛  - simNGames()</li>
+<li>步骤4：输出球员A和B获胜比赛的场次及概率   - printSummary()</li>
+</ul>
+<h3 id="全代码"><a href="#全代码" class="headerlink" title="全代码"></a>全代码</h3><div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printIntro</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;这个程序模拟两个选手A和B的某种竞技比赛&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;程序运行需要A和B的能力值（以0到1之间的小数表示）&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getInputs</span>():</span></span><br><span class="line">    a = <span class="built_in">eval</span>(<span class="built_in">input</span>(<span class="string">&quot;请输入选手A的能力值（0-1）：&quot;</span>))</span><br><span class="line">    b = <span class="built_in">eval</span>(<span class="built_in">input</span>(<span class="string">&quot;请输入选手B的能力值（0-1）：&quot;</span>))</span><br><span class="line">    n = <span class="built_in">eval</span>(<span class="built_in">input</span>(<span class="string">&quot;模拟比赛的场次：&quot;</span>))</span><br><span class="line">    <span class="keyword">return</span> a, b, n</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printSummary</span>(<span class="params">winsA, winsB</span>):</span></span><br><span class="line">    n = winsA + winsB</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;竞技分析开始，共模拟&#123;&#125;场比赛&quot;</span>.<span class="built_in">format</span>(n))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;选手A获胜&#123;&#125;场比赛，占比&#123;:0.1%&#125;&quot;</span>.<span class="built_in">format</span>(winsA, winsA/n))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;选手B获胜&#123;&#125;场比赛，占比&#123;:0.1%&#125;&quot;</span>.<span class="built_in">format</span>(winsB, winsB/n))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gameOver</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    <span class="keyword">return</span> a==<span class="number">15</span> <span class="keyword">or</span> b==<span class="number">15</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simOneGame</span>(<span class="params">probA, probB</span>):</span></span><br><span class="line">    scoreA, scoreB = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    serving =<span class="string">&quot;A&quot;</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> gameOver(scoreA,scoreB):</span><br><span class="line">        <span class="keyword">if</span> serving == <span class="string">&quot;A&quot;</span>:</span><br><span class="line">            <span class="keyword">if</span> random() &lt; probA:</span><br><span class="line">                scoreA += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                serving = <span class="string">&quot;B&quot;</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> random() &lt; probB:</span><br><span class="line">                scoreB += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                serving = <span class="string">&quot;A&quot;</span></span><br><span class="line">    <span class="keyword">return</span> scoreA, scoreB</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simNGames</span>(<span class="params">n, probA, probB</span>):</span></span><br><span class="line">    winsA, winsB = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        scoreA, scoreB = simOneGame(probA, probB)</span><br><span class="line">        <span class="keyword">if</span> scoreA &gt; scoreB:</span><br><span class="line">            winsA += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            winsB += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> winsA, winsB</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    printIntro()</span><br><span class="line">    probA, probB, n = getInputs()</span><br><span class="line">    winsA, winsB = simNGames(n, probA, probB)</span><br><span class="line">    printSummary(winsA, winsB)</span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h3><img lazyload src="/images/loading.svg" data-src="/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(8)%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E5%AD%A6/result.png" class>
+
+<h2 id="举一反三"><a href="#举一反三" class="headerlink" title="举一反三"></a>举一反三</h2><ol>
+<li>理解自顶向下和自底向上</li>
+</ol>
+<ul>
+<li>理解自顶向下的设计思维：分而治之</li>
+<li>理解自底向上的执行思维：模块化集成</li>
+<li>自顶向下是“系统”思维的简化</li>
+</ul>
+<ol start="2">
+<li>应用问题的扩展</li>
+</ol>
+<ul>
+<li>扩展比赛参数，增加对更多能力对比情况的判断</li>
+<li>扩展比赛设计，增加对真实比赛结果的预测</li>
+<li>扩展分析逻辑，反向推理，用胜率推算能力？</li>
+</ul>
+<h1 id="Python程序设计思维"><a href="#Python程序设计思维" class="headerlink" title="Python程序设计思维"></a>Python程序设计思维</h1><h2 id="计算思维"><a href="#计算思维" class="headerlink" title="计算思维"></a>计算思维</h2><p>第3种人类思维特征</p>
+<ul>
+<li>逻辑思维：推理和演绎，数学为代表，A-&gt;B B-&gt;C A-&gt;C</li>
+<li>实证思维：实验和验证，物理为代表，引力波&lt;-实验</li>
+<li>计算思维：设计和构造，计算机为代表，汉诺塔递归</li>
+</ul>
+<p>计算思维（Computational Thinking）：<strong>抽象</strong>问题的计算过程，利用计算机<strong>自动化</strong>求解，是基于计算机的思维方式。计算思维基于计算机强大的算力及海量数据，抽象计算过程，关注设计和构造，而非因果。</p>
+<h2 id="计算生态与Python语言"><a href="#计算生态与Python语言" class="headerlink" title="计算生态与Python语言"></a>计算生态与Python语言</h2><ul>
+<li>以开源项目为代表的大量第三方库</li>
+<li>库的建设经过野蛮生长和自然选择</li>
+<li>库之间相互关联使用，依存发展</li>
+<li>社区庞大，新技术更迭迅速</li>
+</ul>
+<p>计算生态的价值</p>
+<ul>
+<li>加速科技类应用创新的重要支撑</li>
+<li>发展科技产品商业价值的重要模式</li>
+<li>国家科技体系安全和稳固的基础</li>
+</ul>
+<h2 id="基本的程序设计模式"><a href="#基本的程序设计模式" class="headerlink" title="基本的程序设计模式"></a>基本的程序设计模式</h2><p>IPO<br>模块化设计<br>配置化设计</p>
+<h1 id="Python第三方库安装"><a href="#Python第三方库安装" class="headerlink" title="Python第三方库安装"></a>Python第三方库安装</h1><p>Python社区：<a class="link" href="https://pypi.org/">https://pypi.org<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<p>安装第三方库：</p>
+<ol>
+<li>主要方法：使用pip命令</li>
+<li>集成安装方法</li>
+<li>文件安装方法</li>
+</ol>
+<p>Anaconda： <a class="link" href="https://www.continuum.io/">https://www.continuum.io<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<ul>
+<li>支持近800个第三方库</li>
+<li>包含多个主流工具</li>
+<li>适合数据计算领域开发</li>
+</ul>
+<p>UCI页面： <a class="link" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/">http://www.lfd.uci.edu/~gohlke/pythonlibs/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<ul>
+<li>在UCI页面上搜索&lt;库名称&gt;</li>
+<li>下载对应版本的文件</li>
+<li>使用pip install &lt;文件名&gt;安装</li>
+</ul>
+<h1 id="os库的使用"><a href="#os库的使用" class="headerlink" title="os库的使用"></a>os库的使用</h1><h2 id="os库基本介绍"><a href="#os库基本介绍" class="headerlink" title="os库基本介绍"></a>os库基本介绍</h2><p>os库提供通用的、基本的操作系统交互功能</p>
+<ul>
+<li>os库是Python标准库，包含几百个函数</li>
+<li>常用路径操作、进程管理、环境参数等几类<ul>
+<li>路径操作：os.path子库，处理文件路径及信息</li>
+<li>进程管理：启动系统中其他程序</li>
+<li>环境参数：获得系统软硬件信息等环境参数</li>
+</ul>
+</li>
+</ul>
+<h2 id="os库的路径操作"><a href="#os库的路径操作" class="headerlink" title="os库的路径操作"></a>os库的路径操作</h2><p>os.path子库以path为入口，用于操作和处理文件路径<br>| 函数                        | 描述                                  |<br>| ————————— | ——————————— |<br>| <code>os.path.abspath(path)</code>  | 返回path在当前系统中的绝对路径             |<br>| <code>os.path.normpath(path)</code>  | 归一化path的表示形式，统一用\\分隔路径      |<br>| <code>os.path.relpath(path)</code> | 返回当前程序与文件之间的相对路径（relative path）|<br>| <code>os.path.dirname(path)</code>   | 返回path中的目录名称                        |<br>| <code>os.path.basename(path)</code> | 返回path中最后的文件名称                  |<br>| <code>os.path.join(path,*paths)</code> | 组合path与paths，返回一个路径字符串         |<br>| <code>os.path.exists(path)</code> | 判断path对应文件或目录是否存在，返回True或False   |<br>| <code>os.path.isfile(path)</code>  | 判断path所对应是否为已存在的文件，返回True或False|<br>| <code>os.path.isdir(path)</code>  | 判断path所对应是否为已存在的目录，返回True或False |<br>| <code>os.path.getatime(path)</code>  | 返回path对应文件或目录上一次的访问时间        |<br>| <code>os.path.getmtime(path)</code>    | 返回path对应文件或目录最近一次的修改时间     |<br>| <code>os.path.getctime(path)</code>    | 返回path对应文件或目录创建时间             |<br>| <code>os.path.getsize(path)</code>     | 返回path对应文件的大小，以字节为单位        |</p>
+<h2 id="os库的进程管理"><a href="#os库的进程管理" class="headerlink" title="os库的进程管理"></a>os库的进程管理</h2><div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">os.system(command)</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li>执行程序或命令command</li>
+<li>在Windows操作系统中，返回值为cmd调用的返回信息</li>
+</ul>
+<h2 id="os库的环境参数"><a href="#os库的环境参数" class="headerlink" title="os库的环境参数"></a>os库的环境参数</h2><p>获取或改变系统环境信息<br>| 函数             | 描述                                            |<br>| —————- | ———————————————– |<br>| <code>os.chdir(path)</code> | 修改当前程序的操作路径                          |<br>| <code>os.getcwd()</code>    | 返回程序的当前路径                              |<br>| <code>os.getlogin()</code>  | 获得当前系统登录用户名称                        |<br>| <code>os.cpu_count()</code> | 获得当前系统CPU数量                             |<br>| <code>os.urandom(n)</code>  | 获得n个字节长度的随机字符串，通常用于加解密运算 |</p>
+<h1 id="实例：第三方库安装脚本"><a href="#实例：第三方库安装脚本" class="headerlink" title="实例：第三方库安装脚本"></a>实例：第三方库安装脚本</h1><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><ul>
+<li>需求：批量安装第三方库需要人工干预，能否自动安装？</li>
+<li>自动执行pip逐一根据需求安装</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>库名</th>
+<th>用途</th>
+<th>pip安装指令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NumPy</td>
+<td>N维数据表示和运算</td>
+<td>pip install numpy</td>
+</tr>
+<tr>
+<td>Matplotlib</td>
+<td>二维数据可视化</td>
+<td>pip install matplotlib</td>
+</tr>
+<tr>
+<td>PIL</td>
+<td>图像处理</td>
+<td>pip install pillow</td>
+</tr>
+<tr>
+<td>Scikit-Learn</td>
+<td>机器学习和数据挖掘</td>
+<td>pip install sklearn</td>
+</tr>
+<tr>
+<td>Requests</td>
+<td>HTTP协议访问及网络爬虫</td>
+<td>pip install requests</td>
+</tr>
+<tr>
+<td>Jieba</td>
+<td>中文分词</td>
+<td>pip install jieba</td>
+</tr>
+<tr>
+<td>Beautiful Soup</td>
+<td>HTML和XML解析器</td>
+<td>pip install beautifulsoup4</td>
+</tr>
+<tr>
+<td>Wheel Python</td>
+<td>第三方库文件打包工具</td>
+<td>pip install wheel</td>
+</tr>
+<tr>
+<td>PyInstaller</td>
+<td>打包Python源文件为可执行文件</td>
+<td>pip install pyinstall</td>
+</tr>
+<tr>
+<td>Flask</td>
+<td>轻量级Web开发框架</td>
+<td>pip install flask</td>
+</tr>
+<tr>
+<td>WeRoBot</td>
+<td>微信机器人开发框架</td>
+<td>pip install werobot</td>
+</tr>
+<tr>
+<td>SymPy</td>
+<td>数学符号计算工具</td>
+<td>pip install sympy</td>
+</tr>
+<tr>
+<td>Pandas</td>
+<td>高效数据分析和计算</td>
+<td>pip install pandas</td>
+</tr>
+<tr>
+<td>Networkx</td>
+<td>复杂网络和图结构的建模和分析</td>
+<td>pip install networkx</td>
+</tr>
+<tr>
+<td>PyQt5</td>
+<td>基于Qt的专业级GUI开发框架</td>
+<td>pip install pyqt5</td>
+</tr>
+<tr>
+<td>PyOpenGL</td>
+<td>多平台OpenGL开发接口</td>
+<td>pip install pyopengl</td>
+</tr>
+<tr>
+<td>PyPDF2</td>
+<td>PDF文件内容提取及处理</td>
+<td>pip install pypdf2</td>
+</tr>
+<tr>
+<td>docopt</td>
+<td>Python命令行解析</td>
+<td>pip install docopt</td>
+</tr>
+<tr>
+<td>PyGame</td>
+<td>简单小游戏开发框架</td>
+<td>pip install pygame</td>
+</tr>
+</tbody></table>
+<h2 id="实例解析"><a href="#实例解析" class="headerlink" title="实例解析"></a>实例解析</h2><div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#BatchInstall.py</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">libs = &#123;<span class="string">&quot;numpy&quot;</span>,<span class="string">&quot;matplotlib&quot;</span>,<span class="string">&quot;pillow&quot;</span>,<span class="string">&quot;sklearn&quot;</span>,<span class="string">&quot;requests&quot;</span>,\</span><br><span class="line">        <span class="string">&quot;jieba&quot;</span>,<span class="string">&quot;beautifulsoup4&quot;</span>,<span class="string">&quot;wheel&quot;</span>,<span class="string">&quot;networkx&quot;</span>,<span class="string">&quot;sympy&quot;</span>,\</span><br><span class="line">        <span class="string">&quot;pyinstaller&quot;</span>,<span class="string">&quot;django&quot;</span>,<span class="string">&quot;flask&quot;</span>,<span class="string">&quot;werobot&quot;</span>,<span class="string">&quot;pyqt5&quot;</span>,\</span><br><span class="line">        <span class="string">&quot;pandas&quot;</span>,<span class="string">&quot;pyopengl&quot;</span>,<span class="string">&quot;pypdf2&quot;</span>,<span class="string">&quot;docopt&quot;</span>,<span class="string">&quot;pygame&quot;</span>&#125;</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">for</span> lib <span class="keyword">in</span> libs:</span><br><span class="line">        os.system(<span class="string">&quot;pip install&quot;</span> + lib)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Successful&quot;</span>)</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Failed Somehow&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="举一反三-1"><a href="#举一反三-1" class="headerlink" title="举一反三"></a>举一反三</h2><p>自动化脚本+</p>
+<ul>
+<li>编写各类自动化运行程序的脚本，调用已有程序</li>
+<li>扩展应用：安装更多第三方库，增加配置文件</li>
+<li>扩展异常检测：捕获更多异常类型，程序更稳定友好</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>嵩天老师Python(7)文件和数据格式化</title>
     <url>/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/</url>
     <content><![CDATA[<h1 id="文件的使用"><a href="#文件的使用" class="headerlink" title="文件的使用"></a>文件的使用</h1><h2 id="文件的类型"><a href="#文件的类型" class="headerlink" title="文件的类型"></a>文件的类型</h2><h3 id="文件的理解"><a href="#文件的理解" class="headerlink" title="文件的理解"></a>文件的理解</h3><p>文件是数据的抽象和集合</p>
@@ -4501,241 +4736,6 @@
 <blockquote>
 <p>练习素材下载：<br><a class="link" href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/%E6%96%B0%E6%97%B6%E4%BB%A3%E4%B8%AD%E5%9B%BD%E7%89%B9%E8%89%B2%E7%A4%BE%E4%BC%9A%E4%B8%BB%E4%B9%89.txt">新时代中国特色社会主义.txt<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br><a class="link" href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/%E5%85%B3%E4%BA%8E%E5%AE%9E%E6%96%BD%E4%B9%A1%E6%9D%91%E6%8C%AF%E5%85%B4%E6%88%98%E7%95%A5%E7%9A%84%E6%84%8F%E8%A7%81.txt">关于实施乡村振兴战略的意见.txt<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br><a class="link" href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/chinamap.jpg">chinamap.jpg<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br><a class="link" href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/fivestars.png">fivestars.png<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 </blockquote>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>嵩天老师Python(8)程序设计方法学</title>
-    <url>/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(8)%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E5%AD%A6/</url>
-    <content><![CDATA[<h1 id="实例：体育竞技分析"><a href="#实例：体育竞技分析" class="headerlink" title="实例：体育竞技分析"></a>实例：体育竞技分析</h1><blockquote>
-<p>高手过招，胜负只在毫厘之间</p>
-</blockquote>
-<h2 id="“体育竞技分析”问题分析"><a href="#“体育竞技分析”问题分析" class="headerlink" title="“体育竞技分析”问题分析"></a>“体育竞技分析”问题分析</h2><h3 id="体育竞技分析"><a href="#体育竞技分析" class="headerlink" title="体育竞技分析"></a>体育竞技分析</h3><ul>
-<li><p>需求：毫厘是多少？如何科学分析体育竞技比赛？</p>
-</li>
-<li><p>输入：球员的水平</p>
-</li>
-<li><p>输出：可预测的比赛成绩</p>
-<span id="more"></span></li>
-</ul>
-<h3 id="体育竞技分析：模拟N场比赛"><a href="#体育竞技分析：模拟N场比赛" class="headerlink" title="体育竞技分析：模拟N场比赛"></a>体育竞技分析：模拟N场比赛</h3><ul>
-<li>计算思维：抽象 + 自动化</li>
-<li>模拟：抽象比赛过程 + 自动化执行N场比赛</li>
-<li>当N越大时，比赛结果分析会越科学</li>
-</ul>
-<h3 id="比赛规则"><a href="#比赛规则" class="headerlink" title="比赛规则"></a>比赛规则</h3><ul>
-<li>双人击球比赛：A &amp; B，回合制，5局3胜</li>
-<li>开始时一方先发球，直至判分，接下来胜者发球</li>
-<li>球员只能在发球局得分，15分胜一局</li>
-</ul>
-<h2 id="自顶向下和自底向上"><a href="#自顶向下和自底向上" class="headerlink" title="自顶向下和自底向上"></a>自顶向下和自底向上</h2><h3 id="自顶向下（设计）——解决复杂问题的有效方法"><a href="#自顶向下（设计）——解决复杂问题的有效方法" class="headerlink" title="自顶向下（设计）——解决复杂问题的有效方法"></a>自顶向下（设计）——解决复杂问题的有效方法</h3><ul>
-<li>将一个总问题表达为若干个小问题组成的形式</li>
-<li>使用同样方法进一步分解小问题</li>
-<li>直至，小问题可以用计算机简单明了的解决</li>
-</ul>
-<h3 id="自底向上（执行）——逐步组建复杂系统的有效测试方法"><a href="#自底向上（执行）——逐步组建复杂系统的有效测试方法" class="headerlink" title="自底向上（执行）——逐步组建复杂系统的有效测试方法"></a>自底向上（执行）——逐步组建复杂系统的有效测试方法</h3><h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h3 id="程序总体框架及步骤"><a href="#程序总体框架及步骤" class="headerlink" title="程序总体框架及步骤"></a>程序总体框架及步骤</h3><ul>
-<li>步骤1：打印程序的介绍性信息               - printInfo()</li>
-<li>步骤2：获得程序运行参数：proA, proB, n    - getInputs()</li>
-<li>步骤3：利用球员A和B的能力值，模拟n局比赛  - simNGames()</li>
-<li>步骤4：输出球员A和B获胜比赛的场次及概率   - printSummary()</li>
-</ul>
-<h3 id="全代码"><a href="#全代码" class="headerlink" title="全代码"></a>全代码</h3><div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printIntro</span>():</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;这个程序模拟两个选手A和B的某种竞技比赛&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;程序运行需要A和B的能力值（以0到1之间的小数表示）&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getInputs</span>():</span></span><br><span class="line">    a = <span class="built_in">eval</span>(<span class="built_in">input</span>(<span class="string">&quot;请输入选手A的能力值（0-1）：&quot;</span>))</span><br><span class="line">    b = <span class="built_in">eval</span>(<span class="built_in">input</span>(<span class="string">&quot;请输入选手B的能力值（0-1）：&quot;</span>))</span><br><span class="line">    n = <span class="built_in">eval</span>(<span class="built_in">input</span>(<span class="string">&quot;模拟比赛的场次：&quot;</span>))</span><br><span class="line">    <span class="keyword">return</span> a, b, n</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printSummary</span>(<span class="params">winsA, winsB</span>):</span></span><br><span class="line">    n = winsA + winsB</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;竞技分析开始，共模拟&#123;&#125;场比赛&quot;</span>.<span class="built_in">format</span>(n))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;选手A获胜&#123;&#125;场比赛，占比&#123;:0.1%&#125;&quot;</span>.<span class="built_in">format</span>(winsA, winsA/n))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;选手B获胜&#123;&#125;场比赛，占比&#123;:0.1%&#125;&quot;</span>.<span class="built_in">format</span>(winsB, winsB/n))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gameOver</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    <span class="keyword">return</span> a==<span class="number">15</span> <span class="keyword">or</span> b==<span class="number">15</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simOneGame</span>(<span class="params">probA, probB</span>):</span></span><br><span class="line">    scoreA, scoreB = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    serving =<span class="string">&quot;A&quot;</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> gameOver(scoreA,scoreB):</span><br><span class="line">        <span class="keyword">if</span> serving == <span class="string">&quot;A&quot;</span>:</span><br><span class="line">            <span class="keyword">if</span> random() &lt; probA:</span><br><span class="line">                scoreA += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                serving = <span class="string">&quot;B&quot;</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> random() &lt; probB:</span><br><span class="line">                scoreB += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                serving = <span class="string">&quot;A&quot;</span></span><br><span class="line">    <span class="keyword">return</span> scoreA, scoreB</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simNGames</span>(<span class="params">n, probA, probB</span>):</span></span><br><span class="line">    winsA, winsB = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        scoreA, scoreB = simOneGame(probA, probB)</span><br><span class="line">        <span class="keyword">if</span> scoreA &gt; scoreB:</span><br><span class="line">            winsA += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            winsB += <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> winsA, winsB</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    printIntro()</span><br><span class="line">    probA, probB, n = getInputs()</span><br><span class="line">    winsA, winsB = simNGames(n, probA, probB)</span><br><span class="line">    printSummary(winsA, winsB)</span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h3><img lazyload src="/images/loading.svg" data-src="/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(8)%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95%E5%AD%A6/result.png" class>
-
-<h2 id="举一反三"><a href="#举一反三" class="headerlink" title="举一反三"></a>举一反三</h2><ol>
-<li>理解自顶向下和自底向上</li>
-</ol>
-<ul>
-<li>理解自顶向下的设计思维：分而治之</li>
-<li>理解自底向上的执行思维：模块化集成</li>
-<li>自顶向下是“系统”思维的简化</li>
-</ul>
-<ol start="2">
-<li>应用问题的扩展</li>
-</ol>
-<ul>
-<li>扩展比赛参数，增加对更多能力对比情况的判断</li>
-<li>扩展比赛设计，增加对真实比赛结果的预测</li>
-<li>扩展分析逻辑，反向推理，用胜率推算能力？</li>
-</ul>
-<h1 id="Python程序设计思维"><a href="#Python程序设计思维" class="headerlink" title="Python程序设计思维"></a>Python程序设计思维</h1><h2 id="计算思维"><a href="#计算思维" class="headerlink" title="计算思维"></a>计算思维</h2><p>第3种人类思维特征</p>
-<ul>
-<li>逻辑思维：推理和演绎，数学为代表，A-&gt;B B-&gt;C A-&gt;C</li>
-<li>实证思维：实验和验证，物理为代表，引力波&lt;-实验</li>
-<li>计算思维：设计和构造，计算机为代表，汉诺塔递归</li>
-</ul>
-<p>计算思维（Computational Thinking）：<strong>抽象</strong>问题的计算过程，利用计算机<strong>自动化</strong>求解，是基于计算机的思维方式。计算思维基于计算机强大的算力及海量数据，抽象计算过程，关注设计和构造，而非因果。</p>
-<h2 id="计算生态与Python语言"><a href="#计算生态与Python语言" class="headerlink" title="计算生态与Python语言"></a>计算生态与Python语言</h2><ul>
-<li>以开源项目为代表的大量第三方库</li>
-<li>库的建设经过野蛮生长和自然选择</li>
-<li>库之间相互关联使用，依存发展</li>
-<li>社区庞大，新技术更迭迅速</li>
-</ul>
-<p>计算生态的价值</p>
-<ul>
-<li>加速科技类应用创新的重要支撑</li>
-<li>发展科技产品商业价值的重要模式</li>
-<li>国家科技体系安全和稳固的基础</li>
-</ul>
-<h2 id="基本的程序设计模式"><a href="#基本的程序设计模式" class="headerlink" title="基本的程序设计模式"></a>基本的程序设计模式</h2><p>IPO<br>模块化设计<br>配置化设计</p>
-<h1 id="Python第三方库安装"><a href="#Python第三方库安装" class="headerlink" title="Python第三方库安装"></a>Python第三方库安装</h1><p>Python社区：<a class="link" href="https://pypi.org/">https://pypi.org<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-<p>安装第三方库：</p>
-<ol>
-<li>主要方法：使用pip命令</li>
-<li>集成安装方法</li>
-<li>文件安装方法</li>
-</ol>
-<p>Anaconda： <a class="link" href="https://www.continuum.io/">https://www.continuum.io<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-<ul>
-<li>支持近800个第三方库</li>
-<li>包含多个主流工具</li>
-<li>适合数据计算领域开发</li>
-</ul>
-<p>UCI页面： <a class="link" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/">http://www.lfd.uci.edu/~gohlke/pythonlibs/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-<ul>
-<li>在UCI页面上搜索&lt;库名称&gt;</li>
-<li>下载对应版本的文件</li>
-<li>使用pip install &lt;文件名&gt;安装</li>
-</ul>
-<h1 id="os库的使用"><a href="#os库的使用" class="headerlink" title="os库的使用"></a>os库的使用</h1><h2 id="os库基本介绍"><a href="#os库基本介绍" class="headerlink" title="os库基本介绍"></a>os库基本介绍</h2><p>os库提供通用的、基本的操作系统交互功能</p>
-<ul>
-<li>os库是Python标准库，包含几百个函数</li>
-<li>常用路径操作、进程管理、环境参数等几类<ul>
-<li>路径操作：os.path子库，处理文件路径及信息</li>
-<li>进程管理：启动系统中其他程序</li>
-<li>环境参数：获得系统软硬件信息等环境参数</li>
-</ul>
-</li>
-</ul>
-<h2 id="os库的路径操作"><a href="#os库的路径操作" class="headerlink" title="os库的路径操作"></a>os库的路径操作</h2><p>os.path子库以path为入口，用于操作和处理文件路径<br>| 函数                        | 描述                                  |<br>| ————————— | ——————————— |<br>| <code>os.path.abspath(path)</code>  | 返回path在当前系统中的绝对路径             |<br>| <code>os.path.normpath(path)</code>  | 归一化path的表示形式，统一用\\分隔路径      |<br>| <code>os.path.relpath(path)</code> | 返回当前程序与文件之间的相对路径（relative path）|<br>| <code>os.path.dirname(path)</code>   | 返回path中的目录名称                        |<br>| <code>os.path.basename(path)</code> | 返回path中最后的文件名称                  |<br>| <code>os.path.join(path,*paths)</code> | 组合path与paths，返回一个路径字符串         |<br>| <code>os.path.exists(path)</code> | 判断path对应文件或目录是否存在，返回True或False   |<br>| <code>os.path.isfile(path)</code>  | 判断path所对应是否为已存在的文件，返回True或False|<br>| <code>os.path.isdir(path)</code>  | 判断path所对应是否为已存在的目录，返回True或False |<br>| <code>os.path.getatime(path)</code>  | 返回path对应文件或目录上一次的访问时间        |<br>| <code>os.path.getmtime(path)</code>    | 返回path对应文件或目录最近一次的修改时间     |<br>| <code>os.path.getctime(path)</code>    | 返回path对应文件或目录创建时间             |<br>| <code>os.path.getsize(path)</code>     | 返回path对应文件的大小，以字节为单位        |</p>
-<h2 id="os库的进程管理"><a href="#os库的进程管理" class="headerlink" title="os库的进程管理"></a>os库的进程管理</h2><div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">os.system(command)</span><br></pre></td></tr></table></figure></div>
-<ul>
-<li>执行程序或命令command</li>
-<li>在Windows操作系统中，返回值为cmd调用的返回信息</li>
-</ul>
-<h2 id="os库的环境参数"><a href="#os库的环境参数" class="headerlink" title="os库的环境参数"></a>os库的环境参数</h2><p>获取或改变系统环境信息<br>| 函数             | 描述                                            |<br>| —————- | ———————————————– |<br>| <code>os.chdir(path)</code> | 修改当前程序的操作路径                          |<br>| <code>os.getcwd()</code>    | 返回程序的当前路径                              |<br>| <code>os.getlogin()</code>  | 获得当前系统登录用户名称                        |<br>| <code>os.cpu_count()</code> | 获得当前系统CPU数量                             |<br>| <code>os.urandom(n)</code>  | 获得n个字节长度的随机字符串，通常用于加解密运算 |</p>
-<h1 id="实例：第三方库安装脚本"><a href="#实例：第三方库安装脚本" class="headerlink" title="实例：第三方库安装脚本"></a>实例：第三方库安装脚本</h1><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><ul>
-<li>需求：批量安装第三方库需要人工干预，能否自动安装？</li>
-<li>自动执行pip逐一根据需求安装</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>库名</th>
-<th>用途</th>
-<th>pip安装指令</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>NumPy</td>
-<td>N维数据表示和运算</td>
-<td>pip install numpy</td>
-</tr>
-<tr>
-<td>Matplotlib</td>
-<td>二维数据可视化</td>
-<td>pip install matplotlib</td>
-</tr>
-<tr>
-<td>PIL</td>
-<td>图像处理</td>
-<td>pip install pillow</td>
-</tr>
-<tr>
-<td>Scikit-Learn</td>
-<td>机器学习和数据挖掘</td>
-<td>pip install sklearn</td>
-</tr>
-<tr>
-<td>Requests</td>
-<td>HTTP协议访问及网络爬虫</td>
-<td>pip install requests</td>
-</tr>
-<tr>
-<td>Jieba</td>
-<td>中文分词</td>
-<td>pip install jieba</td>
-</tr>
-<tr>
-<td>Beautiful Soup</td>
-<td>HTML和XML解析器</td>
-<td>pip install beautifulsoup4</td>
-</tr>
-<tr>
-<td>Wheel Python</td>
-<td>第三方库文件打包工具</td>
-<td>pip install wheel</td>
-</tr>
-<tr>
-<td>PyInstaller</td>
-<td>打包Python源文件为可执行文件</td>
-<td>pip install pyinstall</td>
-</tr>
-<tr>
-<td>Flask</td>
-<td>轻量级Web开发框架</td>
-<td>pip install flask</td>
-</tr>
-<tr>
-<td>WeRoBot</td>
-<td>微信机器人开发框架</td>
-<td>pip install werobot</td>
-</tr>
-<tr>
-<td>SymPy</td>
-<td>数学符号计算工具</td>
-<td>pip install sympy</td>
-</tr>
-<tr>
-<td>Pandas</td>
-<td>高效数据分析和计算</td>
-<td>pip install pandas</td>
-</tr>
-<tr>
-<td>Networkx</td>
-<td>复杂网络和图结构的建模和分析</td>
-<td>pip install networkx</td>
-</tr>
-<tr>
-<td>PyQt5</td>
-<td>基于Qt的专业级GUI开发框架</td>
-<td>pip install pyqt5</td>
-</tr>
-<tr>
-<td>PyOpenGL</td>
-<td>多平台OpenGL开发接口</td>
-<td>pip install pyopengl</td>
-</tr>
-<tr>
-<td>PyPDF2</td>
-<td>PDF文件内容提取及处理</td>
-<td>pip install pypdf2</td>
-</tr>
-<tr>
-<td>docopt</td>
-<td>Python命令行解析</td>
-<td>pip install docopt</td>
-</tr>
-<tr>
-<td>PyGame</td>
-<td>简单小游戏开发框架</td>
-<td>pip install pygame</td>
-</tr>
-</tbody></table>
-<h2 id="实例解析"><a href="#实例解析" class="headerlink" title="实例解析"></a>实例解析</h2><div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#BatchInstall.py</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">libs = &#123;<span class="string">&quot;numpy&quot;</span>,<span class="string">&quot;matplotlib&quot;</span>,<span class="string">&quot;pillow&quot;</span>,<span class="string">&quot;sklearn&quot;</span>,<span class="string">&quot;requests&quot;</span>,\</span><br><span class="line">        <span class="string">&quot;jieba&quot;</span>,<span class="string">&quot;beautifulsoup4&quot;</span>,<span class="string">&quot;wheel&quot;</span>,<span class="string">&quot;networkx&quot;</span>,<span class="string">&quot;sympy&quot;</span>,\</span><br><span class="line">        <span class="string">&quot;pyinstaller&quot;</span>,<span class="string">&quot;django&quot;</span>,<span class="string">&quot;flask&quot;</span>,<span class="string">&quot;werobot&quot;</span>,<span class="string">&quot;pyqt5&quot;</span>,\</span><br><span class="line">        <span class="string">&quot;pandas&quot;</span>,<span class="string">&quot;pyopengl&quot;</span>,<span class="string">&quot;pypdf2&quot;</span>,<span class="string">&quot;docopt&quot;</span>,<span class="string">&quot;pygame&quot;</span>&#125;</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">for</span> lib <span class="keyword">in</span> libs:</span><br><span class="line">        os.system(<span class="string">&quot;pip install&quot;</span> + lib)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Successful&quot;</span>)</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Failed Somehow&quot;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="举一反三-1"><a href="#举一反三-1" class="headerlink" title="举一反三"></a>举一反三</h2><p>自动化脚本+</p>
-<ul>
-<li>编写各类自动化运行程序的脚本，调用已有程序</li>
-<li>扩展应用：安装更多第三方库，增加配置文件</li>
-<li>扩展异常检测：捕获更多异常类型，程序更稳定友好</li>
-</ul>
 ]]></content>
       <categories>
         <category>Python</category>
@@ -5182,11 +5182,6 @@
       </tags>
   </entry>
   <entry>
-    <title>年更博主：小恐龙OJ的装修心得</title>
-    <url>/2024/08/21/%E5%B9%B4%E6%9B%B4%E5%8D%9A%E4%B8%BB%EF%BC%9A%E5%B0%8F%E6%81%90%E9%BE%99OJ%E7%9A%84%E8%A3%85%E4%BF%AE%E5%BF%83%E5%BE%97/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>带你学C带你飞(3)</title>
     <url>/2022/03/25/%E5%B8%A6%E4%BD%A0%E5%AD%A6C%E5%B8%A6%E4%BD%A0%E9%A3%9E-3/</url>
     <content><![CDATA[<p>小甲鱼C语言系列课程笔记，共61个视频，每6个视频总结一次笔记，预计10篇。</p>
@@ -5282,6 +5277,11 @@
       <tags>
         <tag>C</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>年更博主：小恐龙OJ的装修心得</title>
+    <url>/2024/08/21/%E5%B9%B4%E6%9B%B4%E5%8D%9A%E4%B8%BB%EF%BC%9A%E5%B0%8F%E6%81%90%E9%BE%99OJ%E7%9A%84%E8%A3%85%E4%BF%AE%E5%BF%83%E5%BE%97/</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>庆祝中国共产党成立100周年</title>
