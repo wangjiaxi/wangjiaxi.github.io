@@ -1,449 +1,811 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="The Redefine Team">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
 
+                // Try immediately
+                if (addBodyClass()) return;
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon32.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
-  <link rel="mask-icon" href="/images/favicon32.ico" color="#222">
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link rel="stylesheet" href="/css/main.css">
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/black/pace-theme-big-counter.css">
-  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
-  <script>
-  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/f7028396.js","daovoice")
-  daovoice('init', {
-      app_id: "f7028396"
-    });
-  daovoice('update');
-  </script>
-
-
-
-
-
-<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeInDown","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInDown","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-<meta name="description" content="其实这个项目来自一位我的新疆的学生。原本的Turtle Race项目只是画出赛道，创建两支画笔然后进行一个赛跑。但是学生后边学习了Turtle的事件、监听、绑定按键等知识以后，将原有的Turtle Race升级，做成一个人机交互小游戏。">
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="http://yoursite.com/2020/12/17/升级版turtle-race/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="升级版Turtle Race">
 <meta property="og:url" content="http://yoursite.com/2020/12/17/%E5%8D%87%E7%BA%A7%E7%89%88Turtle-Race/index.html">
 <meta property="og:site_name" content="Ward&#39;s BLOG">
-<meta property="og:description" content="其实这个项目来自一位我的新疆的学生。原本的Turtle Race项目只是画出赛道，创建两支画笔然后进行一个赛跑。但是学生后边学习了Turtle的事件、监听、绑定按键等知识以后，将原有的Turtle Race升级，做成一个人机交互小游戏。">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://yoursite.com/2020/12/17/%E5%8D%87%E7%BA%A7%E7%89%88Turtle-Race/tr2.gif">
+<meta property="og:image" content="http://yoursite.com/images/redefine-og.webp">
 <meta property="article:published_time" content="2020-12-17T14:53:28.000Z">
 <meta property="article:modified_time" content="2020-12-18T13:28:51.466Z">
 <meta property="article:author" content="Ward Wang">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/12/17/%E5%8D%87%E7%BA%A7%E7%89%88Turtle-Race/tr2.gif">
-
-
-<link rel="canonical" href="http://yoursite.com/2020/12/17/%E5%8D%87%E7%BA%A7%E7%89%88Turtle-Race/">
-
-
-
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://yoursite.com/2020/12/17/%E5%8D%87%E7%BA%A7%E7%89%88Turtle-Race/","path":"2020/12/17/升级版Turtle-Race/","title":"升级版Turtle Race"}</script>
-
-<script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>升级版Turtle Race | Ward's BLOG</title>
-  
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-145825566-1"></script>
-  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-145825566-1","only_pageview":false}</script>
-  <script src="/js/third-party/analytics/google-analytics.js"></script>
-
-
-
-
-  <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
-  </noscript>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
-
-  <main class="main">
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏" role="button">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <h1 class="site-title">Ward's BLOG</h1>
-      <i class="logo-line"></i>
-    </a>
-      <p class="site-subtitle" itemprop="description">都是瞎写</p>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-        <i class="fa fa-search fa-fw fa-lg"></i>
-    </div>
-  </div>
-</div>
-
-
-
-<nav class="site-nav">
-  <ul class="main-menu menu">
-        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
-        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
-        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
-        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
-        </a>
-      </li>
-  </ul>
-</nav>
-
-
-
-  <div class="search-pop-overlay">
-    <div class="popup search-popup"><div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off" maxlength="80"
-           placeholder="搜索..." spellcheck="false"
-           type="search" class="search-input">
-  </div>
-  <span class="popup-btn-close" role="button">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div class="search-result-container no-result">
-  <div class="search-result-icon">
-    <i class="fa fa-spinner fa-pulse fa-5x"></i>
-  </div>
-</div>
-
-    </div>
-  </div>
-
-</div>
+<meta name="twitter:image" content="http://yoursite.com/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
         
-  
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
+            升级版Turtle Race | Theme Redefine
+        
+    </title>
 
-  <aside class="sidebar">
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
 
-    <div class="sidebar-inner sidebar-overview-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
 
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <div class="post-toc-wrap sidebar-panel">
-        </div>
-        <!--/noindex-->
+    <!--- Inject Part-->
+    
 
-        <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Ward Wang"
-      src="/images/avatar.png">
-  <p class="site-author-name" itemprop="name">Ward Wang</p>
-  <div class="site-description" itemprop="description"></div>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"yoursite.com","root":"/","language":"zh-CN","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":false,"list":[]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":false},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Theme Redefine","subtitle":{"text":[],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":false,"style":"default","links":{"github":null,"instagram":null,"zhihu":null,"twitter":null,"email":null},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":false,"type":"fixed","audios":[{"name":null,"artist":null,"url":null,"cover":null,"lrc":null}]},"mermaid":{"enable":false,"version":"11.4.1"}},"version":"2.8.5","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"}},"search":{"enable":false,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":null},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"};
+    window.data = {"masonry":false};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
 </div>
-<div class="site-state-wrap site-overview-item animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-        <a href="/archives/">
-          <span class="site-state-item-count">70</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-          <a href="/categories/">
-        <span class="site-state-item-count">9</span>
-        <span class="site-state-item-name">分类</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-          <a href="/tags/">
-        <span class="site-state-item-count">22</span>
-        <span class="site-state-item-name">标签</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author site-overview-item animated">
-      <span class="links-of-author-item">
-        <a href="https://github.com/wangjiaxi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangjiaxi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:wangjiaxi.cv@qq.com" title="E-Mail → mailto:wangjiaxi.cv@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
-      </span>
-  </div>
 
+<main class="page-container" id="swup">
 
+	
 
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                Theme Redefine
+                
+            </a>
         </div>
-      </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    首页
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
     </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                首页
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+
+            
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">22</div>
+        <div class="label text-third-text-color text-sm">标签</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">9</div>
+        <div class="label text-third-text-color text-sm">分类</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">70</div>
+        <div class="label text-third-text-color text-sm">文章</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
 
 
-    </header>
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">升级版Turtle Race</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/images/redefine-avatar.svg">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">The Redefine Team</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv5</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2020-12-17 22:53:28</span>
+        <span class="mobile">2020-12-17 22:53:28</span>
+        <span class="hover-info">创建</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2020-12-18 21:28:51</span>
+            <span class="mobile">2020-12-18 21:28:51</span>
+            <span class="hover-info">更新</span>
+        </span>
+    
 
     
-  <div class="back-to-top" role="button" aria-label="返回顶部">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
-
-
-    <div class="main-inner post posts-expand">
-
-
-  
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/17/%E5%8D%87%E7%BA%A7%E7%89%88Turtle-Race/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Ward Wang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ward's BLOG">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          升级版Turtle Race
-        </h1>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2020-12-17 22:53:28" itemprop="dateCreated datePublished" datetime="2020-12-17T22:53:28+08:00">2020-12-17</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/Python/">Python</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
         </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-12-18 21:28:51" itemprop="dateModified" datetime="2020-12-18T21:28:51+08:00">2020-12-18</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/Python/">Python</a>&nbsp;
+                    </li>
+                
+            </ul>
         </span>
-    </span>
+    
 
-  
-    <span id="/2020/12/17/%E5%8D%87%E7%BA%A7%E7%89%88Turtle-Race/" class="post-meta-item leancloud_visitors" data-flag-title="升级版Turtle Race" title="阅读次数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span class="leancloud-visitors-count"></span>
-    </span>
-    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span id="busuanzi_value_page_pv"></span>
-    </span>
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>595 字</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>3 分钟</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
 </div>
 
-        </div>
-      </header>
+				</div>
+			</div>
+		</div>
+		
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-        <p>其实这个项目来自一位我的新疆的学生。原本的Turtle Race项目只是画出赛道，创建两支画笔然后进行一个赛跑。但是学生后边学习了Turtle的事件、监听、绑定按键等知识以后，将原有的Turtle Race升级，做成一个人机交互小游戏。</p>
-<img src="/2020/12/17/%E5%8D%87%E7%BA%A7%E7%89%88Turtle-Race/tr2.gif" class>
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<p>其实这个项目来自一位我的新疆的学生。原本的Turtle Race项目只是画出赛道，创建两支画笔然后进行一个赛跑。但是学生后边学习了Turtle的事件、监听、绑定按键等知识以后，将原有的Turtle Race升级，做成一个人机交互小游戏。</p>
+<img lazyload src="/images/loading.svg" data-src="/2020/12/17/%E5%8D%87%E7%BA%A7%E7%89%88Turtle-Race/tr2.gif" class>
 
 <span id="more"></span>
 
 <p>游戏规则很简单：</p>
 <p>一共有3只海龟，你控制其中的tina（红色），剩下两只海龟会自动前进。但是跑道旁边有一个红绿灯🚥，只有绿灯、黄灯亮起时才允许前进。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> turtle</span><br><span class="line"></span><br><span class="line">s = turtle.Screen()</span><br><span class="line">s.setup(width=<span class="number">500</span>, height=<span class="number">300</span>)</span><br><span class="line">t = turtle.Turtle()</span><br><span class="line">turtle.bgcolor(<span class="string">&#x27;skyblue&#x27;</span>)</span><br><span class="line">t.speed(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印规则</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;游戏规则：红灯停绿灯行，闯红灯有惩罚&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 赛道</span></span><br><span class="line">t.goto(-<span class="number">150</span>, <span class="number">50</span>)</span><br><span class="line">t.color(<span class="string">&#x27;gray&#x27;</span>)</span><br><span class="line">t.begin_fill()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>):</span><br><span class="line">    t.fd(<span class="number">300</span>)</span><br><span class="line">    t.rt(<span class="number">90</span>)</span><br><span class="line">    t.fd(<span class="number">100</span>)</span><br><span class="line">    t.rt(<span class="number">90</span>)</span><br><span class="line">t.end_fill()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 画出终点线</span></span><br><span class="line">t.goto(<span class="number">150</span>, <span class="number">50</span>)</span><br><span class="line">t.color(<span class="string">&#x27;red&#x27;</span>)</span><br><span class="line">t.begin_fill()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>):</span><br><span class="line">    t.fd(<span class="number">10</span>)</span><br><span class="line">    t.rt(<span class="number">90</span>)</span><br><span class="line">    t.fd(<span class="number">100</span>)</span><br><span class="line">    t.rt(<span class="number">90</span>)</span><br><span class="line">t.end_fill()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 画出分割线</span></span><br><span class="line">t.pu()</span><br><span class="line">t.goto(-<span class="number">150</span>, -<span class="number">16</span>)</span><br><span class="line">t.color(<span class="string">&#x27;white&#x27;</span>)</span><br><span class="line">t.pd()</span><br><span class="line">t.fd(<span class="number">300</span>)</span><br><span class="line">t.pu()</span><br><span class="line">t.goto(-<span class="number">150</span>, <span class="number">17</span>)</span><br><span class="line">t.pd()</span><br><span class="line">t.fd(<span class="number">300</span>)</span><br><span class="line"></span><br><span class="line">t.hideturtle()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建海龟运动员</span></span><br><span class="line">tina = turtle.Turtle()</span><br><span class="line">tina.shape(<span class="string">&#x27;turtle&#x27;</span>)</span><br><span class="line">bob = turtle.Turtle()</span><br><span class="line">bob.shape(<span class="string">&#x27;turtle&#x27;</span>)</span><br><span class="line">frank = turtle.Turtle()</span><br><span class="line">frank.shape(<span class="string">&#x27;turtle&#x27;</span>)</span><br><span class="line">tina.pu()</span><br><span class="line">bob.pu()</span><br><span class="line">frank.pu()</span><br><span class="line">tina.color(<span class="string">&#x27;red&#x27;</span>)</span><br><span class="line">bob.color(<span class="string">&#x27;blue&#x27;</span>)</span><br><span class="line">frank.color(<span class="string">&#x27;orange&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移动到起点</span></span><br><span class="line">tina.goto(-<span class="number">150</span>, <span class="number">40</span>)</span><br><span class="line">bob.goto(-<span class="number">150</span>, -<span class="number">40</span>)</span><br><span class="line">frank.goto(-<span class="number">150</span>, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 写出名字</span></span><br><span class="line">tina.write(<span class="string">&#x27;tina&#x27;</span>, font=(<span class="string">&#x27;楷体&#x27;</span>, <span class="number">15</span>))</span><br><span class="line">bob.write(<span class="string">&#x27;bob&#x27;</span>, font=(<span class="string">&#x27;楷体&#x27;</span>, <span class="number">15</span>))</span><br><span class="line">frank.write(<span class="string">&#x27;frank&#x27;</span>, font=(<span class="string">&#x27;楷体&#x27;</span>, <span class="number">15</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始赛跑并判断胜负</span></span><br><span class="line">a = turtle.Turtle()</span><br><span class="line">a.pu()</span><br><span class="line">a.hideturtle()</span><br><span class="line">a.goto(<span class="number">50</span>, <span class="number">100</span>)</span><br><span class="line">x = <span class="number">0</span></span><br><span class="line">y = <span class="number">0</span></span><br><span class="line">r = <span class="number">0</span></span><br><span class="line">z = <span class="number">4</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">speed</span>():</span></span><br><span class="line">    tina.speed(<span class="number">0</span>)</span><br><span class="line">    tina.fd(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a.color(<span class="string">&#x27;green&#x27;</span>)</span><br><span class="line">a.dot(<span class="number">30</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    x += <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> x &gt; <span class="number">15</span> <span class="keyword">and</span> y &lt; <span class="number">6</span>:</span><br><span class="line">        a.pd()</span><br><span class="line">        a.color(<span class="string">&#x27;yellow&#x27;</span>)</span><br><span class="line">        a.dot(<span class="number">30</span>)</span><br><span class="line">        y += <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> x &gt; <span class="number">15</span> <span class="keyword">and</span> y &gt; <span class="number">5</span>:</span><br><span class="line">        a.color(<span class="string">&#x27;red&#x27;</span>)</span><br><span class="line">        a.dot(<span class="number">30</span>)</span><br><span class="line">        r = <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> tina.xcor() != tina_x:</span><br><span class="line">            tina.bk(<span class="number">30</span>)</span><br><span class="line">        tina_x = tina.xcor()</span><br><span class="line">        z += <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> z &gt; <span class="number">50</span>:</span><br><span class="line">        x = <span class="number">0</span></span><br><span class="line">        y = <span class="number">0</span></span><br><span class="line">        z = <span class="number">0</span></span><br><span class="line">        r = <span class="number">0</span></span><br><span class="line">        a.color(<span class="string">&#x27;green&#x27;</span>)</span><br><span class="line">        a.dot(<span class="number">30</span>)</span><br><span class="line">    s.onkey(speed, <span class="string">&#x27;Right&#x27;</span>)</span><br><span class="line">    s.listen()</span><br><span class="line">    tina_x = tina.xcor()</span><br><span class="line">    <span class="keyword">if</span> tina_x &gt;= <span class="number">150</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;tina win&#x27;</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    n = random.randint(<span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="keyword">if</span> r == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    bob.fd(n - n * <span class="number">2</span>)</span><br><span class="line">    bob.fd(random.randint(n, <span class="number">10</span>))</span><br><span class="line">    bob_x = bob.xcor()</span><br><span class="line">    <span class="keyword">if</span> bob_x &gt;= <span class="number">150</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;bob win&#x27;</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(random.randint(<span class="number">0</span>, <span class="number">6</span>)):</span><br><span class="line">        frank.fd(random.randint(<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line">    frank_x = frank.xcor()</span><br><span class="line">    <span class="keyword">if</span> frank_x &gt;= <span class="number">150</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;frank win&#x27;</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">turtle.mainloop()</span><br></pre></td></tr></table></figure>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> turtle</span><br><span class="line"></span><br><span class="line">s = turtle.Screen()</span><br><span class="line">s.setup(width=<span class="number">500</span>, height=<span class="number">300</span>)</span><br><span class="line">t = turtle.Turtle()</span><br><span class="line">turtle.bgcolor(<span class="string">&#x27;skyblue&#x27;</span>)</span><br><span class="line">t.speed(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印规则</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;游戏规则：红灯停绿灯行，闯红灯有惩罚&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 赛道</span></span><br><span class="line">t.goto(-<span class="number">150</span>, <span class="number">50</span>)</span><br><span class="line">t.color(<span class="string">&#x27;gray&#x27;</span>)</span><br><span class="line">t.begin_fill()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>):</span><br><span class="line">    t.fd(<span class="number">300</span>)</span><br><span class="line">    t.rt(<span class="number">90</span>)</span><br><span class="line">    t.fd(<span class="number">100</span>)</span><br><span class="line">    t.rt(<span class="number">90</span>)</span><br><span class="line">t.end_fill()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 画出终点线</span></span><br><span class="line">t.goto(<span class="number">150</span>, <span class="number">50</span>)</span><br><span class="line">t.color(<span class="string">&#x27;red&#x27;</span>)</span><br><span class="line">t.begin_fill()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>):</span><br><span class="line">    t.fd(<span class="number">10</span>)</span><br><span class="line">    t.rt(<span class="number">90</span>)</span><br><span class="line">    t.fd(<span class="number">100</span>)</span><br><span class="line">    t.rt(<span class="number">90</span>)</span><br><span class="line">t.end_fill()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 画出分割线</span></span><br><span class="line">t.pu()</span><br><span class="line">t.goto(-<span class="number">150</span>, -<span class="number">16</span>)</span><br><span class="line">t.color(<span class="string">&#x27;white&#x27;</span>)</span><br><span class="line">t.pd()</span><br><span class="line">t.fd(<span class="number">300</span>)</span><br><span class="line">t.pu()</span><br><span class="line">t.goto(-<span class="number">150</span>, <span class="number">17</span>)</span><br><span class="line">t.pd()</span><br><span class="line">t.fd(<span class="number">300</span>)</span><br><span class="line"></span><br><span class="line">t.hideturtle()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建海龟运动员</span></span><br><span class="line">tina = turtle.Turtle()</span><br><span class="line">tina.shape(<span class="string">&#x27;turtle&#x27;</span>)</span><br><span class="line">bob = turtle.Turtle()</span><br><span class="line">bob.shape(<span class="string">&#x27;turtle&#x27;</span>)</span><br><span class="line">frank = turtle.Turtle()</span><br><span class="line">frank.shape(<span class="string">&#x27;turtle&#x27;</span>)</span><br><span class="line">tina.pu()</span><br><span class="line">bob.pu()</span><br><span class="line">frank.pu()</span><br><span class="line">tina.color(<span class="string">&#x27;red&#x27;</span>)</span><br><span class="line">bob.color(<span class="string">&#x27;blue&#x27;</span>)</span><br><span class="line">frank.color(<span class="string">&#x27;orange&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移动到起点</span></span><br><span class="line">tina.goto(-<span class="number">150</span>, <span class="number">40</span>)</span><br><span class="line">bob.goto(-<span class="number">150</span>, -<span class="number">40</span>)</span><br><span class="line">frank.goto(-<span class="number">150</span>, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 写出名字</span></span><br><span class="line">tina.write(<span class="string">&#x27;tina&#x27;</span>, font=(<span class="string">&#x27;楷体&#x27;</span>, <span class="number">15</span>))</span><br><span class="line">bob.write(<span class="string">&#x27;bob&#x27;</span>, font=(<span class="string">&#x27;楷体&#x27;</span>, <span class="number">15</span>))</span><br><span class="line">frank.write(<span class="string">&#x27;frank&#x27;</span>, font=(<span class="string">&#x27;楷体&#x27;</span>, <span class="number">15</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始赛跑并判断胜负</span></span><br><span class="line">a = turtle.Turtle()</span><br><span class="line">a.pu()</span><br><span class="line">a.hideturtle()</span><br><span class="line">a.goto(<span class="number">50</span>, <span class="number">100</span>)</span><br><span class="line">x = <span class="number">0</span></span><br><span class="line">y = <span class="number">0</span></span><br><span class="line">r = <span class="number">0</span></span><br><span class="line">z = <span class="number">4</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">speed</span>():</span></span><br><span class="line">    tina.speed(<span class="number">0</span>)</span><br><span class="line">    tina.fd(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a.color(<span class="string">&#x27;green&#x27;</span>)</span><br><span class="line">a.dot(<span class="number">30</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    x += <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> x &gt; <span class="number">15</span> <span class="keyword">and</span> y &lt; <span class="number">6</span>:</span><br><span class="line">        a.pd()</span><br><span class="line">        a.color(<span class="string">&#x27;yellow&#x27;</span>)</span><br><span class="line">        a.dot(<span class="number">30</span>)</span><br><span class="line">        y += <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> x &gt; <span class="number">15</span> <span class="keyword">and</span> y &gt; <span class="number">5</span>:</span><br><span class="line">        a.color(<span class="string">&#x27;red&#x27;</span>)</span><br><span class="line">        a.dot(<span class="number">30</span>)</span><br><span class="line">        r = <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> tina.xcor() != tina_x:</span><br><span class="line">            tina.bk(<span class="number">30</span>)</span><br><span class="line">        tina_x = tina.xcor()</span><br><span class="line">        z += <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> z &gt; <span class="number">50</span>:</span><br><span class="line">        x = <span class="number">0</span></span><br><span class="line">        y = <span class="number">0</span></span><br><span class="line">        z = <span class="number">0</span></span><br><span class="line">        r = <span class="number">0</span></span><br><span class="line">        a.color(<span class="string">&#x27;green&#x27;</span>)</span><br><span class="line">        a.dot(<span class="number">30</span>)</span><br><span class="line">    s.onkey(speed, <span class="string">&#x27;Right&#x27;</span>)</span><br><span class="line">    s.listen()</span><br><span class="line">    tina_x = tina.xcor()</span><br><span class="line">    <span class="keyword">if</span> tina_x &gt;= <span class="number">150</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;tina win&#x27;</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    n = random.randint(<span class="number">0</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="keyword">if</span> r == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    bob.fd(n - n * <span class="number">2</span>)</span><br><span class="line">    bob.fd(random.randint(n, <span class="number">10</span>))</span><br><span class="line">    bob_x = bob.xcor()</span><br><span class="line">    <span class="keyword">if</span> bob_x &gt;= <span class="number">150</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;bob win&#x27;</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(random.randint(<span class="number">0</span>, <span class="number">6</span>)):</span><br><span class="line">        frank.fd(random.randint(<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line">    frank_x = frank.xcor()</span><br><span class="line">    <span class="keyword">if</span> frank_x &gt;= <span class="number">150</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;frank win&#x27;</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">turtle.mainloop()</span><br></pre></td></tr></table></figure></div>
 
 
-    </div>
+		</div>
 
-    
-    
-    
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>标题:</strong> 升级版Turtle Race</li>
+        <li><strong>作者:</strong> The Redefine Team</li>
+        <li><strong>创建于
+                :</strong> 2020-12-17 22:53:28</li>
+        
+            <li>
+                <strong>更新于
+                    :</strong> 2020-12-18 21:28:51
+            </li>
+        
+        <li>
+            <strong>链接:</strong> https://redefine.ohevan.com/2020/12/17/升级版Turtle-Race/
+        </li>
+        <li>
+            <strong>
+                版权声明:
+            </strong>
+            
 
-    <footer class="post-footer">
-          <div class="reward-container">
-  <div>Buy me a cup of coffee</div>
-  <button>
-    赞赏
-  </button>
-  <div class="post-reward">
-      <div>
-        <img src="/images/wechatpay.png" alt="Ward Wang 微信">
-        <span>微信</span>
-      </div>
-      <div>
-        <img src="/images/alipay.png" alt="Ward Wang 支付宝">
-        <span>支付宝</span>
-      </div>
-
-  </div>
+            
+                本文章采用 <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a> 进行许可。
+            
+        </li>
+    </ul>
 </div>
 
-          <div class="post-tags">
-              <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
-          </div>
+		</div>
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/Python/">#Python</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="prev" rel="prev" href="/2020/12/19/turtle%E5%A6%82%E4%BD%95%E8%87%AA%E5%AE%9A%E4%B9%89%E7%94%BB%E7%AC%94%E5%BD%A2%E7%8A%B6/">
+					<span class="left arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-left"></i>
+					</span>
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">turtle如何自定义画笔形状</span>
+						<span class="post-nav-item">上一篇</span>
+					</span>
+				</a>
+			</div>
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">Python递归绘制科赫雪花</span>
+						<span class="post-nav-item">下一篇</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        评论
+    </div>
+    
 
         
+            
+    <div id="waline"></div>
+    <script type="module" data-swup-reload-script>
+      import { init } from '/js/libs/waline.js';
 
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/" rel="prev" title="Python递归绘制科赫雪花">
-                  <i class="fa fa-chevron-left"></i> Python递归绘制科赫雪花
-                </a>
+      function loadWaline() {
+        init({
+          el: '#waline',
+          serverURL: 'https://example.example.com',
+          dark: 'body[class~="dark-mode"]',
+          reaction: false,
+          requiredMeta: ['nick', 'mail'],
+          emoji: [],
+                    lang: 'zh-CN',
+        });
+      }
+
+      if (typeof swup !== 'undefined') {
+        loadWaline();
+      } else {
+        window.addEventListener('DOMContentLoaded', loadWaline);
+      }
+    </script>
+
+
+
+        
+    
+</div>
+
+		</div>
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">目录</div>
+		<div class="page-title">升级版Turtle Race</div>
+		
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">The Redefine Team</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        共撰写了 70 篇文章
+                    </span>
+                    
+                        <span>
+                            共 54.2k 字
+                        </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">访问人数</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">总访问量</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
             </div>
-            <div class="post-nav-item">
-                <a href="/2020/12/19/turtle%E5%A6%82%E4%BD%95%E8%87%AA%E5%AE%9A%E4%B9%89%E7%94%BB%E7%AC%94%E5%BD%A2%E7%8A%B6/" rel="next" title="turtle如何自定义画笔形状">
-                  turtle如何自定义画笔形状 <i class="fa fa-chevron-right"></i>
-                </a>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">由 <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a> 驱动</span>
+            <span class="text-sm lg:block">主题&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.5</a></span>
+        </div>
+        
+        
+            <div>
+                博客已运行 <span class="odometer" id="runtime_days" ></span> 天 <span class="odometer" id="runtime_hours"></span> 小时 <span class="odometer" id="runtime_minutes"></span> 分钟 <span class="odometer" id="runtime_seconds"></span> 秒
             </div>
-          </div>
-    </footer>
-  </article>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
 </div>
 
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/js/build/utils.js" type="module"></script>
+
+<script src="/js/build/main.js" type="module"></script>
+
+<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/js/build/layouts/categoryList.js" type="module"></script>
 
 
 
 
 
-    <div class="comments gitalk-container"></div>
-</div>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-inner">
+    
+<script src="/js/build/tools/codeBlock.js" type="module"></script>
 
 
 
 
-<div class="copyright">
-  &copy; 2017 – 
-  <span itemprop="copyrightYear">2025</span>
-  <span class="with-love">
-    <i class="user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Ward Wang</span>
-</div>
-<div class="busuanzi-count">
-    <span class="post-meta-item" id="busuanzi_container_site_uv">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
-  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
-  </div>
+    
+<script src="/js/build/layouts/lazyload.js" type="module"></script>
 
-    </div>
-  </footer>
+
+
+
+    
+<script src="/js/build/tools/runtime.js"></script>
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
 
   
-  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+<script src="/js/build/libs/Typed.min.js"></script>
 
   
-<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
-<script src="/js/third-party/search/local-search.js"></script>
-
-  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.7/pdfobject.min.js","integrity":"sha256-ph3Dk89VmuTVXG6x/RDzk53SU9LPdAh1tpv0UvnDZ2I="},"url":"/lib/pdf/web/viewer.html"}</script>
-  <script src="/js/third-party/tags/pdf.js"></script>
+<script src="/js/build/plugins/typed.js" type="module"></script>
 
 
 
-  <script src="/js/third-party/pace.js"></script>
-
-  
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 
-  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"7AqAfY0UTLGCzrqwgoLDeAqh-gzGzoHsz","app_key":"sqdLgSwc2tD97Dq102IaJ609","server_url":null,"security":true}</script>
-  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
 
-<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"wangjiaxi","repo":"gitalkRepo","client_id":"f6d1b8482adec3ff7d51","client_secret":"058ab630876a1c29a2d059beb8b089e9f48bb79e","admin_user":"wangjiaxi","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"f852dcff3ab0cbd927a74ed5d63de66e"}</script>
-<script src="/js/third-party/comments/gitalk.js"></script>
-
-
-  <!--彩带2.自动飘动-->
-  <!-- <% if (theme.ribbon_flow){ %> -->
-      <!-- <script src="https://g.joyinshare.com/hc/piao.js" type="text/javascript"></script> -->
-      <script type="text/javascript" src="/js/ribbon_flow.js"></script>
-  <!-- <% } %> -->
+    
+<script src="/js/build/libs/anime.min.js"></script>
 
 
+
+
+
+    
+<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+	
 </body>
+
 </html>
