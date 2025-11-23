@@ -28,25 +28,6 @@
       </tags>
   </entry>
   <entry>
-    <title>HDFS客户端API</title>
-    <url>/2019/04/04/HDFS%E5%AE%A2%E6%88%B7%E7%AB%AFAPI/</url>
-    <content><![CDATA[<p>手动导入需要用的jars，也可以使用maven。</p>
-<span id="more"></span>
-
-
-<div class="code-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * HDFS的客户端api功能无非就是操作HDFS上的文件或文件夹</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HdfsClientDemo</span> </span>&#123;</span><br><span class="line">	FileSystem hdfsClient;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Before</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">		conf.addResource(<span class="string">&quot;myconf.xml&quot;</span>);</span><br><span class="line">		conf.set(<span class="string">&quot;dfs.replication&quot;</span>, <span class="string">&quot;2&quot;</span>);</span><br><span class="line">		conf.set(<span class="string">&quot;dfs.blocksize&quot;</span>, <span class="string">&quot;32m&quot;</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 创建一个HDFS客户端对象</span></span><br><span class="line">		hdfsClient = FileSystem.get(<span class="keyword">new</span> URI(<span class="string">&quot;hdfs://hdp-nn-01:9000/&quot;</span>), conf, <span class="string">&quot;root&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 上传一个文件</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testPutFile</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		hdfsClient.copyFromLocalFile(<span class="keyword">new</span> Path(<span class="string">&quot;d:/jdk-8u191-linux-x64.tar.gz&quot;</span>), <span class="keyword">new</span> Path(<span class="string">&quot;/jdk8.gz&quot;</span>));</span><br><span class="line">		hdfsClient.close();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 测试取文件</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testGetFile</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		hdfsClient.copyToLocalFile(<span class="keyword">false</span>, <span class="keyword">new</span> Path(<span class="string">&quot;/jdk8.gz&quot;</span>), <span class="keyword">new</span> Path(<span class="string">&quot;d:/&quot;</span>), <span class="keyword">true</span>);</span><br><span class="line">		hdfsClient.close();</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></div>
-<blockquote>
-<p><strong>注意</strong>：HDFS客户端从HDFS上读取数据写入本地磁盘时，可以使用Hadoop自己开发的本地库操作，也可以使用java 的原生库来操作本地文件。 参数就是useRawLocalFileSystem，如果为true，则使用java原生库；false则使用Hadoop自己的本地库。如果要使用Hadoop的本地库来操作本地文件，要配置Hadoop在本地的环境。</p>
-</blockquote>
-<div class="code-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 文件夹创建</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMkdir</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		<span class="comment">// 如果创建文件夹时，指定权限信息，但创建的结果并不会跟指定的信息完全一致，因为想指定的信息还会经过一个参数值的掩码运算</span></span><br><span class="line">		hdfsClient.mkdirs(<span class="keyword">new</span> Path(<span class="string">&quot;/xxx/yyy&quot;</span>), <span class="keyword">new</span> FsPermission((<span class="keyword">short</span>) <span class="number">777</span>));</span><br><span class="line">		hdfsClient.close();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 文件夹删除</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDeldir</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">		hdfsClient.delete(<span class="keyword">new</span> Path(<span class="string">&quot;/xxx&quot;</span>), <span class="keyword">true</span>);</span><br><span class="line">		hdfsClient.close();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 文件夹重命名</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRenamedir</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">		hdfsClient.rename(<span class="keyword">new</span> Path(<span class="string">&quot;/xxx&quot;</span>), <span class="keyword">new</span> Path(<span class="string">&quot;/ooo&quot;</span>));</span><br><span class="line">		hdfsClient.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>]]></content>
-      <categories>
-        <category>大数据开发</category>
-      </categories>
-      <tags>
-        <tag>大数据开发</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>HDFS基本配置属性</title>
     <url>/2019/04/04/HDFS%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7/</url>
     <content><![CDATA[<h1 id="块大小"><a href="#块大小" class="headerlink" title="块大小"></a>块大小</h1><p>HDFS中存储的文件块的块大小，默认128M</p>
@@ -88,6 +69,25 @@
 <li>在新机器上手动启动一个DataNode进程：<code>hadoop-daemon.sh start datanode</code></li>
 </ol>
 ]]></content>
+      <categories>
+        <category>大数据开发</category>
+      </categories>
+      <tags>
+        <tag>大数据开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HDFS客户端API</title>
+    <url>/2019/04/04/HDFS%E5%AE%A2%E6%88%B7%E7%AB%AFAPI/</url>
+    <content><![CDATA[<p>手动导入需要用的jars，也可以使用maven。</p>
+<span id="more"></span>
+
+
+<div class="code-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * HDFS的客户端api功能无非就是操作HDFS上的文件或文件夹</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HdfsClientDemo</span> </span>&#123;</span><br><span class="line">	FileSystem hdfsClient;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Before</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		Configuration conf = <span class="keyword">new</span> Configuration();</span><br><span class="line">		conf.addResource(<span class="string">&quot;myconf.xml&quot;</span>);</span><br><span class="line">		conf.set(<span class="string">&quot;dfs.replication&quot;</span>, <span class="string">&quot;2&quot;</span>);</span><br><span class="line">		conf.set(<span class="string">&quot;dfs.blocksize&quot;</span>, <span class="string">&quot;32m&quot;</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 创建一个HDFS客户端对象</span></span><br><span class="line">		hdfsClient = FileSystem.get(<span class="keyword">new</span> URI(<span class="string">&quot;hdfs://hdp-nn-01:9000/&quot;</span>), conf, <span class="string">&quot;root&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 上传一个文件</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testPutFile</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		hdfsClient.copyFromLocalFile(<span class="keyword">new</span> Path(<span class="string">&quot;d:/jdk-8u191-linux-x64.tar.gz&quot;</span>), <span class="keyword">new</span> Path(<span class="string">&quot;/jdk8.gz&quot;</span>));</span><br><span class="line">		hdfsClient.close();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 测试取文件</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testGetFile</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		hdfsClient.copyToLocalFile(<span class="keyword">false</span>, <span class="keyword">new</span> Path(<span class="string">&quot;/jdk8.gz&quot;</span>), <span class="keyword">new</span> Path(<span class="string">&quot;d:/&quot;</span>), <span class="keyword">true</span>);</span><br><span class="line">		hdfsClient.close();</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></div>
+<blockquote>
+<p><strong>注意</strong>：HDFS客户端从HDFS上读取数据写入本地磁盘时，可以使用Hadoop自己开发的本地库操作，也可以使用java 的原生库来操作本地文件。 参数就是useRawLocalFileSystem，如果为true，则使用java原生库；false则使用Hadoop自己的本地库。如果要使用Hadoop的本地库来操作本地文件，要配置Hadoop在本地的环境。</p>
+</blockquote>
+<div class="code-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 文件夹创建</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMkdir</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		<span class="comment">// 如果创建文件夹时，指定权限信息，但创建的结果并不会跟指定的信息完全一致，因为想指定的信息还会经过一个参数值的掩码运算</span></span><br><span class="line">		hdfsClient.mkdirs(<span class="keyword">new</span> Path(<span class="string">&quot;/xxx/yyy&quot;</span>), <span class="keyword">new</span> FsPermission((<span class="keyword">short</span>) <span class="number">777</span>));</span><br><span class="line">		hdfsClient.close();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 文件夹删除</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDeldir</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">		hdfsClient.delete(<span class="keyword">new</span> Path(<span class="string">&quot;/xxx&quot;</span>), <span class="keyword">true</span>);</span><br><span class="line">		hdfsClient.close();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 文件夹重命名</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRenamedir</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">		hdfsClient.rename(<span class="keyword">new</span> Path(<span class="string">&quot;/xxx&quot;</span>), <span class="keyword">new</span> Path(<span class="string">&quot;/ooo&quot;</span>));</span><br><span class="line">		hdfsClient.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>]]></content>
       <categories>
         <category>大数据开发</category>
       </categories>
@@ -242,75 +242,30 @@
       </tags>
   </entry>
   <entry>
-    <title>MacOS下使用VS Code搭建C语言开发环境</title>
-    <url>/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
-    <content><![CDATA[<p>本篇介绍如何在Mac上使用VS Code写C语言代码。VS Code是一个轻量级的IDE，相比CLion、Xcode等等体积小很多，并且在插件市场拥有丰富的插件，可以方便的安装使用。</p>
+    <title>Pygame Zero之贪吃蛇（三）</title>
+    <url>/2021/01/07/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89/</url>
+    <content><![CDATA[<p>本文继续来研究如何移动小蛇，这一次是让小蛇左转和右转。上一篇讲到小蛇只能前进，今天就让小蛇学会转弯。</p>
 <span id="more"></span>
 
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><h2 id="下载VS-Code"><a href="#下载VS-Code" class="headerlink" title="下载VS Code"></a>下载VS Code</h2><p>下载地址：<a class="link" href="https://code.visualstudio.com/">https://code.visualstudio.com/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="1.png" alt="1"></p>
-</blockquote>
-<h2 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h2><p>打开VS Code，点击左侧的 Extensions（图标为“田”字右上角的格子起飞），在搜索框中输入 <code>C/C++</code>，选择紫色图标，作者为Microsoft，点击 Install 即可安装。</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="3.png" alt="3"></p>
-</blockquote>
-<h2 id="创建文件夹"><a href="#创建文件夹" class="headerlink" title="创建文件夹"></a>创建文件夹</h2><p>在电脑中你希望保存代码的地方新建一个文件夹，我的是 <code>桌面-个人-学习-C/C++</code> ，创建好以后重启 VS Code。重启后，在欢迎页面点击 Open，并打开你刚创建的文件夹。</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="4.png" alt="4"></p>
-</blockquote>
-<h2 id="另存为一个工作区"><a href="#另存为一个工作区" class="headerlink" title="另存为一个工作区"></a>另存为一个工作区</h2><p>点击 File &gt; Save Workspace As …，并命名。</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="5.png" alt="5"></p>
-</blockquote>
-<h2 id="新建一个C文件，命名并保存"><a href="#新建一个C文件，命名并保存" class="headerlink" title="新建一个C文件，命名并保存"></a>新建一个C文件，命名并保存</h2><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;hello VSCode!\n&quot;</span>);</span><br><span class="line">     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></div>
+<p>如果小蛇本来是向右移动的，那么右转以后，小蛇就会向下移动，只需要把新蛇头的位置设置在旧蛇头<code>Snake[0]</code>的下方</p>
+<img lazyload src="/images/loading.svg" data-src="/2021/01/07/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89/%E5%90%91%E4%B8%8B%E7%A7%BB%E5%8A%A8.png" class>
 
-<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h2 id="配置-c-cpp-properties-json"><a href="#配置-c-cpp-properties-json" class="headerlink" title="配置 c_cpp_properties.json"></a>配置 <code>c_cpp_properties.json</code></h2><p>使用快捷键 <code>command</code> + <code>shift</code> + <code>P</code>打开命令行面板（Command Palette）</p>
-<p>输入 edit configurations，在弹出的列表中选择带 JSON 的 C/C++: Edit Configurations(JSON)</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="6.png" alt="6"></p>
-</blockquote>
-<p>配置字段 includePath：</p>
-<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;includePath&quot;</span>: </span><br><span class="line">[</span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include/c++/v1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/usr/local/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include&quot;</span></span><br><span class="line">],</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 前置代码见9-2.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="comment"># 设定新蛇头的坐标，小蛇向下移动，新蛇头在旧蛇头下方</span></span><br><span class="line">    newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">    newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)  <span class="comment"># 把新蛇头加入列表的最前面</span></span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]  <span class="comment"># 删除旧蛇尾</span></span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure></div>
 
-<p>你可能需要注意<br> <code>&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;,</code>中的版本号，可以进入Finder，按快捷键<code>command</code> + <code>shift</code> + <code>G</code> 输入：</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">/Library/Developer/CommandLineTools/usr/lib/clang/</span><br></pre></td></tr></table></figure></div>
+<p>类似的，我们就可以完成小蛇的所有方向移动了。定义一个变量来表示小蛇的移动方向。在<code>update</code>函数中，判断这个变量的值，就可以控制小蛇向不同的方向移动。</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 前置代码见9-2.py</span></span><br><span class="line"></span><br><span class="line">direction = <span class="string">&#x27;right&#x27;</span>  <span class="comment"># 控制小蛇运动方向，默认向右</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="comment"># 判断变量direction的值，执行相应操作</span></span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;up&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y - TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;down&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;left&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x - TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;right&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]</span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure></div>
 
-<p>在文件夹中查看clang版本</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="8.png" alt="8"></p>
-</blockquote>
-<p>完成后保存。</p>
-<h2 id="配置-tasks-json"><a href="#配置-tasks-json" class="headerlink" title="配置 tasks.json"></a>配置 <code>tasks.json</code></h2><p>在打开.c文件的情况下（比如我这里的hello.c）打开命令行面板 <code>command</code> + <code>shift</code> + <code>P</code>，输入tasks:configure task，选择Tasks: Configure Task</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="9.png" alt="9"></p>
-</blockquote>
-<p>点击C/C++:clang 生成活动文件</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="10.png" alt="10"></p>
-</blockquote>
-<p>这里我们需要配置 args 字段</p>
-<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;args&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;-g&quot;</span>,<span class="comment">//编译命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.c&quot;</span>,<span class="comment">//当前workspace下的hello.c文件</span></span><br><span class="line">    <span class="string">&quot;-o&quot;</span>,<span class="comment">//输出文件命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span><span class="comment">//生成的可执行文件的路径及名称</span></span><br><span class="line">    ],</span><br></pre></td></tr></table></figure></div>
+<p>现在小蛇已经可以向四个方向移动了，我们需要加上一个控制的功能。通过按下方向键来修改<code>direction</code>的值就可以了。</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">direction = <span class="string">&#x27;right&#x27;</span>  <span class="comment"># 控制小蛇运动方向，默认向右</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="keyword">global</span> direction  <span class="comment"># 将direction设为全局变量</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.left:</span><br><span class="line">        direction = <span class="string">&#x27;left&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.right:</span><br><span class="line">        direction = <span class="string">&#x27;right&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.up:</span><br><span class="line">        direction = <span class="string">&#x27;up&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.down:</span><br><span class="line">        direction = <span class="string">&#x27;down&#x27;</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;up&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y - TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;down&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;left&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x - TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;right&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]</span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure></div>
 
-<p>你需要配置第二个参数和第四个参数，第二个是编制的文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.c</code>，第四个是生成的可执行文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.o</code> ，完成后保存。</p>
-<h2 id="配置launch-json"><a href="#配置launch-json" class="headerlink" title="配置launch.json"></a>配置<code>launch.json</code></h2><p>在 hello.c 中按<code>Fn</code> + <code>F5</code> ，软件会报错并自动打开一个 <code>launch.json</code> 文件，这里需要配置 <code>program</code> 字段：</p>
-<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;program&quot;</span>: <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span>,</span><br></pre></td></tr></table></figure></div>
-
-<p>再次运行：</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="11.png" alt="11"></p>
-</blockquote>
-<hr>
-<blockquote>
-<p>部分内容转自 <a class="link" href="https://www.jianshu.com/u/69abdc363757">Robinone<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> 的 <a class="link" href="https://www.jianshu.com/p/83879b4aa3fe">https://www.jianshu.com/p/83879b4aa3fe<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-</blockquote>
-]]></content>
+<p>看一看效果图吧：</p>
+<img lazyload src="/images/loading.svg" data-src="/2021/01/07/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89/%E4%B8%8A%E4%B8%8B%E5%B7%A6%E5%8F%B3.gif" class>]]></content>
       <categories>
-        <category>C/C++</category>
+        <category>Python</category>
       </categories>
       <tags>
-        <tag>C</tag>
-        <tag>IDE</tag>
+        <tag>Python</tag>
+        <tag>游戏</tag>
       </tags>
   </entry>
   <entry>
@@ -341,33 +296,6 @@
 
 <p>运行程序，有一种古老游戏的感觉了，小蛇看起来是在一格一格的前进！</p>
 ]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>游戏</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Pygame Zero之贪吃蛇（三）</title>
-    <url>/2021/01/07/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89/</url>
-    <content><![CDATA[<p>本文继续来研究如何移动小蛇，这一次是让小蛇左转和右转。上一篇讲到小蛇只能前进，今天就让小蛇学会转弯。</p>
-<span id="more"></span>
-
-<p>如果小蛇本来是向右移动的，那么右转以后，小蛇就会向下移动，只需要把新蛇头的位置设置在旧蛇头<code>Snake[0]</code>的下方</p>
-<img lazyload src="/images/loading.svg" data-src="/2021/01/07/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89/%E5%90%91%E4%B8%8B%E7%A7%BB%E5%8A%A8.png" class>
-
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 前置代码见9-2.py</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="comment"># 设定新蛇头的坐标，小蛇向下移动，新蛇头在旧蛇头下方</span></span><br><span class="line">    newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">    newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)  <span class="comment"># 把新蛇头加入列表的最前面</span></span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]  <span class="comment"># 删除旧蛇尾</span></span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>类似的，我们就可以完成小蛇的所有方向移动了。定义一个变量来表示小蛇的移动方向。在<code>update</code>函数中，判断这个变量的值，就可以控制小蛇向不同的方向移动。</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 前置代码见9-2.py</span></span><br><span class="line"></span><br><span class="line">direction = <span class="string">&#x27;right&#x27;</span>  <span class="comment"># 控制小蛇运动方向，默认向右</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="comment"># 判断变量direction的值，执行相应操作</span></span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;up&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y - TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;down&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;left&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x - TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;right&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]</span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>现在小蛇已经可以向四个方向移动了，我们需要加上一个控制的功能。通过按下方向键来修改<code>direction</code>的值就可以了。</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">direction = <span class="string">&#x27;right&#x27;</span>  <span class="comment"># 控制小蛇运动方向，默认向右</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update</span>():</span></span><br><span class="line">    <span class="keyword">global</span> direction  <span class="comment"># 将direction设为全局变量</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.left:</span><br><span class="line">        direction = <span class="string">&#x27;left&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.right:</span><br><span class="line">        direction = <span class="string">&#x27;right&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.up:</span><br><span class="line">        direction = <span class="string">&#x27;up&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> keyboard.down:</span><br><span class="line">        direction = <span class="string">&#x27;down&#x27;</span></span><br><span class="line">    newSnakeHead = Actor(<span class="string">&#x27;snake1&#x27;</span>)  <span class="comment"># 创建新蛇头</span></span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;up&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y - TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;down&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y + TILE_SIZE</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;left&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x - TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    <span class="keyword">if</span> direction == <span class="string">&#x27;right&#x27;</span>:</span><br><span class="line">        newSnakeHead.x = Snake[<span class="number">0</span>].x + TILE_SIZE</span><br><span class="line">        newSnakeHead.y = Snake[<span class="number">0</span>].y</span><br><span class="line">    Snake.insert(<span class="number">0</span>, newSnakeHead)</span><br><span class="line">    <span class="keyword">del</span> Snake[<span class="built_in">len</span>(Snake) - <span class="number">1</span>]</span><br><span class="line">    time.sleep(<span class="number">0.2</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>看一看效果图吧：</p>
-<img lazyload src="/images/loading.svg" data-src="/2021/01/07/Pygame-Zero%E4%B9%8B%E8%B4%AA%E5%90%83%E8%9B%87%EF%BC%88%E4%B8%89%EF%BC%89/%E4%B8%8A%E4%B8%8B%E5%B7%A6%E5%8F%B3.gif" class>]]></content>
       <categories>
         <category>Python</category>
       </categories>
@@ -801,6 +729,110 @@
       </tags>
   </entry>
   <entry>
+    <title>MacOS下使用VS Code搭建C语言开发环境</title>
+    <url>/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
+    <content><![CDATA[<p>本篇介绍如何在Mac上使用VS Code写C语言代码。VS Code是一个轻量级的IDE，相比CLion、Xcode等等体积小很多，并且在插件市场拥有丰富的插件，可以方便的安装使用。</p>
+<span id="more"></span>
+
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><h2 id="下载VS-Code"><a href="#下载VS-Code" class="headerlink" title="下载VS Code"></a>下载VS Code</h2><p>下载地址：<a class="link" href="https://code.visualstudio.com/">https://code.visualstudio.com/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="1.png" alt="1"></p>
+</blockquote>
+<h2 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h2><p>打开VS Code，点击左侧的 Extensions（图标为“田”字右上角的格子起飞），在搜索框中输入 <code>C/C++</code>，选择紫色图标，作者为Microsoft，点击 Install 即可安装。</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="3.png" alt="3"></p>
+</blockquote>
+<h2 id="创建文件夹"><a href="#创建文件夹" class="headerlink" title="创建文件夹"></a>创建文件夹</h2><p>在电脑中你希望保存代码的地方新建一个文件夹，我的是 <code>桌面-个人-学习-C/C++</code> ，创建好以后重启 VS Code。重启后，在欢迎页面点击 Open，并打开你刚创建的文件夹。</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="4.png" alt="4"></p>
+</blockquote>
+<h2 id="另存为一个工作区"><a href="#另存为一个工作区" class="headerlink" title="另存为一个工作区"></a>另存为一个工作区</h2><p>点击 File &gt; Save Workspace As …，并命名。</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="5.png" alt="5"></p>
+</blockquote>
+<h2 id="新建一个C文件，命名并保存"><a href="#新建一个C文件，命名并保存" class="headerlink" title="新建一个C文件，命名并保存"></a>新建一个C文件，命名并保存</h2><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;hello VSCode!\n&quot;</span>);</span><br><span class="line">     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h2 id="配置-c-cpp-properties-json"><a href="#配置-c-cpp-properties-json" class="headerlink" title="配置 c_cpp_properties.json"></a>配置 <code>c_cpp_properties.json</code></h2><p>使用快捷键 <code>command</code> + <code>shift</code> + <code>P</code>打开命令行面板（Command Palette）</p>
+<p>输入 edit configurations，在弹出的列表中选择带 JSON 的 C/C++: Edit Configurations(JSON)</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="6.png" alt="6"></p>
+</blockquote>
+<p>配置字段 includePath：</p>
+<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;includePath&quot;</span>: </span><br><span class="line">[</span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include/c++/v1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/usr/local/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include&quot;</span></span><br><span class="line">],</span><br></pre></td></tr></table></figure></div>
+
+<p>你可能需要注意<br> <code>&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;,</code>中的版本号，可以进入Finder，按快捷键<code>command</code> + <code>shift</code> + <code>G</code> 输入：</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">/Library/Developer/CommandLineTools/usr/lib/clang/</span><br></pre></td></tr></table></figure></div>
+
+<p>在文件夹中查看clang版本</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="8.png" alt="8"></p>
+</blockquote>
+<p>完成后保存。</p>
+<h2 id="配置-tasks-json"><a href="#配置-tasks-json" class="headerlink" title="配置 tasks.json"></a>配置 <code>tasks.json</code></h2><p>在打开.c文件的情况下（比如我这里的hello.c）打开命令行面板 <code>command</code> + <code>shift</code> + <code>P</code>，输入tasks:configure task，选择Tasks: Configure Task</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="9.png" alt="9"></p>
+</blockquote>
+<p>点击C/C++:clang 生成活动文件</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="10.png" alt="10"></p>
+</blockquote>
+<p>这里我们需要配置 args 字段</p>
+<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;args&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;-g&quot;</span>,<span class="comment">//编译命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.c&quot;</span>,<span class="comment">//当前workspace下的hello.c文件</span></span><br><span class="line">    <span class="string">&quot;-o&quot;</span>,<span class="comment">//输出文件命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span><span class="comment">//生成的可执行文件的路径及名称</span></span><br><span class="line">    ],</span><br></pre></td></tr></table></figure></div>
+
+<p>你需要配置第二个参数和第四个参数，第二个是编制的文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.c</code>，第四个是生成的可执行文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.o</code> ，完成后保存。</p>
+<h2 id="配置launch-json"><a href="#配置launch-json" class="headerlink" title="配置launch.json"></a>配置<code>launch.json</code></h2><p>在 hello.c 中按<code>Fn</code> + <code>F5</code> ，软件会报错并自动打开一个 <code>launch.json</code> 文件，这里需要配置 <code>program</code> 字段：</p>
+<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;program&quot;</span>: <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span>,</span><br></pre></td></tr></table></figure></div>
+
+<p>再次运行：</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="11.png" alt="11"></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>部分内容转自 <a class="link" href="https://www.jianshu.com/u/69abdc363757">Robinone<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> 的 <a class="link" href="https://www.jianshu.com/p/83879b4aa3fe">https://www.jianshu.com/p/83879b4aa3fe<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>C/C++</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>IDE</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Pycharm Out of memory 解决办法</title>
+    <url>/2021/05/26/Pycharm-Out-of-memory-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
+    <content><![CDATA[<p>最近使用Pycharm敲代码突然卡住，并且蹦出一个错误：<code>Out of memory</code>。</p>
+<p>但是该错误与代码无关，只是因为系统分配给Pycharm的最大内存不够用了而已。</p>
+<p>这个最大内存是我们可以修改的，将它修改的大一些就可以解决这个问题。</p>
+<p>下面看看如何修改~</p>
+<span id="more"></span>
+
+<ol>
+<li>进入如下目录：</li>
+</ol>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">访达 -&gt; 应用程序 -&gt; 右键Pycharm -&gt; 显示包内容 -&gt; Contents -&gt; bin</span><br></pre></td></tr></table></figure></div>
+
+<ol start="2">
+<li>找到文件<code>pycharm.vmoptions</code>，使用一个文本编辑器打开，修改前两行的数值：</li>
+</ol>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">-Xms1024m      修改前是512</span><br><span class="line">-Xmx2048m      修改前是750（奇怪的数字）</span><br><span class="line">-XX:ReservedCodeCacheSize=512m</span><br><span class="line">-XX:+UseConcMarkSweepGC</span><br></pre></td></tr></table></figure></div>
+
+<ol start="3">
+<li>修改后保存关闭，重新启动Pycharm。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>bug</tag>
+        <tag>Python</tag>
+        <tag>IDE</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python中if后直接加变量</title>
     <url>/2019/12/23/Python%E4%B8%ADif%E5%90%8E%E7%9B%B4%E6%8E%A5%E5%8A%A0%E5%8F%98%E9%87%8F/</url>
     <content><![CDATA[<p>python中有时候会使用if语句，后边直接加一个变量，而不是一个布尔表达式，这是在判断神马呢？</p>
@@ -887,38 +919,6 @@
       </categories>
       <tags>
         <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Pycharm Out of memory 解决办法</title>
-    <url>/2021/05/26/Pycharm-Out-of-memory-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
-    <content><![CDATA[<p>最近使用Pycharm敲代码突然卡住，并且蹦出一个错误：<code>Out of memory</code>。</p>
-<p>但是该错误与代码无关，只是因为系统分配给Pycharm的最大内存不够用了而已。</p>
-<p>这个最大内存是我们可以修改的，将它修改的大一些就可以解决这个问题。</p>
-<p>下面看看如何修改~</p>
-<span id="more"></span>
-
-<ol>
-<li>进入如下目录：</li>
-</ol>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">访达 -&gt; 应用程序 -&gt; 右键Pycharm -&gt; 显示包内容 -&gt; Contents -&gt; bin</span><br></pre></td></tr></table></figure></div>
-
-<ol start="2">
-<li>找到文件<code>pycharm.vmoptions</code>，使用一个文本编辑器打开，修改前两行的数值：</li>
-</ol>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">-Xms1024m      修改前是512</span><br><span class="line">-Xmx2048m      修改前是750（奇怪的数字）</span><br><span class="line">-XX:ReservedCodeCacheSize=512m</span><br><span class="line">-XX:+UseConcMarkSweepGC</span><br></pre></td></tr></table></figure></div>
-
-<ol start="3">
-<li>修改后保存关闭，重新启动Pycharm。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>bug</tag>
-        <tag>Python</tag>
-        <tag>IDE</tag>
       </tags>
   </entry>
   <entry>
@@ -2907,6 +2907,22 @@
       </tags>
   </entry>
   <entry>
+    <title>macOS安装VEX Tournament Manager端口占用问题</title>
+    <url>/2023/02/02/macOS%E5%AE%89%E8%A3%85VEX-Tournament-Manager%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>Hi!</p>
+<span id="more"></span>
+<h1 id="安装VEX-Tournament-Manager"><a href="#安装VEX-Tournament-Manager" class="headerlink" title="安装VEX Tournament Manager"></a>安装VEX Tournament Manager</h1><p>准备学习VEX机器人了，在安装VEX Tournament Manager时遇到了打不开的情形，并收获<strong>3连弹</strong>，如下图所示：<br><img lazyload src="/images/loading.svg" data-src="error1.png" alt="error1"><br><img lazyload src="/images/loading.svg" data-src="error2.png" alt="error2"><br><img lazyload src="/images/loading.svg" data-src="error3.png" alt="error3"></p>
+<h1 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h1><p>打开系统设置 - 通用 - 隔空投送与接力<br>关闭 <code>隔空播放接收器</code><br><img lazyload src="/images/loading.svg" data-src="solve1.png" alt="solve1"><br><img lazyload src="/images/loading.svg" data-src="solve2.png" alt="solve2"></p>
+]]></content>
+      <categories>
+        <category>机器人编程</category>
+      </categories>
+      <tags>
+        <tag>bug</tag>
+        <tag>VEX</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>pygame笨拙的旋转</title>
     <url>/2021/10/09/pygame%E7%AC%A8%E6%8B%99%E7%9A%84%E6%97%8B%E8%BD%AC/</url>
     <content><![CDATA[<p>标题来自Jonathan S.Harbour的《Python游戏编程入门》。</p>
@@ -2921,22 +2937,6 @@
         <tag>Python</tag>
         <tag>游戏</tag>
         <tag>pygame</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>macOS安装VEX Tournament Manager端口占用问题</title>
-    <url>/2023/02/02/macOS%E5%AE%89%E8%A3%85VEX-Tournament-Manager%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>Hi!</p>
-<span id="more"></span>
-<h1 id="安装VEX-Tournament-Manager"><a href="#安装VEX-Tournament-Manager" class="headerlink" title="安装VEX Tournament Manager"></a>安装VEX Tournament Manager</h1><p>准备学习VEX机器人了，在安装VEX Tournament Manager时遇到了打不开的情形，并收获<strong>3连弹</strong>，如下图所示：<br><img lazyload src="/images/loading.svg" data-src="error1.png" alt="error1"><br><img lazyload src="/images/loading.svg" data-src="error2.png" alt="error2"><br><img lazyload src="/images/loading.svg" data-src="error3.png" alt="error3"></p>
-<h1 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h1><p>打开系统设置 - 通用 - 隔空投送与接力<br>关闭 <code>隔空播放接收器</code><br><img lazyload src="/images/loading.svg" data-src="solve1.png" alt="solve1"><br><img lazyload src="/images/loading.svg" data-src="solve2.png" alt="solve2"></p>
-]]></content>
-      <categories>
-        <category>机器人编程</category>
-      </categories>
-      <tags>
-        <tag>bug</tag>
-        <tag>VEX</tag>
       </tags>
   </entry>
   <entry>
@@ -3564,124 +3564,6 @@
       </tags>
   </entry>
   <entry>
-    <title>嵩天老师Python(2)基本图形绘制</title>
-    <url>/2019/04/15/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(2)%E5%9F%BA%E6%9C%AC%E5%9B%BE%E5%BD%A2%E7%BB%98%E5%88%B6/</url>
-    <content><![CDATA[<h1 id="深入理解Python语言"><a href="#深入理解Python语言" class="headerlink" title="深入理解Python语言"></a>深入理解Python语言</h1><ul>
-<li>Python语言是通用语言</li>
-<li>Python语言是脚本语言</li>
-<li>Python语言是开源语言</li>
-<li>Python语言是跨平台语言</li>
-<li>Python语言是多模型语言</li>
-</ul>
-<span id="more"></span>
-
-<h1 id="实例-Python蟒蛇绘制"><a href="#实例-Python蟒蛇绘制" class="headerlink" title="实例: Python蟒蛇绘制"></a>实例: Python蟒蛇绘制</h1><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><ul>
-<li>用程序绘制一条蟒蛇</li>
-<li>设计蟒蛇的基本形状</li>
-</ul>
-<h2 id="实例编写"><a href="#实例编写" class="headerlink" title="实例编写"></a>实例编写</h2><div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#PythonDraw.py</span></span><br><span class="line"><span class="keyword">import</span> turtle</span><br><span class="line">turtle.setup(<span class="number">650</span>, <span class="number">350</span>, <span class="number">200</span>, <span class="number">200</span>)</span><br><span class="line">turtle.penup()</span><br><span class="line">turtle.fd(-<span class="number">250</span>)</span><br><span class="line">turtle.pendown()</span><br><span class="line">turtle.pensize(<span class="number">25</span>)</span><br><span class="line">turtle.pencolor(<span class="string">&quot;purple&quot;</span>)</span><br><span class="line">turtle.seth(-<span class="number">40</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    turtle.circle(<span class="number">40</span>, <span class="number">80</span>)</span><br><span class="line">    turtle.circle(-<span class="number">40</span>, <span class="number">80</span>)</span><br><span class="line">turtle.circle(<span class="number">40</span>, <span class="number">80</span>/<span class="number">2</span>)</span><br><span class="line">turtle.fd(<span class="number">40</span>)</span><br><span class="line">turtle.circle(<span class="number">16</span>, <span class="number">180</span>)</span><br><span class="line">turtle.fd(<span class="number">40</span> * <span class="number">2</span>/<span class="number">3</span>)</span><br><span class="line">turtle.done()</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="图片展示"><a href="#图片展示" class="headerlink" title="图片展示"></a>图片展示</h2><p><img lazyload src="/images/loading.svg" data-src="Pythondraw.jpg"></p>
-<h2 id="举一反三"><a href="#举一反三" class="headerlink" title="举一反三"></a>举一反三</h2><ul>
-<li>程序参数的改变<ul>
-<li>Python蟒蛇的颜色：黑色、白色、七彩色…</li>
-<li>Python蟒蛇的长度：1节、3节、10节…</li>
-<li>Python蟒蛇的方向：向左走、斜着走…</li>
-</ul>
-</li>
-<li>计算问题的扩展<ul>
-<li>Python蟒蛇绘制问题是各类图像绘制问题的代表</li>
-<li>圆形绘制、五角星绘制、国旗绘制、机器猫绘制…</li>
-<li>掌握绘制一条线的方法，就可以绘制整个世界</li>
-</ul>
-</li>
-</ul>
-<h1 id="turtle库的使用"><a href="#turtle库的使用" class="headerlink" title="turtle库的使用"></a>turtle库的使用</h1><h2 id="turtle库基本介绍"><a href="#turtle库基本介绍" class="headerlink" title="turtle库基本介绍"></a>turtle库基本介绍</h2><p>turtle(海龟)库是turtle绘图体系的Python实现</p>
-<ul>
-<li>turtle绘图体系：1969年诞生，主要用于程序设计入门</li>
-<li>Python语言的标准库之一</li>
-<li>入门级的图形绘制函数库</li>
-</ul>
-<h3 id="标准库"><a href="#标准库" class="headerlink" title="标准库"></a>标准库</h3><p>Python计算生态 = 标准库 + 第三方库</p>
-<ul>
-<li>标准库：随解释器直接安装到操作系统中的功能模块</li>
-<li>第三方库：需要经过安装才能使用的功能模块</li>
-<li>库Library、包Package、模块Module，统称<strong>模块</strong></li>
-</ul>
-<h3 id="turtle的原理"><a href="#turtle的原理" class="headerlink" title="turtle的原理"></a>turtle的原理</h3><p>turtle(海龟)是一种真实的存在</p>
-<ul>
-<li>有一只海龟，其实在窗体正中心，在画布上游走</li>
-<li>走过的轨迹形成了绘制的图形</li>
-<li>海龟由程序控制，可以变换颜色、改变宽度等</li>
-</ul>
-<h2 id="turtle绘图窗体"><a href="#turtle绘图窗体" class="headerlink" title="turtle绘图窗体"></a>turtle绘图窗体</h2><div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">turtle.setup(width, height, startx, starty)</span><br></pre></td></tr></table></figure></div>
-<ul>
-<li>setup()设置窗体大小及位置</li>
-<li>4个参数中后两个可选</li>
-<li>setup()不是必须的</li>
-</ul>
-<h2 id="RGB色彩模式"><a href="#RGB色彩模式" class="headerlink" title="RGB色彩模式"></a>RGB色彩模式</h2><ul>
-<li>RGB指红蓝绿三个通道的颜色组合</li>
-<li>覆盖视力所能感知的所有颜色</li>
-<li>RGB每色取值范围0-255整数或0-1小数</li>
-</ul>
-<p>常用RGB色彩<br>| 英文名称 | RGB整数值     | RGB小数值        | 中文名称 |<br>| ——– | ————- | —————- | ——– |<br>| white    | 255, 255, 255 | 1, 1, 1          | 白色     |<br>| yellow   | 255, 255, 0   | 1, 1, 0          | 黄色     |<br>| magenta  | 255, 0, 255   | 1, 0, 1          | 洋红     |<br>| cyan     | 0, 255, 255   | 0, 1, 1          | 青色     |<br>| blue     | 0, 0, 255     | 0, 0, 1          | 蓝色     |<br>| black    | 0, 0, 0       | 0, 0, 0          | 黑色     |<br>| seashell | 255, 245, 238 | 1, 0.96, 0.93    | 海贝色   |<br>| gold     | 255, 215, 0   | 1, 0.84, 0       | 金色     |<br>| pink     | 255, 192, 203 | 1, 0.75, 0.80    | 粉红色   |<br>| brown    | 165, 42, 42   | 0.65, 0.16, 0.16 | 棕色     |<br>| purple   | 160, 32, 240  | 0.63, 0.13, 0.94 | 紫色     |<br>| tomato   | 255, 99, 71   | 1, 0.39, 0.28    | 番茄色   |</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">turtle.colormode(mode)</span><br></pre></td></tr></table></figure></div>
-
-<h1 id="turtle程序语法元素分析"><a href="#turtle程序语法元素分析" class="headerlink" title="turtle程序语法元素分析"></a>turtle程序语法元素分析</h1><h2 id="库引用与import"><a href="#库引用与import" class="headerlink" title="库引用与import"></a>库引用与import</h2><h3 id="库引用"><a href="#库引用" class="headerlink" title="库引用"></a>库引用</h3><p>扩充Python程序功能的方式,使用import保留字完成，采用<a>.<b>()编码风格</b></a></p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &lt;库名&gt; </span><br><span class="line">&lt;库名&gt;.&lt;函数名&gt;(&lt;函数参数&gt;)</span><br></pre></td></tr></table></figure></div>
-<h3 id="import更多用法"><a href="#import更多用法" class="headerlink" title="import更多用法"></a>import更多用法</h3><ol>
-<li>使用from和import保留字共同完成</li>
-</ol>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> &lt;库名&gt; <span class="keyword">import</span> &lt;函数名&gt; </span><br><span class="line"><span class="keyword">from</span> &lt;库名&gt; <span class="keyword">import</span> *</span><br><span class="line">&lt;函数名&gt;(&lt;函数参数&gt;)</span><br></pre></td></tr></table></figure></div>
-
-<ol start="2">
-<li>使用import和as保留字共同完成</li>
-</ol>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &lt;库名&gt; <span class="keyword">as</span> &lt;库别名&gt; </span><br><span class="line">&lt;库别名&gt;.&lt;函数名&gt;(&lt;函数参数&gt;)</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="turtle画笔控制函数"><a href="#turtle画笔控制函数" class="headerlink" title="turtle画笔控制函数"></a>turtle画笔控制函数</h2><ul>
-<li><code>turtle.penup()</code> 别名 <code>turtle.pu()</code><br>抬起画笔，海龟在飞行</li>
-<li><code>turtle.pendown()</code> 别名 <code>turtle.pd()</code><br>落下画笔，海龟在爬行</li>
-<li><code>turtle.pensize(width)</code> 别名 <code>turtle.width(width)</code><br>画笔宽度，海龟的腰围</li>
-<li><code>turtle.pencolor(color)</code> color为颜色字符串或r,g,b值<br>画笔颜色，海龟在涂装<ul>
-<li>颜色字符串 ：<code>turtle.pencolor(&quot;purple&quot;)</code></li>
-<li>RGB的小数值：<code>turtle.pencolor(0.63, 0.13, 0.94)</code></li>
-<li>RGB的元组值：<code>turtle.pencolor((0.63,0.13,0.94))</code></li>
-</ul>
-</li>
-</ul>
-<h2 id="turtle运动控制函数"><a href="#turtle运动控制函数" class="headerlink" title="turtle运动控制函数"></a>turtle运动控制函数</h2><ul>
-<li><code>turtle.forward(d)</code> 别名 <code>turtle.fd(d)</code><br>向前行进，海龟走直线</li>
-<li>d: 行进距离，可以为负数</li>
-<li><code>turtle.circle(r, extent=None)</code><br>根据半径r绘制extent角度的弧形</li>
-<li>r: 默认圆心在海龟左侧r距离的位置</li>
-<li>extent: 绘制角度，默认是360度整圆</li>
-</ul>
-<h2 id="turtle方向控制函数"><a href="#turtle方向控制函数" class="headerlink" title="turtle方向控制函数"></a>turtle方向控制函数</h2><ul>
-<li><code>turtle.setheading(angle)</code> 别名 <code>turtle.seth(angle)</code><br>改变行进方向，海龟走角度</li>
-<li>angle: 行进方向的绝对角度</li>
-<li><code>turtle.left(angle)</code> 海龟向左转</li>
-<li><code>turtle.right(angle)</code> 海龟向右转</li>
-<li>angle: 在海龟当前行进方向上旋转的角度</li>
-</ul>
-<h2 id="循环语句与range-函数"><a href="#循环语句与range-函数" class="headerlink" title="循环语句与range()函数"></a>循环语句与range()函数</h2><h3 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h3><p>按照一定次数循环执行一组语句</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> &lt;变量&gt; <span class="keyword">in</span> <span class="built_in">range</span>(&lt;次数&gt;):</span><br><span class="line">    &lt;被循环执行的语句&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># &lt;变量&gt;表示每次循环的计数，0到&lt;次数&gt;-1</span></span><br></pre></td></tr></table></figure></div>
-
-<h3 id="range-函数"><a href="#range-函数" class="headerlink" title="range()函数"></a>range()函数</h3><p>产生循环计数序列</p>
-<ul>
-<li><code>range(N)</code><br>产生 0 到 N-1的整数序列，共N个</li>
-<li><code>range(M,N)</code><br>产生 M 到 N-1的整数序列，共N-M个</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>嵩天老师Python(6)组合数据类型</title>
     <url>/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(6)%E7%BB%84%E5%90%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url>
     <content><![CDATA[<h1 id="集合类型及操作"><a href="#集合类型及操作" class="headerlink" title="集合类型及操作"></a>集合类型及操作</h1><h2 id="集合类型的定义"><a href="#集合类型的定义" class="headerlink" title="集合类型的定义"></a>集合类型的定义</h2><p>集合类型的<strong>定义</strong>：集合是多个元素的无序组合</p>
@@ -4132,6 +4014,124 @@
 <h1 id="资料下载"><a href="#资料下载" class="headerlink" title="资料下载"></a>资料下载</h1><ul>
 <li><a class="link" href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/hamlet.txt">hamlet.txt<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
 <li><a class="link" href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/threekingdoms.txt">threekingdoms.txt<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>嵩天老师Python(2)基本图形绘制</title>
+    <url>/2019/04/15/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(2)%E5%9F%BA%E6%9C%AC%E5%9B%BE%E5%BD%A2%E7%BB%98%E5%88%B6/</url>
+    <content><![CDATA[<h1 id="深入理解Python语言"><a href="#深入理解Python语言" class="headerlink" title="深入理解Python语言"></a>深入理解Python语言</h1><ul>
+<li>Python语言是通用语言</li>
+<li>Python语言是脚本语言</li>
+<li>Python语言是开源语言</li>
+<li>Python语言是跨平台语言</li>
+<li>Python语言是多模型语言</li>
+</ul>
+<span id="more"></span>
+
+<h1 id="实例-Python蟒蛇绘制"><a href="#实例-Python蟒蛇绘制" class="headerlink" title="实例: Python蟒蛇绘制"></a>实例: Python蟒蛇绘制</h1><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><ul>
+<li>用程序绘制一条蟒蛇</li>
+<li>设计蟒蛇的基本形状</li>
+</ul>
+<h2 id="实例编写"><a href="#实例编写" class="headerlink" title="实例编写"></a>实例编写</h2><div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#PythonDraw.py</span></span><br><span class="line"><span class="keyword">import</span> turtle</span><br><span class="line">turtle.setup(<span class="number">650</span>, <span class="number">350</span>, <span class="number">200</span>, <span class="number">200</span>)</span><br><span class="line">turtle.penup()</span><br><span class="line">turtle.fd(-<span class="number">250</span>)</span><br><span class="line">turtle.pendown()</span><br><span class="line">turtle.pensize(<span class="number">25</span>)</span><br><span class="line">turtle.pencolor(<span class="string">&quot;purple&quot;</span>)</span><br><span class="line">turtle.seth(-<span class="number">40</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    turtle.circle(<span class="number">40</span>, <span class="number">80</span>)</span><br><span class="line">    turtle.circle(-<span class="number">40</span>, <span class="number">80</span>)</span><br><span class="line">turtle.circle(<span class="number">40</span>, <span class="number">80</span>/<span class="number">2</span>)</span><br><span class="line">turtle.fd(<span class="number">40</span>)</span><br><span class="line">turtle.circle(<span class="number">16</span>, <span class="number">180</span>)</span><br><span class="line">turtle.fd(<span class="number">40</span> * <span class="number">2</span>/<span class="number">3</span>)</span><br><span class="line">turtle.done()</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="图片展示"><a href="#图片展示" class="headerlink" title="图片展示"></a>图片展示</h2><p><img lazyload src="/images/loading.svg" data-src="Pythondraw.jpg"></p>
+<h2 id="举一反三"><a href="#举一反三" class="headerlink" title="举一反三"></a>举一反三</h2><ul>
+<li>程序参数的改变<ul>
+<li>Python蟒蛇的颜色：黑色、白色、七彩色…</li>
+<li>Python蟒蛇的长度：1节、3节、10节…</li>
+<li>Python蟒蛇的方向：向左走、斜着走…</li>
+</ul>
+</li>
+<li>计算问题的扩展<ul>
+<li>Python蟒蛇绘制问题是各类图像绘制问题的代表</li>
+<li>圆形绘制、五角星绘制、国旗绘制、机器猫绘制…</li>
+<li>掌握绘制一条线的方法，就可以绘制整个世界</li>
+</ul>
+</li>
+</ul>
+<h1 id="turtle库的使用"><a href="#turtle库的使用" class="headerlink" title="turtle库的使用"></a>turtle库的使用</h1><h2 id="turtle库基本介绍"><a href="#turtle库基本介绍" class="headerlink" title="turtle库基本介绍"></a>turtle库基本介绍</h2><p>turtle(海龟)库是turtle绘图体系的Python实现</p>
+<ul>
+<li>turtle绘图体系：1969年诞生，主要用于程序设计入门</li>
+<li>Python语言的标准库之一</li>
+<li>入门级的图形绘制函数库</li>
+</ul>
+<h3 id="标准库"><a href="#标准库" class="headerlink" title="标准库"></a>标准库</h3><p>Python计算生态 = 标准库 + 第三方库</p>
+<ul>
+<li>标准库：随解释器直接安装到操作系统中的功能模块</li>
+<li>第三方库：需要经过安装才能使用的功能模块</li>
+<li>库Library、包Package、模块Module，统称<strong>模块</strong></li>
+</ul>
+<h3 id="turtle的原理"><a href="#turtle的原理" class="headerlink" title="turtle的原理"></a>turtle的原理</h3><p>turtle(海龟)是一种真实的存在</p>
+<ul>
+<li>有一只海龟，其实在窗体正中心，在画布上游走</li>
+<li>走过的轨迹形成了绘制的图形</li>
+<li>海龟由程序控制，可以变换颜色、改变宽度等</li>
+</ul>
+<h2 id="turtle绘图窗体"><a href="#turtle绘图窗体" class="headerlink" title="turtle绘图窗体"></a>turtle绘图窗体</h2><div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">turtle.setup(width, height, startx, starty)</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li>setup()设置窗体大小及位置</li>
+<li>4个参数中后两个可选</li>
+<li>setup()不是必须的</li>
+</ul>
+<h2 id="RGB色彩模式"><a href="#RGB色彩模式" class="headerlink" title="RGB色彩模式"></a>RGB色彩模式</h2><ul>
+<li>RGB指红蓝绿三个通道的颜色组合</li>
+<li>覆盖视力所能感知的所有颜色</li>
+<li>RGB每色取值范围0-255整数或0-1小数</li>
+</ul>
+<p>常用RGB色彩<br>| 英文名称 | RGB整数值     | RGB小数值        | 中文名称 |<br>| ——– | ————- | —————- | ——– |<br>| white    | 255, 255, 255 | 1, 1, 1          | 白色     |<br>| yellow   | 255, 255, 0   | 1, 1, 0          | 黄色     |<br>| magenta  | 255, 0, 255   | 1, 0, 1          | 洋红     |<br>| cyan     | 0, 255, 255   | 0, 1, 1          | 青色     |<br>| blue     | 0, 0, 255     | 0, 0, 1          | 蓝色     |<br>| black    | 0, 0, 0       | 0, 0, 0          | 黑色     |<br>| seashell | 255, 245, 238 | 1, 0.96, 0.93    | 海贝色   |<br>| gold     | 255, 215, 0   | 1, 0.84, 0       | 金色     |<br>| pink     | 255, 192, 203 | 1, 0.75, 0.80    | 粉红色   |<br>| brown    | 165, 42, 42   | 0.65, 0.16, 0.16 | 棕色     |<br>| purple   | 160, 32, 240  | 0.63, 0.13, 0.94 | 紫色     |<br>| tomato   | 255, 99, 71   | 1, 0.39, 0.28    | 番茄色   |</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">turtle.colormode(mode)</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="turtle程序语法元素分析"><a href="#turtle程序语法元素分析" class="headerlink" title="turtle程序语法元素分析"></a>turtle程序语法元素分析</h1><h2 id="库引用与import"><a href="#库引用与import" class="headerlink" title="库引用与import"></a>库引用与import</h2><h3 id="库引用"><a href="#库引用" class="headerlink" title="库引用"></a>库引用</h3><p>扩充Python程序功能的方式,使用import保留字完成，采用<a>.<b>()编码风格</b></a></p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &lt;库名&gt; </span><br><span class="line">&lt;库名&gt;.&lt;函数名&gt;(&lt;函数参数&gt;)</span><br></pre></td></tr></table></figure></div>
+<h3 id="import更多用法"><a href="#import更多用法" class="headerlink" title="import更多用法"></a>import更多用法</h3><ol>
+<li>使用from和import保留字共同完成</li>
+</ol>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> &lt;库名&gt; <span class="keyword">import</span> &lt;函数名&gt; </span><br><span class="line"><span class="keyword">from</span> &lt;库名&gt; <span class="keyword">import</span> *</span><br><span class="line">&lt;函数名&gt;(&lt;函数参数&gt;)</span><br></pre></td></tr></table></figure></div>
+
+<ol start="2">
+<li>使用import和as保留字共同完成</li>
+</ol>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &lt;库名&gt; <span class="keyword">as</span> &lt;库别名&gt; </span><br><span class="line">&lt;库别名&gt;.&lt;函数名&gt;(&lt;函数参数&gt;)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="turtle画笔控制函数"><a href="#turtle画笔控制函数" class="headerlink" title="turtle画笔控制函数"></a>turtle画笔控制函数</h2><ul>
+<li><code>turtle.penup()</code> 别名 <code>turtle.pu()</code><br>抬起画笔，海龟在飞行</li>
+<li><code>turtle.pendown()</code> 别名 <code>turtle.pd()</code><br>落下画笔，海龟在爬行</li>
+<li><code>turtle.pensize(width)</code> 别名 <code>turtle.width(width)</code><br>画笔宽度，海龟的腰围</li>
+<li><code>turtle.pencolor(color)</code> color为颜色字符串或r,g,b值<br>画笔颜色，海龟在涂装<ul>
+<li>颜色字符串 ：<code>turtle.pencolor(&quot;purple&quot;)</code></li>
+<li>RGB的小数值：<code>turtle.pencolor(0.63, 0.13, 0.94)</code></li>
+<li>RGB的元组值：<code>turtle.pencolor((0.63,0.13,0.94))</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="turtle运动控制函数"><a href="#turtle运动控制函数" class="headerlink" title="turtle运动控制函数"></a>turtle运动控制函数</h2><ul>
+<li><code>turtle.forward(d)</code> 别名 <code>turtle.fd(d)</code><br>向前行进，海龟走直线</li>
+<li>d: 行进距离，可以为负数</li>
+<li><code>turtle.circle(r, extent=None)</code><br>根据半径r绘制extent角度的弧形</li>
+<li>r: 默认圆心在海龟左侧r距离的位置</li>
+<li>extent: 绘制角度，默认是360度整圆</li>
+</ul>
+<h2 id="turtle方向控制函数"><a href="#turtle方向控制函数" class="headerlink" title="turtle方向控制函数"></a>turtle方向控制函数</h2><ul>
+<li><code>turtle.setheading(angle)</code> 别名 <code>turtle.seth(angle)</code><br>改变行进方向，海龟走角度</li>
+<li>angle: 行进方向的绝对角度</li>
+<li><code>turtle.left(angle)</code> 海龟向左转</li>
+<li><code>turtle.right(angle)</code> 海龟向右转</li>
+<li>angle: 在海龟当前行进方向上旋转的角度</li>
+</ul>
+<h2 id="循环语句与range-函数"><a href="#循环语句与range-函数" class="headerlink" title="循环语句与range()函数"></a>循环语句与range()函数</h2><h3 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h3><p>按照一定次数循环执行一组语句</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> &lt;变量&gt; <span class="keyword">in</span> <span class="built_in">range</span>(&lt;次数&gt;):</span><br><span class="line">    &lt;被循环执行的语句&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># &lt;变量&gt;表示每次循环的计数，0到&lt;次数&gt;-1</span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="range-函数"><a href="#range-函数" class="headerlink" title="range()函数"></a>range()函数</h3><p>产生循环计数序列</p>
+<ul>
+<li><code>range(N)</code><br>产生 0 到 N-1的整数序列，共N个</li>
+<li><code>range(M,N)</code><br>产生 M 到 N-1的整数序列，共N-M个</li>
 </ul>
 ]]></content>
       <categories>
@@ -5484,12 +5484,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>许久没更新了…</title>
-    <url>/2021/05/19/%E8%AE%B8%E4%B9%85%E6%B2%A1%E6%9B%B4%E6%96%B0%E4%BA%86%E2%80%A6/</url>
-    <content><![CDATA[<p>许久没更新了，就是冒个泡</p>
-]]></content>
-  </entry>
-  <entry>
     <title>安装python库时遇到ValueError: check_hostname requires server_hostname问题及解决</title>
     <url>/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/</url>
     <content><![CDATA[<p>正当我熟练地使用 <code>pip</code> 安装 <code>requests</code> 模块时，令人意想不到的一幕发生了……</p>
@@ -5517,6 +5511,12 @@
       </tags>
   </entry>
   <entry>
+    <title>许久没更新了…</title>
+    <url>/2021/05/19/%E8%AE%B8%E4%B9%85%E6%B2%A1%E6%9B%B4%E6%96%B0%E4%BA%86%E2%80%A6/</url>
+    <content><![CDATA[<p>许久没更新了，就是冒个泡</p>
+]]></content>
+  </entry>
+  <entry>
     <title>题解：1066_满足条件的数累加</title>
     <url>/2023/08/16/%E9%A2%98%E8%A7%A3%EF%BC%9A1066-%E6%BB%A1%E8%B6%B3%E6%9D%A1%E4%BB%B6%E7%9A%84%E6%95%B0%E7%B4%AF%E5%8A%A0/</url>
     <content><![CDATA[<p>一篇超简单的题的题解示例</p>
@@ -5534,22 +5534,6 @@
       <tags>
         <tag>C++</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>编译和解释的区别</title>
-    <url>/2021/12/08/%E7%BC%96%E8%AF%91%E5%92%8C%E8%A7%A3%E9%87%8A%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[<p>有些编程语言是编译运行，有些则是解释运行，那它们的区别是什么呢？</p>
-<span id="more"></span>
-<h1 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h1><p>编译过程可以比作<strong>“笔译”</strong></p>
-<p>编译程序对整个源程序经过编译处理，产生一个与源程序等价的目标程序，再通过连接程序将所有需要的程序组合成一个完整的可执行程序，最后运行。</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E7%BC%96%E8%AF%91.png" alt="编译"></p>
-<h1 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h1><p>解释过程可以比作<strong>“同声翻译”</strong></p>
-<p>解释程序对源程序逐句分析，将语句翻译成机器指令，然后立即执行指令。不会产生目标程序。</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E8%A7%A3%E9%87%8A.png" alt="解释"></p>
-<blockquote>
-<p>大学计算机（第7版) 龚沛曾 杨志强</p>
-</blockquote>
-]]></content>
   </entry>
   <entry>
     <title>趣味二维码生成</title>
@@ -5573,5 +5557,21 @@
       <tags>
         <tag>Python</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>编译和解释的区别</title>
+    <url>/2021/12/08/%E7%BC%96%E8%AF%91%E5%92%8C%E8%A7%A3%E9%87%8A%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<p>有些编程语言是编译运行，有些则是解释运行，那它们的区别是什么呢？</p>
+<span id="more"></span>
+<h1 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h1><p>编译过程可以比作<strong>“笔译”</strong></p>
+<p>编译程序对整个源程序经过编译处理，产生一个与源程序等价的目标程序，再通过连接程序将所有需要的程序组合成一个完整的可执行程序，最后运行。</p>
+<p><img lazyload src="/images/loading.svg" data-src="%E7%BC%96%E8%AF%91.png" alt="编译"></p>
+<h1 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h1><p>解释过程可以比作<strong>“同声翻译”</strong></p>
+<p>解释程序对源程序逐句分析，将语句翻译成机器指令，然后立即执行指令。不会产生目标程序。</p>
+<p><img lazyload src="/images/loading.svg" data-src="%E8%A7%A3%E9%87%8A.png" alt="解释"></p>
+<blockquote>
+<p>大学计算机（第7版) 龚沛曾 杨志强</p>
+</blockquote>
+]]></content>
   </entry>
 </search>
