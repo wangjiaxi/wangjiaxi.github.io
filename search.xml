@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Flume+Kafka实时数据采集</title>
+    <url>/2019/04/04/Flume-Kafka%E5%AE%9E%E6%97%B6%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/</url>
+    <content><![CDATA[<p>Flume的配置</p>
+<span id="more"></span>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># avro-memory-kafka.conf</span></span><br><span class="line">avro-memory-kafka.sources = avro-source</span><br><span class="line">avro-memory-kafka.sinks = kafka-sink</span><br><span class="line">avro-memory-kafka.channels = memory-channel</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.type = avro</span><br><span class="line">avro-memory-kafka.sources.avro-source.bind = bigdata-01</span><br><span class="line">avro-memory-kafka.sources.avro-source.port = 44444</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.type = org.apache.flume.sink.kafka.KafkaSink</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.brokerList = bigdata-01:9092</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.topic = hello_topic</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.batchSize = 5</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.requiredAcks = 1</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.channels.memory-channel.type = memory</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.channels = memory-channel</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.channel = memory-channel</span><br></pre></td></tr></table></figure></div>
+<p>启动Flume</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flume-ng agent \</span><br><span class="line">--name avro-memory-kafka \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/avro-memory-kafka.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br><span class="line"></span><br><span class="line">flume-ng agent \</span><br><span class="line">--name exec-memory-avro \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/exec-memory-avro.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure></div>
+
+<p>启动消费者进行监控</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">kafka-console-consumer.sh --zookeeper bigdata-01:2181 -topic hello_topic</span><br></pre></td></tr></table></figure></div>
+
+<p>向日志文件中追加内容</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">[root@bigdata-01 ~]<span class="comment"># cd data/</span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># ll</span></span><br><span class="line">total 4</span><br><span class="line">-rw-r--r--. 1 root root 112 Feb  6 05:37 data.log</span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark2 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark3 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark4 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark5 &gt;&gt; data.log</span></span><br></pre></td></tr></table></figure></div>
+<p>这时，消费者就可以消费到日志文件中的新内容了。</p>
+<blockquote>
+<p>Flume的版本不同，配置文件（*.conf）需要配置的内容也不完全相同。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>大数据开发</category>
+      </categories>
+      <tags>
+        <tag>大数据开发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>HDFS基本配置属性</title>
     <url>/2019/04/04/HDFS%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7/</url>
     <content><![CDATA[<h1 id="块大小"><a href="#块大小" class="headerlink" title="块大小"></a>块大小</h1><p>HDFS中存储的文件块的块大小，默认128M</p>
@@ -41,33 +68,6 @@
 <li>直接用<code>start-dfs.sh</code></li>
 <li>在新机器上手动启动一个DataNode进程：<code>hadoop-daemon.sh start datanode</code></li>
 </ol>
-]]></content>
-      <categories>
-        <category>大数据开发</category>
-      </categories>
-      <tags>
-        <tag>大数据开发</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Flume+Kafka实时数据采集</title>
-    <url>/2019/04/04/Flume-Kafka%E5%AE%9E%E6%97%B6%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/</url>
-    <content><![CDATA[<p>Flume的配置</p>
-<span id="more"></span>
-
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># avro-memory-kafka.conf</span></span><br><span class="line">avro-memory-kafka.sources = avro-source</span><br><span class="line">avro-memory-kafka.sinks = kafka-sink</span><br><span class="line">avro-memory-kafka.channels = memory-channel</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.type = avro</span><br><span class="line">avro-memory-kafka.sources.avro-source.bind = bigdata-01</span><br><span class="line">avro-memory-kafka.sources.avro-source.port = 44444</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.type = org.apache.flume.sink.kafka.KafkaSink</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.brokerList = bigdata-01:9092</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.topic = hello_topic</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.batchSize = 5</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.requiredAcks = 1</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.channels.memory-channel.type = memory</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.channels = memory-channel</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.channel = memory-channel</span><br></pre></td></tr></table></figure></div>
-<p>启动Flume</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flume-ng agent \</span><br><span class="line">--name avro-memory-kafka \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/avro-memory-kafka.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br><span class="line"></span><br><span class="line">flume-ng agent \</span><br><span class="line">--name exec-memory-avro \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/exec-memory-avro.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure></div>
-
-<p>启动消费者进行监控</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">kafka-console-consumer.sh --zookeeper bigdata-01:2181 -topic hello_topic</span><br></pre></td></tr></table></figure></div>
-
-<p>向日志文件中追加内容</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">[root@bigdata-01 ~]<span class="comment"># cd data/</span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># ll</span></span><br><span class="line">total 4</span><br><span class="line">-rw-r--r--. 1 root root 112 Feb  6 05:37 data.log</span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark2 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark3 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark4 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark5 &gt;&gt; data.log</span></span><br></pre></td></tr></table></figure></div>
-<p>这时，消费者就可以消费到日志文件中的新内容了。</p>
-<blockquote>
-<p>Flume的版本不同，配置文件（*.conf）需要配置的内容也不完全相同。</p>
-</blockquote>
 ]]></content>
       <categories>
         <category>大数据开发</category>
@@ -813,23 +813,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Python中if后直接加变量</title>
-    <url>/2019/12/23/Python%E4%B8%ADif%E5%90%8E%E7%9B%B4%E6%8E%A5%E5%8A%A0%E5%8F%98%E9%87%8F/</url>
-    <content><![CDATA[<p>python中有时候会使用if语句，后边直接加一个变量，而不是一个布尔表达式，这是在判断神马呢？</p>
-<span id="more"></span>
-
-<p>其实意思是判断这个变量是否有值，这个值需要是<strong>非零非空</strong>的值，这行代码返回<code>True</code>或<code>False</code>。<br>Python中除了’’、””、0、()、[]、{}、None为False之外，其他的都是True。<br>举例</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">ls = [[], <span class="number">0</span>, <span class="string">&#x27;&#x27;</span>, <span class="string">&quot;&quot;</span>, &#123;&#125;, (), [<span class="number">1</span>], <span class="number">2</span>, <span class="string">&#x27;3&#x27;</span>, <span class="string">&quot;4&quot;</span>, &#123;<span class="number">5</span>&#125;, (<span class="number">6</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> ls:</span><br><span class="line">    <span class="keyword">if</span> i:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;i =&#x27;</span>, i, <span class="string">&#x27;有值&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;i =&#x27;</span>, i, <span class="string">&#x27;没值&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
-<p>结果</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">i = [] 没值</span><br><span class="line">i = <span class="number">0</span> 没值</span><br><span class="line">i =  没值</span><br><span class="line">i =  没值</span><br><span class="line">i = &#123;&#125; 没值</span><br><span class="line">i = () 没值</span><br><span class="line">i = [<span class="number">1</span>] 有值</span><br><span class="line">i = <span class="number">2</span> 有值</span><br><span class="line">i = <span class="number">3</span> 有值</span><br><span class="line">i = <span class="number">4</span> 有值</span><br><span class="line">i = &#123;<span class="number">5</span>&#125; 有值</span><br><span class="line">i = <span class="number">6</span> 有值</span><br></pre></td></tr></table></figure></div>]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>PygameZero制作Pacman</title>
     <url>/2020/11/28/PygameZero%E5%88%B6%E4%BD%9CPacman/</url>
     <content><![CDATA[<p>本篇来介绍Pacman的PygameZero实现。</p>
@@ -847,6 +830,23 @@
       <tags>
         <tag>Python</tag>
         <tag>游戏</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python中if后直接加变量</title>
+    <url>/2019/12/23/Python%E4%B8%ADif%E5%90%8E%E7%9B%B4%E6%8E%A5%E5%8A%A0%E5%8F%98%E9%87%8F/</url>
+    <content><![CDATA[<p>python中有时候会使用if语句，后边直接加一个变量，而不是一个布尔表达式，这是在判断神马呢？</p>
+<span id="more"></span>
+
+<p>其实意思是判断这个变量是否有值，这个值需要是<strong>非零非空</strong>的值，这行代码返回<code>True</code>或<code>False</code>。<br>Python中除了’’、””、0、()、[]、{}、None为False之外，其他的都是True。<br>举例</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">ls = [[], <span class="number">0</span>, <span class="string">&#x27;&#x27;</span>, <span class="string">&quot;&quot;</span>, &#123;&#125;, (), [<span class="number">1</span>], <span class="number">2</span>, <span class="string">&#x27;3&#x27;</span>, <span class="string">&quot;4&quot;</span>, &#123;<span class="number">5</span>&#125;, (<span class="number">6</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> ls:</span><br><span class="line">    <span class="keyword">if</span> i:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;i =&#x27;</span>, i, <span class="string">&#x27;有值&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;i =&#x27;</span>, i, <span class="string">&#x27;没值&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+<p>结果</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">i = [] 没值</span><br><span class="line">i = <span class="number">0</span> 没值</span><br><span class="line">i =  没值</span><br><span class="line">i =  没值</span><br><span class="line">i = &#123;&#125; 没值</span><br><span class="line">i = () 没值</span><br><span class="line">i = [<span class="number">1</span>] 有值</span><br><span class="line">i = <span class="number">2</span> 有值</span><br><span class="line">i = <span class="number">3</span> 有值</span><br><span class="line">i = <span class="number">4</span> 有值</span><br><span class="line">i = &#123;<span class="number">5</span>&#125; 有值</span><br><span class="line">i = <span class="number">6</span> 有值</span><br></pre></td></tr></table></figure></div>]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -3054,53 +3054,6 @@
       </tags>
   </entry>
   <entry>
-    <title>使用turtle实现动画效果</title>
-    <url>/2020/12/02/%E4%BD%BF%E7%94%A8turtle%E5%AE%9E%E7%8E%B0%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C/</url>
-    <content><![CDATA[<p>众所周知，turtle能够像画笔一样来作图。一个绘图程序运行后，我们能够像看动画一样观看整个绘图过程。但是今天说的动画可和它不太一样。</p>
-<span id="more"></span>
-
-<p>我们可以用下面的函数调整画笔的速度。</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">turtle.speed(<span class="number">1</span>)</span><br><span class="line">turtle.speed(<span class="number">10</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>在官方文档中，<code>turtle.speed()</code>的参数是0-10的整数，从<code>1</code>到<code>10</code>速度递增。<code>0</code>比较特殊，速度最快，几乎是瞬间完成。</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> turtle, time</span><br><span class="line"></span><br><span class="line">t1 = turtle.Turtle()</span><br><span class="line">t2 = turtle.Turtle()</span><br><span class="line">t3 = turtle.Turtle()</span><br><span class="line"></span><br><span class="line">pens = [t1, t2, t3]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(pens)):</span><br><span class="line">    pens[i].pu()</span><br><span class="line">    pens[i].goto(-<span class="number">100</span>, -<span class="number">100</span> + <span class="number">50</span> * i)</span><br><span class="line">    pens[i].pd()</span><br><span class="line"></span><br><span class="line">t1.speed(<span class="number">1</span>)</span><br><span class="line">t2.speed(<span class="number">5</span>)</span><br><span class="line">t3.speed(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">t1.fd(<span class="number">300</span>)</span><br><span class="line">time.sleep(<span class="number">2</span>)</span><br><span class="line">t2.fd(<span class="number">300</span>)</span><br><span class="line">time.sleep(<span class="number">2</span>)</span><br><span class="line">t3.fd(<span class="number">300</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>效果比较明显：</p>
-<img lazyload src="/images/loading.svg" data-src="/2020/12/02/%E4%BD%BF%E7%94%A8turtle%E5%AE%9E%E7%8E%B0%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C/speed.gif" class>
-
-<p>可以说，这是一种动画的效果，毕竟能够看到绘画的全过程嘛。但是这个不是今天的重点，今天要讲的是真正的动画。</p>
-<img lazyload src="/images/loading.svg" data-src="/2020/12/02/%E4%BD%BF%E7%94%A8turtle%E5%AE%9E%E7%8E%B0%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C/download.png" class>
-
-<p>赶紧进入正题，要想使画面动起来，肯定是先画出主体，再将它移动。这里我们先看一个奇葩转圈图。</p>
-<img lazyload src="/images/loading.svg" data-src="/2020/12/02/%E4%BD%BF%E7%94%A8turtle%E5%AE%9E%E7%8E%B0%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C/roll1.gif" class>
-
-
-
-<blockquote>
-<p>“很快啊！”          ——马老师</p>
-</blockquote>
-<p>下面看一下代码，为什么画完之后会转起来？</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> turtle</span><br><span class="line"></span><br><span class="line">turtle.speed(<span class="number">0</span>)</span><br><span class="line">turtle.Screen().bgcolor(<span class="string">&#x27;black&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个函数主要是画出一个奇葩图形，你想转什么就画什么</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">arm</span>(<span class="params">col</span>):</span></span><br><span class="line">    turtle.begin_fill()</span><br><span class="line">    turtle.color(col)</span><br><span class="line">    turtle.fd(<span class="number">60</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    turtle.fd(<span class="number">60</span>)</span><br><span class="line">    turtle.rt(<span class="number">60</span>)</span><br><span class="line">    turtle.fd(<span class="number">60</span>)</span><br><span class="line">    turtle.rt(<span class="number">60</span>)</span><br><span class="line">    turtle.fd(<span class="number">60</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    turtle.fd(<span class="number">60</span>)</span><br><span class="line">    turtle.lt(<span class="number">120</span>)</span><br><span class="line">    turtle.fd(<span class="number">120</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    turtle.fd(<span class="number">120</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    turtle.fd(<span class="number">120</span>)</span><br><span class="line">    turtle.lt(<span class="number">120</span>)</span><br><span class="line">    turtle.end_fill()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个函数可以画出我们转动的主体，我的主体是6个不同颜色的arm</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">turn</span>(<span class="params">angle</span>):</span></span><br><span class="line">    turtle.seth(angle)</span><br><span class="line">    arm(<span class="string">&#x27;red&#x27;</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    arm(<span class="string">&#x27;orange&#x27;</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    arm(<span class="string">&#x27;yellow&#x27;</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    arm(<span class="string">&#x27;green&#x27;</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    arm(<span class="string">&#x27;blue&#x27;</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    arm(<span class="string">&#x27;purple&#x27;</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    turtle.hideturtle()</span><br><span class="line"></span><br><span class="line">angle = <span class="number">0</span>  <span class="comment"># 设置一个初始角度</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    turtle.clear()</span><br><span class="line">    turn(angle)</span><br><span class="line">    turtle.tracer(n=<span class="number">1000000000</span>)</span><br><span class="line">    angle += <span class="number">15</span>  <span class="comment"># 每次循环角度都增加15度</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
-
-<p>这里两个自定义函数都很好理解，主要看一下 <code>turtle.tracer()</code>，它的意思<strong>大概是</strong>将之前画过的作品重复一次，<code>n</code>的大小就是重复的速度，也就是说<code>n</code>如果很大，就可以瞬间完成刚才的画作。所以循环中的过程可以理解为（图有些丑）：</p>
-<pre class="mermaid">graph TD
-    B((开始)) -->C{while True}
-    C -->  D[clear清屏] 
-    D[clear清屏] --> E[seth改变角度]
-    E[seth改变角度] --> F[tracer再画一次]
-    F[tracer再画一次] --> G[角度增加15]
-    G[角度增加15] --> C</pre>
-
-<p>所以，图中的6个arm就转起来了，修改每次循环的角度可以调整旋转速度和方向哦。（负数为反方向）</p>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>turtle如何自定义画笔形状</title>
     <url>/2020/12/19/turtle%E5%A6%82%E4%BD%95%E8%87%AA%E5%AE%9A%E4%B9%89%E7%94%BB%E7%AC%94%E5%BD%A2%E7%8A%B6/</url>
     <content><![CDATA[<p>turtle内置的画笔形状一共只有这么几种：</p>
@@ -3149,6 +3102,53 @@
 <blockquote>
 <p>参考文献：<a class="link" href="https://my.oschina.net/oisanblog/blog/3420837">python学习turtle(更改海龟图标)<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 </blockquote>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用turtle实现动画效果</title>
+    <url>/2020/12/02/%E4%BD%BF%E7%94%A8turtle%E5%AE%9E%E7%8E%B0%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C/</url>
+    <content><![CDATA[<p>众所周知，turtle能够像画笔一样来作图。一个绘图程序运行后，我们能够像看动画一样观看整个绘图过程。但是今天说的动画可和它不太一样。</p>
+<span id="more"></span>
+
+<p>我们可以用下面的函数调整画笔的速度。</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">turtle.speed(<span class="number">1</span>)</span><br><span class="line">turtle.speed(<span class="number">10</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>在官方文档中，<code>turtle.speed()</code>的参数是0-10的整数，从<code>1</code>到<code>10</code>速度递增。<code>0</code>比较特殊，速度最快，几乎是瞬间完成。</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> turtle, time</span><br><span class="line"></span><br><span class="line">t1 = turtle.Turtle()</span><br><span class="line">t2 = turtle.Turtle()</span><br><span class="line">t3 = turtle.Turtle()</span><br><span class="line"></span><br><span class="line">pens = [t1, t2, t3]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(pens)):</span><br><span class="line">    pens[i].pu()</span><br><span class="line">    pens[i].goto(-<span class="number">100</span>, -<span class="number">100</span> + <span class="number">50</span> * i)</span><br><span class="line">    pens[i].pd()</span><br><span class="line"></span><br><span class="line">t1.speed(<span class="number">1</span>)</span><br><span class="line">t2.speed(<span class="number">5</span>)</span><br><span class="line">t3.speed(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">t1.fd(<span class="number">300</span>)</span><br><span class="line">time.sleep(<span class="number">2</span>)</span><br><span class="line">t2.fd(<span class="number">300</span>)</span><br><span class="line">time.sleep(<span class="number">2</span>)</span><br><span class="line">t3.fd(<span class="number">300</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>效果比较明显：</p>
+<img lazyload src="/images/loading.svg" data-src="/2020/12/02/%E4%BD%BF%E7%94%A8turtle%E5%AE%9E%E7%8E%B0%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C/speed.gif" class>
+
+<p>可以说，这是一种动画的效果，毕竟能够看到绘画的全过程嘛。但是这个不是今天的重点，今天要讲的是真正的动画。</p>
+<img lazyload src="/images/loading.svg" data-src="/2020/12/02/%E4%BD%BF%E7%94%A8turtle%E5%AE%9E%E7%8E%B0%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C/download.png" class>
+
+<p>赶紧进入正题，要想使画面动起来，肯定是先画出主体，再将它移动。这里我们先看一个奇葩转圈图。</p>
+<img lazyload src="/images/loading.svg" data-src="/2020/12/02/%E4%BD%BF%E7%94%A8turtle%E5%AE%9E%E7%8E%B0%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C/roll1.gif" class>
+
+
+
+<blockquote>
+<p>“很快啊！”          ——马老师</p>
+</blockquote>
+<p>下面看一下代码，为什么画完之后会转起来？</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> turtle</span><br><span class="line"></span><br><span class="line">turtle.speed(<span class="number">0</span>)</span><br><span class="line">turtle.Screen().bgcolor(<span class="string">&#x27;black&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个函数主要是画出一个奇葩图形，你想转什么就画什么</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">arm</span>(<span class="params">col</span>):</span></span><br><span class="line">    turtle.begin_fill()</span><br><span class="line">    turtle.color(col)</span><br><span class="line">    turtle.fd(<span class="number">60</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    turtle.fd(<span class="number">60</span>)</span><br><span class="line">    turtle.rt(<span class="number">60</span>)</span><br><span class="line">    turtle.fd(<span class="number">60</span>)</span><br><span class="line">    turtle.rt(<span class="number">60</span>)</span><br><span class="line">    turtle.fd(<span class="number">60</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    turtle.fd(<span class="number">60</span>)</span><br><span class="line">    turtle.lt(<span class="number">120</span>)</span><br><span class="line">    turtle.fd(<span class="number">120</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    turtle.fd(<span class="number">120</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    turtle.fd(<span class="number">120</span>)</span><br><span class="line">    turtle.lt(<span class="number">120</span>)</span><br><span class="line">    turtle.end_fill()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个函数可以画出我们转动的主体，我的主体是6个不同颜色的arm</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">turn</span>(<span class="params">angle</span>):</span></span><br><span class="line">    turtle.seth(angle)</span><br><span class="line">    arm(<span class="string">&#x27;red&#x27;</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    arm(<span class="string">&#x27;orange&#x27;</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    arm(<span class="string">&#x27;yellow&#x27;</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    arm(<span class="string">&#x27;green&#x27;</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    arm(<span class="string">&#x27;blue&#x27;</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    arm(<span class="string">&#x27;purple&#x27;</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    turtle.hideturtle()</span><br><span class="line"></span><br><span class="line">angle = <span class="number">0</span>  <span class="comment"># 设置一个初始角度</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    turtle.clear()</span><br><span class="line">    turn(angle)</span><br><span class="line">    turtle.tracer(n=<span class="number">1000000000</span>)</span><br><span class="line">    angle += <span class="number">15</span>  <span class="comment"># 每次循环角度都增加15度</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<p>这里两个自定义函数都很好理解，主要看一下 <code>turtle.tracer()</code>，它的意思<strong>大概是</strong>将之前画过的作品重复一次，<code>n</code>的大小就是重复的速度，也就是说<code>n</code>如果很大，就可以瞬间完成刚才的画作。所以循环中的过程可以理解为（图有些丑）：</p>
+<pre class="mermaid">graph TD
+    B((开始)) -->C{while True}
+    C -->  D[clear清屏] 
+    D[clear清屏] --> E[seth改变角度]
+    E[seth改变角度] --> F[tracer再画一次]
+    F[tracer再画一次] --> G[角度增加15]
+    G[角度增加15] --> C</pre>
+
+<p>所以，图中的6个arm就转起来了，修改每次循环的角度可以调整旋转速度和方向哦。（负数为反方向）</p>
 ]]></content>
       <categories>
         <category>Python</category>
@@ -3399,33 +3399,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>安装python库时遇到ValueError: check_hostname requires server_hostname问题及解决</title>
-    <url>/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/</url>
-    <content><![CDATA[<p>正当我熟练地使用 <code>pip</code> 安装 <code>requests</code> 模块时，令人意想不到的一幕发生了……</p>
-<span id="more"></span>
-
-<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>今天准备爬虫，为了排查问题，我搬出了尘封已久的Windows笔记本，上一次打开这个电脑还是上一次。</p>
-<p>这个电脑上的python很干净，我需要安装 <code>requests</code> 来完成爬虫的相关功能。</p>
-<p>正当我熟练地使用 <code>pip</code> 安装这个模块时，令人意想不到的一幕发生了：</p>
-<img lazyload src="/images/loading.svg" data-src="/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/1.png" class>
-
-<p>一堆红色字体！</p>
-<p>定睛一看，报错信息为：</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">ValueError: check_hostname requires server_hostname</span><br></pre></td></tr></table></figure></div>
-
-<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>原来这个尘封已久的电脑，竟然还开机自启动微屁恩~</p>
-<p>当我把微屁恩关掉，再次安装，就可以了。顺便更新了一下 <code>pip</code> 。</p>
-<p>正确运行结果如上图所示。</p>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>bug</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>实用SQL</title>
     <url>/2019/11/12/%E5%AE%9E%E7%94%A8SQL/</url>
     <content><![CDATA[<p>在编写SQL时，灵活运用一些技巧，可以大大简化程序逻辑。</p>
@@ -3461,6 +3434,33 @@
       </categories>
       <tags>
         <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>安装python库时遇到ValueError: check_hostname requires server_hostname问题及解决</title>
+    <url>/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/</url>
+    <content><![CDATA[<p>正当我熟练地使用 <code>pip</code> 安装 <code>requests</code> 模块时，令人意想不到的一幕发生了……</p>
+<span id="more"></span>
+
+<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>今天准备爬虫，为了排查问题，我搬出了尘封已久的Windows笔记本，上一次打开这个电脑还是上一次。</p>
+<p>这个电脑上的python很干净，我需要安装 <code>requests</code> 来完成爬虫的相关功能。</p>
+<p>正当我熟练地使用 <code>pip</code> 安装这个模块时，令人意想不到的一幕发生了：</p>
+<img lazyload src="/images/loading.svg" data-src="/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/1.png" class>
+
+<p>一堆红色字体！</p>
+<p>定睛一看，报错信息为：</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">ValueError: check_hostname requires server_hostname</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>原来这个尘封已久的电脑，竟然还开机自启动微屁恩~</p>
+<p>当我把微屁恩关掉，再次安装，就可以了。顺便更新了一下 <code>pip</code> 。</p>
+<p>正确运行结果如上图所示。</p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>bug</tag>
+        <tag>python</tag>
       </tags>
   </entry>
   <entry>
