@@ -1,33 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Flume+Kafka实时数据采集</title>
-    <url>/2019/04/04/Flume-Kafka%E5%AE%9E%E6%97%B6%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/</url>
-    <content><![CDATA[<p>Flume的配置</p>
-<span id="more"></span>
-
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># avro-memory-kafka.conf</span></span><br><span class="line">avro-memory-kafka.sources = avro-source</span><br><span class="line">avro-memory-kafka.sinks = kafka-sink</span><br><span class="line">avro-memory-kafka.channels = memory-channel</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.type = avro</span><br><span class="line">avro-memory-kafka.sources.avro-source.bind = bigdata-01</span><br><span class="line">avro-memory-kafka.sources.avro-source.port = 44444</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.type = org.apache.flume.sink.kafka.KafkaSink</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.brokerList = bigdata-01:9092</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.topic = hello_topic</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.batchSize = 5</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.requiredAcks = 1</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.channels.memory-channel.type = memory</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.channels = memory-channel</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.channel = memory-channel</span><br></pre></td></tr></table></figure></div>
-<p>启动Flume</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flume-ng agent \</span><br><span class="line">--name avro-memory-kafka \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/avro-memory-kafka.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br><span class="line"></span><br><span class="line">flume-ng agent \</span><br><span class="line">--name exec-memory-avro \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/exec-memory-avro.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure></div>
-
-<p>启动消费者进行监控</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">kafka-console-consumer.sh --zookeeper bigdata-01:2181 -topic hello_topic</span><br></pre></td></tr></table></figure></div>
-
-<p>向日志文件中追加内容</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">[root@bigdata-01 ~]<span class="comment"># cd data/</span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># ll</span></span><br><span class="line">total 4</span><br><span class="line">-rw-r--r--. 1 root root 112 Feb  6 05:37 data.log</span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark2 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark3 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark4 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark5 &gt;&gt; data.log</span></span><br></pre></td></tr></table></figure></div>
-<p>这时，消费者就可以消费到日志文件中的新内容了。</p>
-<blockquote>
-<p>Flume的版本不同，配置文件（*.conf）需要配置的内容也不完全相同。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>大数据开发</category>
-      </categories>
-      <tags>
-        <tag>大数据开发</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>HDFS基本配置属性</title>
     <url>/2019/04/04/HDFS%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7/</url>
     <content><![CDATA[<h1 id="块大小"><a href="#块大小" class="headerlink" title="块大小"></a>块大小</h1><p>HDFS中存储的文件块的块大小，默认128M</p>
@@ -68,6 +41,33 @@
 <li>直接用<code>start-dfs.sh</code></li>
 <li>在新机器上手动启动一个DataNode进程：<code>hadoop-daemon.sh start datanode</code></li>
 </ol>
+]]></content>
+      <categories>
+        <category>大数据开发</category>
+      </categories>
+      <tags>
+        <tag>大数据开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Flume+Kafka实时数据采集</title>
+    <url>/2019/04/04/Flume-Kafka%E5%AE%9E%E6%97%B6%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/</url>
+    <content><![CDATA[<p>Flume的配置</p>
+<span id="more"></span>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># avro-memory-kafka.conf</span></span><br><span class="line">avro-memory-kafka.sources = avro-source</span><br><span class="line">avro-memory-kafka.sinks = kafka-sink</span><br><span class="line">avro-memory-kafka.channels = memory-channel</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.type = avro</span><br><span class="line">avro-memory-kafka.sources.avro-source.bind = bigdata-01</span><br><span class="line">avro-memory-kafka.sources.avro-source.port = 44444</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.type = org.apache.flume.sink.kafka.KafkaSink</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.brokerList = bigdata-01:9092</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.topic = hello_topic</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.batchSize = 5</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.requiredAcks = 1</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.channels.memory-channel.type = memory</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.channels = memory-channel</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.channel = memory-channel</span><br></pre></td></tr></table></figure></div>
+<p>启动Flume</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flume-ng agent \</span><br><span class="line">--name avro-memory-kafka \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/avro-memory-kafka.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br><span class="line"></span><br><span class="line">flume-ng agent \</span><br><span class="line">--name exec-memory-avro \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/exec-memory-avro.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure></div>
+
+<p>启动消费者进行监控</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">kafka-console-consumer.sh --zookeeper bigdata-01:2181 -topic hello_topic</span><br></pre></td></tr></table></figure></div>
+
+<p>向日志文件中追加内容</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">[root@bigdata-01 ~]<span class="comment"># cd data/</span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># ll</span></span><br><span class="line">total 4</span><br><span class="line">-rw-r--r--. 1 root root 112 Feb  6 05:37 data.log</span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark2 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark3 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark4 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark5 &gt;&gt; data.log</span></span><br></pre></td></tr></table></figure></div>
+<p>这时，消费者就可以消费到日志文件中的新内容了。</p>
+<blockquote>
+<p>Flume的版本不同，配置文件（*.conf）需要配置的内容也不完全相同。</p>
+</blockquote>
 ]]></content>
       <categories>
         <category>大数据开发</category>
@@ -132,6 +132,78 @@
       <tags>
         <tag>OJ</tag>
         <tag>Hydro</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MacOS下使用VS Code搭建C语言开发环境</title>
+    <url>/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
+    <content><![CDATA[<p>本篇介绍如何在Mac上使用VS Code写C语言代码。VS Code是一个轻量级的IDE，相比CLion、Xcode等等体积小很多，并且在插件市场拥有丰富的插件，可以方便的安装使用。</p>
+<span id="more"></span>
+
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><h2 id="下载VS-Code"><a href="#下载VS-Code" class="headerlink" title="下载VS Code"></a>下载VS Code</h2><p>下载地址：<a class="link" href="https://code.visualstudio.com/">https://code.visualstudio.com/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="1.png" alt="1"></p>
+</blockquote>
+<h2 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h2><p>打开VS Code，点击左侧的 Extensions（图标为“田”字右上角的格子起飞），在搜索框中输入 <code>C/C++</code>，选择紫色图标，作者为Microsoft，点击 Install 即可安装。</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="3.png" alt="3"></p>
+</blockquote>
+<h2 id="创建文件夹"><a href="#创建文件夹" class="headerlink" title="创建文件夹"></a>创建文件夹</h2><p>在电脑中你希望保存代码的地方新建一个文件夹，我的是 <code>桌面-个人-学习-C/C++</code> ，创建好以后重启 VS Code。重启后，在欢迎页面点击 Open，并打开你刚创建的文件夹。</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="4.png" alt="4"></p>
+</blockquote>
+<h2 id="另存为一个工作区"><a href="#另存为一个工作区" class="headerlink" title="另存为一个工作区"></a>另存为一个工作区</h2><p>点击 File &gt; Save Workspace As …，并命名。</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="5.png" alt="5"></p>
+</blockquote>
+<h2 id="新建一个C文件，命名并保存"><a href="#新建一个C文件，命名并保存" class="headerlink" title="新建一个C文件，命名并保存"></a>新建一个C文件，命名并保存</h2><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;hello VSCode!\n&quot;</span>);</span><br><span class="line">     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h2 id="配置-c-cpp-properties-json"><a href="#配置-c-cpp-properties-json" class="headerlink" title="配置 c_cpp_properties.json"></a>配置 <code>c_cpp_properties.json</code></h2><p>使用快捷键 <code>command</code> + <code>shift</code> + <code>P</code>打开命令行面板（Command Palette）</p>
+<p>输入 edit configurations，在弹出的列表中选择带 JSON 的 C/C++: Edit Configurations(JSON)</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="6.png" alt="6"></p>
+</blockquote>
+<p>配置字段 includePath：</p>
+<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;includePath&quot;</span>: </span><br><span class="line">[</span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include/c++/v1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/usr/local/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include&quot;</span></span><br><span class="line">],</span><br></pre></td></tr></table></figure></div>
+
+<p>你可能需要注意<br> <code>&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;,</code>中的版本号，可以进入Finder，按快捷键<code>command</code> + <code>shift</code> + <code>G</code> 输入：</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">/Library/Developer/CommandLineTools/usr/lib/clang/</span><br></pre></td></tr></table></figure></div>
+
+<p>在文件夹中查看clang版本</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="8.png" alt="8"></p>
+</blockquote>
+<p>完成后保存。</p>
+<h2 id="配置-tasks-json"><a href="#配置-tasks-json" class="headerlink" title="配置 tasks.json"></a>配置 <code>tasks.json</code></h2><p>在打开.c文件的情况下（比如我这里的hello.c）打开命令行面板 <code>command</code> + <code>shift</code> + <code>P</code>，输入tasks:configure task，选择Tasks: Configure Task</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="9.png" alt="9"></p>
+</blockquote>
+<p>点击C/C++:clang 生成活动文件</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="10.png" alt="10"></p>
+</blockquote>
+<p>这里我们需要配置 args 字段</p>
+<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;args&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;-g&quot;</span>,<span class="comment">//编译命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.c&quot;</span>,<span class="comment">//当前workspace下的hello.c文件</span></span><br><span class="line">    <span class="string">&quot;-o&quot;</span>,<span class="comment">//输出文件命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span><span class="comment">//生成的可执行文件的路径及名称</span></span><br><span class="line">    ],</span><br></pre></td></tr></table></figure></div>
+
+<p>你需要配置第二个参数和第四个参数，第二个是编制的文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.c</code>，第四个是生成的可执行文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.o</code> ，完成后保存。</p>
+<h2 id="配置launch-json"><a href="#配置launch-json" class="headerlink" title="配置launch.json"></a>配置<code>launch.json</code></h2><p>在 hello.c 中按<code>Fn</code> + <code>F5</code> ，软件会报错并自动打开一个 <code>launch.json</code> 文件，这里需要配置 <code>program</code> 字段：</p>
+<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;program&quot;</span>: <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span>,</span><br></pre></td></tr></table></figure></div>
+
+<p>再次运行：</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="11.png" alt="11"></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>部分内容转自 <a class="link" href="https://www.jianshu.com/u/69abdc363757">Robinone<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> 的 <a class="link" href="https://www.jianshu.com/p/83879b4aa3fe">https://www.jianshu.com/p/83879b4aa3fe<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>C/C++</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>IDE</tag>
       </tags>
   </entry>
   <entry>
@@ -201,6 +273,38 @@
         <category>Python</category>
       </categories>
       <tags>
+        <tag>bug</tag>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Pycharm Out of memory 解决办法</title>
+    <url>/2021/05/26/Pycharm-Out-of-memory-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
+    <content><![CDATA[<p>最近使用Pycharm敲代码突然卡住，并且蹦出一个错误：<code>Out of memory</code>。</p>
+<p>但是该错误与代码无关，只是因为系统分配给Pycharm的最大内存不够用了而已。</p>
+<p>这个最大内存是我们可以修改的，将它修改的大一些就可以解决这个问题。</p>
+<p>下面看看如何修改~</p>
+<span id="more"></span>
+
+<ol>
+<li>进入如下目录：</li>
+</ol>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">访达 -&gt; 应用程序 -&gt; 右键Pycharm -&gt; 显示包内容 -&gt; Contents -&gt; bin</span><br></pre></td></tr></table></figure></div>
+
+<ol start="2">
+<li>找到文件<code>pycharm.vmoptions</code>，使用一个文本编辑器打开，修改前两行的数值：</li>
+</ol>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">-Xms1024m      修改前是512</span><br><span class="line">-Xmx2048m      修改前是750（奇怪的数字）</span><br><span class="line">-XX:ReservedCodeCacheSize=512m</span><br><span class="line">-XX:+UseConcMarkSweepGC</span><br></pre></td></tr></table></figure></div>
+
+<ol start="3">
+<li>修改后保存关闭，重新启动Pycharm。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>IDE</tag>
         <tag>bug</tag>
         <tag>Python</tag>
       </tags>
@@ -358,78 +462,6 @@
       <tags>
         <tag>Python</tag>
         <tag>游戏</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MacOS下使用VS Code搭建C语言开发环境</title>
-    <url>/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
-    <content><![CDATA[<p>本篇介绍如何在Mac上使用VS Code写C语言代码。VS Code是一个轻量级的IDE，相比CLion、Xcode等等体积小很多，并且在插件市场拥有丰富的插件，可以方便的安装使用。</p>
-<span id="more"></span>
-
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><h2 id="下载VS-Code"><a href="#下载VS-Code" class="headerlink" title="下载VS Code"></a>下载VS Code</h2><p>下载地址：<a class="link" href="https://code.visualstudio.com/">https://code.visualstudio.com/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="1.png" alt="1"></p>
-</blockquote>
-<h2 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h2><p>打开VS Code，点击左侧的 Extensions（图标为“田”字右上角的格子起飞），在搜索框中输入 <code>C/C++</code>，选择紫色图标，作者为Microsoft，点击 Install 即可安装。</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="3.png" alt="3"></p>
-</blockquote>
-<h2 id="创建文件夹"><a href="#创建文件夹" class="headerlink" title="创建文件夹"></a>创建文件夹</h2><p>在电脑中你希望保存代码的地方新建一个文件夹，我的是 <code>桌面-个人-学习-C/C++</code> ，创建好以后重启 VS Code。重启后，在欢迎页面点击 Open，并打开你刚创建的文件夹。</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="4.png" alt="4"></p>
-</blockquote>
-<h2 id="另存为一个工作区"><a href="#另存为一个工作区" class="headerlink" title="另存为一个工作区"></a>另存为一个工作区</h2><p>点击 File &gt; Save Workspace As …，并命名。</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="5.png" alt="5"></p>
-</blockquote>
-<h2 id="新建一个C文件，命名并保存"><a href="#新建一个C文件，命名并保存" class="headerlink" title="新建一个C文件，命名并保存"></a>新建一个C文件，命名并保存</h2><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;hello VSCode!\n&quot;</span>);</span><br><span class="line">     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></div>
-
-<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h2 id="配置-c-cpp-properties-json"><a href="#配置-c-cpp-properties-json" class="headerlink" title="配置 c_cpp_properties.json"></a>配置 <code>c_cpp_properties.json</code></h2><p>使用快捷键 <code>command</code> + <code>shift</code> + <code>P</code>打开命令行面板（Command Palette）</p>
-<p>输入 edit configurations，在弹出的列表中选择带 JSON 的 C/C++: Edit Configurations(JSON)</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="6.png" alt="6"></p>
-</blockquote>
-<p>配置字段 includePath：</p>
-<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;includePath&quot;</span>: </span><br><span class="line">[</span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include/c++/v1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/usr/local/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include&quot;</span></span><br><span class="line">],</span><br></pre></td></tr></table></figure></div>
-
-<p>你可能需要注意<br> <code>&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;,</code>中的版本号，可以进入Finder，按快捷键<code>command</code> + <code>shift</code> + <code>G</code> 输入：</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">/Library/Developer/CommandLineTools/usr/lib/clang/</span><br></pre></td></tr></table></figure></div>
-
-<p>在文件夹中查看clang版本</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="8.png" alt="8"></p>
-</blockquote>
-<p>完成后保存。</p>
-<h2 id="配置-tasks-json"><a href="#配置-tasks-json" class="headerlink" title="配置 tasks.json"></a>配置 <code>tasks.json</code></h2><p>在打开.c文件的情况下（比如我这里的hello.c）打开命令行面板 <code>command</code> + <code>shift</code> + <code>P</code>，输入tasks:configure task，选择Tasks: Configure Task</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="9.png" alt="9"></p>
-</blockquote>
-<p>点击C/C++:clang 生成活动文件</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="10.png" alt="10"></p>
-</blockquote>
-<p>这里我们需要配置 args 字段</p>
-<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;args&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;-g&quot;</span>,<span class="comment">//编译命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.c&quot;</span>,<span class="comment">//当前workspace下的hello.c文件</span></span><br><span class="line">    <span class="string">&quot;-o&quot;</span>,<span class="comment">//输出文件命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span><span class="comment">//生成的可执行文件的路径及名称</span></span><br><span class="line">    ],</span><br></pre></td></tr></table></figure></div>
-
-<p>你需要配置第二个参数和第四个参数，第二个是编制的文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.c</code>，第四个是生成的可执行文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.o</code> ，完成后保存。</p>
-<h2 id="配置launch-json"><a href="#配置launch-json" class="headerlink" title="配置launch.json"></a>配置<code>launch.json</code></h2><p>在 hello.c 中按<code>Fn</code> + <code>F5</code> ，软件会报错并自动打开一个 <code>launch.json</code> 文件，这里需要配置 <code>program</code> 字段：</p>
-<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;program&quot;</span>: <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span>,</span><br></pre></td></tr></table></figure></div>
-
-<p>再次运行：</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="11.png" alt="11"></p>
-</blockquote>
-<hr>
-<blockquote>
-<p>部分内容转自 <a class="link" href="https://www.jianshu.com/u/69abdc363757">Robinone<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> 的 <a class="link" href="https://www.jianshu.com/p/83879b4aa3fe">https://www.jianshu.com/p/83879b4aa3fe<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>C/C++</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-        <tag>IDE</tag>
       </tags>
   </entry>
   <entry>
@@ -670,38 +702,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Pycharm Out of memory 解决办法</title>
-    <url>/2021/05/26/Pycharm-Out-of-memory-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
-    <content><![CDATA[<p>最近使用Pycharm敲代码突然卡住，并且蹦出一个错误：<code>Out of memory</code>。</p>
-<p>但是该错误与代码无关，只是因为系统分配给Pycharm的最大内存不够用了而已。</p>
-<p>这个最大内存是我们可以修改的，将它修改的大一些就可以解决这个问题。</p>
-<p>下面看看如何修改~</p>
-<span id="more"></span>
-
-<ol>
-<li>进入如下目录：</li>
-</ol>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">访达 -&gt; 应用程序 -&gt; 右键Pycharm -&gt; 显示包内容 -&gt; Contents -&gt; bin</span><br></pre></td></tr></table></figure></div>
-
-<ol start="2">
-<li>找到文件<code>pycharm.vmoptions</code>，使用一个文本编辑器打开，修改前两行的数值：</li>
-</ol>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">-Xms1024m      修改前是512</span><br><span class="line">-Xmx2048m      修改前是750（奇怪的数字）</span><br><span class="line">-XX:ReservedCodeCacheSize=512m</span><br><span class="line">-XX:+UseConcMarkSweepGC</span><br></pre></td></tr></table></figure></div>
-
-<ol start="3">
-<li>修改后保存关闭，重新启动Pycharm。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>bug</tag>
-        <tag>Python</tag>
-        <tag>IDE</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>PygameZero中文文档 - 3</title>
     <url>/2019/08/28/PygameZero%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3%20-%203/</url>
     <content><![CDATA[<p>Pygame Zero会自动识别并调用您定义的事件钩，这种方法可以使您不必自己实现事件循环机制。</p>
@@ -813,6 +813,23 @@
       </tags>
   </entry>
   <entry>
+    <title>Python中if后直接加变量</title>
+    <url>/2019/12/23/Python%E4%B8%ADif%E5%90%8E%E7%9B%B4%E6%8E%A5%E5%8A%A0%E5%8F%98%E9%87%8F/</url>
+    <content><![CDATA[<p>python中有时候会使用if语句，后边直接加一个变量，而不是一个布尔表达式，这是在判断神马呢？</p>
+<span id="more"></span>
+
+<p>其实意思是判断这个变量是否有值，这个值需要是<strong>非零非空</strong>的值，这行代码返回<code>True</code>或<code>False</code>。<br>Python中除了’’、””、0、()、[]、{}、None为False之外，其他的都是True。<br>举例</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">ls = [[], <span class="number">0</span>, <span class="string">&#x27;&#x27;</span>, <span class="string">&quot;&quot;</span>, &#123;&#125;, (), [<span class="number">1</span>], <span class="number">2</span>, <span class="string">&#x27;3&#x27;</span>, <span class="string">&quot;4&quot;</span>, &#123;<span class="number">5</span>&#125;, (<span class="number">6</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> ls:</span><br><span class="line">    <span class="keyword">if</span> i:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;i =&#x27;</span>, i, <span class="string">&#x27;有值&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;i =&#x27;</span>, i, <span class="string">&#x27;没值&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+<p>结果</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">i = [] 没值</span><br><span class="line">i = <span class="number">0</span> 没值</span><br><span class="line">i =  没值</span><br><span class="line">i =  没值</span><br><span class="line">i = &#123;&#125; 没值</span><br><span class="line">i = () 没值</span><br><span class="line">i = [<span class="number">1</span>] 有值</span><br><span class="line">i = <span class="number">2</span> 有值</span><br><span class="line">i = <span class="number">3</span> 有值</span><br><span class="line">i = <span class="number">4</span> 有值</span><br><span class="line">i = &#123;<span class="number">5</span>&#125; 有值</span><br><span class="line">i = <span class="number">6</span> 有值</span><br></pre></td></tr></table></figure></div>]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>PygameZero制作Pacman</title>
     <url>/2020/11/28/PygameZero%E5%88%B6%E4%BD%9CPacman/</url>
     <content><![CDATA[<p>本篇来介绍Pacman的PygameZero实现。</p>
@@ -830,23 +847,6 @@
       <tags>
         <tag>Python</tag>
         <tag>游戏</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python中if后直接加变量</title>
-    <url>/2019/12/23/Python%E4%B8%ADif%E5%90%8E%E7%9B%B4%E6%8E%A5%E5%8A%A0%E5%8F%98%E9%87%8F/</url>
-    <content><![CDATA[<p>python中有时候会使用if语句，后边直接加一个变量，而不是一个布尔表达式，这是在判断神马呢？</p>
-<span id="more"></span>
-
-<p>其实意思是判断这个变量是否有值，这个值需要是<strong>非零非空</strong>的值，这行代码返回<code>True</code>或<code>False</code>。<br>Python中除了’’、””、0、()、[]、{}、None为False之外，其他的都是True。<br>举例</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">ls = [[], <span class="number">0</span>, <span class="string">&#x27;&#x27;</span>, <span class="string">&quot;&quot;</span>, &#123;&#125;, (), [<span class="number">1</span>], <span class="number">2</span>, <span class="string">&#x27;3&#x27;</span>, <span class="string">&quot;4&quot;</span>, &#123;<span class="number">5</span>&#125;, (<span class="number">6</span>)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> ls:</span><br><span class="line">    <span class="keyword">if</span> i:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;i =&#x27;</span>, i, <span class="string">&#x27;有值&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;i =&#x27;</span>, i, <span class="string">&#x27;没值&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
-<p>结果</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">i = [] 没值</span><br><span class="line">i = <span class="number">0</span> 没值</span><br><span class="line">i =  没值</span><br><span class="line">i =  没值</span><br><span class="line">i = &#123;&#125; 没值</span><br><span class="line">i = () 没值</span><br><span class="line">i = [<span class="number">1</span>] 有值</span><br><span class="line">i = <span class="number">2</span> 有值</span><br><span class="line">i = <span class="number">3</span> 有值</span><br><span class="line">i = <span class="number">4</span> 有值</span><br><span class="line">i = &#123;<span class="number">5</span>&#125; 有值</span><br><span class="line">i = <span class="number">6</span> 有值</span><br></pre></td></tr></table></figure></div>]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -2514,64 +2514,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Scratch还能做出这么酷炫的3D效果？</title>
-    <url>/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/</url>
-    <content><![CDATA[<p>哇！</p>
-<iframe src="//player.bilibili.com/player.html?aid=758188286&bvid=BV1y64y1d7yt&cid=343226566&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-
-<span id="more"></span>
-
-<p>酷炫的3D星空效果，想知道怎么实现的吗？</p>
-<h1 id="绘制角色"><a href="#绘制角色" class="headerlink" title="绘制角色"></a>绘制角色</h1><p>Scratch版本3.22.0</p>
-<p>首先把小猫干掉，我们选择自己绘制角色。</p>
-<p>按住shift再绘制圆形，可以画出正圆！但是画之前，先选好填充颜色。这样填充会给人一种3D立体的感觉。</p>
-<img lazyload src="/images/loading.svg" data-src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/1.png" class>
-
-<p>下面开始画圆，大小在<code>40*40</code>左右即可。</p>
-<img lazyload src="/images/loading.svg" data-src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/2.png" class>
-
-<h1 id="选择背景"><a href="#选择背景" class="headerlink" title="选择背景"></a>选择背景</h1><p>由于是星空，所以我们需要选择深色背景（如Galaxy、Stars、Nebula），也可以像我一样直接拿一个黑色长方形~</p>
-<img lazyload src="/images/loading.svg" data-src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/3.png" class>
-
-<h1 id="编程"><a href="#编程" class="headerlink" title="编程"></a>编程</h1><h2 id="本体"><a href="#本体" class="headerlink" title="本体"></a>本体</h2><p>这个程序中，本体要做的只有一个，那就是不停克隆自己：</p>
-<img lazyload src="/images/loading.svg" data-src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/4.png" class>
-
-<h2 id="距离"><a href="#距离" class="headerlink" title="距离"></a>距离</h2><p>我们平时看东西，会有一个「近大远小」的现象，距离我们比较近的都会特别大，距离我们很远的都会很小。</p>
-<p>对于我们的星星也可以这样来设计，首先创建一个变量距离，因为每个星星到我们的距离都不同，因此这个变量<strong>仅适用于当前角色</strong>。假设星星到我们的距离时1到10之间，那么可以使用随机来创建不同距离的星星。</p>
-<img lazyload src="/images/loading.svg" data-src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/5.png" class>
-
-<h2 id="大小"><a href="#大小" class="headerlink" title="大小"></a>大小</h2><p>当距离越小，角色就应该越大；距离越大，角色就应该越小。<strong>角色的大小和距离成反比。</strong>那么可以使用除法来设置角色大小：</p>
-<img lazyload src="/images/loading.svg" data-src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/6.png" class>
-
-<h2 id="开始移动"><a href="#开始移动" class="headerlink" title="开始移动"></a>开始移动</h2><p>下面只需要让这些星星从右向左移动就行了，先移到最右边，再减少x坐标，直到移出舞台。</p>
-<img lazyload src="/images/loading.svg" data-src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/7.png" class>
-
-<p>看看效果：</p>
-<iframe src="//player.bilibili.com/player.html?aid=630739988&bvid=BV18b4y1o7Rc&cid=343226890&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" height="450" width="100%"> </iframe>
-
-<p>噢，我的上帝，看起来速度<strong>相同</strong>还很快，一点也不3D啊~</p>
-<h2 id="速度"><a href="#速度" class="headerlink" title="速度"></a>速度</h2><p>除了近大远小，还有「近快远慢」。当你坐在车上，看眼前的大树，它们嗖嗖嗖的从眼前闪过。而如果看看远处的山，却感觉它好像几乎没有移动。</p>
-<p>所以把近处（距离小）的星星速度变快，远处的变慢吧。又是反比，继续使用除法！</p>
-<img lazyload src="/images/loading.svg" data-src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/9.png" class>
-
-<iframe src="//player.bilibili.com/player.html?aid=333170393&bvid=BV19A411G7n4&cid=343227151&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" height="450" width="100%"> </iframe>
-
-<h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><p>至此程序已经基本完成了，不过还有一个不合常理之处，那就是小的克隆体会出现在大的克隆体之上。这里涉及到一个「层」的概念，我们根据距离，将角色后移相应层数即可。</p>
-<img lazyload src="/images/loading.svg" data-src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/11.png" class>
-
-<h1 id="全部程序和运行效果"><a href="#全部程序和运行效果" class="headerlink" title="全部程序和运行效果"></a>全部程序和运行效果</h1><img lazyload src="/images/loading.svg" data-src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/12.png" class>
-
-<iframe src="//player.bilibili.com/player.html?aid=758188286&bvid=BV1y64y1d7yt&cid=343226566&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" height="450" width="100%"> </iframe>
-
-]]></content>
-      <categories>
-        <category>Scratch</category>
-      </categories>
-      <tags>
-        <tag>Scratch</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SQL必知必会(5)高级过滤数据</title>
     <url>/2020/12/06/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-5-%E9%AB%98%E7%BA%A7%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE/</url>
     <content><![CDATA[<p><strong>操作符（operator）</strong>：用来连接或改变WHERE子句中的子句的关键字，也称为逻辑操作符（logical operator）。</p>
@@ -2780,6 +2722,64 @@
       </categories>
       <tags>
         <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Scratch还能做出这么酷炫的3D效果？</title>
+    <url>/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/</url>
+    <content><![CDATA[<p>哇！</p>
+<iframe src="//player.bilibili.com/player.html?aid=758188286&bvid=BV1y64y1d7yt&cid=343226566&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+<span id="more"></span>
+
+<p>酷炫的3D星空效果，想知道怎么实现的吗？</p>
+<h1 id="绘制角色"><a href="#绘制角色" class="headerlink" title="绘制角色"></a>绘制角色</h1><p>Scratch版本3.22.0</p>
+<p>首先把小猫干掉，我们选择自己绘制角色。</p>
+<p>按住shift再绘制圆形，可以画出正圆！但是画之前，先选好填充颜色。这样填充会给人一种3D立体的感觉。</p>
+<img lazyload src="/images/loading.svg" data-src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/1.png" class>
+
+<p>下面开始画圆，大小在<code>40*40</code>左右即可。</p>
+<img lazyload src="/images/loading.svg" data-src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/2.png" class>
+
+<h1 id="选择背景"><a href="#选择背景" class="headerlink" title="选择背景"></a>选择背景</h1><p>由于是星空，所以我们需要选择深色背景（如Galaxy、Stars、Nebula），也可以像我一样直接拿一个黑色长方形~</p>
+<img lazyload src="/images/loading.svg" data-src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/3.png" class>
+
+<h1 id="编程"><a href="#编程" class="headerlink" title="编程"></a>编程</h1><h2 id="本体"><a href="#本体" class="headerlink" title="本体"></a>本体</h2><p>这个程序中，本体要做的只有一个，那就是不停克隆自己：</p>
+<img lazyload src="/images/loading.svg" data-src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/4.png" class>
+
+<h2 id="距离"><a href="#距离" class="headerlink" title="距离"></a>距离</h2><p>我们平时看东西，会有一个「近大远小」的现象，距离我们比较近的都会特别大，距离我们很远的都会很小。</p>
+<p>对于我们的星星也可以这样来设计，首先创建一个变量距离，因为每个星星到我们的距离都不同，因此这个变量<strong>仅适用于当前角色</strong>。假设星星到我们的距离时1到10之间，那么可以使用随机来创建不同距离的星星。</p>
+<img lazyload src="/images/loading.svg" data-src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/5.png" class>
+
+<h2 id="大小"><a href="#大小" class="headerlink" title="大小"></a>大小</h2><p>当距离越小，角色就应该越大；距离越大，角色就应该越小。<strong>角色的大小和距离成反比。</strong>那么可以使用除法来设置角色大小：</p>
+<img lazyload src="/images/loading.svg" data-src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/6.png" class>
+
+<h2 id="开始移动"><a href="#开始移动" class="headerlink" title="开始移动"></a>开始移动</h2><p>下面只需要让这些星星从右向左移动就行了，先移到最右边，再减少x坐标，直到移出舞台。</p>
+<img lazyload src="/images/loading.svg" data-src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/7.png" class>
+
+<p>看看效果：</p>
+<iframe src="//player.bilibili.com/player.html?aid=630739988&bvid=BV18b4y1o7Rc&cid=343226890&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" height="450" width="100%"> </iframe>
+
+<p>噢，我的上帝，看起来速度<strong>相同</strong>还很快，一点也不3D啊~</p>
+<h2 id="速度"><a href="#速度" class="headerlink" title="速度"></a>速度</h2><p>除了近大远小，还有「近快远慢」。当你坐在车上，看眼前的大树，它们嗖嗖嗖的从眼前闪过。而如果看看远处的山，却感觉它好像几乎没有移动。</p>
+<p>所以把近处（距离小）的星星速度变快，远处的变慢吧。又是反比，继续使用除法！</p>
+<img lazyload src="/images/loading.svg" data-src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/9.png" class>
+
+<iframe src="//player.bilibili.com/player.html?aid=333170393&bvid=BV19A411G7n4&cid=343227151&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" height="450" width="100%"> </iframe>
+
+<h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><p>至此程序已经基本完成了，不过还有一个不合常理之处，那就是小的克隆体会出现在大的克隆体之上。这里涉及到一个「层」的概念，我们根据距离，将角色后移相应层数即可。</p>
+<img lazyload src="/images/loading.svg" data-src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/11.png" class>
+
+<h1 id="全部程序和运行效果"><a href="#全部程序和运行效果" class="headerlink" title="全部程序和运行效果"></a>全部程序和运行效果</h1><img lazyload src="/images/loading.svg" data-src="/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/12.png" class>
+
+<iframe src="//player.bilibili.com/player.html?aid=758188286&bvid=BV1y64y1d7yt&cid=343226566&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" height="450" width="100%"> </iframe>
+
+]]></content>
+      <categories>
+        <category>Scratch</category>
+      </categories>
+      <tags>
+        <tag>Scratch</tag>
       </tags>
   </entry>
   <entry>
@@ -3054,6 +3054,53 @@
       </tags>
   </entry>
   <entry>
+    <title>使用turtle实现动画效果</title>
+    <url>/2020/12/02/%E4%BD%BF%E7%94%A8turtle%E5%AE%9E%E7%8E%B0%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C/</url>
+    <content><![CDATA[<p>众所周知，turtle能够像画笔一样来作图。一个绘图程序运行后，我们能够像看动画一样观看整个绘图过程。但是今天说的动画可和它不太一样。</p>
+<span id="more"></span>
+
+<p>我们可以用下面的函数调整画笔的速度。</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">turtle.speed(<span class="number">1</span>)</span><br><span class="line">turtle.speed(<span class="number">10</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>在官方文档中，<code>turtle.speed()</code>的参数是0-10的整数，从<code>1</code>到<code>10</code>速度递增。<code>0</code>比较特殊，速度最快，几乎是瞬间完成。</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> turtle, time</span><br><span class="line"></span><br><span class="line">t1 = turtle.Turtle()</span><br><span class="line">t2 = turtle.Turtle()</span><br><span class="line">t3 = turtle.Turtle()</span><br><span class="line"></span><br><span class="line">pens = [t1, t2, t3]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(pens)):</span><br><span class="line">    pens[i].pu()</span><br><span class="line">    pens[i].goto(-<span class="number">100</span>, -<span class="number">100</span> + <span class="number">50</span> * i)</span><br><span class="line">    pens[i].pd()</span><br><span class="line"></span><br><span class="line">t1.speed(<span class="number">1</span>)</span><br><span class="line">t2.speed(<span class="number">5</span>)</span><br><span class="line">t3.speed(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">t1.fd(<span class="number">300</span>)</span><br><span class="line">time.sleep(<span class="number">2</span>)</span><br><span class="line">t2.fd(<span class="number">300</span>)</span><br><span class="line">time.sleep(<span class="number">2</span>)</span><br><span class="line">t3.fd(<span class="number">300</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>效果比较明显：</p>
+<img lazyload src="/images/loading.svg" data-src="/2020/12/02/%E4%BD%BF%E7%94%A8turtle%E5%AE%9E%E7%8E%B0%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C/speed.gif" class>
+
+<p>可以说，这是一种动画的效果，毕竟能够看到绘画的全过程嘛。但是这个不是今天的重点，今天要讲的是真正的动画。</p>
+<img lazyload src="/images/loading.svg" data-src="/2020/12/02/%E4%BD%BF%E7%94%A8turtle%E5%AE%9E%E7%8E%B0%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C/download.png" class>
+
+<p>赶紧进入正题，要想使画面动起来，肯定是先画出主体，再将它移动。这里我们先看一个奇葩转圈图。</p>
+<img lazyload src="/images/loading.svg" data-src="/2020/12/02/%E4%BD%BF%E7%94%A8turtle%E5%AE%9E%E7%8E%B0%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C/roll1.gif" class>
+
+
+
+<blockquote>
+<p>“很快啊！”          ——马老师</p>
+</blockquote>
+<p>下面看一下代码，为什么画完之后会转起来？</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> turtle</span><br><span class="line"></span><br><span class="line">turtle.speed(<span class="number">0</span>)</span><br><span class="line">turtle.Screen().bgcolor(<span class="string">&#x27;black&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个函数主要是画出一个奇葩图形，你想转什么就画什么</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">arm</span>(<span class="params">col</span>):</span></span><br><span class="line">    turtle.begin_fill()</span><br><span class="line">    turtle.color(col)</span><br><span class="line">    turtle.fd(<span class="number">60</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    turtle.fd(<span class="number">60</span>)</span><br><span class="line">    turtle.rt(<span class="number">60</span>)</span><br><span class="line">    turtle.fd(<span class="number">60</span>)</span><br><span class="line">    turtle.rt(<span class="number">60</span>)</span><br><span class="line">    turtle.fd(<span class="number">60</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    turtle.fd(<span class="number">60</span>)</span><br><span class="line">    turtle.lt(<span class="number">120</span>)</span><br><span class="line">    turtle.fd(<span class="number">120</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    turtle.fd(<span class="number">120</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    turtle.fd(<span class="number">120</span>)</span><br><span class="line">    turtle.lt(<span class="number">120</span>)</span><br><span class="line">    turtle.end_fill()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个函数可以画出我们转动的主体，我的主体是6个不同颜色的arm</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">turn</span>(<span class="params">angle</span>):</span></span><br><span class="line">    turtle.seth(angle)</span><br><span class="line">    arm(<span class="string">&#x27;red&#x27;</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    arm(<span class="string">&#x27;orange&#x27;</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    arm(<span class="string">&#x27;yellow&#x27;</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    arm(<span class="string">&#x27;green&#x27;</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    arm(<span class="string">&#x27;blue&#x27;</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    arm(<span class="string">&#x27;purple&#x27;</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    turtle.hideturtle()</span><br><span class="line"></span><br><span class="line">angle = <span class="number">0</span>  <span class="comment"># 设置一个初始角度</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    turtle.clear()</span><br><span class="line">    turn(angle)</span><br><span class="line">    turtle.tracer(n=<span class="number">1000000000</span>)</span><br><span class="line">    angle += <span class="number">15</span>  <span class="comment"># 每次循环角度都增加15度</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<p>这里两个自定义函数都很好理解，主要看一下 <code>turtle.tracer()</code>，它的意思<strong>大概是</strong>将之前画过的作品重复一次，<code>n</code>的大小就是重复的速度，也就是说<code>n</code>如果很大，就可以瞬间完成刚才的画作。所以循环中的过程可以理解为（图有些丑）：</p>
+<pre class="mermaid">graph TD
+    B((开始)) -->C{while True}
+    C -->  D[clear清屏] 
+    D[clear清屏] --> E[seth改变角度]
+    E[seth改变角度] --> F[tracer再画一次]
+    F[tracer再画一次] --> G[角度增加15]
+    G[角度增加15] --> C</pre>
+
+<p>所以，图中的6个arm就转起来了，修改每次循环的角度可以调整旋转速度和方向哦。（负数为反方向）</p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>turtle如何自定义画笔形状</title>
     <url>/2020/12/19/turtle%E5%A6%82%E4%BD%95%E8%87%AA%E5%AE%9A%E4%B9%89%E7%94%BB%E7%AC%94%E5%BD%A2%E7%8A%B6/</url>
     <content><![CDATA[<p>turtle内置的画笔形状一共只有这么几种：</p>
@@ -3102,53 +3149,6 @@
 <blockquote>
 <p>参考文献：<a class="link" href="https://my.oschina.net/oisanblog/blog/3420837">python学习turtle(更改海龟图标)<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 </blockquote>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用turtle实现动画效果</title>
-    <url>/2020/12/02/%E4%BD%BF%E7%94%A8turtle%E5%AE%9E%E7%8E%B0%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C/</url>
-    <content><![CDATA[<p>众所周知，turtle能够像画笔一样来作图。一个绘图程序运行后，我们能够像看动画一样观看整个绘图过程。但是今天说的动画可和它不太一样。</p>
-<span id="more"></span>
-
-<p>我们可以用下面的函数调整画笔的速度。</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">turtle.speed(<span class="number">1</span>)</span><br><span class="line">turtle.speed(<span class="number">10</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>在官方文档中，<code>turtle.speed()</code>的参数是0-10的整数，从<code>1</code>到<code>10</code>速度递增。<code>0</code>比较特殊，速度最快，几乎是瞬间完成。</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> turtle, time</span><br><span class="line"></span><br><span class="line">t1 = turtle.Turtle()</span><br><span class="line">t2 = turtle.Turtle()</span><br><span class="line">t3 = turtle.Turtle()</span><br><span class="line"></span><br><span class="line">pens = [t1, t2, t3]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(pens)):</span><br><span class="line">    pens[i].pu()</span><br><span class="line">    pens[i].goto(-<span class="number">100</span>, -<span class="number">100</span> + <span class="number">50</span> * i)</span><br><span class="line">    pens[i].pd()</span><br><span class="line"></span><br><span class="line">t1.speed(<span class="number">1</span>)</span><br><span class="line">t2.speed(<span class="number">5</span>)</span><br><span class="line">t3.speed(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">t1.fd(<span class="number">300</span>)</span><br><span class="line">time.sleep(<span class="number">2</span>)</span><br><span class="line">t2.fd(<span class="number">300</span>)</span><br><span class="line">time.sleep(<span class="number">2</span>)</span><br><span class="line">t3.fd(<span class="number">300</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>效果比较明显：</p>
-<img lazyload src="/images/loading.svg" data-src="/2020/12/02/%E4%BD%BF%E7%94%A8turtle%E5%AE%9E%E7%8E%B0%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C/speed.gif" class>
-
-<p>可以说，这是一种动画的效果，毕竟能够看到绘画的全过程嘛。但是这个不是今天的重点，今天要讲的是真正的动画。</p>
-<img lazyload src="/images/loading.svg" data-src="/2020/12/02/%E4%BD%BF%E7%94%A8turtle%E5%AE%9E%E7%8E%B0%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C/download.png" class>
-
-<p>赶紧进入正题，要想使画面动起来，肯定是先画出主体，再将它移动。这里我们先看一个奇葩转圈图。</p>
-<img lazyload src="/images/loading.svg" data-src="/2020/12/02/%E4%BD%BF%E7%94%A8turtle%E5%AE%9E%E7%8E%B0%E5%8A%A8%E7%94%BB%E6%95%88%E6%9E%9C/roll1.gif" class>
-
-
-
-<blockquote>
-<p>“很快啊！”          ——马老师</p>
-</blockquote>
-<p>下面看一下代码，为什么画完之后会转起来？</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> turtle</span><br><span class="line"></span><br><span class="line">turtle.speed(<span class="number">0</span>)</span><br><span class="line">turtle.Screen().bgcolor(<span class="string">&#x27;black&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个函数主要是画出一个奇葩图形，你想转什么就画什么</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">arm</span>(<span class="params">col</span>):</span></span><br><span class="line">    turtle.begin_fill()</span><br><span class="line">    turtle.color(col)</span><br><span class="line">    turtle.fd(<span class="number">60</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    turtle.fd(<span class="number">60</span>)</span><br><span class="line">    turtle.rt(<span class="number">60</span>)</span><br><span class="line">    turtle.fd(<span class="number">60</span>)</span><br><span class="line">    turtle.rt(<span class="number">60</span>)</span><br><span class="line">    turtle.fd(<span class="number">60</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    turtle.fd(<span class="number">60</span>)</span><br><span class="line">    turtle.lt(<span class="number">120</span>)</span><br><span class="line">    turtle.fd(<span class="number">120</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    turtle.fd(<span class="number">120</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    turtle.fd(<span class="number">120</span>)</span><br><span class="line">    turtle.lt(<span class="number">120</span>)</span><br><span class="line">    turtle.end_fill()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个函数可以画出我们转动的主体，我的主体是6个不同颜色的arm</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">turn</span>(<span class="params">angle</span>):</span></span><br><span class="line">    turtle.seth(angle)</span><br><span class="line">    arm(<span class="string">&#x27;red&#x27;</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    arm(<span class="string">&#x27;orange&#x27;</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    arm(<span class="string">&#x27;yellow&#x27;</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    arm(<span class="string">&#x27;green&#x27;</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    arm(<span class="string">&#x27;blue&#x27;</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    arm(<span class="string">&#x27;purple&#x27;</span>)</span><br><span class="line">    turtle.lt(<span class="number">60</span>)</span><br><span class="line">    turtle.hideturtle()</span><br><span class="line"></span><br><span class="line">angle = <span class="number">0</span>  <span class="comment"># 设置一个初始角度</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    turtle.clear()</span><br><span class="line">    turn(angle)</span><br><span class="line">    turtle.tracer(n=<span class="number">1000000000</span>)</span><br><span class="line">    angle += <span class="number">15</span>  <span class="comment"># 每次循环角度都增加15度</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
-
-<p>这里两个自定义函数都很好理解，主要看一下 <code>turtle.tracer()</code>，它的意思<strong>大概是</strong>将之前画过的作品重复一次，<code>n</code>的大小就是重复的速度，也就是说<code>n</code>如果很大，就可以瞬间完成刚才的画作。所以循环中的过程可以理解为（图有些丑）：</p>
-<pre class="mermaid">graph TD
-    B((开始)) -->C{while True}
-    C -->  D[clear清屏] 
-    D[clear清屏] --> E[seth改变角度]
-    E[seth改变角度] --> F[tracer再画一次]
-    F[tracer再画一次] --> G[角度增加15]
-    G[角度增加15] --> C</pre>
-
-<p>所以，图中的6个arm就转起来了，修改每次循环的角度可以调整旋转速度和方向哦。（负数为反方向）</p>
 ]]></content>
       <categories>
         <category>Python</category>
@@ -3397,6 +3397,33 @@
 <p>参考：<a class="link" href="https://www.csdn.net/tags/MtTaEg4sOTQ4ODE5LWJsb2cO0O0O.html">https://www.csdn.net/tags/MtTaEg4sOTQ4ODE5LWJsb2cO0O0O.html<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 </blockquote>
 ]]></content>
+  </entry>
+  <entry>
+    <title>安装python库时遇到ValueError: check_hostname requires server_hostname问题及解决</title>
+    <url>/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/</url>
+    <content><![CDATA[<p>正当我熟练地使用 <code>pip</code> 安装 <code>requests</code> 模块时，令人意想不到的一幕发生了……</p>
+<span id="more"></span>
+
+<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>今天准备爬虫，为了排查问题，我搬出了尘封已久的Windows笔记本，上一次打开这个电脑还是上一次。</p>
+<p>这个电脑上的python很干净，我需要安装 <code>requests</code> 来完成爬虫的相关功能。</p>
+<p>正当我熟练地使用 <code>pip</code> 安装这个模块时，令人意想不到的一幕发生了：</p>
+<img lazyload src="/images/loading.svg" data-src="/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/1.png" class>
+
+<p>一堆红色字体！</p>
+<p>定睛一看，报错信息为：</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">ValueError: check_hostname requires server_hostname</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>原来这个尘封已久的电脑，竟然还开机自启动微屁恩~</p>
+<p>当我把微屁恩关掉，再次安装，就可以了。顺便更新了一下 <code>pip</code> 。</p>
+<p>正确运行结果如上图所示。</p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>bug</tag>
+        <tag>python</tag>
+      </tags>
   </entry>
   <entry>
     <title>实用SQL</title>
@@ -5455,33 +5482,6 @@
       </tags>
   </entry>
   <entry>
-    <title>安装python库时遇到ValueError: check_hostname requires server_hostname问题及解决</title>
-    <url>/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/</url>
-    <content><![CDATA[<p>正当我熟练地使用 <code>pip</code> 安装 <code>requests</code> 模块时，令人意想不到的一幕发生了……</p>
-<span id="more"></span>
-
-<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>今天准备爬虫，为了排查问题，我搬出了尘封已久的Windows笔记本，上一次打开这个电脑还是上一次。</p>
-<p>这个电脑上的python很干净，我需要安装 <code>requests</code> 来完成爬虫的相关功能。</p>
-<p>正当我熟练地使用 <code>pip</code> 安装这个模块时，令人意想不到的一幕发生了：</p>
-<img lazyload src="/images/loading.svg" data-src="/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/1.png" class>
-
-<p>一堆红色字体！</p>
-<p>定睛一看，报错信息为：</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">ValueError: check_hostname requires server_hostname</span><br></pre></td></tr></table></figure></div>
-
-<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>原来这个尘封已久的电脑，竟然还开机自启动微屁恩~</p>
-<p>当我把微屁恩关掉，再次安装，就可以了。顺便更新了一下 <code>pip</code> 。</p>
-<p>正确运行结果如上图所示。</p>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>bug</tag>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>机构如何自建OJ？云服务器+开源项目，满足一切需求！</title>
     <url>/2023/07/27/%E6%9C%BA%E6%9E%84%E5%A6%82%E4%BD%95%E8%87%AA%E5%BB%BAOJ%EF%BC%9F%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8+%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%EF%BC%8C%E6%BB%A1%E8%B6%B3%E4%B8%80%E5%88%87%E9%9C%80%E6%B1%82%EF%BC%81/</url>
     <content><![CDATA[<p>没时间写了家人们。接手教学主管以来，真的比以前忙了。先列个大纲吧。</p>
@@ -5511,29 +5511,26 @@
 ]]></content>
   </entry>
   <entry>
+    <title>编译和解释的区别</title>
+    <url>/2021/12/08/%E7%BC%96%E8%AF%91%E5%92%8C%E8%A7%A3%E9%87%8A%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<p>有些编程语言是编译运行，有些则是解释运行，那它们的区别是什么呢？</p>
+<span id="more"></span>
+<h1 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h1><p>编译过程可以比作<strong>“笔译”</strong></p>
+<p>编译程序对整个源程序经过编译处理，产生一个与源程序等价的目标程序，再通过连接程序将所有需要的程序组合成一个完整的可执行程序，最后运行。</p>
+<p><img lazyload src="/images/loading.svg" data-src="%E7%BC%96%E8%AF%91.png" alt="编译"></p>
+<h1 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h1><p>解释过程可以比作<strong>“同声翻译”</strong></p>
+<p>解释程序对源程序逐句分析，将语句翻译成机器指令，然后立即执行指令。不会产生目标程序。</p>
+<p><img lazyload src="/images/loading.svg" data-src="%E8%A7%A3%E9%87%8A.png" alt="解释"></p>
+<blockquote>
+<p>大学计算机（第7版) 龚沛曾 杨志强</p>
+</blockquote>
+]]></content>
+  </entry>
+  <entry>
     <title>许久没更新了…</title>
     <url>/2021/05/19/%E8%AE%B8%E4%B9%85%E6%B2%A1%E6%9B%B4%E6%96%B0%E4%BA%86%E2%80%A6/</url>
     <content><![CDATA[<p>许久没更新了，就是冒个泡</p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>题解：1066_满足条件的数累加</title>
-    <url>/2023/08/16/%E9%A2%98%E8%A7%A3%EF%BC%9A1066-%E6%BB%A1%E8%B6%B3%E6%9D%A1%E4%BB%B6%E7%9A%84%E6%95%B0%E7%B4%AF%E5%8A%A0/</url>
-    <content><![CDATA[<p>一篇超简单的题的题解示例</p>
-<span id="more"></span>
-<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>将正整数m和n之间(包括m和n)能被17整除的数累加，其中，<code>0&lt;m&lt;n&lt;1000</code>。</p>
-<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>一行，包含两个整数m和n，其间，以一个空格间隔。</p>
-<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>输出一行，包行一个整数，表示累加的结果。</p>
-<h2 id="输入样例"><a href="#输入样例" class="headerlink" title="输入样例"></a>输入样例</h2><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">50 85</span><br></pre></td></tr></table></figure></div>
-<h2 id="输出样例"><a href="#输出样例" class="headerlink" title="输出样例"></a>输出样例</h2><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">204</span><br></pre></td></tr></table></figure></div>
-
-<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><p>用枚举法。</p>
-<p>用for循环把从m到n的所有数列举出来，然后判断是否能被17整除，如果符合条件，就把这个数累加到变量ans中。</p>
-<h1 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码"></a>AC代码</h1><div class="code-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="comment">// 1066：满足条件的数累加</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> m, n, ans = <span class="number">0</span>;</span><br><span class="line">    cin &gt;&gt; m &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = m; i &lt;= n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (i % <span class="number">17</span> == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            ans += i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; ans &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-]]></content>
-      <tags>
-        <tag>C++</tag>
-      </tags>
   </entry>
   <entry>
     <title>趣味二维码生成</title>
@@ -5559,19 +5556,22 @@
       </tags>
   </entry>
   <entry>
-    <title>编译和解释的区别</title>
-    <url>/2021/12/08/%E7%BC%96%E8%AF%91%E5%92%8C%E8%A7%A3%E9%87%8A%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[<p>有些编程语言是编译运行，有些则是解释运行，那它们的区别是什么呢？</p>
+    <title>题解：1066_满足条件的数累加</title>
+    <url>/2023/08/16/%E9%A2%98%E8%A7%A3%EF%BC%9A1066-%E6%BB%A1%E8%B6%B3%E6%9D%A1%E4%BB%B6%E7%9A%84%E6%95%B0%E7%B4%AF%E5%8A%A0/</url>
+    <content><![CDATA[<p>一篇超简单的题的题解示例</p>
 <span id="more"></span>
-<h1 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h1><p>编译过程可以比作<strong>“笔译”</strong></p>
-<p>编译程序对整个源程序经过编译处理，产生一个与源程序等价的目标程序，再通过连接程序将所有需要的程序组合成一个完整的可执行程序，最后运行。</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E7%BC%96%E8%AF%91.png" alt="编译"></p>
-<h1 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h1><p>解释过程可以比作<strong>“同声翻译”</strong></p>
-<p>解释程序对源程序逐句分析，将语句翻译成机器指令，然后立即执行指令。不会产生目标程序。</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E8%A7%A3%E9%87%8A.png" alt="解释"></p>
-<blockquote>
-<p>大学计算机（第7版) 龚沛曾 杨志强</p>
-</blockquote>
+<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>将正整数m和n之间(包括m和n)能被17整除的数累加，其中，<code>0&lt;m&lt;n&lt;1000</code>。</p>
+<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>一行，包含两个整数m和n，其间，以一个空格间隔。</p>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>输出一行，包行一个整数，表示累加的结果。</p>
+<h2 id="输入样例"><a href="#输入样例" class="headerlink" title="输入样例"></a>输入样例</h2><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">50 85</span><br></pre></td></tr></table></figure></div>
+<h2 id="输出样例"><a href="#输出样例" class="headerlink" title="输出样例"></a>输出样例</h2><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">204</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><p>用枚举法。</p>
+<p>用for循环把从m到n的所有数列举出来，然后判断是否能被17整除，如果符合条件，就把这个数累加到变量ans中。</p>
+<h1 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码"></a>AC代码</h1><div class="code-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="comment">// 1066：满足条件的数累加</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> m, n, ans = <span class="number">0</span>;</span><br><span class="line">    cin &gt;&gt; m &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = m; i &lt;= n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (i % <span class="number">17</span> == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            ans += i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; ans &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 ]]></content>
+      <tags>
+        <tag>C++</tag>
+      </tags>
   </entry>
 </search>
