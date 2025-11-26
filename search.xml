@@ -1387,32 +1387,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Python题目 - 回文质数</title>
-    <url>/2020/01/09/Python%E9%A2%98%E7%9B%AE%20-%20%E5%9B%9E%E6%96%87%E8%B4%A8%E6%95%B0/</url>
-    <content><![CDATA[<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>因为 151 既是一个质数又是一个回文数（从左到右和从右到左是看一样的），所以 151 是回文质数。</p>
-<span id="more"></span>
-
-<p>写一个程序来找出范围 [a,b] $(5 \le a &lt; b \le 100,000,000)$ (一亿)间的所有回文质数。</p>
-<h1 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h1><p>第 1 行: 二个整数 a 和 b .</p>
-<h1 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h1><p>输出一个回文质数的列表，一行一个。</p>
-<h1 id="输入输出样例"><a href="#输入输出样例" class="headerlink" title="输入输出样例"></a>输入输出样例</h1><h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">5</span> <span class="number">500</span></span><br></pre></td></tr></table></figure></div>
-
-<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">7</span></span><br><span class="line"><span class="number">11</span></span><br><span class="line"><span class="number">101</span></span><br><span class="line"><span class="number">131</span></span><br><span class="line"><span class="number">151</span></span><br><span class="line"><span class="number">181</span></span><br><span class="line"><span class="number">191</span></span><br><span class="line"><span class="number">313</span></span><br><span class="line"><span class="number">353</span></span><br><span class="line"><span class="number">373</span></span><br><span class="line"><span class="number">383</span></span><br></pre></td></tr></table></figure></div>
-
-<h1 id="超时实现"><a href="#超时实现" class="headerlink" title="超时实现"></a>超时实现</h1><div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 获得输入</span></span><br><span class="line">ab = <span class="built_in">input</span>().split()</span><br><span class="line">a = <span class="built_in">int</span>(ab[<span class="number">0</span>])</span><br><span class="line">b = <span class="built_in">int</span>(ab[<span class="number">1</span>])</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(a, b + <span class="number">1</span>):</span><br><span class="line">    <span class="keyword">if</span> i % <span class="number">2</span> == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">str</span>(i)[::-<span class="number">1</span>] == <span class="built_in">str</span>(i): <span class="comment"># 判断是否回文数</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, <span class="built_in">int</span>(i ** <span class="number">0.5</span>) + <span class="number">1</span>): <span class="comment"># 判断是否质数</span></span><br><span class="line">                <span class="keyword">if</span> i % j == <span class="number">0</span>:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="built_in">print</span>(i) <span class="comment"># 是则打印</span></span><br></pre></td></tr></table></figure></div>
-
-<h1 id="大佬方法"><a href="#大佬方法" class="headerlink" title="大佬方法"></a>大佬方法</h1><p>埃氏筛</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">prime_numbers</span>(<span class="params">n</span>):</span></span><br><span class="line">    number = [<span class="number">1</span>]*(n+<span class="number">1</span>)  <span class="comment"># 初始化，1表示全部为质数</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, <span class="built_in">int</span>((n**<span class="number">0.5</span>))+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> number[i]:  <span class="comment"># 如果下标i对应的数字i是素数</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i*i, n+<span class="number">1</span>, i):  <span class="comment"># 素数i的各个倍数</span></span><br><span class="line">                number[j] = <span class="number">0</span></span><br><span class="line">                j += <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, n+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> number[x]:</span><br><span class="line">            <span class="built_in">print</span>(x)</span><br></pre></td></tr></table></figure></div>
-
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Python递归绘制科赫雪花</title>
     <url>/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/</url>
     <content><![CDATA[<img lazyload src="/images/loading.svg" data-src="/2020/12/08/Python%E9%80%92%E5%BD%92%E7%BB%98%E5%88%B6%E7%A7%91%E8%B5%AB%E9%9B%AA%E8%8A%B1/snowflake.png" class>
@@ -1497,6 +1471,32 @@
 <blockquote>
 <p>转自嵩天老师的课程《Python语言程序设计》-  <a class="link" href="https://www.icourse163.org/course/BIT-268001">https://www.icourse163.org/course/BIT-268001<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 </blockquote>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python题目 - 回文质数</title>
+    <url>/2020/01/09/Python%E9%A2%98%E7%9B%AE%20-%20%E5%9B%9E%E6%96%87%E8%B4%A8%E6%95%B0/</url>
+    <content><![CDATA[<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>因为 151 既是一个质数又是一个回文数（从左到右和从右到左是看一样的），所以 151 是回文质数。</p>
+<span id="more"></span>
+
+<p>写一个程序来找出范围 [a,b] $(5 \le a &lt; b \le 100,000,000)$ (一亿)间的所有回文质数。</p>
+<h1 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h1><p>第 1 行: 二个整数 a 和 b .</p>
+<h1 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h1><p>输出一个回文质数的列表，一行一个。</p>
+<h1 id="输入输出样例"><a href="#输入输出样例" class="headerlink" title="输入输出样例"></a>输入输出样例</h1><h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">5</span> <span class="number">500</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">7</span></span><br><span class="line"><span class="number">11</span></span><br><span class="line"><span class="number">101</span></span><br><span class="line"><span class="number">131</span></span><br><span class="line"><span class="number">151</span></span><br><span class="line"><span class="number">181</span></span><br><span class="line"><span class="number">191</span></span><br><span class="line"><span class="number">313</span></span><br><span class="line"><span class="number">353</span></span><br><span class="line"><span class="number">373</span></span><br><span class="line"><span class="number">383</span></span><br></pre></td></tr></table></figure></div>
+
+<h1 id="超时实现"><a href="#超时实现" class="headerlink" title="超时实现"></a>超时实现</h1><div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 获得输入</span></span><br><span class="line">ab = <span class="built_in">input</span>().split()</span><br><span class="line">a = <span class="built_in">int</span>(ab[<span class="number">0</span>])</span><br><span class="line">b = <span class="built_in">int</span>(ab[<span class="number">1</span>])</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(a, b + <span class="number">1</span>):</span><br><span class="line">    <span class="keyword">if</span> i % <span class="number">2</span> == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">str</span>(i)[::-<span class="number">1</span>] == <span class="built_in">str</span>(i): <span class="comment"># 判断是否回文数</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, <span class="built_in">int</span>(i ** <span class="number">0.5</span>) + <span class="number">1</span>): <span class="comment"># 判断是否质数</span></span><br><span class="line">                <span class="keyword">if</span> i % j == <span class="number">0</span>:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="built_in">print</span>(i) <span class="comment"># 是则打印</span></span><br></pre></td></tr></table></figure></div>
+
+<h1 id="大佬方法"><a href="#大佬方法" class="headerlink" title="大佬方法"></a>大佬方法</h1><p>埃氏筛</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">prime_numbers</span>(<span class="params">n</span>):</span></span><br><span class="line">    number = [<span class="number">1</span>]*(n+<span class="number">1</span>)  <span class="comment"># 初始化，1表示全部为质数</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, <span class="built_in">int</span>((n**<span class="number">0.5</span>))+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> number[i]:  <span class="comment"># 如果下标i对应的数字i是素数</span></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i*i, n+<span class="number">1</span>, i):  <span class="comment"># 素数i的各个倍数</span></span><br><span class="line">                number[j] = <span class="number">0</span></span><br><span class="line">                j += <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, n+<span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> number[x]:</span><br><span class="line">            <span class="built_in">print</span>(x)</span><br></pre></td></tr></table></figure></div>
+
 ]]></content>
       <categories>
         <category>Python</category>
@@ -1700,249 +1700,6 @@
 <p>行（row）：表中的一个记录。</p>
 <p>主键（primary key）：一列（或一组列），其值能够唯一标识表中每一行。</p>
 ]]></content>
-      <categories>
-        <category>SQL</category>
-      </categories>
-      <tags>
-        <tag>SQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SQL必知必会(2)检索数据</title>
-    <url>/2020/12/06/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-2-%E6%A3%80%E7%B4%A2%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[<p><strong>关键字（keyword）</strong>：作为SQL组成部分的保留字。关键字不能用作表或列的名字。</p>
-<p><strong>SELECT语句</strong>：从一个或多个表中检索信息，必须给出想选择什么，以及从什么地方选择。</p>
-<p>检索单个列：</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name</span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br></pre></td></tr></table></figure></div>
-
-<span id="more"></span>
-
-<table>
-<thead>
-<tr>
-<th>prod_name</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Fish bean bag toy</td>
-</tr>
-<tr>
-<td>Bird bean bag toy</td>
-</tr>
-<tr>
-<td>Rabbit bean bag toy</td>
-</tr>
-<tr>
-<td>8 inch teddy bear</td>
-</tr>
-<tr>
-<td>12 inch teddy bear</td>
-</tr>
-<tr>
-<td>18 inch teddy bear</td>
-</tr>
-<tr>
-<td>Raggedy Ann</td>
-</tr>
-<tr>
-<td>King doll</td>
-</tr>
-<tr>
-<td>Queen doll</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>SQL不区分大小写，一般对关键字使用大写，并将SQL语句分成多行，这样会使代码易于阅读和调试。</p>
-</blockquote>
-<p>检索多个列：</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_id, prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>prod_id</th>
-<th>prod_name</th>
-<th>prod_price</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>BNBG01</td>
-<td>Fish bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>BNBG02</td>
-<td>Bird bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>BNBG03</td>
-<td>Rabbit bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>BR01</td>
-<td>8 inch teddy bear</td>
-<td>5.99</td>
-</tr>
-<tr>
-<td>BR02</td>
-<td>12 inch teddy bear</td>
-<td>8.99</td>
-</tr>
-<tr>
-<td>BR03</td>
-<td>18 inch teddy bear</td>
-<td>11.99</td>
-</tr>
-<tr>
-<td>RGAN01</td>
-<td>Raggedy Ann</td>
-<td>4.99</td>
-</tr>
-<tr>
-<td>RYL01</td>
-<td>King doll</td>
-<td>9.49</td>
-</tr>
-<tr>
-<td>RYL02</td>
-<td>Queen doll</td>
-<td>9.49</td>
-</tr>
-</tbody></table>
-<p>检索所有列：</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>略</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>略</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>使用通配符 * 的优点：可以检索出名字未知的列。</p>
-</blockquote>
-<p>检索不同的值：</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> vend_id </span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>vend_id</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>BRS01</td>
-</tr>
-<tr>
-<td>BRS01</td>
-</tr>
-<tr>
-<td>BRS01</td>
-</tr>
-<tr>
-<td>DLL01</td>
-</tr>
-<tr>
-<td>DLL01</td>
-</tr>
-<tr>
-<td>DLL01</td>
-</tr>
-<tr>
-<td>DLL01</td>
-</tr>
-<tr>
-<td>FNG01</td>
-</tr>
-<tr>
-<td>FNG01</td>
-</tr>
-</tbody></table>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> vend_id</span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>vend_id</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>BRS01</td>
-</tr>
-<tr>
-<td>DLL01</td>
-</tr>
-<tr>
-<td>FNG01</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>关键字DISTINCT可以去重，但会作用于所有的列，不仅是跟在它后边的那一列。</p>
-</blockquote>
-<p>限制结果：<br>如果想检索一定数量的行，比如只检索5行，以MySQL为例。</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line">LIMIT <span class="number">5</span>;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>prod_name</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Fish bean bag toy</td>
-</tr>
-<tr>
-<td>Bird bean bag toy</td>
-</tr>
-<tr>
-<td>Rabbit bean bag toy</td>
-</tr>
-<tr>
-<td>8 inch teddy bear</td>
-</tr>
-<tr>
-<td>12 inch teddy bear</td>
-</tr>
-</tbody></table>
-<p>要想得到后5行数据，需要指定从哪开始以及检索的行数：</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line">LIMIT <span class="number">5</span> <span class="keyword">OFFSET</span> <span class="number">5</span>;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>prod_name</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>18 inch teddy bear</td>
-</tr>
-<tr>
-<td>Raggedy Ann</td>
-</tr>
-<tr>
-<td>King doll</td>
-</tr>
-<tr>
-<td>Queen doll</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>表中共9行，所以检索只返回4行。</p>
-</blockquote>
-<blockquote>
-<p>第一个检索的行是第0行。</p>
-</blockquote>
-<blockquote>
-<p><code>LIMIT 4 OFFSET 3</code>可以简化：<code>LIMIT 3,4</code>。需要注意数字顺序相反。</p>
-</blockquote>
-<p>注释：</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name     <span class="comment">--这是一条注释</span></span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br><span class="line"># 这是一条注释</span><br><span class="line"><span class="comment">/*这是</span></span><br><span class="line"><span class="comment">一条注释*/</span></span><br></pre></td></tr></table></figure></div>]]></content>
       <categories>
         <category>SQL</category>
       </categories>
@@ -2293,196 +2050,41 @@
       </tags>
   </entry>
   <entry>
-    <title>SQL必知必会(5)高级过滤数据</title>
-    <url>/2020/12/06/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-5-%E9%AB%98%E7%BA%A7%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[<p><strong>操作符（operator）</strong>：用来连接或改变WHERE子句中的子句的关键字，也称为逻辑操作符（logical operator）。</p>
-<p><strong>AND操作符</strong>：要通过不止一个列进行过滤。</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_id, prod_price, prod_name</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="operator">=</span> ‘DLL01’ <span class="keyword">AND</span> prod_price <span class="operator">&lt;=</span> <span class="number">4</span>;</span><br></pre></td></tr></table></figure></div>
+    <title>SQL必知必会(2)检索数据</title>
+    <url>/2020/12/06/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-2-%E6%A3%80%E7%B4%A2%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[<p><strong>关键字（keyword）</strong>：作为SQL组成部分的保留字。关键字不能用作表或列的名字。</p>
+<p><strong>SELECT语句</strong>：从一个或多个表中检索信息，必须给出想选择什么，以及从什么地方选择。</p>
+<p>检索单个列：</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name</span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br></pre></td></tr></table></figure></div>
 
 <span id="more"></span>
 
 <table>
 <thead>
 <tr>
-<th>prod_id</th>
-<th>prod_price</th>
 <th>prod_name</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>BNBG01</td>
-<td>3.49</td>
 <td>Fish bean bag toy</td>
 </tr>
 <tr>
-<td>BNBG02</td>
-<td>3.49</td>
 <td>Bird bean bag toy</td>
 </tr>
 <tr>
-<td>BNBG03</td>
-<td>3.49</td>
 <td>Rabbit bean bag toy</td>
-</tr>
-</tbody></table>
-<p><strong>OR操作符</strong>：多个条件，满足任意一个即可。</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="operator">=</span> ‘DLL01’ <span class="keyword">OR</span> vend_id <span class="operator">=</span> ‘BRS01’;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>prod_name</th>
-<th>prod_price</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>8 inch teddy bear</td>
-<td>5.99</td>
-</tr>
-<tr>
-<td>12 inch teddy bear</td>
-<td>8.99</td>
-</tr>
-<tr>
-<td>18 inch teddy bear</td>
-<td>11.99</td>
-</tr>
-<tr>
-<td>Fish bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Bird bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Rabbit bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Raggedy Ann</td>
-<td>4.99</td>
-</tr>
-</tbody></table>
-<p>求值顺序：<br>目标：想要列出价格为10美元及以上，且由DLL01或BRS01制造的所有产品。</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*------------错误示例------------*/</span></span><br><span class="line"><span class="keyword">SELECT</span> prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="operator">=</span> ‘DLL01’ <span class="keyword">OR</span> vend_id <span class="operator">=</span> ‘BRS01’</span><br><span class="line">        <span class="keyword">AND</span> prod_price <span class="operator">&gt;=</span> <span class="number">10</span>;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>prod_name</th>
-<th>prod_price</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>18 inch teddy bear</td>
-<td>11.99</td>
-</tr>
-<tr>
-<td>Fish bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Bird bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Rabbit bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Raggedy Ann</td>
-<td>4.99</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>SQL在处理OR操作符之前，优先处理AND操作符。</p>
-</blockquote>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*------------正确示例------------*/</span></span><br><span class="line"><span class="keyword">SELECT</span> prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> (vend_id <span class="operator">=</span> ‘DLL01’ <span class="keyword">OR</span> vend_id <span class="operator">=</span> ‘BRS01’)</span><br><span class="line">    <span class="keyword">AND</span> prod_price <span class="operator">&gt;=</span> <span class="number">10</span>;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>prod_name</th>
-<th>prod_price</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>18 inch teddy bear</td>
-<td>11.99</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>圆括号比AND或OR具有更高的优先级，任何时候使用具有AND、OR的WHERE子句，都可以使用圆括号消除歧义。</p>
-</blockquote>
-<p><strong>IN操作符</strong>：用来指定条件范围，范围中的每个条件都可以进行匹配。</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="keyword">IN</span> (‘DLL01’, ‘BRS01’)</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_name;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>prod_name</th>
-<th>prod_price</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>12 inch teddy bear</td>
-<td>8.99</td>
-</tr>
-<tr>
-<td>18 inch teddy bear</td>
-<td>11.99</td>
 </tr>
 <tr>
 <td>8 inch teddy bear</td>
-<td>5.99</td>
 </tr>
 <tr>
-<td>Bird bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Fish bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Rabbit bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>Raggedy Ann</td>
-<td>4.99</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>IN操作符与OR具有相同功能。</p>
-</blockquote>
-<blockquote>
-<p>使用IN操作符的优点：</p>
-<ul>
-<li>在有很多合法选项时，IN更加清楚直观；</li>
-<li>在于其他AND、OR组合使用IN时，求值顺序易管理；</li>
-<li>IN比一组OR执行更快；</li>
-<li>IN可以包含其他SELECT语句，能够更动态的建立WHERE子句。</li>
-</ul>
-</blockquote>
-<p><strong>NOT操作符</strong>：WHERE子句中用来否定其后条件的关键字。</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name </span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">NOT</span> vend_id <span class="operator">=</span> ‘DLL01’</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_name;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>prod_name</th>
-</tr>
-</thead>
-<tbody><tr>
 <td>12 inch teddy bear</td>
 </tr>
 <tr>
 <td>18 inch teddy bear</td>
 </tr>
 <tr>
-<td>8 inch teddy bear</td>
+<td>Raggedy Ann</td>
 </tr>
 <tr>
 <td>King doll</td>
@@ -2491,11 +2093,198 @@
 <td>Queen doll</td>
 </tr>
 </tbody></table>
-<p>+——————–+</p>
 <blockquote>
-<p>上面的例子，也可以用<code>&lt;&gt;</code>来完成。</p>
+<p>SQL不区分大小写，一般对关键字使用大写，并将SQL语句分成多行，这样会使代码易于阅读和调试。</p>
 </blockquote>
-]]></content>
+<p>检索多个列：</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_id, prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>prod_id</th>
+<th>prod_name</th>
+<th>prod_price</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BNBG01</td>
+<td>Fish bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>BNBG02</td>
+<td>Bird bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>BNBG03</td>
+<td>Rabbit bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>BR01</td>
+<td>8 inch teddy bear</td>
+<td>5.99</td>
+</tr>
+<tr>
+<td>BR02</td>
+<td>12 inch teddy bear</td>
+<td>8.99</td>
+</tr>
+<tr>
+<td>BR03</td>
+<td>18 inch teddy bear</td>
+<td>11.99</td>
+</tr>
+<tr>
+<td>RGAN01</td>
+<td>Raggedy Ann</td>
+<td>4.99</td>
+</tr>
+<tr>
+<td>RYL01</td>
+<td>King doll</td>
+<td>9.49</td>
+</tr>
+<tr>
+<td>RYL02</td>
+<td>Queen doll</td>
+<td>9.49</td>
+</tr>
+</tbody></table>
+<p>检索所有列：</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>略</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>略</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>使用通配符 * 的优点：可以检索出名字未知的列。</p>
+</blockquote>
+<p>检索不同的值：</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> vend_id </span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>vend_id</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BRS01</td>
+</tr>
+<tr>
+<td>BRS01</td>
+</tr>
+<tr>
+<td>BRS01</td>
+</tr>
+<tr>
+<td>DLL01</td>
+</tr>
+<tr>
+<td>DLL01</td>
+</tr>
+<tr>
+<td>DLL01</td>
+</tr>
+<tr>
+<td>DLL01</td>
+</tr>
+<tr>
+<td>FNG01</td>
+</tr>
+<tr>
+<td>FNG01</td>
+</tr>
+</tbody></table>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> vend_id</span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>vend_id</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BRS01</td>
+</tr>
+<tr>
+<td>DLL01</td>
+</tr>
+<tr>
+<td>FNG01</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>关键字DISTINCT可以去重，但会作用于所有的列，不仅是跟在它后边的那一列。</p>
+</blockquote>
+<p>限制结果：<br>如果想检索一定数量的行，比如只检索5行，以MySQL为例。</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line">LIMIT <span class="number">5</span>;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>prod_name</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Fish bean bag toy</td>
+</tr>
+<tr>
+<td>Bird bean bag toy</td>
+</tr>
+<tr>
+<td>Rabbit bean bag toy</td>
+</tr>
+<tr>
+<td>8 inch teddy bear</td>
+</tr>
+<tr>
+<td>12 inch teddy bear</td>
+</tr>
+</tbody></table>
+<p>要想得到后5行数据，需要指定从哪开始以及检索的行数：</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line">LIMIT <span class="number">5</span> <span class="keyword">OFFSET</span> <span class="number">5</span>;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>prod_name</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>18 inch teddy bear</td>
+</tr>
+<tr>
+<td>Raggedy Ann</td>
+</tr>
+<tr>
+<td>King doll</td>
+</tr>
+<tr>
+<td>Queen doll</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>表中共9行，所以检索只返回4行。</p>
+</blockquote>
+<blockquote>
+<p>第一个检索的行是第0行。</p>
+</blockquote>
+<blockquote>
+<p><code>LIMIT 4 OFFSET 3</code>可以简化：<code>LIMIT 3,4</code>。需要注意数字顺序相反。</p>
+</blockquote>
+<p>注释：</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name     <span class="comment">--这是一条注释</span></span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br><span class="line"># 这是一条注释</span><br><span class="line"><span class="comment">/*这是</span></span><br><span class="line"><span class="comment">一条注释*/</span></span><br></pre></td></tr></table></figure></div>]]></content>
       <categories>
         <category>SQL</category>
       </categories>
@@ -2725,6 +2514,217 @@
       </tags>
   </entry>
   <entry>
+    <title>SQL必知必会(5)高级过滤数据</title>
+    <url>/2020/12/06/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-5-%E9%AB%98%E7%BA%A7%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[<p><strong>操作符（operator）</strong>：用来连接或改变WHERE子句中的子句的关键字，也称为逻辑操作符（logical operator）。</p>
+<p><strong>AND操作符</strong>：要通过不止一个列进行过滤。</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_id, prod_price, prod_name</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="operator">=</span> ‘DLL01’ <span class="keyword">AND</span> prod_price <span class="operator">&lt;=</span> <span class="number">4</span>;</span><br></pre></td></tr></table></figure></div>
+
+<span id="more"></span>
+
+<table>
+<thead>
+<tr>
+<th>prod_id</th>
+<th>prod_price</th>
+<th>prod_name</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BNBG01</td>
+<td>3.49</td>
+<td>Fish bean bag toy</td>
+</tr>
+<tr>
+<td>BNBG02</td>
+<td>3.49</td>
+<td>Bird bean bag toy</td>
+</tr>
+<tr>
+<td>BNBG03</td>
+<td>3.49</td>
+<td>Rabbit bean bag toy</td>
+</tr>
+</tbody></table>
+<p><strong>OR操作符</strong>：多个条件，满足任意一个即可。</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="operator">=</span> ‘DLL01’ <span class="keyword">OR</span> vend_id <span class="operator">=</span> ‘BRS01’;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>prod_name</th>
+<th>prod_price</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>8 inch teddy bear</td>
+<td>5.99</td>
+</tr>
+<tr>
+<td>12 inch teddy bear</td>
+<td>8.99</td>
+</tr>
+<tr>
+<td>18 inch teddy bear</td>
+<td>11.99</td>
+</tr>
+<tr>
+<td>Fish bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Bird bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Rabbit bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Raggedy Ann</td>
+<td>4.99</td>
+</tr>
+</tbody></table>
+<p>求值顺序：<br>目标：想要列出价格为10美元及以上，且由DLL01或BRS01制造的所有产品。</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*------------错误示例------------*/</span></span><br><span class="line"><span class="keyword">SELECT</span> prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="operator">=</span> ‘DLL01’ <span class="keyword">OR</span> vend_id <span class="operator">=</span> ‘BRS01’</span><br><span class="line">        <span class="keyword">AND</span> prod_price <span class="operator">&gt;=</span> <span class="number">10</span>;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>prod_name</th>
+<th>prod_price</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>18 inch teddy bear</td>
+<td>11.99</td>
+</tr>
+<tr>
+<td>Fish bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Bird bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Rabbit bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Raggedy Ann</td>
+<td>4.99</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>SQL在处理OR操作符之前，优先处理AND操作符。</p>
+</blockquote>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*------------正确示例------------*/</span></span><br><span class="line"><span class="keyword">SELECT</span> prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> (vend_id <span class="operator">=</span> ‘DLL01’ <span class="keyword">OR</span> vend_id <span class="operator">=</span> ‘BRS01’)</span><br><span class="line">    <span class="keyword">AND</span> prod_price <span class="operator">&gt;=</span> <span class="number">10</span>;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>prod_name</th>
+<th>prod_price</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>18 inch teddy bear</td>
+<td>11.99</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>圆括号比AND或OR具有更高的优先级，任何时候使用具有AND、OR的WHERE子句，都可以使用圆括号消除歧义。</p>
+</blockquote>
+<p><strong>IN操作符</strong>：用来指定条件范围，范围中的每个条件都可以进行匹配。</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> vend_id <span class="keyword">IN</span> (‘DLL01’, ‘BRS01’)</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_name;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>prod_name</th>
+<th>prod_price</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>12 inch teddy bear</td>
+<td>8.99</td>
+</tr>
+<tr>
+<td>18 inch teddy bear</td>
+<td>11.99</td>
+</tr>
+<tr>
+<td>8 inch teddy bear</td>
+<td>5.99</td>
+</tr>
+<tr>
+<td>Bird bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Fish bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Rabbit bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>Raggedy Ann</td>
+<td>4.99</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>IN操作符与OR具有相同功能。</p>
+</blockquote>
+<blockquote>
+<p>使用IN操作符的优点：</p>
+<ul>
+<li>在有很多合法选项时，IN更加清楚直观；</li>
+<li>在于其他AND、OR组合使用IN时，求值顺序易管理；</li>
+<li>IN比一组OR执行更快；</li>
+<li>IN可以包含其他SELECT语句，能够更动态的建立WHERE子句。</li>
+</ul>
+</blockquote>
+<p><strong>NOT操作符</strong>：WHERE子句中用来否定其后条件的关键字。</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name </span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">NOT</span> vend_id <span class="operator">=</span> ‘DLL01’</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> prod_name;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>prod_name</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>12 inch teddy bear</td>
+</tr>
+<tr>
+<td>18 inch teddy bear</td>
+</tr>
+<tr>
+<td>8 inch teddy bear</td>
+</tr>
+<tr>
+<td>King doll</td>
+</tr>
+<tr>
+<td>Queen doll</td>
+</tr>
+</tbody></table>
+<p>+——————–+</p>
+<blockquote>
+<p>上面的例子，也可以用<code>&lt;&gt;</code>来完成。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Scratch还能做出这么酷炫的3D效果？</title>
     <url>/2021/05/23/Scratch%E8%BF%98%E8%83%BD%E5%81%9A%E5%87%BA%E8%BF%99%E4%B9%88%E9%85%B7%E7%82%AB%E7%9A%843D%E6%95%88%E6%9E%9C%EF%BC%9F/</url>
     <content><![CDATA[<p>哇！</p>
@@ -2783,49 +2783,6 @@
       </tags>
   </entry>
   <entry>
-    <title>ChatGPT首次会晤</title>
-    <url>/2023/02/16/chatGPT%E9%A6%96%E6%AC%A1%E4%BC%9A%E6%99%A4/</url>
-    <content><![CDATA[<blockquote>
-<p>为节省时间，本文部分内容由ChatGPT生成。</p>
-</blockquote>
-<span id="more"></span>
-<h1 id="什么是ChatGPT？"><a href="#什么是ChatGPT？" class="headerlink" title="什么是ChatGPT？"></a>什么是ChatGPT？</h1><p>ChatGPT是一种基于自然语言处理技术的聊天机器人，它可以通过对话与用户进行交互。它是由OpenAI开发的，采用了最新的GPT（Generative Pre-training Transformer）模型，可以实现对话的生成和理解。与传统的聊天机器人不同，ChatGPT可以模拟人类对话的风格和方式，从而实现更加自然、流畅的交流。ChatGPT的应用场景包括但不限于自然语言交互、文本生成、智能客服、语音交互等。</p>
-<h1 id="ChatGPT为什么突然火了？"><a href="#ChatGPT为什么突然火了？" class="headerlink" title="ChatGPT为什么突然火了？"></a>ChatGPT为什么突然火了？</h1><p>ChatGPT突然火起来主要是由于其所使用的GPT模型的出色表现和实用性。GPT是一种自然语言处理技术，能够在未知上下文中生成自然语言文本。在最近几年的发展中，GPT已经实现了极大的进步，成为自然语言生成的最先进技术之一。而ChatGPT则将这种技术应用到聊天机器人中，实现了更加自然、流畅的对话体验，从而得到了广泛的关注和使用。</p>
-<p>另外，随着社交媒体和在线社区的兴起，人们的社交活动也越来越多地发生在网络中。在这种情况下，ChatGPT的普及也得益于其方便快捷的聊天体验，用户可以在不受时间和空间限制的情况下与ChatGPT进行交互，获取所需的信息和支持。</p>
-<p>总之，ChatGPT的突然火起来是由于其使用的GPT技术的出色表现和实用性，以及社交活动向网络化转移的趋势所推动的。</p>
-<h1 id="如何使用ChatGPT"><a href="#如何使用ChatGPT" class="headerlink" title="如何使用ChatGPT"></a>如何使用ChatGPT</h1><p>要使用ChatGPT进行对话，可以按照以下步骤进行：</p>
-<ol>
-<li><p>找到可以访问ChatGPT的平台。例如，OpenAI官方网站上提供了一个在线的ChatGPT接口，用户可以直接在网页上与ChatGPT进行交互。</p>
-</li>
-<li><p>进入ChatGPT界面后，输入您想要与ChatGPT进行对话的内容。ChatGPT会根据您的输入内容，生成相应的回复，并返回给您。</p>
-</li>
-<li><p>根据ChatGPT的回复内容，继续与ChatGPT进行对话。您可以通过不断地输入内容和观察ChatGPT的回复，逐渐深入对话，获取您想要的信息或体验愉快的聊天时光。</p>
-</li>
-</ol>
-<p>除了在OpenAI官方网站上，还有其他许多平台和应用程序支持ChatGPT，例如智能音箱、聊天应用程序等。使用这些应用程序时，用户可以通过语音输入或者文本输入与ChatGPT进行交互，享受更为便捷和自然的聊天体验。</p>
-<p>需要注意的是，尽管ChatGPT能够产生人类类似的对话，但它并不能完全代替人类交互。ChatGPT目前仍有其局限性和缺陷，需要持续的技术发展和改进。因此，在使用ChatGPT时，需要保持谨慎和理性，同时遵守相应的法律法规和使用规范。</p>
-<h1 id="中国用户如何注册openai账号？"><a href="#中国用户如何注册openai账号？" class="headerlink" title="中国用户如何注册openai账号？"></a>中国用户如何注册openai账号？</h1><p>由于目前OpenAI官方网站仅支持英文界面，因此对于中国用户来说，注册OpenAI账号可能会有一些难度。以下是一个简要的注册流程：</p>
-<ol>
-<li><p>打开OpenAI官方网站<a class="link" href="https://openai.com/">https://openai.com/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>，进入网站首页。</p>
-</li>
-<li><p>点击右上角的“Sign Up”按钮，进入注册页面。</p>
-</li>
-<li><p>在注册页面上，需要填写邮箱地址、密码、用户名等信息，以完成账号注册。请注意，OpenAI官方网站要求密码必须包含字母和数字，并且长度不得少于8位。</p>
-</li>
-<li><p>注册成功后，您可以登录OpenAI官方网站，进入ChatGPT接口页面，开始与ChatGPT进行交互。</p>
-</li>
-</ol>
-<p>需要注意的是，由于OpenAI接口目前需要访问国外服务器，可能会受到网络访问的影响。同时，OpenAI的访问权限和服务范围也受到一些限制，用户需要注意遵守相关规定，并在使用过程中保持谨慎和理性。</p>
-]]></content>
-      <categories>
-        <category>AI</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>ChatGPT</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>kaggle项目之泰坦尼克幸存预测</title>
     <url>/2020/05/12/kaggle%E9%A1%B9%E7%9B%AE%20-%20%E6%B3%B0%E5%9D%A6%E5%B0%BC%E5%85%8B%E5%B9%B8%E5%AD%98%E9%A2%84%E6%B5%8B/</url>
     <content><![CDATA[<p>kaggle是一个机器学习竞赛平台。</p>
@@ -2866,6 +2823,49 @@
         <tag>Python</tag>
         <tag>数据分析</tag>
         <tag>机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ChatGPT首次会晤</title>
+    <url>/2023/02/16/chatGPT%E9%A6%96%E6%AC%A1%E4%BC%9A%E6%99%A4/</url>
+    <content><![CDATA[<blockquote>
+<p>为节省时间，本文部分内容由ChatGPT生成。</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="什么是ChatGPT？"><a href="#什么是ChatGPT？" class="headerlink" title="什么是ChatGPT？"></a>什么是ChatGPT？</h1><p>ChatGPT是一种基于自然语言处理技术的聊天机器人，它可以通过对话与用户进行交互。它是由OpenAI开发的，采用了最新的GPT（Generative Pre-training Transformer）模型，可以实现对话的生成和理解。与传统的聊天机器人不同，ChatGPT可以模拟人类对话的风格和方式，从而实现更加自然、流畅的交流。ChatGPT的应用场景包括但不限于自然语言交互、文本生成、智能客服、语音交互等。</p>
+<h1 id="ChatGPT为什么突然火了？"><a href="#ChatGPT为什么突然火了？" class="headerlink" title="ChatGPT为什么突然火了？"></a>ChatGPT为什么突然火了？</h1><p>ChatGPT突然火起来主要是由于其所使用的GPT模型的出色表现和实用性。GPT是一种自然语言处理技术，能够在未知上下文中生成自然语言文本。在最近几年的发展中，GPT已经实现了极大的进步，成为自然语言生成的最先进技术之一。而ChatGPT则将这种技术应用到聊天机器人中，实现了更加自然、流畅的对话体验，从而得到了广泛的关注和使用。</p>
+<p>另外，随着社交媒体和在线社区的兴起，人们的社交活动也越来越多地发生在网络中。在这种情况下，ChatGPT的普及也得益于其方便快捷的聊天体验，用户可以在不受时间和空间限制的情况下与ChatGPT进行交互，获取所需的信息和支持。</p>
+<p>总之，ChatGPT的突然火起来是由于其使用的GPT技术的出色表现和实用性，以及社交活动向网络化转移的趋势所推动的。</p>
+<h1 id="如何使用ChatGPT"><a href="#如何使用ChatGPT" class="headerlink" title="如何使用ChatGPT"></a>如何使用ChatGPT</h1><p>要使用ChatGPT进行对话，可以按照以下步骤进行：</p>
+<ol>
+<li><p>找到可以访问ChatGPT的平台。例如，OpenAI官方网站上提供了一个在线的ChatGPT接口，用户可以直接在网页上与ChatGPT进行交互。</p>
+</li>
+<li><p>进入ChatGPT界面后，输入您想要与ChatGPT进行对话的内容。ChatGPT会根据您的输入内容，生成相应的回复，并返回给您。</p>
+</li>
+<li><p>根据ChatGPT的回复内容，继续与ChatGPT进行对话。您可以通过不断地输入内容和观察ChatGPT的回复，逐渐深入对话，获取您想要的信息或体验愉快的聊天时光。</p>
+</li>
+</ol>
+<p>除了在OpenAI官方网站上，还有其他许多平台和应用程序支持ChatGPT，例如智能音箱、聊天应用程序等。使用这些应用程序时，用户可以通过语音输入或者文本输入与ChatGPT进行交互，享受更为便捷和自然的聊天体验。</p>
+<p>需要注意的是，尽管ChatGPT能够产生人类类似的对话，但它并不能完全代替人类交互。ChatGPT目前仍有其局限性和缺陷，需要持续的技术发展和改进。因此，在使用ChatGPT时，需要保持谨慎和理性，同时遵守相应的法律法规和使用规范。</p>
+<h1 id="中国用户如何注册openai账号？"><a href="#中国用户如何注册openai账号？" class="headerlink" title="中国用户如何注册openai账号？"></a>中国用户如何注册openai账号？</h1><p>由于目前OpenAI官方网站仅支持英文界面，因此对于中国用户来说，注册OpenAI账号可能会有一些难度。以下是一个简要的注册流程：</p>
+<ol>
+<li><p>打开OpenAI官方网站<a class="link" href="https://openai.com/">https://openai.com/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>，进入网站首页。</p>
+</li>
+<li><p>点击右上角的“Sign Up”按钮，进入注册页面。</p>
+</li>
+<li><p>在注册页面上，需要填写邮箱地址、密码、用户名等信息，以完成账号注册。请注意，OpenAI官方网站要求密码必须包含字母和数字，并且长度不得少于8位。</p>
+</li>
+<li><p>注册成功后，您可以登录OpenAI官方网站，进入ChatGPT接口页面，开始与ChatGPT进行交互。</p>
+</li>
+</ol>
+<p>需要注意的是，由于OpenAI接口目前需要访问国外服务器，可能会受到网络访问的影响。同时，OpenAI的访问权限和服务范围也受到一些限制，用户需要注意遵守相关规定，并在使用过程中保持谨慎和理性。</p>
+]]></content>
+      <categories>
+        <category>AI</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>ChatGPT</tag>
       </tags>
   </entry>
   <entry>
@@ -4999,6 +4999,53 @@
       </tags>
   </entry>
   <entry>
+    <title>带你学C带你飞(1)</title>
+    <url>/2022/03/23/%E5%B8%A6%E4%BD%A0%E5%AD%A6C%E5%B8%A6%E4%BD%A0%E9%A3%9E-1/</url>
+    <content><![CDATA[<p>小甲鱼C语言系列课程笔记，共61个视频，每6个视频总结一次笔记，预计10篇。</p>
+<blockquote>
+<p><a class="link" href="https://www.bilibili.com/video/BV17s411N78s">https://www.bilibili.com/video/BV17s411N78s<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+</blockquote>
+<span id="more"></span>
+<h1 id="Hello-world"><a href="#Hello-world" class="headerlink" title="Hello world!"></a>Hello world!</h1><p>每个编程语言的学习，都从Hello world开始！</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Hello world!\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="宏定义"><a href="#宏定义" class="headerlink" title="宏定义"></a>宏定义</h1><p>类似于Python中的常量，<code>#</code> 表示预处理，也就是说在编译的时候，所有的 <code>URL</code> 都被换成 <code>&quot;http://www.fishc.com&quot;</code> ，后面无法改变它的值。</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> URL <span class="meta-string">&quot;http://www.fishc.com&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NAME <span class="meta-string">&quot;鱼C工作室&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BOSS <span class="meta-string">&quot;小甲鱼&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> YEAR 2010</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MONTH 5</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DAY 20</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s成立于%d年%d月%d日\n&quot;</span>, NAME, YEAR, MONTH, DAY);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s是%s创立的……\n&quot;</span>, NAME, BOSS);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s的域名是%s\n&quot;</span>, NAME, URL);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><p><img lazyload src="/images/loading.svg" data-src="C%E8%AF%AD%E8%A8%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.png" alt="C语言数据类型"></p>
+<ul>
+<li>整数类型 <code>short int</code> <code>int</code> <code>long int</code> <code>long long int</code></li>
+<li>浮点数类型 <code>float</code> <code>double</code></li>
+<li>字符类型 <code>char</code></li>
+<li>布尔类型 <code>_Bool</code></li>
+<li>枚举类型 <code>enum</code></li>
+</ul>
+<h2 id="sizeof-运算符"><a href="#sizeof-运算符" class="headerlink" title="sizeof 运算符"></a><code>sizeof</code> 运算符</h2><p>sizeof运算符用于获得数据类型或表达式的长度</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">sizeof</span>(object)</span><br><span class="line"><span class="keyword">sizeof</span>(type-name)</span><br><span class="line"><span class="keyword">sizeof</span> object</span><br></pre></td></tr></table></figure></div>
+<p>示例：</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">char</span> j;</span><br><span class="line">    <span class="keyword">float</span> k;</span><br><span class="line"></span><br><span class="line">    i = <span class="number">123</span>;</span><br><span class="line">    j = <span class="string">&#x27;c&#x27;</span>;</span><br><span class="line">    k = <span class="number">3.14</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;size of int is %d\n&quot;</span>, <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;size of i is %d\n&quot;</span>, <span class="keyword">sizeof</span>(i));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;size of char is %d\n&quot;</span>, <span class="keyword">sizeof</span>(<span class="keyword">char</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;size of j is %d\n&quot;</span>, <span class="keyword">sizeof</span> j);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;size of float is %d\n&quot;</span>, <span class="keyword">sizeof</span>(<span class="keyword">float</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;size of k is %d\n&quot;</span>, <span class="keyword">sizeof</span> k);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h2 id="signed-和-unsigned"><a href="#signed-和-unsigned" class="headerlink" title="signed 和 unsigned"></a><code>signed</code> 和 <code>unsigned</code></h2><p>通俗讲，<code>signed</code> 表示带符号，即可以存放负数；<code>unsigned</code> 不带符号，不可存放负数。</p>
+<ul>
+<li><code>[signed] short [int]</code></li>
+<li><code>unsigned short [int]</code></li>
+<li><code>[signed] int</code></li>
+<li><code>unsigned int</code></li>
+<li><code>[signed] long [int]</code></li>
+<li><code>unsigned long [int]</code></li>
+<li><code>[signed] long long [int]</code></li>
+<li><code>unsigned long long [int]</code></li>
+</ul>
+<p>示例</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">short</span> i;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> j;</span><br><span class="line"></span><br><span class="line">    i = <span class="number">-1</span>;</span><br><span class="line">    j = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, i);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%u\n&quot;</span>, j);  <span class="comment">//打印无符号用%u</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+]]></content>
+      <categories>
+        <category>C/C++</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>带你学C带你飞(2)</title>
     <url>/2022/03/24/%E5%B8%A6%E4%BD%A0%E5%AD%A6C%E5%B8%A6%E4%BD%A0%E9%A3%9E-2/</url>
     <content><![CDATA[<p>小甲鱼C语言系列课程笔记，共61个视频，每6个视频总结一次笔记，预计10篇。</p>
@@ -5154,53 +5201,6 @@
 <div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> isRain, isFree;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;是否有空？(Y/N)&quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%c&quot;</span>, &amp;isFree);</span><br><span class="line"></span><br><span class="line">    getchar(); <span class="comment">//过滤回车</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;是否下雨？(Y/N)&quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%c&quot;</span>, &amp;isRain);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (isFree == <span class="string">&#x27;Y&#x27;</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (isRain == <span class="string">&#x27;Y&#x27;</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;记得带伞哦！\n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="comment">//悬挂else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;女神没空！\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 <h2 id="bug：等号问题"><a href="#bug：等号问题" class="headerlink" title="bug：等号问题"></a>bug：等号问题</h2><p>赋值用<code>=</code>，判断是否相等用<code>==</code>。</p>
 <div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 正确代码</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> hasBF;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;小花是否有男朋友？(Y/N)&quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%c&quot;</span>, &amp;hasBF);</span><br><span class="line">    <span class="keyword">if</span> (hasBF == <span class="string">&#x27;Y&#x27;</span>)  <span class="comment">// 逻辑用==，赋值用=</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;那……祝福你们咯！\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;那我们在一起吧！\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>]]></content>
-      <categories>
-        <category>C/C++</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>带你学C带你飞(1)</title>
-    <url>/2022/03/23/%E5%B8%A6%E4%BD%A0%E5%AD%A6C%E5%B8%A6%E4%BD%A0%E9%A3%9E-1/</url>
-    <content><![CDATA[<p>小甲鱼C语言系列课程笔记，共61个视频，每6个视频总结一次笔记，预计10篇。</p>
-<blockquote>
-<p><a class="link" href="https://www.bilibili.com/video/BV17s411N78s">https://www.bilibili.com/video/BV17s411N78s<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-</blockquote>
-<span id="more"></span>
-<h1 id="Hello-world"><a href="#Hello-world" class="headerlink" title="Hello world!"></a>Hello world!</h1><p>每个编程语言的学习，都从Hello world开始！</p>
-<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Hello world!\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h1 id="宏定义"><a href="#宏定义" class="headerlink" title="宏定义"></a>宏定义</h1><p>类似于Python中的常量，<code>#</code> 表示预处理，也就是说在编译的时候，所有的 <code>URL</code> 都被换成 <code>&quot;http://www.fishc.com&quot;</code> ，后面无法改变它的值。</p>
-<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> URL <span class="meta-string">&quot;http://www.fishc.com&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NAME <span class="meta-string">&quot;鱼C工作室&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BOSS <span class="meta-string">&quot;小甲鱼&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> YEAR 2010</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MONTH 5</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DAY 20</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s成立于%d年%d月%d日\n&quot;</span>, NAME, YEAR, MONTH, DAY);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s是%s创立的……\n&quot;</span>, NAME, BOSS);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s的域名是%s\n&quot;</span>, NAME, URL);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><p><img lazyload src="/images/loading.svg" data-src="C%E8%AF%AD%E8%A8%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B.png" alt="C语言数据类型"></p>
-<ul>
-<li>整数类型 <code>short int</code> <code>int</code> <code>long int</code> <code>long long int</code></li>
-<li>浮点数类型 <code>float</code> <code>double</code></li>
-<li>字符类型 <code>char</code></li>
-<li>布尔类型 <code>_Bool</code></li>
-<li>枚举类型 <code>enum</code></li>
-</ul>
-<h2 id="sizeof-运算符"><a href="#sizeof-运算符" class="headerlink" title="sizeof 运算符"></a><code>sizeof</code> 运算符</h2><p>sizeof运算符用于获得数据类型或表达式的长度</p>
-<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">sizeof</span>(object)</span><br><span class="line"><span class="keyword">sizeof</span>(type-name)</span><br><span class="line"><span class="keyword">sizeof</span> object</span><br></pre></td></tr></table></figure></div>
-<p>示例：</p>
-<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">char</span> j;</span><br><span class="line">    <span class="keyword">float</span> k;</span><br><span class="line"></span><br><span class="line">    i = <span class="number">123</span>;</span><br><span class="line">    j = <span class="string">&#x27;c&#x27;</span>;</span><br><span class="line">    k = <span class="number">3.14</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;size of int is %d\n&quot;</span>, <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;size of i is %d\n&quot;</span>, <span class="keyword">sizeof</span>(i));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;size of char is %d\n&quot;</span>, <span class="keyword">sizeof</span>(<span class="keyword">char</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;size of j is %d\n&quot;</span>, <span class="keyword">sizeof</span> j);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;size of float is %d\n&quot;</span>, <span class="keyword">sizeof</span>(<span class="keyword">float</span>));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;size of k is %d\n&quot;</span>, <span class="keyword">sizeof</span> k);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-<h2 id="signed-和-unsigned"><a href="#signed-和-unsigned" class="headerlink" title="signed 和 unsigned"></a><code>signed</code> 和 <code>unsigned</code></h2><p>通俗讲，<code>signed</code> 表示带符号，即可以存放负数；<code>unsigned</code> 不带符号，不可存放负数。</p>
-<ul>
-<li><code>[signed] short [int]</code></li>
-<li><code>unsigned short [int]</code></li>
-<li><code>[signed] int</code></li>
-<li><code>unsigned int</code></li>
-<li><code>[signed] long [int]</code></li>
-<li><code>unsigned long [int]</code></li>
-<li><code>[signed] long long [int]</code></li>
-<li><code>unsigned long long [int]</code></li>
-</ul>
-<p>示例</p>
-<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">short</span> i;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> j;</span><br><span class="line"></span><br><span class="line">    i = <span class="number">-1</span>;</span><br><span class="line">    j = <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, i);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%u\n&quot;</span>, j);  <span class="comment">//打印无符号用%u</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-]]></content>
       <categories>
         <category>C/C++</category>
       </categories>
