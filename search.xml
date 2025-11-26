@@ -1,33 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Flume+Kafka实时数据采集</title>
-    <url>/2019/04/04/Flume-Kafka%E5%AE%9E%E6%97%B6%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/</url>
-    <content><![CDATA[<p>Flume的配置</p>
-<span id="more"></span>
-
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># avro-memory-kafka.conf</span></span><br><span class="line">avro-memory-kafka.sources = avro-source</span><br><span class="line">avro-memory-kafka.sinks = kafka-sink</span><br><span class="line">avro-memory-kafka.channels = memory-channel</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.type = avro</span><br><span class="line">avro-memory-kafka.sources.avro-source.bind = bigdata-01</span><br><span class="line">avro-memory-kafka.sources.avro-source.port = 44444</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.type = org.apache.flume.sink.kafka.KafkaSink</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.brokerList = bigdata-01:9092</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.topic = hello_topic</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.batchSize = 5</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.requiredAcks = 1</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.channels.memory-channel.type = memory</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.channels = memory-channel</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.channel = memory-channel</span><br></pre></td></tr></table></figure></div>
-<p>启动Flume</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flume-ng agent \</span><br><span class="line">--name avro-memory-kafka \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/avro-memory-kafka.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br><span class="line"></span><br><span class="line">flume-ng agent \</span><br><span class="line">--name exec-memory-avro \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/exec-memory-avro.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure></div>
-
-<p>启动消费者进行监控</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">kafka-console-consumer.sh --zookeeper bigdata-01:2181 -topic hello_topic</span><br></pre></td></tr></table></figure></div>
-
-<p>向日志文件中追加内容</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">[root@bigdata-01 ~]<span class="comment"># cd data/</span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># ll</span></span><br><span class="line">total 4</span><br><span class="line">-rw-r--r--. 1 root root 112 Feb  6 05:37 data.log</span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark2 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark3 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark4 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark5 &gt;&gt; data.log</span></span><br></pre></td></tr></table></figure></div>
-<p>这时，消费者就可以消费到日志文件中的新内容了。</p>
-<blockquote>
-<p>Flume的版本不同，配置文件（*.conf）需要配置的内容也不完全相同。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>大数据开发</category>
-      </categories>
-      <tags>
-        <tag>大数据开发</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>HDFS基本配置属性</title>
     <url>/2019/04/04/HDFS%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7/</url>
     <content><![CDATA[<h1 id="块大小"><a href="#块大小" class="headerlink" title="块大小"></a>块大小</h1><p>HDFS中存储的文件块的块大小，默认128M</p>
@@ -88,6 +61,33 @@
 <p><strong>注意</strong>：HDFS客户端从HDFS上读取数据写入本地磁盘时，可以使用Hadoop自己开发的本地库操作，也可以使用java 的原生库来操作本地文件。 参数就是useRawLocalFileSystem，如果为true，则使用java原生库；false则使用Hadoop自己的本地库。如果要使用Hadoop的本地库来操作本地文件，要配置Hadoop在本地的环境。</p>
 </blockquote>
 <div class="code-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 文件夹创建</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMkdir</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		<span class="comment">// 如果创建文件夹时，指定权限信息，但创建的结果并不会跟指定的信息完全一致，因为想指定的信息还会经过一个参数值的掩码运算</span></span><br><span class="line">		hdfsClient.mkdirs(<span class="keyword">new</span> Path(<span class="string">&quot;/xxx/yyy&quot;</span>), <span class="keyword">new</span> FsPermission((<span class="keyword">short</span>) <span class="number">777</span>));</span><br><span class="line">		hdfsClient.close();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 文件夹删除</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDeldir</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">		hdfsClient.delete(<span class="keyword">new</span> Path(<span class="string">&quot;/xxx&quot;</span>), <span class="keyword">true</span>);</span><br><span class="line">		hdfsClient.close();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 文件夹重命名</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testRenamedir</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">		hdfsClient.rename(<span class="keyword">new</span> Path(<span class="string">&quot;/xxx&quot;</span>), <span class="keyword">new</span> Path(<span class="string">&quot;/ooo&quot;</span>));</span><br><span class="line">		hdfsClient.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>]]></content>
+      <categories>
+        <category>大数据开发</category>
+      </categories>
+      <tags>
+        <tag>大数据开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Flume+Kafka实时数据采集</title>
+    <url>/2019/04/04/Flume-Kafka%E5%AE%9E%E6%97%B6%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/</url>
+    <content><![CDATA[<p>Flume的配置</p>
+<span id="more"></span>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># avro-memory-kafka.conf</span></span><br><span class="line">avro-memory-kafka.sources = avro-source</span><br><span class="line">avro-memory-kafka.sinks = kafka-sink</span><br><span class="line">avro-memory-kafka.channels = memory-channel</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.type = avro</span><br><span class="line">avro-memory-kafka.sources.avro-source.bind = bigdata-01</span><br><span class="line">avro-memory-kafka.sources.avro-source.port = 44444</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.type = org.apache.flume.sink.kafka.KafkaSink</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.brokerList = bigdata-01:9092</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.topic = hello_topic</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.batchSize = 5</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.requiredAcks = 1</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.channels.memory-channel.type = memory</span><br><span class="line"></span><br><span class="line">avro-memory-kafka.sources.avro-source.channels = memory-channel</span><br><span class="line">avro-memory-kafka.sinks.kafka-sink.channel = memory-channel</span><br></pre></td></tr></table></figure></div>
+<p>启动Flume</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">flume-ng agent \</span><br><span class="line">--name avro-memory-kafka \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/avro-memory-kafka.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br><span class="line"></span><br><span class="line">flume-ng agent \</span><br><span class="line">--name exec-memory-avro \</span><br><span class="line">--conf <span class="variable">$FLUME_HOME</span>/conf \</span><br><span class="line">--conf-file <span class="variable">$FLUME_HOME</span>/conf/exec-memory-avro.conf \</span><br><span class="line">-Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure></div>
+
+<p>启动消费者进行监控</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">kafka-console-consumer.sh --zookeeper bigdata-01:2181 -topic hello_topic</span><br></pre></td></tr></table></figure></div>
+
+<p>向日志文件中追加内容</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">[root@bigdata-01 ~]<span class="comment"># cd data/</span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># ll</span></span><br><span class="line">total 4</span><br><span class="line">-rw-r--r--. 1 root root 112 Feb  6 05:37 data.log</span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark2 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark3 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark4 &gt;&gt; data.log </span></span><br><span class="line">[root@bigdata-01 data]<span class="comment"># echo hellospark5 &gt;&gt; data.log</span></span><br></pre></td></tr></table></figure></div>
+<p>这时，消费者就可以消费到日志文件中的新内容了。</p>
+<blockquote>
+<p>Flume的版本不同，配置文件（*.conf）需要配置的内容也不完全相同。</p>
+</blockquote>
+]]></content>
       <categories>
         <category>大数据开发</category>
       </categories>
@@ -1708,6 +1708,249 @@
       </tags>
   </entry>
   <entry>
+    <title>SQL必知必会(2)检索数据</title>
+    <url>/2020/12/06/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-2-%E6%A3%80%E7%B4%A2%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[<p><strong>关键字（keyword）</strong>：作为SQL组成部分的保留字。关键字不能用作表或列的名字。</p>
+<p><strong>SELECT语句</strong>：从一个或多个表中检索信息，必须给出想选择什么，以及从什么地方选择。</p>
+<p>检索单个列：</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name</span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br></pre></td></tr></table></figure></div>
+
+<span id="more"></span>
+
+<table>
+<thead>
+<tr>
+<th>prod_name</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Fish bean bag toy</td>
+</tr>
+<tr>
+<td>Bird bean bag toy</td>
+</tr>
+<tr>
+<td>Rabbit bean bag toy</td>
+</tr>
+<tr>
+<td>8 inch teddy bear</td>
+</tr>
+<tr>
+<td>12 inch teddy bear</td>
+</tr>
+<tr>
+<td>18 inch teddy bear</td>
+</tr>
+<tr>
+<td>Raggedy Ann</td>
+</tr>
+<tr>
+<td>King doll</td>
+</tr>
+<tr>
+<td>Queen doll</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>SQL不区分大小写，一般对关键字使用大写，并将SQL语句分成多行，这样会使代码易于阅读和调试。</p>
+</blockquote>
+<p>检索多个列：</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_id, prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>prod_id</th>
+<th>prod_name</th>
+<th>prod_price</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BNBG01</td>
+<td>Fish bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>BNBG02</td>
+<td>Bird bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>BNBG03</td>
+<td>Rabbit bean bag toy</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>BR01</td>
+<td>8 inch teddy bear</td>
+<td>5.99</td>
+</tr>
+<tr>
+<td>BR02</td>
+<td>12 inch teddy bear</td>
+<td>8.99</td>
+</tr>
+<tr>
+<td>BR03</td>
+<td>18 inch teddy bear</td>
+<td>11.99</td>
+</tr>
+<tr>
+<td>RGAN01</td>
+<td>Raggedy Ann</td>
+<td>4.99</td>
+</tr>
+<tr>
+<td>RYL01</td>
+<td>King doll</td>
+<td>9.49</td>
+</tr>
+<tr>
+<td>RYL02</td>
+<td>Queen doll</td>
+<td>9.49</td>
+</tr>
+</tbody></table>
+<p>检索所有列：</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>略</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>略</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>使用通配符 * 的优点：可以检索出名字未知的列。</p>
+</blockquote>
+<p>检索不同的值：</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> vend_id </span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>vend_id</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BRS01</td>
+</tr>
+<tr>
+<td>BRS01</td>
+</tr>
+<tr>
+<td>BRS01</td>
+</tr>
+<tr>
+<td>DLL01</td>
+</tr>
+<tr>
+<td>DLL01</td>
+</tr>
+<tr>
+<td>DLL01</td>
+</tr>
+<tr>
+<td>DLL01</td>
+</tr>
+<tr>
+<td>FNG01</td>
+</tr>
+<tr>
+<td>FNG01</td>
+</tr>
+</tbody></table>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> vend_id</span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>vend_id</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>BRS01</td>
+</tr>
+<tr>
+<td>DLL01</td>
+</tr>
+<tr>
+<td>FNG01</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>关键字DISTINCT可以去重，但会作用于所有的列，不仅是跟在它后边的那一列。</p>
+</blockquote>
+<p>限制结果：<br>如果想检索一定数量的行，比如只检索5行，以MySQL为例。</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line">LIMIT <span class="number">5</span>;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>prod_name</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Fish bean bag toy</td>
+</tr>
+<tr>
+<td>Bird bean bag toy</td>
+</tr>
+<tr>
+<td>Rabbit bean bag toy</td>
+</tr>
+<tr>
+<td>8 inch teddy bear</td>
+</tr>
+<tr>
+<td>12 inch teddy bear</td>
+</tr>
+</tbody></table>
+<p>要想得到后5行数据，需要指定从哪开始以及检索的行数：</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line">LIMIT <span class="number">5</span> <span class="keyword">OFFSET</span> <span class="number">5</span>;</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>prod_name</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>18 inch teddy bear</td>
+</tr>
+<tr>
+<td>Raggedy Ann</td>
+</tr>
+<tr>
+<td>King doll</td>
+</tr>
+<tr>
+<td>Queen doll</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>表中共9行，所以检索只返回4行。</p>
+</blockquote>
+<blockquote>
+<p>第一个检索的行是第0行。</p>
+</blockquote>
+<blockquote>
+<p><code>LIMIT 4 OFFSET 3</code>可以简化：<code>LIMIT 3,4</code>。需要注意数字顺序相反。</p>
+</blockquote>
+<p>注释：</p>
+<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name     <span class="comment">--这是一条注释</span></span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br><span class="line"># 这是一条注释</span><br><span class="line"><span class="comment">/*这是</span></span><br><span class="line"><span class="comment">一条注释*/</span></span><br></pre></td></tr></table></figure></div>]]></content>
+      <categories>
+        <category>SQL</category>
+      </categories>
+      <tags>
+        <tag>SQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SQL必知必会(3)排序检索数据</title>
     <url>/2020/12/06/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-3-%E6%8E%92%E5%BA%8F%E6%A3%80%E7%B4%A2%E6%95%B0%E6%8D%AE/</url>
     <content><![CDATA[<p><strong>子句</strong>：SQL语句由子句构成，有些子句是必须的，有些是可选的。</p>
@@ -2042,249 +2285,6 @@
 <p>区分大小写和排序顺序：在字典排序顺序中，A与a相同，这是大多数数据库管理系统默认的。</p>
 </blockquote>
 ]]></content>
-      <categories>
-        <category>SQL</category>
-      </categories>
-      <tags>
-        <tag>SQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>SQL必知必会(2)检索数据</title>
-    <url>/2020/12/06/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-2-%E6%A3%80%E7%B4%A2%E6%95%B0%E6%8D%AE/</url>
-    <content><![CDATA[<p><strong>关键字（keyword）</strong>：作为SQL组成部分的保留字。关键字不能用作表或列的名字。</p>
-<p><strong>SELECT语句</strong>：从一个或多个表中检索信息，必须给出想选择什么，以及从什么地方选择。</p>
-<p>检索单个列：</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name</span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br></pre></td></tr></table></figure></div>
-
-<span id="more"></span>
-
-<table>
-<thead>
-<tr>
-<th>prod_name</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Fish bean bag toy</td>
-</tr>
-<tr>
-<td>Bird bean bag toy</td>
-</tr>
-<tr>
-<td>Rabbit bean bag toy</td>
-</tr>
-<tr>
-<td>8 inch teddy bear</td>
-</tr>
-<tr>
-<td>12 inch teddy bear</td>
-</tr>
-<tr>
-<td>18 inch teddy bear</td>
-</tr>
-<tr>
-<td>Raggedy Ann</td>
-</tr>
-<tr>
-<td>King doll</td>
-</tr>
-<tr>
-<td>Queen doll</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>SQL不区分大小写，一般对关键字使用大写，并将SQL语句分成多行，这样会使代码易于阅读和调试。</p>
-</blockquote>
-<p>检索多个列：</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_id, prod_name, prod_price</span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>prod_id</th>
-<th>prod_name</th>
-<th>prod_price</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>BNBG01</td>
-<td>Fish bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>BNBG02</td>
-<td>Bird bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>BNBG03</td>
-<td>Rabbit bean bag toy</td>
-<td>3.49</td>
-</tr>
-<tr>
-<td>BR01</td>
-<td>8 inch teddy bear</td>
-<td>5.99</td>
-</tr>
-<tr>
-<td>BR02</td>
-<td>12 inch teddy bear</td>
-<td>8.99</td>
-</tr>
-<tr>
-<td>BR03</td>
-<td>18 inch teddy bear</td>
-<td>11.99</td>
-</tr>
-<tr>
-<td>RGAN01</td>
-<td>Raggedy Ann</td>
-<td>4.99</td>
-</tr>
-<tr>
-<td>RYL01</td>
-<td>King doll</td>
-<td>9.49</td>
-</tr>
-<tr>
-<td>RYL02</td>
-<td>Queen doll</td>
-<td>9.49</td>
-</tr>
-</tbody></table>
-<p>检索所有列：</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>略</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>略</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>使用通配符 * 的优点：可以检索出名字未知的列。</p>
-</blockquote>
-<p>检索不同的值：</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> vend_id </span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>vend_id</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>BRS01</td>
-</tr>
-<tr>
-<td>BRS01</td>
-</tr>
-<tr>
-<td>BRS01</td>
-</tr>
-<tr>
-<td>DLL01</td>
-</tr>
-<tr>
-<td>DLL01</td>
-</tr>
-<tr>
-<td>DLL01</td>
-</tr>
-<tr>
-<td>DLL01</td>
-</tr>
-<tr>
-<td>FNG01</td>
-</tr>
-<tr>
-<td>FNG01</td>
-</tr>
-</tbody></table>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> vend_id</span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>vend_id</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>BRS01</td>
-</tr>
-<tr>
-<td>DLL01</td>
-</tr>
-<tr>
-<td>FNG01</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>关键字DISTINCT可以去重，但会作用于所有的列，不仅是跟在它后边的那一列。</p>
-</blockquote>
-<p>限制结果：<br>如果想检索一定数量的行，比如只检索5行，以MySQL为例。</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line">LIMIT <span class="number">5</span>;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>prod_name</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Fish bean bag toy</td>
-</tr>
-<tr>
-<td>Bird bean bag toy</td>
-</tr>
-<tr>
-<td>Rabbit bean bag toy</td>
-</tr>
-<tr>
-<td>8 inch teddy bear</td>
-</tr>
-<tr>
-<td>12 inch teddy bear</td>
-</tr>
-</tbody></table>
-<p>要想得到后5行数据，需要指定从哪开始以及检索的行数：</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name</span><br><span class="line"><span class="keyword">FROM</span> Products</span><br><span class="line">LIMIT <span class="number">5</span> <span class="keyword">OFFSET</span> <span class="number">5</span>;</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>prod_name</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>18 inch teddy bear</td>
-</tr>
-<tr>
-<td>Raggedy Ann</td>
-</tr>
-<tr>
-<td>King doll</td>
-</tr>
-<tr>
-<td>Queen doll</td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>表中共9行，所以检索只返回4行。</p>
-</blockquote>
-<blockquote>
-<p>第一个检索的行是第0行。</p>
-</blockquote>
-<blockquote>
-<p><code>LIMIT 4 OFFSET 3</code>可以简化：<code>LIMIT 3,4</code>。需要注意数字顺序相反。</p>
-</blockquote>
-<p>注释：</p>
-<div class="code-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> prod_name     <span class="comment">--这是一条注释</span></span><br><span class="line"><span class="keyword">FROM</span> Products;</span><br><span class="line"># 这是一条注释</span><br><span class="line"><span class="comment">/*这是</span></span><br><span class="line"><span class="comment">一条注释*/</span></span><br></pre></td></tr></table></figure></div>]]></content>
       <categories>
         <category>SQL</category>
       </categories>
@@ -2783,49 +2783,6 @@
       </tags>
   </entry>
   <entry>
-    <title>kaggle项目之泰坦尼克幸存预测</title>
-    <url>/2020/05/12/kaggle%E9%A1%B9%E7%9B%AE%20-%20%E6%B3%B0%E5%9D%A6%E5%B0%BC%E5%85%8B%E5%B9%B8%E5%AD%98%E9%A2%84%E6%B5%8B/</url>
-    <content><![CDATA[<p>kaggle是一个机器学习竞赛平台。</p>
-<span id="more"></span>
-
-<h1 id="项目简介"><a href="#项目简介" class="headerlink" title="项目简介"></a>项目简介</h1><p>作为kaggle的第一个项目，很有必要记录一下遇到的问题和解决的办法，哈哈哈。<br>kaggle是个国外网站，首先加载很慢……其次呢是鄙人英语水平实在不好，全程翻译……<br>在项目描述中，推荐通过<a class="link" href="https://www.kaggle.com/alexisbcook/titanic-tutorial">这个大佬的教程<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>来完成这个项目，所以下面的内容全都是跟这位大佬的解说，一步一步进行的。</p>
-<h1 id="Steps"><a href="#Steps" class="headerlink" title="Steps~"></a>Steps~</h1><p>教程的右侧就是操作步骤喽！</p>
-<h2 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h2><p>首先我们需要点击参加比赛按钮，并且接受规则什么的，然后就可以点击data标签，来获取需要的<strong>数据集</strong>了！我们可以使用gender_submission.csv这个文件，来尝试提交一下答案<del>这个数据比较偏激，只是用来测试提交答案功能的，不过我们应该提交的答案，需要和它格式相同，也就是说这是一个答案模板</del></p>
-<p>这里我上传答案若干次，都失败了，原因不明……</p>
-<h2 id="Your-coding-environment"><a href="#Your-coding-environment" class="headerlink" title="Your coding environment"></a>Your coding environment</h2><p>这里就要开始搭建环境了，新建一个kaggle的notebook<del>这篇就是诞生于此</del><br>接下开，就是复制大佬的代码，从导入数据开始!</p>
-<p>下面的代码，新建笔记本时就自动生成了，主要是导入需要的库。比如数据分析必备的numpy和pandas，读写文件需要的os。</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># This Python 3 environment comes with many helpful analytics libraries installed</span></span><br><span class="line"><span class="comment"># It is defined by the kaggle/python Docker image: https://github.com/kaggle/docker-python</span></span><br><span class="line"><span class="comment"># For example, here&#x27;s several helpful packages to load</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np <span class="comment"># linear algebra</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd <span class="comment"># data processing, CSV file I/O (e.g. pd.read_csv)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Input data files are available in the read-only &quot;../input/&quot; directory</span></span><br><span class="line"><span class="comment"># For example, running this (by clicking run or pressing Shift+Enter) will list all files under the input directory</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">for</span> dirname, _, filenames <span class="keyword">in</span> os.walk(<span class="string">&#x27;/kaggle/input&#x27;</span>):</span><br><span class="line">    <span class="keyword">for</span> filename <span class="keyword">in</span> filenames:</span><br><span class="line">        <span class="built_in">print</span>(os.path.join(dirname, filename))</span><br><span class="line"></span><br><span class="line"><span class="comment"># You can write up to 5GB to the current directory (/kaggle/working/) that gets preserved as output when you create a version using &quot;Save &amp; Run All&quot; </span></span><br><span class="line"><span class="comment"># You can also write temporary files to /kaggle/temp/, but they won&#x27;t be saved outside of the current session</span></span><br></pre></td></tr></table></figure></div>
-
-<p><img lazyload src="/images/loading.svg" data-src="out1.jpg"></p>
-<p>下面的代码是用来读取训练数据的，运行后展示前5行结果。</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">train_data = pd.read_csv(<span class="string">&quot;/kaggle/input/titanic/train.csv&quot;</span>)</span><br><span class="line">train_data.head()</span><br></pre></td></tr></table></figure></div>
-
-<p><img lazyload src="/images/loading.svg" data-src="out2.jpg"></p>
-<p>下面的代码是用来读取测试数据的，运行后展示前5行结果。</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">test_data = pd.read_csv(<span class="string">&quot;/kaggle/input/titanic/test.csv&quot;</span>)</span><br><span class="line">test_data.head()</span><br></pre></td></tr></table></figure></div>
-
-<p><img lazyload src="/images/loading.svg" data-src="out3.jpg"></p>
-<h2 id="Improve-your-score"><a href="#Improve-your-score" class="headerlink" title="Improve your score"></a>Improve your score</h2><p>假如我们的gender_submission.csv文件成立，也就是女性全部存活，男性全部死亡。</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">women = train_data.loc[train_data.Sex == <span class="string">&#x27;female&#x27;</span>][<span class="string">&quot;Survived&quot;</span>]</span><br><span class="line">rate_women = <span class="built_in">sum</span>(women)/<span class="built_in">len</span>(women)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;% of women who survived:&quot;</span>, rate_women)</span><br></pre></td></tr></table></figure></div>
-
-<p><img lazyload src="/images/loading.svg" data-src="out4.jpg"></p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">men = train_data.loc[train_data.Sex == <span class="string">&#x27;male&#x27;</span>][<span class="string">&quot;Survived&quot;</span>]</span><br><span class="line">rate_men = <span class="built_in">sum</span>(men)/<span class="built_in">len</span>(men)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;% of men who survived:&quot;</span>, rate_men)</span><br></pre></td></tr></table></figure></div>
-<p><img lazyload src="/images/loading.svg" data-src="out5.jpg"><br>通过结果我们可以看出，船上有74%女性幸存，而只有19%的男性幸存。所以猜测的“女性全部存活，男性全部死亡”这个结论，是非常贴近结果的！！<br>但是我们还有其他的指标，不能只看性别，还要看年龄等等。此时就可以请机器学习来自动完成~这里我们使用随机森林来实现（我也不知道什么是随机森林，先看例子吧）。<br>二话不说贴代码：</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestClassifier</span><br><span class="line"></span><br><span class="line">y = train_data[<span class="string">&quot;Survived&quot;</span>]</span><br><span class="line"></span><br><span class="line">features = [<span class="string">&quot;Pclass&quot;</span>, <span class="string">&quot;Sex&quot;</span>, <span class="string">&quot;SibSp&quot;</span>, <span class="string">&quot;Parch&quot;</span>]</span><br><span class="line">X = pd.get_dummies(train_data[features])</span><br><span class="line">X_test = pd.get_dummies(test_data[features])</span><br><span class="line"></span><br><span class="line">model = RandomForestClassifier(n_estimators=<span class="number">100</span>, max_depth=<span class="number">5</span>, random_state=<span class="number">1</span>)</span><br><span class="line">model.fit(X, y)</span><br><span class="line">predictions = model.predict(X_test)</span><br><span class="line"></span><br><span class="line">output = pd.DataFrame(&#123;<span class="string">&#x27;PassengerId&#x27;</span>: test_data.PassengerId, <span class="string">&#x27;Survived&#x27;</span>: predictions&#125;)</span><br><span class="line">output.to_csv(<span class="string">&#x27;my_submission.csv&#x27;</span>, index=<span class="literal">False</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Your submission was successfully saved!&quot;</span>)</span><br></pre></td></tr></table></figure></div>
-<p><img lazyload src="/images/loading.svg" data-src="out6.jpg"><br>秃然就完成了！我们可以点击右上角的Save Version，并选择Save &amp; Run All (Commit)这个按钮，保存就可以了。保存以后我们点击Save Version后的数字，进入笔记本，再选择通过Viewer打开，就可以看到和大佬教程一样的格式了~</p>
-<h2 id="提交结果"><a href="#提交结果" class="headerlink" title="提交结果"></a>提交结果</h2><p>程序生成了一个my_submission.csv文件，可以在Viewer中的output标签看到，点击提交就算完成比赛了~</p>
-<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>到此这个项目就算完成了，教程的最后是大佬的机器学习课程广告（怪不得一直在教程里说不用理解代码，抄就完事），据说只有3个小时，会讲解刚刚抄的代码。<br>通过这个项目，我们基本了解了如何参加一次kaggle比赛，从报名到提交答案，每个步骤几乎都涉及过，搞起来！</p>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>数据分析</tag>
-        <tag>机器学习</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ChatGPT首次会晤</title>
     <url>/2023/02/16/chatGPT%E9%A6%96%E6%AC%A1%E4%BC%9A%E6%99%A4/</url>
     <content><![CDATA[<blockquote>
@@ -2866,6 +2823,49 @@
       <tags>
         <tag>AI</tag>
         <tag>ChatGPT</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>kaggle项目之泰坦尼克幸存预测</title>
+    <url>/2020/05/12/kaggle%E9%A1%B9%E7%9B%AE%20-%20%E6%B3%B0%E5%9D%A6%E5%B0%BC%E5%85%8B%E5%B9%B8%E5%AD%98%E9%A2%84%E6%B5%8B/</url>
+    <content><![CDATA[<p>kaggle是一个机器学习竞赛平台。</p>
+<span id="more"></span>
+
+<h1 id="项目简介"><a href="#项目简介" class="headerlink" title="项目简介"></a>项目简介</h1><p>作为kaggle的第一个项目，很有必要记录一下遇到的问题和解决的办法，哈哈哈。<br>kaggle是个国外网站，首先加载很慢……其次呢是鄙人英语水平实在不好，全程翻译……<br>在项目描述中，推荐通过<a class="link" href="https://www.kaggle.com/alexisbcook/titanic-tutorial">这个大佬的教程<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>来完成这个项目，所以下面的内容全都是跟这位大佬的解说，一步一步进行的。</p>
+<h1 id="Steps"><a href="#Steps" class="headerlink" title="Steps~"></a>Steps~</h1><p>教程的右侧就是操作步骤喽！</p>
+<h2 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h2><p>首先我们需要点击参加比赛按钮，并且接受规则什么的，然后就可以点击data标签，来获取需要的<strong>数据集</strong>了！我们可以使用gender_submission.csv这个文件，来尝试提交一下答案<del>这个数据比较偏激，只是用来测试提交答案功能的，不过我们应该提交的答案，需要和它格式相同，也就是说这是一个答案模板</del></p>
+<p>这里我上传答案若干次，都失败了，原因不明……</p>
+<h2 id="Your-coding-environment"><a href="#Your-coding-environment" class="headerlink" title="Your coding environment"></a>Your coding environment</h2><p>这里就要开始搭建环境了，新建一个kaggle的notebook<del>这篇就是诞生于此</del><br>接下开，就是复制大佬的代码，从导入数据开始!</p>
+<p>下面的代码，新建笔记本时就自动生成了，主要是导入需要的库。比如数据分析必备的numpy和pandas，读写文件需要的os。</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># This Python 3 environment comes with many helpful analytics libraries installed</span></span><br><span class="line"><span class="comment"># It is defined by the kaggle/python Docker image: https://github.com/kaggle/docker-python</span></span><br><span class="line"><span class="comment"># For example, here&#x27;s several helpful packages to load</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np <span class="comment"># linear algebra</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd <span class="comment"># data processing, CSV file I/O (e.g. pd.read_csv)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Input data files are available in the read-only &quot;../input/&quot; directory</span></span><br><span class="line"><span class="comment"># For example, running this (by clicking run or pressing Shift+Enter) will list all files under the input directory</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">for</span> dirname, _, filenames <span class="keyword">in</span> os.walk(<span class="string">&#x27;/kaggle/input&#x27;</span>):</span><br><span class="line">    <span class="keyword">for</span> filename <span class="keyword">in</span> filenames:</span><br><span class="line">        <span class="built_in">print</span>(os.path.join(dirname, filename))</span><br><span class="line"></span><br><span class="line"><span class="comment"># You can write up to 5GB to the current directory (/kaggle/working/) that gets preserved as output when you create a version using &quot;Save &amp; Run All&quot; </span></span><br><span class="line"><span class="comment"># You can also write temporary files to /kaggle/temp/, but they won&#x27;t be saved outside of the current session</span></span><br></pre></td></tr></table></figure></div>
+
+<p><img lazyload src="/images/loading.svg" data-src="out1.jpg"></p>
+<p>下面的代码是用来读取训练数据的，运行后展示前5行结果。</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">train_data = pd.read_csv(<span class="string">&quot;/kaggle/input/titanic/train.csv&quot;</span>)</span><br><span class="line">train_data.head()</span><br></pre></td></tr></table></figure></div>
+
+<p><img lazyload src="/images/loading.svg" data-src="out2.jpg"></p>
+<p>下面的代码是用来读取测试数据的，运行后展示前5行结果。</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">test_data = pd.read_csv(<span class="string">&quot;/kaggle/input/titanic/test.csv&quot;</span>)</span><br><span class="line">test_data.head()</span><br></pre></td></tr></table></figure></div>
+
+<p><img lazyload src="/images/loading.svg" data-src="out3.jpg"></p>
+<h2 id="Improve-your-score"><a href="#Improve-your-score" class="headerlink" title="Improve your score"></a>Improve your score</h2><p>假如我们的gender_submission.csv文件成立，也就是女性全部存活，男性全部死亡。</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">women = train_data.loc[train_data.Sex == <span class="string">&#x27;female&#x27;</span>][<span class="string">&quot;Survived&quot;</span>]</span><br><span class="line">rate_women = <span class="built_in">sum</span>(women)/<span class="built_in">len</span>(women)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;% of women who survived:&quot;</span>, rate_women)</span><br></pre></td></tr></table></figure></div>
+
+<p><img lazyload src="/images/loading.svg" data-src="out4.jpg"></p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">men = train_data.loc[train_data.Sex == <span class="string">&#x27;male&#x27;</span>][<span class="string">&quot;Survived&quot;</span>]</span><br><span class="line">rate_men = <span class="built_in">sum</span>(men)/<span class="built_in">len</span>(men)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;% of men who survived:&quot;</span>, rate_men)</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload src="/images/loading.svg" data-src="out5.jpg"><br>通过结果我们可以看出，船上有74%女性幸存，而只有19%的男性幸存。所以猜测的“女性全部存活，男性全部死亡”这个结论，是非常贴近结果的！！<br>但是我们还有其他的指标，不能只看性别，还要看年龄等等。此时就可以请机器学习来自动完成~这里我们使用随机森林来实现（我也不知道什么是随机森林，先看例子吧）。<br>二话不说贴代码：</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestClassifier</span><br><span class="line"></span><br><span class="line">y = train_data[<span class="string">&quot;Survived&quot;</span>]</span><br><span class="line"></span><br><span class="line">features = [<span class="string">&quot;Pclass&quot;</span>, <span class="string">&quot;Sex&quot;</span>, <span class="string">&quot;SibSp&quot;</span>, <span class="string">&quot;Parch&quot;</span>]</span><br><span class="line">X = pd.get_dummies(train_data[features])</span><br><span class="line">X_test = pd.get_dummies(test_data[features])</span><br><span class="line"></span><br><span class="line">model = RandomForestClassifier(n_estimators=<span class="number">100</span>, max_depth=<span class="number">5</span>, random_state=<span class="number">1</span>)</span><br><span class="line">model.fit(X, y)</span><br><span class="line">predictions = model.predict(X_test)</span><br><span class="line"></span><br><span class="line">output = pd.DataFrame(&#123;<span class="string">&#x27;PassengerId&#x27;</span>: test_data.PassengerId, <span class="string">&#x27;Survived&#x27;</span>: predictions&#125;)</span><br><span class="line">output.to_csv(<span class="string">&#x27;my_submission.csv&#x27;</span>, index=<span class="literal">False</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Your submission was successfully saved!&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload src="/images/loading.svg" data-src="out6.jpg"><br>秃然就完成了！我们可以点击右上角的Save Version，并选择Save &amp; Run All (Commit)这个按钮，保存就可以了。保存以后我们点击Save Version后的数字，进入笔记本，再选择通过Viewer打开，就可以看到和大佬教程一样的格式了~</p>
+<h2 id="提交结果"><a href="#提交结果" class="headerlink" title="提交结果"></a>提交结果</h2><p>程序生成了一个my_submission.csv文件，可以在Viewer中的output标签看到，点击提交就算完成比赛了~</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>到此这个项目就算完成了，教程的最后是大佬的机器学习课程广告（怪不得一直在教程里说不用理解代码，抄就完事），据说只有3个小时，会讲解刚刚抄的代码。<br>通过这个项目，我们基本了解了如何参加一次kaggle比赛，从报名到提交答案，每个步骤几乎都涉及过，搞起来！</p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>数据分析</tag>
+        <tag>机器学习</tag>
       </tags>
   </entry>
   <entry>
@@ -3709,6 +3709,374 @@
       </tags>
   </entry>
   <entry>
+    <title>嵩天老师Python(7)文件和数据格式化</title>
+    <url>/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/</url>
+    <content><![CDATA[<h1 id="文件的使用"><a href="#文件的使用" class="headerlink" title="文件的使用"></a>文件的使用</h1><h2 id="文件的类型"><a href="#文件的类型" class="headerlink" title="文件的类型"></a>文件的类型</h2><h3 id="文件的理解"><a href="#文件的理解" class="headerlink" title="文件的理解"></a>文件的理解</h3><p>文件是数据的抽象和集合</p>
+<ul>
+<li>文件是存储在辅助存储器上的数据序列</li>
+<li>文件是数据存储的一种形式</li>
+<li>文件展现形态：文本文件和二进制文件</li>
+</ul>
+<span id="more"></span>
+
+<p>文本文件 vs 二进制文件</p>
+<ul>
+<li>文本文件和二进制文件只是文件的展示方式</li>
+<li>本质上，所有文件都是二进制形式存储</li>
+<li>形式上，所有文件采用两种方式展示</li>
+</ul>
+<p>文本文件</p>
+<ul>
+<li>由<strong>单一特定编码</strong>组成的文件，如UTF-8编码</li>
+<li>由于存在编码，也被看成是存储着的长字符串</li>
+<li>适用于例如：.txt文件、.py文件</li>
+</ul>
+<p>二进制文件</p>
+<ul>
+<li>直接由比特0和1组成，<strong>没有统一字符编码</strong></li>
+<li>一般存在二进制0和1的组织结构，即文件格式</li>
+<li>适用于例如：.png文件、.avi文件等</li>
+</ul>
+<h2 id="文件的打开和关闭"><a href="#文件的打开和关闭" class="headerlink" title="文件的打开和关闭"></a>文件的打开和关闭</h2><p>文件处理的步骤：打开-操作-关闭</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">文件的存储状态-&gt;&gt;文件的占用状态: a = open( , )</span><br><span class="line">文件的占用状态-&gt;&gt;文件的存储状态: a.close()</span><br></pre></td></tr></table></figure></div>
+
+<p>文件打开以后就可以对文件进行读写</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">//读文件函数</span><br><span class="line">a.read(size)</span><br><span class="line">a.readline(size)</span><br><span class="line">a.readlines(hint)</span><br><span class="line"></span><br><span class="line">//写文件函数</span><br><span class="line">a.write(s)</span><br><span class="line">a.writelines(lines)</span><br><span class="line">a.seek(offset)</span><br></pre></td></tr></table></figure></div>
+<p>文件路径</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">&lt;变量名&gt; = <span class="built_in">open</span>(&lt;文件名&gt;, &lt;打开模式&gt;)</span><br></pre></td></tr></table></figure></div>
+<p>打开模式</p>
+<table>
+<thead>
+<tr>
+<th>文件的打开模式</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>‘r’</td>
+<td>只读模式，默认值，如果文件不存在，返回FileNotFoundError</td>
+</tr>
+<tr>
+<td>‘w’</td>
+<td>覆盖写模式，文件不存在则创建，存在则完全覆盖</td>
+</tr>
+<tr>
+<td>‘x’</td>
+<td>创建写模式，文件不存在则创建，存在则返回FileExistsError</td>
+</tr>
+<tr>
+<td>‘a’</td>
+<td>追加写模式，文件不存在则创建，存在则在文件最后追加内容</td>
+</tr>
+<tr>
+<td>‘b’</td>
+<td>二进制文件模式</td>
+</tr>
+<tr>
+<td>‘t’</td>
+<td>文本文件模式，默认值</td>
+</tr>
+<tr>
+<td>‘+’</td>
+<td>与r/w/x/a一同使用，在原功能基础上增加同时读写功能</td>
+</tr>
+</tbody></table>
+<p>文件的关闭</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">&lt;文件名&gt;.close()</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="文件内容的读取"><a href="#文件内容的读取" class="headerlink" title="文件内容的读取"></a>文件内容的读取</h2><table>
+<thead>
+<tr>
+<th>操作方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><f>.read(size=-1)</f></td>
+<td>读入全部内容，如果给出参数，读入前size长度</td>
+</tr>
+<tr>
+<td><f>.readline(size=-1)</f></td>
+<td>读入全部内容，如果给出参数，读入该行前size长度</td>
+</tr>
+<tr>
+<td><f>.readlines(hint=-1)</f></td>
+<td>读入文件所有行，以每行为元素形成列表，如果给出参数，读入前hint行</td>
+</tr>
+</tbody></table>
+<p>文件的全文本操作</p>
+<ul>
+<li><p>遍历全文本：方法一</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">fname = <span class="built_in">input</span>(<span class="string">&quot;请输入要打开的文件名称：&quot;</span>)</span><br><span class="line">fo = <span class="built_in">open</span>(fname,<span class="string">&quot;r&quot;</span>)</span><br><span class="line">txt = fo.read()</span><br><span class="line"><span class="comment">#对全文txt进行处理</span></span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure></div></li>
+<li><p>遍历全文本：方法二</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">fname = <span class="built_in">input</span>(<span class="string">&quot;请输入要打开的文件名称：&quot;</span>)</span><br><span class="line">fo = <span class="built_in">open</span>(fname,<span class="string">&quot;r&quot;</span>)</span><br><span class="line">txt = fo.read(<span class="number">2</span>)</span><br><span class="line"><span class="keyword">while</span> txt != <span class="string">&quot;&quot;</span>:</span><br><span class="line">    <span class="comment">#对txt进行处理</span></span><br><span class="line">    txt = fo.read(<span class="number">2</span>)</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<p>文件的逐行操作</p>
+<ul>
+<li><p>逐行遍历文件：方法一</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">fname = <span class="built_in">input</span>(<span class="string">&quot;请输入要打开的文件名称：&quot;</span>)</span><br><span class="line">fo = <span class="built_in">open</span>(fname,<span class="string">&quot;r&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fo.readlines():</span><br><span class="line">    <span class="built_in">print</span>(line)</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure></div></li>
+<li><p>逐行遍历文件：方法二</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">fname = <span class="built_in">input</span>(<span class="string">&quot;请输入要打开的文件名称：&quot;</span>)</span><br><span class="line">fo = <span class="built_in">open</span>(fname,<span class="string">&quot;r&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fo:</span><br><span class="line">    <span class="built_in">print</span>(line)</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h2 id="数据的文件写入"><a href="#数据的文件写入" class="headerlink" title="数据的文件写入"></a>数据的文件写入</h2><table>
+<thead>
+<tr>
+<th>操作方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><f>.write(s)</f></td>
+<td>向文件写入一个字符串或字节流</td>
+</tr>
+<tr>
+<td><f>.writelines(lines)</f></td>
+<td>将一个元素全为字符串的列表写入文件</td>
+</tr>
+<tr>
+<td><f>.seek(offset)</f></td>
+<td>改变当前文件操作指针的位置，offset含义如下：0-文件开头，1-当前位置，2-文件结尾</td>
+</tr>
+</tbody></table>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">fo = <span class="built_in">open</span>(<span class="string">&quot;output.txt&quot;</span>,<span class="string">&quot;w+&quot;</span>)</span><br><span class="line">ls = [<span class="string">&quot;中国&quot;</span>,<span class="string">&quot;法国&quot;</span>,<span class="string">&quot;美国&quot;</span>]</span><br><span class="line">fo.writelines(ls)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fo:</span><br><span class="line">      <span class="built_in">print</span>(line)</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure></div>
+<p>此时控制台没有任何输出</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">fo = <span class="built_in">open</span>(<span class="string">&quot;output.txt&quot;</span>,<span class="string">&quot;w+&quot;</span>)</span><br><span class="line">ls = [<span class="string">&quot;中国&quot;</span>,<span class="string">&quot;法国&quot;</span>,<span class="string">&quot;美国&quot;</span>]</span><br><span class="line">fo.writelines(ls)</span><br><span class="line">fo.seek(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fo:</span><br><span class="line">      <span class="built_in">print</span>(line)</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure></div>
+<p>此时输出“中国法国美国”</p>
+<h1 id="实例：自动轨迹绘制"><a href="#实例：自动轨迹绘制" class="headerlink" title="实例：自动轨迹绘制"></a>实例：自动轨迹绘制</h1><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><ul>
+<li>需求：根据脚本来绘制图形</li>
+<li>不是写代码而是数据绘制图形</li>
+<li>数据脚本是自动化最重要的第一步</li>
+</ul>
+<h2 id="基本思路"><a href="#基本思路" class="headerlink" title="基本思路"></a>基本思路</h2><ul>
+<li>步骤1：定义数据文件格式（接口）</li>
+<li>步骤2：编写程序，根据文件接口解析参数绘制图形</li>
+<li>步骤3：编制数据文件</li>
+</ul>
+<h2 id="编写程序"><a href="#编写程序" class="headerlink" title="编写程序"></a>编写程序</h2><div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#AutoTraceDraw.py</span></span><br><span class="line"><span class="keyword">import</span> turtle <span class="keyword">as</span> t</span><br><span class="line">t.title(<span class="string">&#x27;自动轨迹绘制&#x27;</span>)</span><br><span class="line">t.setup(<span class="number">800</span>,<span class="number">600</span>,<span class="number">0</span>,<span class="number">0</span>)</span><br><span class="line">t.pencolor(<span class="string">&quot;red&quot;</span>)</span><br><span class="line">t.pensize(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#数据读取</span></span><br><span class="line">datals = []</span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&quot;data.txt&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">      line = line.replace(<span class="string">&quot;\n&quot;</span>,<span class="string">&quot;&quot;</span>)</span><br><span class="line">      datals.append(<span class="built_in">list</span>(<span class="built_in">map</span>(<span class="built_in">eval</span>, line.split(<span class="string">&quot;,&quot;</span>))))</span><br><span class="line"></span><br><span class="line"><span class="comment">#自动绘制</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(datals)):</span><br><span class="line">      t.pencolor(datals[i][<span class="number">3</span>],datals[i][<span class="number">4</span>],datals[i][<span class="number">5</span>])</span><br><span class="line">      t.fd(datals[i][<span class="number">0</span>])</span><br><span class="line">      <span class="keyword">if</span> datals[i][<span class="number">1</span>]:</span><br><span class="line">            t.right(datals[i][<span class="number">2</span>])</span><br><span class="line">      <span class="keyword">else</span>:</span><br><span class="line">            t.left(datals[i][<span class="number">2</span>])</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="数据文件"><a href="#数据文件" class="headerlink" title="数据文件"></a>数据文件</h2><p>data.txt</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">300,0,144,1,0,0</span><br><span class="line">300,0,144,0,1,0</span><br><span class="line">300,0,144,0,0,1</span><br><span class="line">300,0,144,1,1,0</span><br><span class="line">300,0,108,0,1,1</span><br><span class="line">184,0,72,1,0,1</span><br><span class="line">184,0,72,0,0,0</span><br><span class="line">184,0,72,0,0,0</span><br><span class="line">184,0,72,0,0,0</span><br><span class="line">184,1,72,1,0,1</span><br><span class="line">184,1,72,0,0,0</span><br><span class="line">184,1,72,0,0,0</span><br><span class="line">184,1,72,0,0,0</span><br><span class="line">184,1,72,0,0,0</span><br><span class="line">184,1,720,0,0,0</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h2><p><img lazyload src="/images/loading.svg" data-src="%E8%87%AA%E5%8A%A8%E8%BD%A8%E8%BF%B9%E7%BB%98%E5%88%B6.jpg"></p>
+<h1 id="一维数据的格式化和处理"><a href="#一维数据的格式化和处理" class="headerlink" title="一维数据的格式化和处理"></a>一维数据的格式化和处理</h1><h2 id="数据组织的维度"><a href="#数据组织的维度" class="headerlink" title="数据组织的维度"></a>数据组织的维度</h2><p>从一个数据到一组数据：一个数据表达一个含义，一组数据表达一个或多个含义</p>
+<ul>
+<li>一维数据：由对等关系的有序或无序数据构成，采用线性方式组织，对应列表、数组、集合等概念。</li>
+<li>二维数据：由多个一维数据构成，是一维数据的组合形式。表格是典型的二维数据。</li>
+<li>多维数据：由一维或二维数据在新的维度上扩展形成</li>
+<li>高维数据：键值对</li>
+</ul>
+<p>数据的操作周期：存储&lt;-&gt;表示&lt;-&gt;操作</p>
+<h2 id="一维数据的表示"><a href="#一维数据的表示" class="headerlink" title="一维数据的表示"></a>一维数据的表示</h2><p>如果数据间有序：使用列表类型</p>
+<ul>
+<li>列表类型可以表达一维有序数据</li>
+<li>for循环可以遍历数据，进而对每个数据进行处理</li>
+</ul>
+<p>如果数据间无序：使用集合类型</p>
+<ul>
+<li>集合类型可以表达一维无需数据</li>
+<li>for循环可以遍历数据，进而对每个数据进行处理</li>
+</ul>
+<h2 id="一维数据的存储"><a href="#一维数据的存储" class="headerlink" title="一维数据的存储"></a>一维数据的存储</h2><ol>
+<li>存储方式一：空格分隔</li>
+</ol>
+<ul>
+<li>使用一个或多个空格分隔进行存储，不换行</li>
+<li>缺点：数据中不能存在空格</li>
+</ul>
+<ol start="2">
+<li>存储方式二：逗号分隔</li>
+</ol>
+<ul>
+<li>使用英文半角逗号分隔数据进行存储，不换行</li>
+<li>缺点：数据中不能有英文逗号</li>
+</ul>
+<ol start="3">
+<li>存储方式三：其他方式</li>
+</ol>
+<ul>
+<li>使用其他符号或符号组合分隔，建议采用特殊符号</li>
+<li>缺点：需要根据数据特点定义，通用性较差</li>
+</ul>
+<h2 id="一维数据的处理"><a href="#一维数据的处理" class="headerlink" title="一维数据的处理"></a>一维数据的处理</h2><p>从空格分割的文件中<strong>读入</strong>数据</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">txt = <span class="built_in">open</span>(fname).read()</span><br><span class="line">ls = txt.split()</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure></div>
+
+<p>从特殊符号分割的文件中<strong>读入</strong>数据</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">txt = <span class="built_in">open</span>(fname).read()</span><br><span class="line">ls = txt.split(<span class="string">&quot;$&quot;</span>)</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure></div>
+
+<p>采用空格分隔方式将数据写入文件</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">ls = [<span class="string">&quot;中国&quot;</span>,<span class="string">&quot;美国&quot;</span>,<span class="string">&quot;日本&quot;</span>]</span><br><span class="line">f = <span class="built_in">open</span>(fname,<span class="string">&#x27;w&#x27;</span>)</span><br><span class="line">f.write(<span class="string">&#x27; &#x27;</span>.join(ls))</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="二维数据的格式化和处理"><a href="#二维数据的格式化和处理" class="headerlink" title="二维数据的格式化和处理"></a>二维数据的格式化和处理</h1><h2 id="二维数据的表示"><a href="#二维数据的表示" class="headerlink" title="二维数据的表示"></a>二维数据的表示</h2><p>使用列表类型（二维列表）</p>
+<ul>
+<li>使用两层for循环遍历每个元素</li>
+<li>外层列表中每个元素可以对应一行，也可以对应一列</li>
+</ul>
+<h2 id="CSV格式与二维数据的存储"><a href="#CSV格式与二维数据的存储" class="headerlink" title="CSV格式与二维数据的存储"></a>CSV格式与二维数据的存储</h2><p>CSV：Comma-Separated Values</p>
+<ul>
+<li>国际通用的一二维数据存储格式，一般.csv扩展名</li>
+<li>每行一个一维数据，采用逗号分隔，无空行</li>
+<li>Excel可读入输出，一般编辑软件都可以产生</li>
+<li>如果某个元素确缺失，逗号仍要保留</li>
+<li>二维数据的表头可以作为数据存储，也可以另行存储</li>
+</ul>
+<p>二维数据的存储</p>
+<ul>
+<li>按行存或按列存都可以，具体由程序决定</li>
+<li>一般索引习惯：<code>ls[row][column]</code>，先行后列</li>
+<li>根据一般习惯，外层列表每个元素是一行，按行存</li>
+</ul>
+<h2 id="二维数据的处理"><a href="#二维数据的处理" class="headerlink" title="二维数据的处理"></a>二维数据的处理</h2><p>从CSV文件中读入数据</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">fo = <span class="built_in">open</span>(fname)</span><br><span class="line">ls =[]</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fo:</span><br><span class="line">    line = line.replace(<span class="string">&quot;\n&quot;</span>,<span class="string">&quot;&quot;</span>)</span><br><span class="line">    ls.append(line.split(<span class="string">&quot;,&quot;</span>))</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure></div>
+
+<p>将数据写入CSV文件</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">ls = [[],[],[]]  <span class="comment">#二维列表</span></span><br><span class="line">f.<span class="built_in">open</span>(fname,<span class="string">&#x27;w&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> ls:</span><br><span class="line">    f.write(<span class="string">&#x27;,&#x27;</span>.join(item) + <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure></div>
+
+<p>二维数据的逐一处理</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">ls = [[],[],[]]  <span class="comment">#二维列表</span></span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> ls:</span><br><span class="line">    <span class="keyword">for</span> column <span class="keyword">in</span> row:</span><br><span class="line">        <span class="built_in">print</span>(ls[row][column])</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="wordcloud库的使用"><a href="#wordcloud库的使用" class="headerlink" title="wordcloud库的使用"></a>wordcloud库的使用</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>wordcloud是优秀的词云展示的第三方库，词云以词语为基本单位，更加直观和艺术的展示文本。</p>
+<ul>
+<li>安装命令<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install wordcloud</span><br></pre></td></tr></table></figure></div>
+<h2 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h2>wordcloud库把词云当作一个WordCloud对象</li>
+<li>wordcloud.WordCloud()代表一个文本对应的词云</li>
+<li>可以根据文本中词语出现的频率等参数绘制词云</li>
+<li>词云的形状、尺寸和颜色都可以设定</li>
+</ul>
+<p>wordcloud库常规方法</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">w = wordcloud.WordCloud()</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li>以WordCloud对象为基础</li>
+<li>配置参数、加载文本、输出文件</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>w.generate(txt)</td>
+<td>向WordCloud对象w中加载文本txt，<code>w.generate(&quot;python and wordcloud&quot;)</code></td>
+</tr>
+<tr>
+<td>w.to_file(filename)</td>
+<td>将词云输出成图像文件，.png或.jpg格式，<code>w.to_file(&quot;outfile.png&quot;)</code></td>
+</tr>
+</tbody></table>
+<ul>
+<li>步骤1：配置对象参数</li>
+<li>步骤2：加载词云文本</li>
+<li>步骤3：输出词云文件</li>
+</ul>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> wordcloud</span><br><span class="line">c = wordcloud.WordCloud()</span><br><span class="line">c.generate(<span class="string">&quot;wordcloud by python&quot;</span>)</span><br><span class="line">c.to_file(<span class="string">&quot;pywordcloud.png&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>从文本到图片，wordcloud做了哪些事情呢？</p>
+<ol>
+<li>分隔：以空格分隔单词</li>
+<li>统计：单词出现次数并过滤</li>
+<li>字体：根据统计配置字号</li>
+<li>布局：颜色环境尺寸</li>
+</ol>
+<p>wordcloud配置对象参数</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">w = wordcloud.WordCloud(&lt;参数&gt;)</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>width</td>
+<td>指定词云对象生成图片的宽度，默认400像素</td>
+</tr>
+<tr>
+<td>height</td>
+<td>指定词云对象生成图片的高度，默认200像素</td>
+</tr>
+<tr>
+<td>min_font_size</td>
+<td>指定词云中字体的最小字号，默认4号</td>
+</tr>
+<tr>
+<td>max_font_size</td>
+<td>指定词云中字体的最大字号，根据高度自动调节</td>
+</tr>
+<tr>
+<td>font_step</td>
+<td>指定词云中字体字号的不进间隔，默认为1</td>
+</tr>
+<tr>
+<td>font_path</td>
+<td>指定字体文件的路径，默认None</td>
+</tr>
+<tr>
+<td>max_words</td>
+<td>指定词云显示的最大单词数量，默认为200</td>
+</tr>
+<tr>
+<td>stop_words</td>
+<td>指定词云的排除词列表，即不显示的单词列表</td>
+</tr>
+<tr>
+<td>mask</td>
+<td>指定词云形状，默认为长方形，需要引用imread()函数</td>
+</tr>
+<tr>
+<td>background_color</td>
+<td>指定词云图片的背景颜色，默认为黑色</td>
+</tr>
+</tbody></table>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#指定词云形状，默认为长方形，需要引用imread()函数</span></span><br><span class="line"><span class="keyword">from</span> scipy.misc <span class="keyword">import</span> imread </span><br><span class="line">mk = imread(<span class="string">&quot;pic.png&quot;</span>)</span><br><span class="line">w = wordcloud.WordCloud(mask = mk)</span><br></pre></td></tr></table></figure></div>
+
+<p>两个小demo</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> wordcloud</span><br><span class="line">txt = <span class="string">&quot;life is short, you need python&quot;</span></span><br><span class="line">w = wordcloud.WordCloud( \</span><br><span class="line">	background_color = <span class="string">&quot;white&quot;</span>)</span><br><span class="line">w.generate(txt)</span><br><span class="line">w.to_file(<span class="string">&quot;d:/pywordcloud.png&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload src="/images/loading.svg" data-src="pywordcloud.png"></p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="keyword">import</span> wordcloud</span><br><span class="line">txt = <span class="string">&quot;程序设计语言是计算机能够理解和\</span></span><br><span class="line"><span class="string">识别用户操作意图的一种交互体系,它按照\</span></span><br><span class="line"><span class="string">特定规则组织计算机指令,使计算机能够自\</span></span><br><span class="line"><span class="string">动进行各种运算处理。&quot;</span></span><br><span class="line">w = wordcloud.WordCloud( width = <span class="number">1000</span>, \</span><br><span class="line">    font_path = <span class="string">&quot;msyh.ttc&quot;</span>, height = <span class="number">700</span>)</span><br><span class="line">w.generate(<span class="string">&quot; &quot;</span>.join(jieba.lcut(txt)))</span><br><span class="line">w.to_file(<span class="string">&quot;d:/zhongwenciyun.jpg&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload src="/images/loading.svg" data-src="zhongwenciyun.jpg"></p>
+<h1 id="实例：政府工作报告词云"><a href="#实例：政府工作报告词云" class="headerlink" title="实例：政府工作报告词云"></a>实例：政府工作报告词云</h1><h2 id="问题分析-1"><a href="#问题分析-1" class="headerlink" title="问题分析"></a>问题分析</h2><p>直观理解政策文件</p>
+<ul>
+<li>需求：对于政府工作报告等政策文件，如何直观理解？</li>
+<li>体会直观的价值：生成词云 &amp; 优化词云</li>
+</ul>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">graph LR</span><br><span class="line">政府工作报告等文件 --&gt; 有效展示的词云</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="基本思路和代码实现"><a href="#基本思路和代码实现" class="headerlink" title="基本思路和代码实现"></a>基本思路和代码实现</h2><ul>
+<li>步骤1：读取文件，分词整理</li>
+<li>步骤2：设置并输出词云</li>
+<li>步骤3：观察结果，优化迭代</li>
+</ul>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#GovRpWordCloudv1.py</span></span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="keyword">import</span> wordcloud</span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&quot;关于实施乡村振兴战略的意见.txt&quot;</span>,<span class="string">&quot;r&quot;</span>,encoding=<span class="string">&quot;utf-8&quot;</span>)</span><br><span class="line"><span class="comment">#f = open(&quot;新时代中国特色社会主义.txt&quot;,&quot;r&quot;,encoding=&quot;utf-8&quot;)</span></span><br><span class="line">t = f.read()</span><br><span class="line">f.close()</span><br><span class="line">ls = jieba.lcut(t)</span><br><span class="line">txt = <span class="string">&quot; &quot;</span>.join(ls)</span><br><span class="line"><span class="comment">#w = wordcloud.WordCloud(max_words = 15,font_path = &quot;msyh.ttc&quot;,width = 1000,height = 700,background_color = &quot;white&quot;)</span></span><br><span class="line">w = wordcloud.WordCloud(font_path = <span class="string">&quot;msyh.ttc&quot;</span>,width = <span class="number">1000</span>,height = <span class="number">700</span>,background_color = <span class="string">&quot;white&quot;</span>)</span><br><span class="line">w.generate(txt)</span><br><span class="line">w.to_file(<span class="string">&quot;GovRpWordCloudv1.png&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+<p>运行程序后，两个报告的词云如下：</p>
+<p><img lazyload src="/images/loading.svg" data-src="GovRpWordCloudv1%E4%B8%AD%E7%89%B9.png" alt="image"></p>
+<p><img lazyload src="/images/loading.svg" data-src="GovRpWordCloudv1%E5%86%9C%E6%9D%91.png" alt="image"></p>
+<p>增加参数<code>max_words=15</code>，结果如下：</p>
+<p><img lazyload src="/images/loading.svg" data-src="GovRpWordCloudv1%E4%B8%AD%E7%89%B915.png" alt="image"></p>
+<p><img lazyload src="/images/loading.svg" data-src="GovRpWordCloudv1%E5%86%9C%E6%9D%9115.png" alt="image"></p>
+<p>增加形状<code>mask = mask</code>，词云图更加漂亮：</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#GovRpWordCloudv1.py</span></span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="keyword">import</span> wordcloud</span><br><span class="line"><span class="keyword">from</span> scipy.misc <span class="keyword">import</span> imread</span><br><span class="line">mask = imread(<span class="string">&quot;chinamap.jpg&quot;</span>)</span><br><span class="line"><span class="comment">#mask = imread(&quot;fivestars.png&quot;)</span></span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&quot;关于实施乡村振兴战略的意见.txt&quot;</span>,<span class="string">&quot;r&quot;</span>,encoding=<span class="string">&quot;utf-8&quot;</span>)</span><br><span class="line"><span class="comment">#f = open(&quot;新时代中国特色社会主义.txt&quot;,&quot;r&quot;,encoding=&quot;utf-8&quot;)</span></span><br><span class="line">t = f.read()</span><br><span class="line">f.close()</span><br><span class="line">ls = jieba.lcut(t)</span><br><span class="line">txt = <span class="string">&quot; &quot;</span>.join(ls)</span><br><span class="line">w = wordcloud.WordCloud(mask = mask,font_path = <span class="string">&quot;msyh.ttc&quot;</span>,width = <span class="number">1000</span>,height = <span class="number">700</span>,background_color = <span class="string">&quot;white&quot;</span>)</span><br><span class="line">w.generate(txt)</span><br><span class="line">w.to_file(<span class="string">&quot;GovRpWordCloudv1.png&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>结果展示：<br><img lazyload src="/images/loading.svg" data-src="GovRpWordCloudv1%E4%B8%AD%E7%89%B9%E4%BA%94%E6%98%9F.png" alt="image"></p>
+<p><img lazyload src="/images/loading.svg" data-src="GovRpWordCloudv1%E5%86%9C%E6%9D%91%E5%9C%B0%E5%9B%BE.png" alt="image"></p>
+<h2 id="扩展能力"><a href="#扩展能力" class="headerlink" title="扩展能力"></a>扩展能力</h2><ul>
+<li>了解wordcloud更多参数，扩展词云能力</li>
+<li>特色词云：设计一款属于自己的特色词云风格</li>
+<li>更多文件：用更多文件练习词云生成</li>
+</ul>
+<blockquote>
+<p>练习素材下载：<br><a class="link" href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/%E6%96%B0%E6%97%B6%E4%BB%A3%E4%B8%AD%E5%9B%BD%E7%89%B9%E8%89%B2%E7%A4%BE%E4%BC%9A%E4%B8%BB%E4%B9%89.txt">新时代中国特色社会主义.txt<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br><a class="link" href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/%E5%85%B3%E4%BA%8E%E5%AE%9E%E6%96%BD%E4%B9%A1%E6%9D%91%E6%8C%AF%E5%85%B4%E6%88%98%E7%95%A5%E7%9A%84%E6%84%8F%E8%A7%81.txt">关于实施乡村振兴战略的意见.txt<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br><a class="link" href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/chinamap.jpg">chinamap.jpg<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br><a class="link" href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/fivestars.png">fivestars.png<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>嵩天老师Python(6)组合数据类型</title>
     <url>/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(6)%E7%BB%84%E5%90%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url>
     <content><![CDATA[<h1 id="集合类型及操作"><a href="#集合类型及操作" class="headerlink" title="集合类型及操作"></a>集合类型及操作</h1><h2 id="集合类型的定义"><a href="#集合类型的定义" class="headerlink" title="集合类型的定义"></a>集合类型的定义</h2><p>集合类型的<strong>定义</strong>：集合是多个元素的无序组合</p>
@@ -4160,374 +4528,6 @@
 <li><a class="link" href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/hamlet.txt">hamlet.txt<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
 <li><a class="link" href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/threekingdoms.txt">threekingdoms.txt<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
 </ul>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>嵩天老师Python(7)文件和数据格式化</title>
-    <url>/2019/04/04/%E5%B5%A9%E5%A4%A9%E8%80%81%E5%B8%88Python(7)%E6%96%87%E4%BB%B6%E5%92%8C%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%8C%96/</url>
-    <content><![CDATA[<h1 id="文件的使用"><a href="#文件的使用" class="headerlink" title="文件的使用"></a>文件的使用</h1><h2 id="文件的类型"><a href="#文件的类型" class="headerlink" title="文件的类型"></a>文件的类型</h2><h3 id="文件的理解"><a href="#文件的理解" class="headerlink" title="文件的理解"></a>文件的理解</h3><p>文件是数据的抽象和集合</p>
-<ul>
-<li>文件是存储在辅助存储器上的数据序列</li>
-<li>文件是数据存储的一种形式</li>
-<li>文件展现形态：文本文件和二进制文件</li>
-</ul>
-<span id="more"></span>
-
-<p>文本文件 vs 二进制文件</p>
-<ul>
-<li>文本文件和二进制文件只是文件的展示方式</li>
-<li>本质上，所有文件都是二进制形式存储</li>
-<li>形式上，所有文件采用两种方式展示</li>
-</ul>
-<p>文本文件</p>
-<ul>
-<li>由<strong>单一特定编码</strong>组成的文件，如UTF-8编码</li>
-<li>由于存在编码，也被看成是存储着的长字符串</li>
-<li>适用于例如：.txt文件、.py文件</li>
-</ul>
-<p>二进制文件</p>
-<ul>
-<li>直接由比特0和1组成，<strong>没有统一字符编码</strong></li>
-<li>一般存在二进制0和1的组织结构，即文件格式</li>
-<li>适用于例如：.png文件、.avi文件等</li>
-</ul>
-<h2 id="文件的打开和关闭"><a href="#文件的打开和关闭" class="headerlink" title="文件的打开和关闭"></a>文件的打开和关闭</h2><p>文件处理的步骤：打开-操作-关闭</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">文件的存储状态-&gt;&gt;文件的占用状态: a = open( , )</span><br><span class="line">文件的占用状态-&gt;&gt;文件的存储状态: a.close()</span><br></pre></td></tr></table></figure></div>
-
-<p>文件打开以后就可以对文件进行读写</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">//读文件函数</span><br><span class="line">a.read(size)</span><br><span class="line">a.readline(size)</span><br><span class="line">a.readlines(hint)</span><br><span class="line"></span><br><span class="line">//写文件函数</span><br><span class="line">a.write(s)</span><br><span class="line">a.writelines(lines)</span><br><span class="line">a.seek(offset)</span><br></pre></td></tr></table></figure></div>
-<p>文件路径</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">&lt;变量名&gt; = <span class="built_in">open</span>(&lt;文件名&gt;, &lt;打开模式&gt;)</span><br></pre></td></tr></table></figure></div>
-<p>打开模式</p>
-<table>
-<thead>
-<tr>
-<th>文件的打开模式</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>‘r’</td>
-<td>只读模式，默认值，如果文件不存在，返回FileNotFoundError</td>
-</tr>
-<tr>
-<td>‘w’</td>
-<td>覆盖写模式，文件不存在则创建，存在则完全覆盖</td>
-</tr>
-<tr>
-<td>‘x’</td>
-<td>创建写模式，文件不存在则创建，存在则返回FileExistsError</td>
-</tr>
-<tr>
-<td>‘a’</td>
-<td>追加写模式，文件不存在则创建，存在则在文件最后追加内容</td>
-</tr>
-<tr>
-<td>‘b’</td>
-<td>二进制文件模式</td>
-</tr>
-<tr>
-<td>‘t’</td>
-<td>文本文件模式，默认值</td>
-</tr>
-<tr>
-<td>‘+’</td>
-<td>与r/w/x/a一同使用，在原功能基础上增加同时读写功能</td>
-</tr>
-</tbody></table>
-<p>文件的关闭</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">&lt;文件名&gt;.close()</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="文件内容的读取"><a href="#文件内容的读取" class="headerlink" title="文件内容的读取"></a>文件内容的读取</h2><table>
-<thead>
-<tr>
-<th>操作方法</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><f>.read(size=-1)</f></td>
-<td>读入全部内容，如果给出参数，读入前size长度</td>
-</tr>
-<tr>
-<td><f>.readline(size=-1)</f></td>
-<td>读入全部内容，如果给出参数，读入该行前size长度</td>
-</tr>
-<tr>
-<td><f>.readlines(hint=-1)</f></td>
-<td>读入文件所有行，以每行为元素形成列表，如果给出参数，读入前hint行</td>
-</tr>
-</tbody></table>
-<p>文件的全文本操作</p>
-<ul>
-<li><p>遍历全文本：方法一</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">fname = <span class="built_in">input</span>(<span class="string">&quot;请输入要打开的文件名称：&quot;</span>)</span><br><span class="line">fo = <span class="built_in">open</span>(fname,<span class="string">&quot;r&quot;</span>)</span><br><span class="line">txt = fo.read()</span><br><span class="line"><span class="comment">#对全文txt进行处理</span></span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure></div></li>
-<li><p>遍历全文本：方法二</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">fname = <span class="built_in">input</span>(<span class="string">&quot;请输入要打开的文件名称：&quot;</span>)</span><br><span class="line">fo = <span class="built_in">open</span>(fname,<span class="string">&quot;r&quot;</span>)</span><br><span class="line">txt = fo.read(<span class="number">2</span>)</span><br><span class="line"><span class="keyword">while</span> txt != <span class="string">&quot;&quot;</span>:</span><br><span class="line">    <span class="comment">#对txt进行处理</span></span><br><span class="line">    txt = fo.read(<span class="number">2</span>)</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<p>文件的逐行操作</p>
-<ul>
-<li><p>逐行遍历文件：方法一</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">fname = <span class="built_in">input</span>(<span class="string">&quot;请输入要打开的文件名称：&quot;</span>)</span><br><span class="line">fo = <span class="built_in">open</span>(fname,<span class="string">&quot;r&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fo.readlines():</span><br><span class="line">    <span class="built_in">print</span>(line)</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure></div></li>
-<li><p>逐行遍历文件：方法二</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">fname = <span class="built_in">input</span>(<span class="string">&quot;请输入要打开的文件名称：&quot;</span>)</span><br><span class="line">fo = <span class="built_in">open</span>(fname,<span class="string">&quot;r&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fo:</span><br><span class="line">    <span class="built_in">print</span>(line)</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure></div></li>
-</ul>
-<h2 id="数据的文件写入"><a href="#数据的文件写入" class="headerlink" title="数据的文件写入"></a>数据的文件写入</h2><table>
-<thead>
-<tr>
-<th>操作方法</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><f>.write(s)</f></td>
-<td>向文件写入一个字符串或字节流</td>
-</tr>
-<tr>
-<td><f>.writelines(lines)</f></td>
-<td>将一个元素全为字符串的列表写入文件</td>
-</tr>
-<tr>
-<td><f>.seek(offset)</f></td>
-<td>改变当前文件操作指针的位置，offset含义如下：0-文件开头，1-当前位置，2-文件结尾</td>
-</tr>
-</tbody></table>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">fo = <span class="built_in">open</span>(<span class="string">&quot;output.txt&quot;</span>,<span class="string">&quot;w+&quot;</span>)</span><br><span class="line">ls = [<span class="string">&quot;中国&quot;</span>,<span class="string">&quot;法国&quot;</span>,<span class="string">&quot;美国&quot;</span>]</span><br><span class="line">fo.writelines(ls)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fo:</span><br><span class="line">      <span class="built_in">print</span>(line)</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure></div>
-<p>此时控制台没有任何输出</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">fo = <span class="built_in">open</span>(<span class="string">&quot;output.txt&quot;</span>,<span class="string">&quot;w+&quot;</span>)</span><br><span class="line">ls = [<span class="string">&quot;中国&quot;</span>,<span class="string">&quot;法国&quot;</span>,<span class="string">&quot;美国&quot;</span>]</span><br><span class="line">fo.writelines(ls)</span><br><span class="line">fo.seek(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fo:</span><br><span class="line">      <span class="built_in">print</span>(line)</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure></div>
-<p>此时输出“中国法国美国”</p>
-<h1 id="实例：自动轨迹绘制"><a href="#实例：自动轨迹绘制" class="headerlink" title="实例：自动轨迹绘制"></a>实例：自动轨迹绘制</h1><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><ul>
-<li>需求：根据脚本来绘制图形</li>
-<li>不是写代码而是数据绘制图形</li>
-<li>数据脚本是自动化最重要的第一步</li>
-</ul>
-<h2 id="基本思路"><a href="#基本思路" class="headerlink" title="基本思路"></a>基本思路</h2><ul>
-<li>步骤1：定义数据文件格式（接口）</li>
-<li>步骤2：编写程序，根据文件接口解析参数绘制图形</li>
-<li>步骤3：编制数据文件</li>
-</ul>
-<h2 id="编写程序"><a href="#编写程序" class="headerlink" title="编写程序"></a>编写程序</h2><div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#AutoTraceDraw.py</span></span><br><span class="line"><span class="keyword">import</span> turtle <span class="keyword">as</span> t</span><br><span class="line">t.title(<span class="string">&#x27;自动轨迹绘制&#x27;</span>)</span><br><span class="line">t.setup(<span class="number">800</span>,<span class="number">600</span>,<span class="number">0</span>,<span class="number">0</span>)</span><br><span class="line">t.pencolor(<span class="string">&quot;red&quot;</span>)</span><br><span class="line">t.pensize(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#数据读取</span></span><br><span class="line">datals = []</span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&quot;data.txt&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">      line = line.replace(<span class="string">&quot;\n&quot;</span>,<span class="string">&quot;&quot;</span>)</span><br><span class="line">      datals.append(<span class="built_in">list</span>(<span class="built_in">map</span>(<span class="built_in">eval</span>, line.split(<span class="string">&quot;,&quot;</span>))))</span><br><span class="line"></span><br><span class="line"><span class="comment">#自动绘制</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(datals)):</span><br><span class="line">      t.pencolor(datals[i][<span class="number">3</span>],datals[i][<span class="number">4</span>],datals[i][<span class="number">5</span>])</span><br><span class="line">      t.fd(datals[i][<span class="number">0</span>])</span><br><span class="line">      <span class="keyword">if</span> datals[i][<span class="number">1</span>]:</span><br><span class="line">            t.right(datals[i][<span class="number">2</span>])</span><br><span class="line">      <span class="keyword">else</span>:</span><br><span class="line">            t.left(datals[i][<span class="number">2</span>])</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="数据文件"><a href="#数据文件" class="headerlink" title="数据文件"></a>数据文件</h2><p>data.txt</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">300,0,144,1,0,0</span><br><span class="line">300,0,144,0,1,0</span><br><span class="line">300,0,144,0,0,1</span><br><span class="line">300,0,144,1,1,0</span><br><span class="line">300,0,108,0,1,1</span><br><span class="line">184,0,72,1,0,1</span><br><span class="line">184,0,72,0,0,0</span><br><span class="line">184,0,72,0,0,0</span><br><span class="line">184,0,72,0,0,0</span><br><span class="line">184,1,72,1,0,1</span><br><span class="line">184,1,72,0,0,0</span><br><span class="line">184,1,72,0,0,0</span><br><span class="line">184,1,72,0,0,0</span><br><span class="line">184,1,72,0,0,0</span><br><span class="line">184,1,720,0,0,0</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h2><p><img lazyload src="/images/loading.svg" data-src="%E8%87%AA%E5%8A%A8%E8%BD%A8%E8%BF%B9%E7%BB%98%E5%88%B6.jpg"></p>
-<h1 id="一维数据的格式化和处理"><a href="#一维数据的格式化和处理" class="headerlink" title="一维数据的格式化和处理"></a>一维数据的格式化和处理</h1><h2 id="数据组织的维度"><a href="#数据组织的维度" class="headerlink" title="数据组织的维度"></a>数据组织的维度</h2><p>从一个数据到一组数据：一个数据表达一个含义，一组数据表达一个或多个含义</p>
-<ul>
-<li>一维数据：由对等关系的有序或无序数据构成，采用线性方式组织，对应列表、数组、集合等概念。</li>
-<li>二维数据：由多个一维数据构成，是一维数据的组合形式。表格是典型的二维数据。</li>
-<li>多维数据：由一维或二维数据在新的维度上扩展形成</li>
-<li>高维数据：键值对</li>
-</ul>
-<p>数据的操作周期：存储&lt;-&gt;表示&lt;-&gt;操作</p>
-<h2 id="一维数据的表示"><a href="#一维数据的表示" class="headerlink" title="一维数据的表示"></a>一维数据的表示</h2><p>如果数据间有序：使用列表类型</p>
-<ul>
-<li>列表类型可以表达一维有序数据</li>
-<li>for循环可以遍历数据，进而对每个数据进行处理</li>
-</ul>
-<p>如果数据间无序：使用集合类型</p>
-<ul>
-<li>集合类型可以表达一维无需数据</li>
-<li>for循环可以遍历数据，进而对每个数据进行处理</li>
-</ul>
-<h2 id="一维数据的存储"><a href="#一维数据的存储" class="headerlink" title="一维数据的存储"></a>一维数据的存储</h2><ol>
-<li>存储方式一：空格分隔</li>
-</ol>
-<ul>
-<li>使用一个或多个空格分隔进行存储，不换行</li>
-<li>缺点：数据中不能存在空格</li>
-</ul>
-<ol start="2">
-<li>存储方式二：逗号分隔</li>
-</ol>
-<ul>
-<li>使用英文半角逗号分隔数据进行存储，不换行</li>
-<li>缺点：数据中不能有英文逗号</li>
-</ul>
-<ol start="3">
-<li>存储方式三：其他方式</li>
-</ol>
-<ul>
-<li>使用其他符号或符号组合分隔，建议采用特殊符号</li>
-<li>缺点：需要根据数据特点定义，通用性较差</li>
-</ul>
-<h2 id="一维数据的处理"><a href="#一维数据的处理" class="headerlink" title="一维数据的处理"></a>一维数据的处理</h2><p>从空格分割的文件中<strong>读入</strong>数据</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">txt = <span class="built_in">open</span>(fname).read()</span><br><span class="line">ls = txt.split()</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure></div>
-
-<p>从特殊符号分割的文件中<strong>读入</strong>数据</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">txt = <span class="built_in">open</span>(fname).read()</span><br><span class="line">ls = txt.split(<span class="string">&quot;$&quot;</span>)</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure></div>
-
-<p>采用空格分隔方式将数据写入文件</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">ls = [<span class="string">&quot;中国&quot;</span>,<span class="string">&quot;美国&quot;</span>,<span class="string">&quot;日本&quot;</span>]</span><br><span class="line">f = <span class="built_in">open</span>(fname,<span class="string">&#x27;w&#x27;</span>)</span><br><span class="line">f.write(<span class="string">&#x27; &#x27;</span>.join(ls))</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure></div>
-
-<h1 id="二维数据的格式化和处理"><a href="#二维数据的格式化和处理" class="headerlink" title="二维数据的格式化和处理"></a>二维数据的格式化和处理</h1><h2 id="二维数据的表示"><a href="#二维数据的表示" class="headerlink" title="二维数据的表示"></a>二维数据的表示</h2><p>使用列表类型（二维列表）</p>
-<ul>
-<li>使用两层for循环遍历每个元素</li>
-<li>外层列表中每个元素可以对应一行，也可以对应一列</li>
-</ul>
-<h2 id="CSV格式与二维数据的存储"><a href="#CSV格式与二维数据的存储" class="headerlink" title="CSV格式与二维数据的存储"></a>CSV格式与二维数据的存储</h2><p>CSV：Comma-Separated Values</p>
-<ul>
-<li>国际通用的一二维数据存储格式，一般.csv扩展名</li>
-<li>每行一个一维数据，采用逗号分隔，无空行</li>
-<li>Excel可读入输出，一般编辑软件都可以产生</li>
-<li>如果某个元素确缺失，逗号仍要保留</li>
-<li>二维数据的表头可以作为数据存储，也可以另行存储</li>
-</ul>
-<p>二维数据的存储</p>
-<ul>
-<li>按行存或按列存都可以，具体由程序决定</li>
-<li>一般索引习惯：<code>ls[row][column]</code>，先行后列</li>
-<li>根据一般习惯，外层列表每个元素是一行，按行存</li>
-</ul>
-<h2 id="二维数据的处理"><a href="#二维数据的处理" class="headerlink" title="二维数据的处理"></a>二维数据的处理</h2><p>从CSV文件中读入数据</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">fo = <span class="built_in">open</span>(fname)</span><br><span class="line">ls =[]</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> fo:</span><br><span class="line">    line = line.replace(<span class="string">&quot;\n&quot;</span>,<span class="string">&quot;&quot;</span>)</span><br><span class="line">    ls.append(line.split(<span class="string">&quot;,&quot;</span>))</span><br><span class="line">fo.close()</span><br></pre></td></tr></table></figure></div>
-
-<p>将数据写入CSV文件</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">ls = [[],[],[]]  <span class="comment">#二维列表</span></span><br><span class="line">f.<span class="built_in">open</span>(fname,<span class="string">&#x27;w&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> ls:</span><br><span class="line">    f.write(<span class="string">&#x27;,&#x27;</span>.join(item) + <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure></div>
-
-<p>二维数据的逐一处理</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">ls = [[],[],[]]  <span class="comment">#二维列表</span></span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> ls:</span><br><span class="line">    <span class="keyword">for</span> column <span class="keyword">in</span> row:</span><br><span class="line">        <span class="built_in">print</span>(ls[row][column])</span><br></pre></td></tr></table></figure></div>
-
-<h1 id="wordcloud库的使用"><a href="#wordcloud库的使用" class="headerlink" title="wordcloud库的使用"></a>wordcloud库的使用</h1><h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>wordcloud是优秀的词云展示的第三方库，词云以词语为基本单位，更加直观和艺术的展示文本。</p>
-<ul>
-<li>安装命令<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip install wordcloud</span><br></pre></td></tr></table></figure></div>
-<h2 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h2>wordcloud库把词云当作一个WordCloud对象</li>
-<li>wordcloud.WordCloud()代表一个文本对应的词云</li>
-<li>可以根据文本中词语出现的频率等参数绘制词云</li>
-<li>词云的形状、尺寸和颜色都可以设定</li>
-</ul>
-<p>wordcloud库常规方法</p>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">w = wordcloud.WordCloud()</span><br></pre></td></tr></table></figure></div>
-<ul>
-<li>以WordCloud对象为基础</li>
-<li>配置参数、加载文本、输出文件</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th>方法</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>w.generate(txt)</td>
-<td>向WordCloud对象w中加载文本txt，<code>w.generate(&quot;python and wordcloud&quot;)</code></td>
-</tr>
-<tr>
-<td>w.to_file(filename)</td>
-<td>将词云输出成图像文件，.png或.jpg格式，<code>w.to_file(&quot;outfile.png&quot;)</code></td>
-</tr>
-</tbody></table>
-<ul>
-<li>步骤1：配置对象参数</li>
-<li>步骤2：加载词云文本</li>
-<li>步骤3：输出词云文件</li>
-</ul>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> wordcloud</span><br><span class="line">c = wordcloud.WordCloud()</span><br><span class="line">c.generate(<span class="string">&quot;wordcloud by python&quot;</span>)</span><br><span class="line">c.to_file(<span class="string">&quot;pywordcloud.png&quot;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>从文本到图片，wordcloud做了哪些事情呢？</p>
-<ol>
-<li>分隔：以空格分隔单词</li>
-<li>统计：单词出现次数并过滤</li>
-<li>字体：根据统计配置字号</li>
-<li>布局：颜色环境尺寸</li>
-</ol>
-<p>wordcloud配置对象参数</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">w = wordcloud.WordCloud(&lt;参数&gt;)</span><br></pre></td></tr></table></figure></div>
-
-<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>width</td>
-<td>指定词云对象生成图片的宽度，默认400像素</td>
-</tr>
-<tr>
-<td>height</td>
-<td>指定词云对象生成图片的高度，默认200像素</td>
-</tr>
-<tr>
-<td>min_font_size</td>
-<td>指定词云中字体的最小字号，默认4号</td>
-</tr>
-<tr>
-<td>max_font_size</td>
-<td>指定词云中字体的最大字号，根据高度自动调节</td>
-</tr>
-<tr>
-<td>font_step</td>
-<td>指定词云中字体字号的不进间隔，默认为1</td>
-</tr>
-<tr>
-<td>font_path</td>
-<td>指定字体文件的路径，默认None</td>
-</tr>
-<tr>
-<td>max_words</td>
-<td>指定词云显示的最大单词数量，默认为200</td>
-</tr>
-<tr>
-<td>stop_words</td>
-<td>指定词云的排除词列表，即不显示的单词列表</td>
-</tr>
-<tr>
-<td>mask</td>
-<td>指定词云形状，默认为长方形，需要引用imread()函数</td>
-</tr>
-<tr>
-<td>background_color</td>
-<td>指定词云图片的背景颜色，默认为黑色</td>
-</tr>
-</tbody></table>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#指定词云形状，默认为长方形，需要引用imread()函数</span></span><br><span class="line"><span class="keyword">from</span> scipy.misc <span class="keyword">import</span> imread </span><br><span class="line">mk = imread(<span class="string">&quot;pic.png&quot;</span>)</span><br><span class="line">w = wordcloud.WordCloud(mask = mk)</span><br></pre></td></tr></table></figure></div>
-
-<p>两个小demo</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> wordcloud</span><br><span class="line">txt = <span class="string">&quot;life is short, you need python&quot;</span></span><br><span class="line">w = wordcloud.WordCloud( \</span><br><span class="line">	background_color = <span class="string">&quot;white&quot;</span>)</span><br><span class="line">w.generate(txt)</span><br><span class="line">w.to_file(<span class="string">&quot;d:/pywordcloud.png&quot;</span>)</span><br></pre></td></tr></table></figure></div>
-<p><img lazyload src="/images/loading.svg" data-src="pywordcloud.png"></p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="keyword">import</span> wordcloud</span><br><span class="line">txt = <span class="string">&quot;程序设计语言是计算机能够理解和\</span></span><br><span class="line"><span class="string">识别用户操作意图的一种交互体系,它按照\</span></span><br><span class="line"><span class="string">特定规则组织计算机指令,使计算机能够自\</span></span><br><span class="line"><span class="string">动进行各种运算处理。&quot;</span></span><br><span class="line">w = wordcloud.WordCloud( width = <span class="number">1000</span>, \</span><br><span class="line">    font_path = <span class="string">&quot;msyh.ttc&quot;</span>, height = <span class="number">700</span>)</span><br><span class="line">w.generate(<span class="string">&quot; &quot;</span>.join(jieba.lcut(txt)))</span><br><span class="line">w.to_file(<span class="string">&quot;d:/zhongwenciyun.jpg&quot;</span>)</span><br></pre></td></tr></table></figure></div>
-<p><img lazyload src="/images/loading.svg" data-src="zhongwenciyun.jpg"></p>
-<h1 id="实例：政府工作报告词云"><a href="#实例：政府工作报告词云" class="headerlink" title="实例：政府工作报告词云"></a>实例：政府工作报告词云</h1><h2 id="问题分析-1"><a href="#问题分析-1" class="headerlink" title="问题分析"></a>问题分析</h2><p>直观理解政策文件</p>
-<ul>
-<li>需求：对于政府工作报告等政策文件，如何直观理解？</li>
-<li>体会直观的价值：生成词云 &amp; 优化词云</li>
-</ul>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">graph LR</span><br><span class="line">政府工作报告等文件 --&gt; 有效展示的词云</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="基本思路和代码实现"><a href="#基本思路和代码实现" class="headerlink" title="基本思路和代码实现"></a>基本思路和代码实现</h2><ul>
-<li>步骤1：读取文件，分词整理</li>
-<li>步骤2：设置并输出词云</li>
-<li>步骤3：观察结果，优化迭代</li>
-</ul>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#GovRpWordCloudv1.py</span></span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="keyword">import</span> wordcloud</span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&quot;关于实施乡村振兴战略的意见.txt&quot;</span>,<span class="string">&quot;r&quot;</span>,encoding=<span class="string">&quot;utf-8&quot;</span>)</span><br><span class="line"><span class="comment">#f = open(&quot;新时代中国特色社会主义.txt&quot;,&quot;r&quot;,encoding=&quot;utf-8&quot;)</span></span><br><span class="line">t = f.read()</span><br><span class="line">f.close()</span><br><span class="line">ls = jieba.lcut(t)</span><br><span class="line">txt = <span class="string">&quot; &quot;</span>.join(ls)</span><br><span class="line"><span class="comment">#w = wordcloud.WordCloud(max_words = 15,font_path = &quot;msyh.ttc&quot;,width = 1000,height = 700,background_color = &quot;white&quot;)</span></span><br><span class="line">w = wordcloud.WordCloud(font_path = <span class="string">&quot;msyh.ttc&quot;</span>,width = <span class="number">1000</span>,height = <span class="number">700</span>,background_color = <span class="string">&quot;white&quot;</span>)</span><br><span class="line">w.generate(txt)</span><br><span class="line">w.to_file(<span class="string">&quot;GovRpWordCloudv1.png&quot;</span>)</span><br></pre></td></tr></table></figure></div>
-<p>运行程序后，两个报告的词云如下：</p>
-<p><img lazyload src="/images/loading.svg" data-src="GovRpWordCloudv1%E4%B8%AD%E7%89%B9.png" alt="image"></p>
-<p><img lazyload src="/images/loading.svg" data-src="GovRpWordCloudv1%E5%86%9C%E6%9D%91.png" alt="image"></p>
-<p>增加参数<code>max_words=15</code>，结果如下：</p>
-<p><img lazyload src="/images/loading.svg" data-src="GovRpWordCloudv1%E4%B8%AD%E7%89%B915.png" alt="image"></p>
-<p><img lazyload src="/images/loading.svg" data-src="GovRpWordCloudv1%E5%86%9C%E6%9D%9115.png" alt="image"></p>
-<p>增加形状<code>mask = mask</code>，词云图更加漂亮：</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#GovRpWordCloudv1.py</span></span><br><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="keyword">import</span> wordcloud</span><br><span class="line"><span class="keyword">from</span> scipy.misc <span class="keyword">import</span> imread</span><br><span class="line">mask = imread(<span class="string">&quot;chinamap.jpg&quot;</span>)</span><br><span class="line"><span class="comment">#mask = imread(&quot;fivestars.png&quot;)</span></span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&quot;关于实施乡村振兴战略的意见.txt&quot;</span>,<span class="string">&quot;r&quot;</span>,encoding=<span class="string">&quot;utf-8&quot;</span>)</span><br><span class="line"><span class="comment">#f = open(&quot;新时代中国特色社会主义.txt&quot;,&quot;r&quot;,encoding=&quot;utf-8&quot;)</span></span><br><span class="line">t = f.read()</span><br><span class="line">f.close()</span><br><span class="line">ls = jieba.lcut(t)</span><br><span class="line">txt = <span class="string">&quot; &quot;</span>.join(ls)</span><br><span class="line">w = wordcloud.WordCloud(mask = mask,font_path = <span class="string">&quot;msyh.ttc&quot;</span>,width = <span class="number">1000</span>,height = <span class="number">700</span>,background_color = <span class="string">&quot;white&quot;</span>)</span><br><span class="line">w.generate(txt)</span><br><span class="line">w.to_file(<span class="string">&quot;GovRpWordCloudv1.png&quot;</span>)</span><br></pre></td></tr></table></figure></div>
-
-<p>结果展示：<br><img lazyload src="/images/loading.svg" data-src="GovRpWordCloudv1%E4%B8%AD%E7%89%B9%E4%BA%94%E6%98%9F.png" alt="image"></p>
-<p><img lazyload src="/images/loading.svg" data-src="GovRpWordCloudv1%E5%86%9C%E6%9D%91%E5%9C%B0%E5%9B%BE.png" alt="image"></p>
-<h2 id="扩展能力"><a href="#扩展能力" class="headerlink" title="扩展能力"></a>扩展能力</h2><ul>
-<li>了解wordcloud更多参数，扩展词云能力</li>
-<li>特色词云：设计一款属于自己的特色词云风格</li>
-<li>更多文件：用更多文件练习词云生成</li>
-</ul>
-<blockquote>
-<p>练习素材下载：<br><a class="link" href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/%E6%96%B0%E6%97%B6%E4%BB%A3%E4%B8%AD%E5%9B%BD%E7%89%B9%E8%89%B2%E7%A4%BE%E4%BC%9A%E4%B8%BB%E4%B9%89.txt">新时代中国特色社会主义.txt<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br><a class="link" href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/%E5%85%B3%E4%BA%8E%E5%AE%9E%E6%96%BD%E4%B9%A1%E6%9D%91%E6%8C%AF%E5%85%B4%E6%88%98%E7%95%A5%E7%9A%84%E6%84%8F%E8%A7%81.txt">关于实施乡村振兴战略的意见.txt<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br><a class="link" href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/chinamap.jpg">chinamap.jpg<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br><a class="link" href="https://image-1253398535.cos.ap-beijing.myqcloud.com/python(6)/fivestars.png">fivestars.png<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-</blockquote>
 ]]></content>
       <categories>
         <category>Python</category>
@@ -4999,6 +4999,108 @@
       </tags>
   </entry>
   <entry>
+    <title>年更博主：小恐龙OJ的装修心得</title>
+    <url>/2024/08/21/%E5%B9%B4%E6%9B%B4%E5%8D%9A%E4%B8%BB%EF%BC%9A%E5%B0%8F%E6%81%90%E9%BE%99OJ%E7%9A%84%E8%A3%85%E4%BF%AE%E5%BF%83%E5%BE%97/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>带你学C带你飞(3)</title>
+    <url>/2022/03/25/%E5%B8%A6%E4%BD%A0%E5%AD%A6C%E5%B8%A6%E4%BD%A0%E9%A3%9E-3/</url>
+    <content><![CDATA[<p>小甲鱼C语言系列课程笔记，共61个视频，每6个视频总结一次笔记，预计10篇。</p>
+<blockquote>
+<p><a class="link" href="https://www.bilibili.com/video/BV17s411N78s">https://www.bilibili.com/video/BV17s411N78s<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+</blockquote>
+<span id="more"></span>
+
+<h1 id="while语句和dowhile语句"><a href="#while语句和dowhile语句" class="headerlink" title="while语句和dowhile语句"></a><code>while</code>语句和<code>dowhile</code>语句</h1><h2 id="while语句"><a href="#while语句" class="headerlink" title="while语句"></a><code>while</code>语句</h2><h3 id="计算1-2-3-…-100"><a href="#计算1-2-3-…-100" class="headerlink" title="计算1+2+3+…+100"></a>计算1+2+3+…+100</h3><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (i &lt;= <span class="number">100</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        sum = sum + i;</span><br><span class="line">        i = i + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;1+2+3+...+100 = %d\n&quot;</span>, sum);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="统计从键盘输入的一行英文句子的字符个数"><a href="#统计从键盘输入的一行英文句子的字符个数" class="headerlink" title="统计从键盘输入的一行英文句子的字符个数"></a>统计从键盘输入的一行英文句子的字符个数</h3><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Please enter:&quot;</span>);</span><br><span class="line">    <span class="keyword">while</span> (getchar() != <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        count = count + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;结果是%d\n&quot;</span>, count);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="dowhile语句"><a href="#dowhile语句" class="headerlink" title="dowhile语句"></a><code>dowhile</code>语句</h2><p>注意格式，<code>while</code>后面有分号</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">do</span></span><br><span class="line">    循环体</span><br><span class="line"><span class="keyword">while</span> (表达式);</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="for语句和循环嵌套"><a href="#for语句和循环嵌套" class="headerlink" title="for语句和循环嵌套"></a><code>for</code>语句和循环嵌套</h1><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (表达式<span class="number">1</span>; 表达式<span class="number">2</span>; 表达式<span class="number">3</span>)</span><br><span class="line">    循环体</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li>表达式1：循环初始化表达式</li>
+<li>表达式2：循环条件表达式</li>
+<li>表达式3：循环调整表达式</li>
+</ul>
+<h2 id="打印10次-I-love-fishc-com"><a href="#打印10次-I-love-fishc-com" class="headerlink" title="打印10次 I love fishc.com"></a>打印10次 <code>I love fishc.com</code></h2><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印10次I love fishc.com</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;I love fishc.com\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h2 id="判断一个数是否为素数"><a href="#判断一个数是否为素数" class="headerlink" title="判断一个数是否为素数"></a>判断一个数是否为素数</h2><blockquote>
+<p>（小甲鱼）测试从 <code>2</code> 到 <code>num / 2</code> 所有整数是否能被整除，如果没有出现能被整除的整数，则 <code>num</code> 为素数。</p>
+<p>（百度）测试从 <code>2</code> 到 <code>sqrt(n)</code> 所有整数是否能被整除，如果没有出现能被整除的整数，则 <code>num</code> 为素数。</p>
+</blockquote>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> num;</span><br><span class="line">    <span class="built_in">_Bool</span> isPrime = <span class="number">1</span>; <span class="comment">//布尔值，1是质数，0不是质数</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Please enter a number(&gt;=2): &quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;num);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt; (<span class="keyword">int</span>)<span class="built_in">sqrt</span>(num) + <span class="number">1</span>; i++) <span class="comment">//从2到sqrt(n)之间是否有整数能被整除，如果有则不是质数</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (num % i == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            isPrime = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (isPrime)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d is a prime number.\n&quot;</span>, num);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d is not a prime number.\n&quot;</span>, num);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h2 id="灵活修改"><a href="#灵活修改" class="headerlink" title="灵活修改"></a>灵活修改</h2><p>for语句的表达式可以根据需要省略，但是 <code>;</code> 必须留下。</p>
+<h2 id="C99新标准"><a href="#C99新标准" class="headerlink" title="C99新标准"></a>C99新标准</h2><p>允许在for语句表达式1中，定义变量（如上述程序）。</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">10</span>; i++)</span><br><span class="line">等价于</span><br><span class="line"><span class="keyword">int</span> i;</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt;= <span class="number">10</span>; i++)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="循环嵌套"><a href="#循环嵌套" class="headerlink" title="循环嵌套"></a>循环嵌套</h2><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; <span class="number">3</span>; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;i = %d, j = %d\n&quot;</span>, i, j);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>运行结果</p>
+<p><img lazyload src="/images/loading.svg" data-src="%E5%B8%A6%E4%BD%A0%E5%AD%A6C%E5%B8%A6%E4%BD%A0%E9%A3%9E-3/test14-3-out.png"></p>
+<h3 id="打印99乘法表"><a href="#打印99乘法表" class="headerlink" title="打印99乘法表"></a>打印99乘法表</h3><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j;</span><br><span class="line">    <span class="keyword">for</span> (j = <span class="number">1</span>; j &lt;= <span class="number">9</span>; j++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= j; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%dx%d=%d\t&quot;</span>, i, j, i * j);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>运行结果：<br><img lazyload src="/images/loading.svg" data-src="%E5%B8%A6%E4%BD%A0%E5%AD%A6C%E5%B8%A6%E4%BD%A0%E9%A3%9E-3/test14-4-out.png"></p>
+<h1 id="break语句和continue语句"><a href="#break语句和continue语句" class="headerlink" title="break语句和continue语句"></a><code>break</code>语句和<code>continue</code>语句</h1><h2 id="break语句"><a href="#break语句" class="headerlink" title="break语句"></a><code>break</code>语句</h2><p>使用<code>break</code>语句可以跳出循环，减少运算次数。</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> <span class="keyword">int</span> i, num;</span><br><span class="line">    <span class="built_in">_Bool</span> flag = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;请输入一个整数：&quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>, &amp;num);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">2</span>; i &lt; num / <span class="number">2</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (num % i == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            flag = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (flag)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%lld是一个素数\n&quot;</span>, num);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%lld不是一个素数\n&quot;</span>, num);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;i = %lld\n&quot;</span>, i);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<blockquote>
+<p><code>break</code>语句只能<strong>跳出</strong>它所在的那一层循环，不能跳出外层循环。</p>
+</blockquote>
+<h2 id="continue语句"><a href="#continue语句" class="headerlink" title="continue语句"></a><code>continue</code>语句</h2><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 凡是大写字母C都当做看不见</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ch;</span><br><span class="line">    <span class="keyword">while</span> ((ch = getchar()) != <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (ch == <span class="string">&#x27;C&#x27;</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">putchar</span>(ch);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">putchar</span>(<span class="string">&#x27;\n&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>运行结果</p>
+<p><img lazyload src="/images/loading.svg" data-src="%E5%B8%A6%E4%BD%A0%E5%AD%A6C%E5%B8%A6%E4%BD%A0%E9%A3%9E-3/test15-2-out.png"></p>
+<blockquote>
+<p><code>continue</code>语句只能<strong>跳过一次</strong>它所在的那一层循环，不能跳过外层循环。</p>
+</blockquote>
+<h2 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h2><p>将如下程序改成等价的<code>while</code>语句形式</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (i % <span class="number">2</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>修改后：</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (i &lt; <span class="number">100</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (i % <span class="number">2</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p><strong>问题</strong>出在：<code>while</code>循环执行完<code>continue</code>后，不会再执行<code>i++</code>，而是直接再次循环，因此形成死循环。</p>
+<h1 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h1><h2 id="赋值运算符"><a href="#赋值运算符" class="headerlink" title="赋值运算符"></a>赋值运算符</h2><p>赋值运算符的左边必须是<code>lvalue</code>，变量名就是<code>lvalue</code>。</p>
+<h3 id="复合赋值运算符"><a href="#复合赋值运算符" class="headerlink" title="复合赋值运算符"></a>复合赋值运算符</h3><table>
+<thead>
+<tr>
+<th>赋值</th>
+<th>简写</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>a = a + 1</code></td>
+<td><code>a += 1</code></td>
+</tr>
+<tr>
+<td><code>a = a - 2</code></td>
+<td><code>a -= 2</code></td>
+</tr>
+<tr>
+<td><code>a = a * 3</code></td>
+<td><code>a *= 3</code></td>
+</tr>
+<tr>
+<td><code>a = a / 4</code></td>
+<td><code>a /= 4</code></td>
+</tr>
+<tr>
+<td><code>a = a % 5</code></td>
+<td><code>a %= 5</code></td>
+</tr>
+</tbody></table>
+<h3 id="自增自减运算符"><a href="#自增自减运算符" class="headerlink" title="自增自减运算符"></a>自增自减运算符</h3><p><code>i = i + 1</code>  =&gt;  <code>i++</code> <code>++i</code><br><code>i = i - 1</code>  =&gt;  <code>i--</code> <code>--i</code></p>
+<p><code>i++</code>和<code>++i</code>的区别：</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">5</span>, j;</span><br><span class="line">    j = ++i;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;i = %d, j = %d\n&quot;</span>, i, j);</span><br><span class="line"></span><br><span class="line">    i = <span class="number">5</span>;</span><br><span class="line">    j = i++;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;i = %d, j = %d\n&quot;</span>, i, j);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>运行结果：</p>
+<p><img lazyload src="/images/loading.svg" data-src="%E5%B8%A6%E4%BD%A0%E5%AD%A6C%E5%B8%A6%E4%BD%A0%E9%A3%9E-3/test16-1-out.png"></p>
+]]></content>
+      <categories>
+        <category>C/C++</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>带你学C带你飞(1)</title>
     <url>/2022/03/23/%E5%B8%A6%E4%BD%A0%E5%AD%A6C%E5%B8%A6%E4%BD%A0%E9%A3%9E-1/</url>
     <content><![CDATA[<p>小甲鱼C语言系列课程笔记，共61个视频，每6个视频总结一次笔记，预计10篇。</p>
@@ -5207,108 +5309,6 @@
       <tags>
         <tag>C</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>带你学C带你飞(3)</title>
-    <url>/2022/03/25/%E5%B8%A6%E4%BD%A0%E5%AD%A6C%E5%B8%A6%E4%BD%A0%E9%A3%9E-3/</url>
-    <content><![CDATA[<p>小甲鱼C语言系列课程笔记，共61个视频，每6个视频总结一次笔记，预计10篇。</p>
-<blockquote>
-<p><a class="link" href="https://www.bilibili.com/video/BV17s411N78s">https://www.bilibili.com/video/BV17s411N78s<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-</blockquote>
-<span id="more"></span>
-
-<h1 id="while语句和dowhile语句"><a href="#while语句和dowhile语句" class="headerlink" title="while语句和dowhile语句"></a><code>while</code>语句和<code>dowhile</code>语句</h1><h2 id="while语句"><a href="#while语句" class="headerlink" title="while语句"></a><code>while</code>语句</h2><h3 id="计算1-2-3-…-100"><a href="#计算1-2-3-…-100" class="headerlink" title="计算1+2+3+…+100"></a>计算1+2+3+…+100</h3><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (i &lt;= <span class="number">100</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        sum = sum + i;</span><br><span class="line">        i = i + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;1+2+3+...+100 = %d\n&quot;</span>, sum);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="统计从键盘输入的一行英文句子的字符个数"><a href="#统计从键盘输入的一行英文句子的字符个数" class="headerlink" title="统计从键盘输入的一行英文句子的字符个数"></a>统计从键盘输入的一行英文句子的字符个数</h3><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Please enter:&quot;</span>);</span><br><span class="line">    <span class="keyword">while</span> (getchar() != <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        count = count + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;结果是%d\n&quot;</span>, count);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="dowhile语句"><a href="#dowhile语句" class="headerlink" title="dowhile语句"></a><code>dowhile</code>语句</h2><p>注意格式，<code>while</code>后面有分号</p>
-<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">do</span></span><br><span class="line">    循环体</span><br><span class="line"><span class="keyword">while</span> (表达式);</span><br></pre></td></tr></table></figure></div>
-
-<h1 id="for语句和循环嵌套"><a href="#for语句和循环嵌套" class="headerlink" title="for语句和循环嵌套"></a><code>for</code>语句和循环嵌套</h1><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (表达式<span class="number">1</span>; 表达式<span class="number">2</span>; 表达式<span class="number">3</span>)</span><br><span class="line">    循环体</span><br></pre></td></tr></table></figure></div>
-<ul>
-<li>表达式1：循环初始化表达式</li>
-<li>表达式2：循环条件表达式</li>
-<li>表达式3：循环调整表达式</li>
-</ul>
-<h2 id="打印10次-I-love-fishc-com"><a href="#打印10次-I-love-fishc-com" class="headerlink" title="打印10次 I love fishc.com"></a>打印10次 <code>I love fishc.com</code></h2><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印10次I love fishc.com</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;I love fishc.com\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-<h2 id="判断一个数是否为素数"><a href="#判断一个数是否为素数" class="headerlink" title="判断一个数是否为素数"></a>判断一个数是否为素数</h2><blockquote>
-<p>（小甲鱼）测试从 <code>2</code> 到 <code>num / 2</code> 所有整数是否能被整除，如果没有出现能被整除的整数，则 <code>num</code> 为素数。</p>
-<p>（百度）测试从 <code>2</code> 到 <code>sqrt(n)</code> 所有整数是否能被整除，如果没有出现能被整除的整数，则 <code>num</code> 为素数。</p>
-</blockquote>
-<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> num;</span><br><span class="line">    <span class="built_in">_Bool</span> isPrime = <span class="number">1</span>; <span class="comment">//布尔值，1是质数，0不是质数</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Please enter a number(&gt;=2): &quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;num);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt; (<span class="keyword">int</span>)<span class="built_in">sqrt</span>(num) + <span class="number">1</span>; i++) <span class="comment">//从2到sqrt(n)之间是否有整数能被整除，如果有则不是质数</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (num % i == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            isPrime = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (isPrime)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d is a prime number.\n&quot;</span>, num);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d is not a prime number.\n&quot;</span>, num);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-<h2 id="灵活修改"><a href="#灵活修改" class="headerlink" title="灵活修改"></a>灵活修改</h2><p>for语句的表达式可以根据需要省略，但是 <code>;</code> 必须留下。</p>
-<h2 id="C99新标准"><a href="#C99新标准" class="headerlink" title="C99新标准"></a>C99新标准</h2><p>允许在for语句表达式1中，定义变量（如上述程序）。</p>
-<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">10</span>; i++)</span><br><span class="line">等价于</span><br><span class="line"><span class="keyword">int</span> i;</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt;= <span class="number">10</span>; i++)</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="循环嵌套"><a href="#循环嵌套" class="headerlink" title="循环嵌套"></a>循环嵌套</h2><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; <span class="number">3</span>; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;i = %d, j = %d\n&quot;</span>, i, j);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-<p>运行结果</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%B8%A6%E4%BD%A0%E5%AD%A6C%E5%B8%A6%E4%BD%A0%E9%A3%9E-3/test14-3-out.png"></p>
-<h3 id="打印99乘法表"><a href="#打印99乘法表" class="headerlink" title="打印99乘法表"></a>打印99乘法表</h3><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i, j;</span><br><span class="line">    <span class="keyword">for</span> (j = <span class="number">1</span>; j &lt;= <span class="number">9</span>; j++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= j; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%dx%d=%d\t&quot;</span>, i, j, i * j);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-<p>运行结果：<br><img lazyload src="/images/loading.svg" data-src="%E5%B8%A6%E4%BD%A0%E5%AD%A6C%E5%B8%A6%E4%BD%A0%E9%A3%9E-3/test14-4-out.png"></p>
-<h1 id="break语句和continue语句"><a href="#break语句和continue语句" class="headerlink" title="break语句和continue语句"></a><code>break</code>语句和<code>continue</code>语句</h1><h2 id="break语句"><a href="#break语句" class="headerlink" title="break语句"></a><code>break</code>语句</h2><p>使用<code>break</code>语句可以跳出循环，减少运算次数。</p>
-<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> <span class="keyword">int</span> i, num;</span><br><span class="line">    <span class="built_in">_Bool</span> flag = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;请输入一个整数：&quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>, &amp;num);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">2</span>; i &lt; num / <span class="number">2</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (num % i == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            flag = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (flag)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%lld是一个素数\n&quot;</span>, num);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%lld不是一个素数\n&quot;</span>, num);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;i = %lld\n&quot;</span>, i);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-<blockquote>
-<p><code>break</code>语句只能<strong>跳出</strong>它所在的那一层循环，不能跳出外层循环。</p>
-</blockquote>
-<h2 id="continue语句"><a href="#continue语句" class="headerlink" title="continue语句"></a><code>continue</code>语句</h2><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 凡是大写字母C都当做看不见</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ch;</span><br><span class="line">    <span class="keyword">while</span> ((ch = getchar()) != <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (ch == <span class="string">&#x27;C&#x27;</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">putchar</span>(ch);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">putchar</span>(<span class="string">&#x27;\n&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p>运行结果</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%B8%A6%E4%BD%A0%E5%AD%A6C%E5%B8%A6%E4%BD%A0%E9%A3%9E-3/test15-2-out.png"></p>
-<blockquote>
-<p><code>continue</code>语句只能<strong>跳过一次</strong>它所在的那一层循环，不能跳过外层循环。</p>
-</blockquote>
-<h2 id="坑"><a href="#坑" class="headerlink" title="坑"></a>坑</h2><p>将如下程序改成等价的<code>while</code>语句形式</p>
-<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (i % <span class="number">2</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<p>修改后：</p>
-<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (i &lt; <span class="number">100</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (i % <span class="number">2</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-<p><strong>问题</strong>出在：<code>while</code>循环执行完<code>continue</code>后，不会再执行<code>i++</code>，而是直接再次循环，因此形成死循环。</p>
-<h1 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h1><h2 id="赋值运算符"><a href="#赋值运算符" class="headerlink" title="赋值运算符"></a>赋值运算符</h2><p>赋值运算符的左边必须是<code>lvalue</code>，变量名就是<code>lvalue</code>。</p>
-<h3 id="复合赋值运算符"><a href="#复合赋值运算符" class="headerlink" title="复合赋值运算符"></a>复合赋值运算符</h3><table>
-<thead>
-<tr>
-<th>赋值</th>
-<th>简写</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>a = a + 1</code></td>
-<td><code>a += 1</code></td>
-</tr>
-<tr>
-<td><code>a = a - 2</code></td>
-<td><code>a -= 2</code></td>
-</tr>
-<tr>
-<td><code>a = a * 3</code></td>
-<td><code>a *= 3</code></td>
-</tr>
-<tr>
-<td><code>a = a / 4</code></td>
-<td><code>a /= 4</code></td>
-</tr>
-<tr>
-<td><code>a = a % 5</code></td>
-<td><code>a %= 5</code></td>
-</tr>
-</tbody></table>
-<h3 id="自增自减运算符"><a href="#自增自减运算符" class="headerlink" title="自增自减运算符"></a>自增自减运算符</h3><p><code>i = i + 1</code>  =&gt;  <code>i++</code> <code>++i</code><br><code>i = i - 1</code>  =&gt;  <code>i--</code> <code>--i</code></p>
-<p><code>i++</code>和<code>++i</code>的区别：</p>
-<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">5</span>, j;</span><br><span class="line">    j = ++i;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;i = %d, j = %d\n&quot;</span>, i, j);</span><br><span class="line"></span><br><span class="line">    i = <span class="number">5</span>;</span><br><span class="line">    j = i++;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;i = %d, j = %d\n&quot;</span>, i, j);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-<p>运行结果：</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E5%B8%A6%E4%BD%A0%E5%AD%A6C%E5%B8%A6%E4%BD%A0%E9%A3%9E-3/test16-1-out.png"></p>
-]]></content>
-      <categories>
-        <category>C/C++</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>年更博主：小恐龙OJ的装修心得</title>
-    <url>/2024/08/21/%E5%B9%B4%E6%9B%B4%E5%8D%9A%E4%B8%BB%EF%BC%9A%E5%B0%8F%E6%81%90%E9%BE%99OJ%E7%9A%84%E8%A3%85%E4%BF%AE%E5%BF%83%E5%BE%97/</url>
-    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>庆祝中国共产党成立100周年</title>
