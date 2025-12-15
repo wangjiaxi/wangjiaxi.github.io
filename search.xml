@@ -135,78 +135,6 @@
       </tags>
   </entry>
   <entry>
-    <title>MacOS下使用VS Code搭建C语言开发环境</title>
-    <url>/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
-    <content><![CDATA[<p>本篇介绍如何在Mac上使用VS Code写C语言代码。VS Code是一个轻量级的IDE，相比CLion、Xcode等等体积小很多，并且在插件市场拥有丰富的插件，可以方便的安装使用。</p>
-<span id="more"></span>
-
-<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><h2 id="下载VS-Code"><a href="#下载VS-Code" class="headerlink" title="下载VS Code"></a>下载VS Code</h2><p>下载地址：<a class="link" href="https://code.visualstudio.com/">https://code.visualstudio.com/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="1.png" alt="1"></p>
-</blockquote>
-<h2 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h2><p>打开VS Code，点击左侧的 Extensions（图标为“田”字右上角的格子起飞），在搜索框中输入 <code>C/C++</code>，选择紫色图标，作者为Microsoft，点击 Install 即可安装。</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="3.png" alt="3"></p>
-</blockquote>
-<h2 id="创建文件夹"><a href="#创建文件夹" class="headerlink" title="创建文件夹"></a>创建文件夹</h2><p>在电脑中你希望保存代码的地方新建一个文件夹，我的是 <code>桌面-个人-学习-C/C++</code> ，创建好以后重启 VS Code。重启后，在欢迎页面点击 Open，并打开你刚创建的文件夹。</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="4.png" alt="4"></p>
-</blockquote>
-<h2 id="另存为一个工作区"><a href="#另存为一个工作区" class="headerlink" title="另存为一个工作区"></a>另存为一个工作区</h2><p>点击 File &gt; Save Workspace As …，并命名。</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="5.png" alt="5"></p>
-</blockquote>
-<h2 id="新建一个C文件，命名并保存"><a href="#新建一个C文件，命名并保存" class="headerlink" title="新建一个C文件，命名并保存"></a>新建一个C文件，命名并保存</h2><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;hello VSCode!\n&quot;</span>);</span><br><span class="line">     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></div>
-
-<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h2 id="配置-c-cpp-properties-json"><a href="#配置-c-cpp-properties-json" class="headerlink" title="配置 c_cpp_properties.json"></a>配置 <code>c_cpp_properties.json</code></h2><p>使用快捷键 <code>command</code> + <code>shift</code> + <code>P</code>打开命令行面板（Command Palette）</p>
-<p>输入 edit configurations，在弹出的列表中选择带 JSON 的 C/C++: Edit Configurations(JSON)</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="6.png" alt="6"></p>
-</blockquote>
-<p>配置字段 includePath：</p>
-<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;includePath&quot;</span>: </span><br><span class="line">[</span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include/c++/v1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/usr/local/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include&quot;</span></span><br><span class="line">],</span><br></pre></td></tr></table></figure></div>
-
-<p>你可能需要注意<br> <code>&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;,</code>中的版本号，可以进入Finder，按快捷键<code>command</code> + <code>shift</code> + <code>G</code> 输入：</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">/Library/Developer/CommandLineTools/usr/lib/clang/</span><br></pre></td></tr></table></figure></div>
-
-<p>在文件夹中查看clang版本</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="8.png" alt="8"></p>
-</blockquote>
-<p>完成后保存。</p>
-<h2 id="配置-tasks-json"><a href="#配置-tasks-json" class="headerlink" title="配置 tasks.json"></a>配置 <code>tasks.json</code></h2><p>在打开.c文件的情况下（比如我这里的hello.c）打开命令行面板 <code>command</code> + <code>shift</code> + <code>P</code>，输入tasks:configure task，选择Tasks: Configure Task</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="9.png" alt="9"></p>
-</blockquote>
-<p>点击C/C++:clang 生成活动文件</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="10.png" alt="10"></p>
-</blockquote>
-<p>这里我们需要配置 args 字段</p>
-<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;args&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;-g&quot;</span>,<span class="comment">//编译命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.c&quot;</span>,<span class="comment">//当前workspace下的hello.c文件</span></span><br><span class="line">    <span class="string">&quot;-o&quot;</span>,<span class="comment">//输出文件命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span><span class="comment">//生成的可执行文件的路径及名称</span></span><br><span class="line">    ],</span><br></pre></td></tr></table></figure></div>
-
-<p>你需要配置第二个参数和第四个参数，第二个是编制的文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.c</code>，第四个是生成的可执行文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.o</code> ，完成后保存。</p>
-<h2 id="配置launch-json"><a href="#配置launch-json" class="headerlink" title="配置launch.json"></a>配置<code>launch.json</code></h2><p>在 hello.c 中按<code>Fn</code> + <code>F5</code> ，软件会报错并自动打开一个 <code>launch.json</code> 文件，这里需要配置 <code>program</code> 字段：</p>
-<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;program&quot;</span>: <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span>,</span><br></pre></td></tr></table></figure></div>
-
-<p>再次运行：</p>
-<blockquote>
-<p><img lazyload src="/images/loading.svg" data-src="11.png" alt="11"></p>
-</blockquote>
-<hr>
-<blockquote>
-<p>部分内容转自 <a class="link" href="https://www.jianshu.com/u/69abdc363757">Robinone<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> 的 <a class="link" href="https://www.jianshu.com/p/83879b4aa3fe">https://www.jianshu.com/p/83879b4aa3fe<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>C/C++</category>
-      </categories>
-      <tags>
-        <tag>C</tag>
-        <tag>IDE</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Mac提示「软件已损坏，请移到废纸篓」解决</title>
     <url>/2022/02/18/Mac%E6%8F%90%E7%A4%BA%E3%80%8C%E8%BD%AF%E4%BB%B6%E5%B7%B2%E6%8D%9F%E5%9D%8F%EF%BC%8C%E8%AF%B7%E7%A7%BB%E5%88%B0%E5%BA%9F%E7%BA%B8%E7%AF%93%E3%80%8D%E8%A7%A3%E5%86%B3/</url>
     <content><![CDATA[<blockquote>
@@ -273,38 +201,6 @@
         <category>Python</category>
       </categories>
       <tags>
-        <tag>bug</tag>
-        <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Pycharm Out of memory 解决办法</title>
-    <url>/2021/05/26/Pycharm-Out-of-memory-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
-    <content><![CDATA[<p>最近使用Pycharm敲代码突然卡住，并且蹦出一个错误：<code>Out of memory</code>。</p>
-<p>但是该错误与代码无关，只是因为系统分配给Pycharm的最大内存不够用了而已。</p>
-<p>这个最大内存是我们可以修改的，将它修改的大一些就可以解决这个问题。</p>
-<p>下面看看如何修改~</p>
-<span id="more"></span>
-
-<ol>
-<li>进入如下目录：</li>
-</ol>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">访达 -&gt; 应用程序 -&gt; 右键Pycharm -&gt; 显示包内容 -&gt; Contents -&gt; bin</span><br></pre></td></tr></table></figure></div>
-
-<ol start="2">
-<li>找到文件<code>pycharm.vmoptions</code>，使用一个文本编辑器打开，修改前两行的数值：</li>
-</ol>
-<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">-Xms1024m      修改前是512</span><br><span class="line">-Xmx2048m      修改前是750（奇怪的数字）</span><br><span class="line">-XX:ReservedCodeCacheSize=512m</span><br><span class="line">-XX:+UseConcMarkSweepGC</span><br></pre></td></tr></table></figure></div>
-
-<ol start="3">
-<li>修改后保存关闭，重新启动Pycharm。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>IDE</tag>
         <tag>bug</tag>
         <tag>Python</tag>
       </tags>
@@ -949,6 +845,68 @@
       </tags>
   </entry>
   <entry>
+    <title>Python输出百分比和有效数字</title>
+    <url>/2020/05/13/Python%E8%BE%93%E5%87%BA%E7%99%BE%E5%88%86%E6%AF%94%E5%92%8C%E6%9C%89%E6%95%88%E6%95%B0%E5%AD%97/</url>
+    <content><![CDATA[<p>目录：</p>
+<ul>
+<li><p>输出百分数</p>
+</li>
+<li><p>输出有效数字</p>
+</li>
+</ul>
+<span id="more"></span>
+<h1 id="输出百分数"><a href="#输出百分数" class="headerlink" title="输出百分数"></a>输出百分数</h1><h2 id="方式1：直接使用参数格式化：-2"><a href="#方式1：直接使用参数格式化：-2" class="headerlink" title="方式1：直接使用参数格式化：{:.2%}"></a>方式1：直接使用参数格式化：<code>&#123;:.2%&#125;</code></h2><p><code>&#123;:.2%&#125;</code>： 显示小数点后2位</p>
+<ul>
+<li>显示小数点后2位：</li>
+</ul>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.2%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.00</span>%</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>不显示小数位：<code>&#123;:.0%&#125;</code>，即，将2改为0：</li>
+</ul>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.0%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84</span>%</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="方式2：格式化为float，然后处理成-格式：-2f"><a href="#方式2：格式化为float，然后处理成-格式：-2f" class="headerlink" title="方式2：格式化为float，然后处理成%格式： {:.2f}%"></a>方式2：格式化为float，然后处理成%格式： <code>&#123;:.2f&#125;%</code></h2><p>与方式1的区别是：</p>
+<ol>
+<li>需要对42/50乘以 100 。</li>
+<li>方式2的%在{ }外边，方式1的%在{ }里边。</li>
+</ol>
+<ul>
+<li>显示小数点后2位：</li>
+</ul>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.2f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.00</span>%</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>显示小数点后1位：</li>
+</ul>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.1f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.0</span>%</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>只显示整数位：</li>
+</ul>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.0f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84</span>%</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p><code>&#123; &#125; </code>的意思是对应<code>format()</code>的一个参数，按默认顺序对应，参数序号从0开始，<code>&#123;0&#125;</code>对应<code>format()</code>的第一个参数，<code>&#123;1&#125;</code>对应第二个参数。例如：</p>
+<ul>
+<li>默认顺序：</li>
+</ul>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent1: &#123;:.2%&#125;, percent2: &#123;:.1%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>, <span class="number">42</span> / <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent1: <span class="number">84.00</span>%, percent2: <span class="number">42.0</span>%</span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>指定顺序：<br><code>&#123;1:.1%&#125;</code>对应第2个参数； <code>&#123;0:.1%&#125;</code>对应第1个参数。</li>
+</ul>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent2: &#123;1:.1%&#125;, percent1: &#123;0:.1%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>, <span class="number">42</span> / <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent2: <span class="number">42.0</span>%, percent1: <span class="number">84.0</span>%</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="输出有效数字"><a href="#输出有效数字" class="headerlink" title="输出有效数字"></a>输出有效数字</h1><p>用自带的decimal模块</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> decimal <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">getcontext().prec = <span class="number">6</span></span><br><span class="line">Decimal(<span class="number">1</span>)/Decimal(<span class="number">7</span>)</span><br><span class="line"><span class="comment"># 结果为Decimal(&#x27;0.142857&#x27;)，六个有效数字</span></span><br></pre></td></tr></table></figure></div>]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>数据分析之Numpy库入门</title>
     <url>/2019/04/04/Python%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E4%B9%8BNumpy%E5%BA%93%E5%85%A5%E9%97%A8/</url>
     <content><![CDATA[<h1 id="数据的维度"><a href="#数据的维度" class="headerlink" title="数据的维度"></a>数据的维度</h1><p>一个数据表达一个含义<br>一组数据表达一个或多个含义</p>
@@ -1322,68 +1280,6 @@
       <tags>
         <tag>Python</tag>
         <tag>数据分析</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Python输出百分比和有效数字</title>
-    <url>/2020/05/13/Python%E8%BE%93%E5%87%BA%E7%99%BE%E5%88%86%E6%AF%94%E5%92%8C%E6%9C%89%E6%95%88%E6%95%B0%E5%AD%97/</url>
-    <content><![CDATA[<p>目录：</p>
-<ul>
-<li><p>输出百分数</p>
-</li>
-<li><p>输出有效数字</p>
-</li>
-</ul>
-<span id="more"></span>
-<h1 id="输出百分数"><a href="#输出百分数" class="headerlink" title="输出百分数"></a>输出百分数</h1><h2 id="方式1：直接使用参数格式化：-2"><a href="#方式1：直接使用参数格式化：-2" class="headerlink" title="方式1：直接使用参数格式化：{:.2%}"></a>方式1：直接使用参数格式化：<code>&#123;:.2%&#125;</code></h2><p><code>&#123;:.2%&#125;</code>： 显示小数点后2位</p>
-<ul>
-<li>显示小数点后2位：</li>
-</ul>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.2%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.00</span>%</span><br></pre></td></tr></table></figure></div>
-
-<ul>
-<li>不显示小数位：<code>&#123;:.0%&#125;</code>，即，将2改为0：</li>
-</ul>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.0%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84</span>%</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="方式2：格式化为float，然后处理成-格式：-2f"><a href="#方式2：格式化为float，然后处理成-格式：-2f" class="headerlink" title="方式2：格式化为float，然后处理成%格式： {:.2f}%"></a>方式2：格式化为float，然后处理成%格式： <code>&#123;:.2f&#125;%</code></h2><p>与方式1的区别是：</p>
-<ol>
-<li>需要对42/50乘以 100 。</li>
-<li>方式2的%在{ }外边，方式1的%在{ }里边。</li>
-</ol>
-<ul>
-<li>显示小数点后2位：</li>
-</ul>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.2f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.00</span>%</span><br></pre></td></tr></table></figure></div>
-
-<ul>
-<li>显示小数点后1位：</li>
-</ul>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.1f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84.0</span>%</span><br></pre></td></tr></table></figure></div>
-
-<ul>
-<li>只显示整数位：</li>
-</ul>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent: &#123;:.0f&#125;%&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span> * <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent: <span class="number">84</span>%</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p><code>&#123; &#125; </code>的意思是对应<code>format()</code>的一个参数，按默认顺序对应，参数序号从0开始，<code>&#123;0&#125;</code>对应<code>format()</code>的第一个参数，<code>&#123;1&#125;</code>对应第二个参数。例如：</p>
-<ul>
-<li>默认顺序：</li>
-</ul>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent1: &#123;:.2%&#125;, percent2: &#123;:.1%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>, <span class="number">42</span> / <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent1: <span class="number">84.00</span>%, percent2: <span class="number">42.0</span>%</span><br></pre></td></tr></table></figure></div>
-
-<ul>
-<li>指定顺序：<br><code>&#123;1:.1%&#125;</code>对应第2个参数； <code>&#123;0:.1%&#125;</code>对应第1个参数。</li>
-</ul>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;percent2: &#123;1:.1%&#125;, percent1: &#123;0:.1%&#125;&#x27;</span>.<span class="built_in">format</span>(<span class="number">42</span> / <span class="number">50</span>, <span class="number">42</span> / <span class="number">100</span>))</span><br><span class="line"></span><br><span class="line">percent2: <span class="number">42.0</span>%, percent1: <span class="number">84.0</span>%</span><br></pre></td></tr></table></figure></div>
-
-<h1 id="输出有效数字"><a href="#输出有效数字" class="headerlink" title="输出有效数字"></a>输出有效数字</h1><p>用自带的decimal模块</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> decimal <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">getcontext().prec = <span class="number">6</span></span><br><span class="line">Decimal(<span class="number">1</span>)/Decimal(<span class="number">7</span>)</span><br><span class="line"><span class="comment"># 结果为Decimal(&#x27;0.142857&#x27;)，六个有效数字</span></span><br></pre></td></tr></table></figure></div>]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -2293,6 +2189,78 @@
       </tags>
   </entry>
   <entry>
+    <title>MacOS下使用VS Code搭建C语言开发环境</title>
+    <url>/2022/03/01/MacOS%E4%B8%8B%E4%BD%BF%E7%94%A8VS-Code%E6%90%AD%E5%BB%BAC%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</url>
+    <content><![CDATA[<p>本篇介绍如何在Mac上使用VS Code写C语言代码。VS Code是一个轻量级的IDE，相比CLion、Xcode等等体积小很多，并且在插件市场拥有丰富的插件，可以方便的安装使用。</p>
+<span id="more"></span>
+
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><h2 id="下载VS-Code"><a href="#下载VS-Code" class="headerlink" title="下载VS Code"></a>下载VS Code</h2><p>下载地址：<a class="link" href="https://code.visualstudio.com/">https://code.visualstudio.com/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="1.png" alt="1"></p>
+</blockquote>
+<h2 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h2><p>打开VS Code，点击左侧的 Extensions（图标为“田”字右上角的格子起飞），在搜索框中输入 <code>C/C++</code>，选择紫色图标，作者为Microsoft，点击 Install 即可安装。</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="3.png" alt="3"></p>
+</blockquote>
+<h2 id="创建文件夹"><a href="#创建文件夹" class="headerlink" title="创建文件夹"></a>创建文件夹</h2><p>在电脑中你希望保存代码的地方新建一个文件夹，我的是 <code>桌面-个人-学习-C/C++</code> ，创建好以后重启 VS Code。重启后，在欢迎页面点击 Open，并打开你刚创建的文件夹。</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="4.png" alt="4"></p>
+</blockquote>
+<h2 id="另存为一个工作区"><a href="#另存为一个工作区" class="headerlink" title="另存为一个工作区"></a>另存为一个工作区</h2><p>点击 File &gt; Save Workspace As …，并命名。</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="5.png" alt="5"></p>
+</blockquote>
+<h2 id="新建一个C文件，命名并保存"><a href="#新建一个C文件，命名并保存" class="headerlink" title="新建一个C文件，命名并保存"></a>新建一个C文件，命名并保存</h2><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;hello VSCode!\n&quot;</span>);</span><br><span class="line">     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h2 id="配置-c-cpp-properties-json"><a href="#配置-c-cpp-properties-json" class="headerlink" title="配置 c_cpp_properties.json"></a>配置 <code>c_cpp_properties.json</code></h2><p>使用快捷键 <code>command</code> + <code>shift</code> + <code>P</code>打开命令行面板（Command Palette）</p>
+<p>输入 edit configurations，在弹出的列表中选择带 JSON 的 C/C++: Edit Configurations(JSON)</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="6.png" alt="6"></p>
+</blockquote>
+<p>配置字段 includePath：</p>
+<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;includePath&quot;</span>: </span><br><span class="line">[</span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include/c++/v1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/usr/local/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;</span>,</span><br><span class="line">    <span class="string">&quot;/Library/Developer/CommandLineTools/usr/include&quot;</span></span><br><span class="line">],</span><br></pre></td></tr></table></figure></div>
+
+<p>你可能需要注意<br> <code>&quot;/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0/include&quot;,</code>中的版本号，可以进入Finder，按快捷键<code>command</code> + <code>shift</code> + <code>G</code> 输入：</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">/Library/Developer/CommandLineTools/usr/lib/clang/</span><br></pre></td></tr></table></figure></div>
+
+<p>在文件夹中查看clang版本</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="8.png" alt="8"></p>
+</blockquote>
+<p>完成后保存。</p>
+<h2 id="配置-tasks-json"><a href="#配置-tasks-json" class="headerlink" title="配置 tasks.json"></a>配置 <code>tasks.json</code></h2><p>在打开.c文件的情况下（比如我这里的hello.c）打开命令行面板 <code>command</code> + <code>shift</code> + <code>P</code>，输入tasks:configure task，选择Tasks: Configure Task</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="9.png" alt="9"></p>
+</blockquote>
+<p>点击C/C++:clang 生成活动文件</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="10.png" alt="10"></p>
+</blockquote>
+<p>这里我们需要配置 args 字段</p>
+<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;args&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;-g&quot;</span>,<span class="comment">//编译命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.c&quot;</span>,<span class="comment">//当前workspace下的hello.c文件</span></span><br><span class="line">    <span class="string">&quot;-o&quot;</span>,<span class="comment">//输出文件命令</span></span><br><span class="line">    <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span><span class="comment">//生成的可执行文件的路径及名称</span></span><br><span class="line">    ],</span><br></pre></td></tr></table></figure></div>
+
+<p>你需要配置第二个参数和第四个参数，第二个是编制的文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.c</code>，第四个是生成的可执行文件路径，我这里是 <code>&#123;workspaceFolder&#125;/hello.o</code> ，完成后保存。</p>
+<h2 id="配置launch-json"><a href="#配置launch-json" class="headerlink" title="配置launch.json"></a>配置<code>launch.json</code></h2><p>在 hello.c 中按<code>Fn</code> + <code>F5</code> ，软件会报错并自动打开一个 <code>launch.json</code> 文件，这里需要配置 <code>program</code> 字段：</p>
+<div class="code-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;program&quot;</span>: <span class="string">&quot;$&#123;workspaceFolder&#125;/hello.o&quot;</span>,</span><br></pre></td></tr></table></figure></div>
+
+<p>再次运行：</p>
+<blockquote>
+<p><img lazyload src="/images/loading.svg" data-src="11.png" alt="11"></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>部分内容转自 <a class="link" href="https://www.jianshu.com/u/69abdc363757">Robinone<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> 的 <a class="link" href="https://www.jianshu.com/p/83879b4aa3fe">https://www.jianshu.com/p/83879b4aa3fe<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>C/C++</category>
+      </categories>
+      <tags>
+        <tag>C</tag>
+        <tag>IDE</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SQL必知必会(4)过滤数据</title>
     <url>/2020/12/06/SQL%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A-4-%E8%BF%87%E6%BB%A4%E6%95%B0%E6%8D%AE/</url>
     <content><![CDATA[<p>在SELECT语句中，数据根据WHERE子句中指定的搜索条件进行过滤。</p>
@@ -2783,49 +2751,6 @@
       </tags>
   </entry>
   <entry>
-    <title>ChatGPT首次会晤</title>
-    <url>/2023/02/16/chatGPT%E9%A6%96%E6%AC%A1%E4%BC%9A%E6%99%A4/</url>
-    <content><![CDATA[<blockquote>
-<p>为节省时间，本文部分内容由ChatGPT生成。</p>
-</blockquote>
-<span id="more"></span>
-<h1 id="什么是ChatGPT？"><a href="#什么是ChatGPT？" class="headerlink" title="什么是ChatGPT？"></a>什么是ChatGPT？</h1><p>ChatGPT是一种基于自然语言处理技术的聊天机器人，它可以通过对话与用户进行交互。它是由OpenAI开发的，采用了最新的GPT（Generative Pre-training Transformer）模型，可以实现对话的生成和理解。与传统的聊天机器人不同，ChatGPT可以模拟人类对话的风格和方式，从而实现更加自然、流畅的交流。ChatGPT的应用场景包括但不限于自然语言交互、文本生成、智能客服、语音交互等。</p>
-<h1 id="ChatGPT为什么突然火了？"><a href="#ChatGPT为什么突然火了？" class="headerlink" title="ChatGPT为什么突然火了？"></a>ChatGPT为什么突然火了？</h1><p>ChatGPT突然火起来主要是由于其所使用的GPT模型的出色表现和实用性。GPT是一种自然语言处理技术，能够在未知上下文中生成自然语言文本。在最近几年的发展中，GPT已经实现了极大的进步，成为自然语言生成的最先进技术之一。而ChatGPT则将这种技术应用到聊天机器人中，实现了更加自然、流畅的对话体验，从而得到了广泛的关注和使用。</p>
-<p>另外，随着社交媒体和在线社区的兴起，人们的社交活动也越来越多地发生在网络中。在这种情况下，ChatGPT的普及也得益于其方便快捷的聊天体验，用户可以在不受时间和空间限制的情况下与ChatGPT进行交互，获取所需的信息和支持。</p>
-<p>总之，ChatGPT的突然火起来是由于其使用的GPT技术的出色表现和实用性，以及社交活动向网络化转移的趋势所推动的。</p>
-<h1 id="如何使用ChatGPT"><a href="#如何使用ChatGPT" class="headerlink" title="如何使用ChatGPT"></a>如何使用ChatGPT</h1><p>要使用ChatGPT进行对话，可以按照以下步骤进行：</p>
-<ol>
-<li><p>找到可以访问ChatGPT的平台。例如，OpenAI官方网站上提供了一个在线的ChatGPT接口，用户可以直接在网页上与ChatGPT进行交互。</p>
-</li>
-<li><p>进入ChatGPT界面后，输入您想要与ChatGPT进行对话的内容。ChatGPT会根据您的输入内容，生成相应的回复，并返回给您。</p>
-</li>
-<li><p>根据ChatGPT的回复内容，继续与ChatGPT进行对话。您可以通过不断地输入内容和观察ChatGPT的回复，逐渐深入对话，获取您想要的信息或体验愉快的聊天时光。</p>
-</li>
-</ol>
-<p>除了在OpenAI官方网站上，还有其他许多平台和应用程序支持ChatGPT，例如智能音箱、聊天应用程序等。使用这些应用程序时，用户可以通过语音输入或者文本输入与ChatGPT进行交互，享受更为便捷和自然的聊天体验。</p>
-<p>需要注意的是，尽管ChatGPT能够产生人类类似的对话，但它并不能完全代替人类交互。ChatGPT目前仍有其局限性和缺陷，需要持续的技术发展和改进。因此，在使用ChatGPT时，需要保持谨慎和理性，同时遵守相应的法律法规和使用规范。</p>
-<h1 id="中国用户如何注册openai账号？"><a href="#中国用户如何注册openai账号？" class="headerlink" title="中国用户如何注册openai账号？"></a>中国用户如何注册openai账号？</h1><p>由于目前OpenAI官方网站仅支持英文界面，因此对于中国用户来说，注册OpenAI账号可能会有一些难度。以下是一个简要的注册流程：</p>
-<ol>
-<li><p>打开OpenAI官方网站<a class="link" href="https://openai.com/">https://openai.com/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>，进入网站首页。</p>
-</li>
-<li><p>点击右上角的“Sign Up”按钮，进入注册页面。</p>
-</li>
-<li><p>在注册页面上，需要填写邮箱地址、密码、用户名等信息，以完成账号注册。请注意，OpenAI官方网站要求密码必须包含字母和数字，并且长度不得少于8位。</p>
-</li>
-<li><p>注册成功后，您可以登录OpenAI官方网站，进入ChatGPT接口页面，开始与ChatGPT进行交互。</p>
-</li>
-</ol>
-<p>需要注意的是，由于OpenAI接口目前需要访问国外服务器，可能会受到网络访问的影响。同时，OpenAI的访问权限和服务范围也受到一些限制，用户需要注意遵守相关规定，并在使用过程中保持谨慎和理性。</p>
-]]></content>
-      <categories>
-        <category>AI</category>
-      </categories>
-      <tags>
-        <tag>AI</tag>
-        <tag>ChatGPT</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>kaggle项目之泰坦尼克幸存预测</title>
     <url>/2020/05/12/kaggle%E9%A1%B9%E7%9B%AE%20-%20%E6%B3%B0%E5%9D%A6%E5%B0%BC%E5%85%8B%E5%B9%B8%E5%AD%98%E9%A2%84%E6%B5%8B/</url>
     <content><![CDATA[<p>kaggle是一个机器学习竞赛平台。</p>
@@ -2866,6 +2791,81 @@
         <tag>Python</tag>
         <tag>数据分析</tag>
         <tag>机器学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Pycharm Out of memory 解决办法</title>
+    <url>/2021/05/26/Pycharm-Out-of-memory-%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
+    <content><![CDATA[<p>最近使用Pycharm敲代码突然卡住，并且蹦出一个错误：<code>Out of memory</code>。</p>
+<p>但是该错误与代码无关，只是因为系统分配给Pycharm的最大内存不够用了而已。</p>
+<p>这个最大内存是我们可以修改的，将它修改的大一些就可以解决这个问题。</p>
+<p>下面看看如何修改~</p>
+<span id="more"></span>
+
+<ol>
+<li>进入如下目录：</li>
+</ol>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">访达 -&gt; 应用程序 -&gt; 右键Pycharm -&gt; 显示包内容 -&gt; Contents -&gt; bin</span><br></pre></td></tr></table></figure></div>
+
+<ol start="2">
+<li>找到文件<code>pycharm.vmoptions</code>，使用一个文本编辑器打开，修改前两行的数值：</li>
+</ol>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">-Xms1024m      修改前是512</span><br><span class="line">-Xmx2048m      修改前是750（奇怪的数字）</span><br><span class="line">-XX:ReservedCodeCacheSize=512m</span><br><span class="line">-XX:+UseConcMarkSweepGC</span><br></pre></td></tr></table></figure></div>
+
+<ol start="3">
+<li>修改后保存关闭，重新启动Pycharm。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>bug</tag>
+        <tag>Python</tag>
+        <tag>IDE</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ChatGPT首次会晤</title>
+    <url>/2023/02/16/chatGPT%E9%A6%96%E6%AC%A1%E4%BC%9A%E6%99%A4/</url>
+    <content><![CDATA[<blockquote>
+<p>为节省时间，本文部分内容由ChatGPT生成。</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="什么是ChatGPT？"><a href="#什么是ChatGPT？" class="headerlink" title="什么是ChatGPT？"></a>什么是ChatGPT？</h1><p>ChatGPT是一种基于自然语言处理技术的聊天机器人，它可以通过对话与用户进行交互。它是由OpenAI开发的，采用了最新的GPT（Generative Pre-training Transformer）模型，可以实现对话的生成和理解。与传统的聊天机器人不同，ChatGPT可以模拟人类对话的风格和方式，从而实现更加自然、流畅的交流。ChatGPT的应用场景包括但不限于自然语言交互、文本生成、智能客服、语音交互等。</p>
+<h1 id="ChatGPT为什么突然火了？"><a href="#ChatGPT为什么突然火了？" class="headerlink" title="ChatGPT为什么突然火了？"></a>ChatGPT为什么突然火了？</h1><p>ChatGPT突然火起来主要是由于其所使用的GPT模型的出色表现和实用性。GPT是一种自然语言处理技术，能够在未知上下文中生成自然语言文本。在最近几年的发展中，GPT已经实现了极大的进步，成为自然语言生成的最先进技术之一。而ChatGPT则将这种技术应用到聊天机器人中，实现了更加自然、流畅的对话体验，从而得到了广泛的关注和使用。</p>
+<p>另外，随着社交媒体和在线社区的兴起，人们的社交活动也越来越多地发生在网络中。在这种情况下，ChatGPT的普及也得益于其方便快捷的聊天体验，用户可以在不受时间和空间限制的情况下与ChatGPT进行交互，获取所需的信息和支持。</p>
+<p>总之，ChatGPT的突然火起来是由于其使用的GPT技术的出色表现和实用性，以及社交活动向网络化转移的趋势所推动的。</p>
+<h1 id="如何使用ChatGPT"><a href="#如何使用ChatGPT" class="headerlink" title="如何使用ChatGPT"></a>如何使用ChatGPT</h1><p>要使用ChatGPT进行对话，可以按照以下步骤进行：</p>
+<ol>
+<li><p>找到可以访问ChatGPT的平台。例如，OpenAI官方网站上提供了一个在线的ChatGPT接口，用户可以直接在网页上与ChatGPT进行交互。</p>
+</li>
+<li><p>进入ChatGPT界面后，输入您想要与ChatGPT进行对话的内容。ChatGPT会根据您的输入内容，生成相应的回复，并返回给您。</p>
+</li>
+<li><p>根据ChatGPT的回复内容，继续与ChatGPT进行对话。您可以通过不断地输入内容和观察ChatGPT的回复，逐渐深入对话，获取您想要的信息或体验愉快的聊天时光。</p>
+</li>
+</ol>
+<p>除了在OpenAI官方网站上，还有其他许多平台和应用程序支持ChatGPT，例如智能音箱、聊天应用程序等。使用这些应用程序时，用户可以通过语音输入或者文本输入与ChatGPT进行交互，享受更为便捷和自然的聊天体验。</p>
+<p>需要注意的是，尽管ChatGPT能够产生人类类似的对话，但它并不能完全代替人类交互。ChatGPT目前仍有其局限性和缺陷，需要持续的技术发展和改进。因此，在使用ChatGPT时，需要保持谨慎和理性，同时遵守相应的法律法规和使用规范。</p>
+<h1 id="中国用户如何注册openai账号？"><a href="#中国用户如何注册openai账号？" class="headerlink" title="中国用户如何注册openai账号？"></a>中国用户如何注册openai账号？</h1><p>由于目前OpenAI官方网站仅支持英文界面，因此对于中国用户来说，注册OpenAI账号可能会有一些难度。以下是一个简要的注册流程：</p>
+<ol>
+<li><p>打开OpenAI官方网站<a class="link" href="https://openai.com/">https://openai.com/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>，进入网站首页。</p>
+</li>
+<li><p>点击右上角的“Sign Up”按钮，进入注册页面。</p>
+</li>
+<li><p>在注册页面上，需要填写邮箱地址、密码、用户名等信息，以完成账号注册。请注意，OpenAI官方网站要求密码必须包含字母和数字，并且长度不得少于8位。</p>
+</li>
+<li><p>注册成功后，您可以登录OpenAI官方网站，进入ChatGPT接口页面，开始与ChatGPT进行交互。</p>
+</li>
+</ol>
+<p>需要注意的是，由于OpenAI接口目前需要访问国外服务器，可能会受到网络访问的影响。同时，OpenAI的访问权限和服务范围也受到一些限制，用户需要注意遵守相关规定，并在使用过程中保持谨慎和理性。</p>
+]]></content>
+      <categories>
+        <category>AI</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+        <tag>ChatGPT</tag>
       </tags>
   </entry>
   <entry>
@@ -3397,33 +3397,6 @@
 <p>参考：<a class="link" href="https://www.csdn.net/tags/MtTaEg4sOTQ4ODE5LWJsb2cO0O0O.html">https://www.csdn.net/tags/MtTaEg4sOTQ4ODE5LWJsb2cO0O0O.html<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 </blockquote>
 ]]></content>
-  </entry>
-  <entry>
-    <title>安装python库时遇到ValueError: check_hostname requires server_hostname问题及解决</title>
-    <url>/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/</url>
-    <content><![CDATA[<p>正当我熟练地使用 <code>pip</code> 安装 <code>requests</code> 模块时，令人意想不到的一幕发生了……</p>
-<span id="more"></span>
-
-<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>今天准备爬虫，为了排查问题，我搬出了尘封已久的Windows笔记本，上一次打开这个电脑还是上一次。</p>
-<p>这个电脑上的python很干净，我需要安装 <code>requests</code> 来完成爬虫的相关功能。</p>
-<p>正当我熟练地使用 <code>pip</code> 安装这个模块时，令人意想不到的一幕发生了：</p>
-<img lazyload src="/images/loading.svg" data-src="/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/1.png" class>
-
-<p>一堆红色字体！</p>
-<p>定睛一看，报错信息为：</p>
-<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">ValueError: check_hostname requires server_hostname</span><br></pre></td></tr></table></figure></div>
-
-<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>原来这个尘封已久的电脑，竟然还开机自启动微屁恩~</p>
-<p>当我把微屁恩关掉，再次安装，就可以了。顺便更新了一下 <code>pip</code> 。</p>
-<p>正确运行结果如上图所示。</p>
-]]></content>
-      <categories>
-        <category>Python</category>
-      </categories>
-      <tags>
-        <tag>bug</tag>
-        <tag>python</tag>
-      </tags>
   </entry>
   <entry>
     <title>实用SQL</title>
@@ -5496,6 +5469,58 @@
 <h1 id="自建OJ的蛋疼点在哪？"><a href="#自建OJ的蛋疼点在哪？" class="headerlink" title="自建OJ的蛋疼点在哪？"></a>自建OJ的蛋疼点在哪？</h1><h1 id="有哪些开源项目可以选择？"><a href="#有哪些开源项目可以选择？" class="headerlink" title="有哪些开源项目可以选择？"></a>有哪些开源项目可以选择？</h1><h1 id="我是怎么搭建EngeekerOJ的？"><a href="#我是怎么搭建EngeekerOJ的？" class="headerlink" title="我是怎么搭建EngeekerOJ的？"></a>我是怎么搭建EngeekerOJ的？</h1><h1 id="我是怎么搭建xxxOJ的？"><a href="#我是怎么搭建xxxOJ的？" class="headerlink" title="我是怎么搭建xxxOJ的？"></a>我是怎么搭建xxxOJ的？</h1>]]></content>
   </entry>
   <entry>
+    <title>安装python库时遇到ValueError: check_hostname requires server_hostname问题及解决</title>
+    <url>/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/</url>
+    <content><![CDATA[<p>正当我熟练地使用 <code>pip</code> 安装 <code>requests</code> 模块时，令人意想不到的一幕发生了……</p>
+<span id="more"></span>
+
+<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>今天准备爬虫，为了排查问题，我搬出了尘封已久的Windows笔记本，上一次打开这个电脑还是上一次。</p>
+<p>这个电脑上的python很干净，我需要安装 <code>requests</code> 来完成爬虫的相关功能。</p>
+<p>正当我熟练地使用 <code>pip</code> 安装这个模块时，令人意想不到的一幕发生了：</p>
+<img lazyload src="/images/loading.svg" data-src="/2022/03/20/%E5%AE%89%E8%A3%85python%E5%BA%93%E6%97%B6%E9%81%87%E5%88%B0ValueError-check-hostname-requires-server-hostname%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3/1.png" class>
+
+<p>一堆红色字体！</p>
+<p>定睛一看，报错信息为：</p>
+<div class="code-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="code"><pre><span class="line">ValueError: check_hostname requires server_hostname</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>原来这个尘封已久的电脑，竟然还开机自启动微屁恩~</p>
+<p>当我把微屁恩关掉，再次安装，就可以了。顺便更新了一下 <code>pip</code> 。</p>
+<p>正确运行结果如上图所示。</p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>bug</tag>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>许久没更新了…</title>
+    <url>/2021/05/19/%E8%AE%B8%E4%B9%85%E6%B2%A1%E6%9B%B4%E6%96%B0%E4%BA%86%E2%80%A6/</url>
+    <content><![CDATA[<p>许久没更新了，就是冒个泡</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>题解：1066_满足条件的数累加</title>
+    <url>/2023/08/16/%E9%A2%98%E8%A7%A3%EF%BC%9A1066-%E6%BB%A1%E8%B6%B3%E6%9D%A1%E4%BB%B6%E7%9A%84%E6%95%B0%E7%B4%AF%E5%8A%A0/</url>
+    <content><![CDATA[<p>一篇超简单的题的题解示例</p>
+<span id="more"></span>
+<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>将正整数m和n之间(包括m和n)能被17整除的数累加，其中，<code>0&lt;m&lt;n&lt;1000</code>。</p>
+<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>一行，包含两个整数m和n，其间，以一个空格间隔。</p>
+<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>输出一行，包行一个整数，表示累加的结果。</p>
+<h2 id="输入样例"><a href="#输入样例" class="headerlink" title="输入样例"></a>输入样例</h2><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">50 85</span><br></pre></td></tr></table></figure></div>
+<h2 id="输出样例"><a href="#输出样例" class="headerlink" title="输出样例"></a>输出样例</h2><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">204</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><p>用枚举法。</p>
+<p>用for循环把从m到n的所有数列举出来，然后判断是否能被17整除，如果符合条件，就把这个数累加到变量ans中。</p>
+<h1 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码"></a>AC代码</h1><div class="code-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="comment">// 1066：满足条件的数累加</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> m, n, ans = <span class="number">0</span>;</span><br><span class="line">    cin &gt;&gt; m &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = m; i &lt;= n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (i % <span class="number">17</span> == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            ans += i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; ans &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+]]></content>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>熟悉键盘</title>
     <url>/2023/03/13/%E7%86%9F%E6%82%89%E9%94%AE%E7%9B%98/</url>
     <content><![CDATA[<span id="more"></span>
@@ -5508,28 +5533,6 @@
 <p>MacOS系统电脑：<a class="link" href="https://exe-1253398535.cos.ap-beijing.myqcloud.com/%E6%89%93%E5%AD%97%E8%AE%AD%E7%BB%83.app.zip">点此下载<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 <p>下载后需要解压，双击<code>.app</code>文件即可运行。可固定至程序坞方便打开。</p>
 <p>有任何问题可企业微信联系或点击右下角聊天窗口联系。</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>编译和解释的区别</title>
-    <url>/2021/12/08/%E7%BC%96%E8%AF%91%E5%92%8C%E8%A7%A3%E9%87%8A%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[<p>有些编程语言是编译运行，有些则是解释运行，那它们的区别是什么呢？</p>
-<span id="more"></span>
-<h1 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h1><p>编译过程可以比作<strong>“笔译”</strong></p>
-<p>编译程序对整个源程序经过编译处理，产生一个与源程序等价的目标程序，再通过连接程序将所有需要的程序组合成一个完整的可执行程序，最后运行。</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E7%BC%96%E8%AF%91.png" alt="编译"></p>
-<h1 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h1><p>解释过程可以比作<strong>“同声翻译”</strong></p>
-<p>解释程序对源程序逐句分析，将语句翻译成机器指令，然后立即执行指令。不会产生目标程序。</p>
-<p><img lazyload src="/images/loading.svg" data-src="%E8%A7%A3%E9%87%8A.png" alt="解释"></p>
-<blockquote>
-<p>大学计算机（第7版) 龚沛曾 杨志强</p>
-</blockquote>
-]]></content>
-  </entry>
-  <entry>
-    <title>许久没更新了…</title>
-    <url>/2021/05/19/%E8%AE%B8%E4%B9%85%E6%B2%A1%E6%9B%B4%E6%96%B0%E4%BA%86%E2%80%A6/</url>
-    <content><![CDATA[<p>许久没更新了，就是冒个泡</p>
 ]]></content>
   </entry>
   <entry>
@@ -5556,22 +5559,19 @@
       </tags>
   </entry>
   <entry>
-    <title>题解：1066_满足条件的数累加</title>
-    <url>/2023/08/16/%E9%A2%98%E8%A7%A3%EF%BC%9A1066-%E6%BB%A1%E8%B6%B3%E6%9D%A1%E4%BB%B6%E7%9A%84%E6%95%B0%E7%B4%AF%E5%8A%A0/</url>
-    <content><![CDATA[<p>一篇超简单的题的题解示例</p>
+    <title>编译和解释的区别</title>
+    <url>/2021/12/08/%E7%BC%96%E8%AF%91%E5%92%8C%E8%A7%A3%E9%87%8A%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<p>有些编程语言是编译运行，有些则是解释运行，那它们的区别是什么呢？</p>
 <span id="more"></span>
-<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>将正整数m和n之间(包括m和n)能被17整除的数累加，其中，<code>0&lt;m&lt;n&lt;1000</code>。</p>
-<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>一行，包含两个整数m和n，其间，以一个空格间隔。</p>
-<h2 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h2><p>输出一行，包行一个整数，表示累加的结果。</p>
-<h2 id="输入样例"><a href="#输入样例" class="headerlink" title="输入样例"></a>输入样例</h2><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">50 85</span><br></pre></td></tr></table></figure></div>
-<h2 id="输出样例"><a href="#输出样例" class="headerlink" title="输出样例"></a>输出样例</h2><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">204</span><br></pre></td></tr></table></figure></div>
-
-<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><p>用枚举法。</p>
-<p>用for循环把从m到n的所有数列举出来，然后判断是否能被17整除，如果符合条件，就把这个数累加到变量ans中。</p>
-<h1 id="AC代码"><a href="#AC代码" class="headerlink" title="AC代码"></a>AC代码</h1><div class="code-container" data-rel="Cpp"><figure class="iseeu highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="comment">// 1066：满足条件的数累加</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> m, n, ans = <span class="number">0</span>;</span><br><span class="line">    cin &gt;&gt; m &gt;&gt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = m; i &lt;= n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (i % <span class="number">17</span> == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            ans += i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; ans &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h1 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h1><p>编译过程可以比作<strong>“笔译”</strong></p>
+<p>编译程序对整个源程序经过编译处理，产生一个与源程序等价的目标程序，再通过连接程序将所有需要的程序组合成一个完整的可执行程序，最后运行。</p>
+<p><img lazyload src="/images/loading.svg" data-src="%E7%BC%96%E8%AF%91.png" alt="编译"></p>
+<h1 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h1><p>解释过程可以比作<strong>“同声翻译”</strong></p>
+<p>解释程序对源程序逐句分析，将语句翻译成机器指令，然后立即执行指令。不会产生目标程序。</p>
+<p><img lazyload src="/images/loading.svg" data-src="%E8%A7%A3%E9%87%8A.png" alt="解释"></p>
+<blockquote>
+<p>大学计算机（第7版) 龚沛曾 杨志强</p>
+</blockquote>
 ]]></content>
-      <tags>
-        <tag>C++</tag>
-      </tags>
   </entry>
 </search>
